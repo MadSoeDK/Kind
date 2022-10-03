@@ -7,12 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.kind.ui.home.HomeScreen
 import com.example.kind.ui.home.HomeViewModel
 import com.example.kind.ui.theme.KindTheme
@@ -21,27 +19,21 @@ import com.example.kind.ui.theme.KindTheme
 fun KindApp() {
     KindTheme {
         val appState = rememberKindAppState()
-        MainScreen()
-    }
-}
-
-@Composable
-fun MainScreen() {
-    val items = listOf(Screen.Home, Screen.Profile)
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            KindBottomBar(items = items, navController = navController)
+        val items = listOf(Screen.Home, Screen.Profile)
+        Scaffold(
+            bottomBar = {
+                KindBottomBar(items = items, appState = appState )
+            }
+        ) {
+            KindNavigation(navController = appState.navController)
         }
-    ) {
-        KindNavigation(navController = navController)
     }
 }
 
 @Composable
-fun KindBottomBar(items: List<Screen>, navController: NavHostController) {
+fun KindBottomBar(items: List<Screen>, appState: KindAppState) {
     BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
         val destination = navBackStackEntry?.destination
         items.forEach { screen ->
             BottomNavigationItem(
@@ -49,19 +41,7 @@ fun KindBottomBar(items: List<Screen>, navController: NavHostController) {
                 label = { Text(screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
-                    navController.navigate(screen.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
-                    }
+                    appState.navigateToBottomBarRoute(screen.route)
                 }
             )
         }
@@ -77,8 +57,8 @@ fun KindNavigation(navController: NavHostController) {
         composable(Screen.Home.route) {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(
-                textProvider = { viewModel.getText() },
-                navigateToPage = { navController.navigate(Screen.Profile.route) }
+                donatedAmountProvider =  viewModel.getDonatedAmount(),
+                welcomeText = viewModel.getText(),
             )
         }
         composable(Screen.Profile.route) {
