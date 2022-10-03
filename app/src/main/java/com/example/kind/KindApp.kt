@@ -59,6 +59,7 @@ fun KindNavigation(navController: NavHostController) {
             HomeScreen(
                 donatedAmountProvider =  viewModel.getDonatedAmount(),
                 welcomeText = viewModel.getText(),
+                articles = viewModel.getArticles()
             )
         }
         composable(Screen.Profile.route) {
