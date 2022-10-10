@@ -14,6 +14,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.kind.ui.home.HomeScreen
 import com.example.kind.ui.home.HomeViewModel
 import com.example.kind.ui.theme.KindTheme
+import data.News
+import data.User
 
 @Composable
 fun KindApp() {
