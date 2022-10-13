@@ -6,9 +6,10 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ProfileScreen(
-    onNavigateToHome: () -> Unit
+    viewModel: ProfileViewModel,
+    onButtonClick: () -> Unit
 ) {
-    Button(onClick = onNavigateToHome) {
-        Text(text = "Profile screen")
+    Button(onClick = onButtonClick) {
+        Text(text = viewModel.getButtonText())
     }
 }
