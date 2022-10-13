@@ -1,18 +1,18 @@
 package com.example.kind
 
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.kind.ui.home.HomeScreen
+import androidx.navigation.navArgument
+import com.example.kind.ui.composables.KindBottomBar
 import com.example.kind.ui.home.HomeViewModel
+import com.example.kind.ui.home.composables.HomeScreen
+import com.example.kind.ui.profile.ProfileScreen
+import com.example.kind.ui.profile.ProfileViewModel
 import com.example.kind.ui.theme.KindTheme
 
 @Composable
@@ -31,24 +31,6 @@ fun KindApp() {
 }
 
 @Composable
-fun KindBottomBar(items: List<Screen>, appState: KindAppState) {
-    BottomNavigation {
-        val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
-        val destination = navBackStackEntry?.destination
-        items.forEach { screen ->
-            BottomNavigationItem(
-                icon = { Icon(imageVector = Icons.Filled.Favorite, contentDescription = null)},
-                label = { Text(screen.route) },
-                selected = destination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = {
-                    appState.navigateToBottomBarRoute(screen.route)
-                }
-            )
-        }
-    }
-}
-
-@Composable
 fun KindNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
@@ -56,23 +38,15 @@ fun KindNavigation(navController: NavHostController) {
     ) {
         composable(Screen.Home.route) {
             val viewModel = viewModel<HomeViewModel>()
-            HomeScreen(
-                donatedAmountProvider =  viewModel.getDonatedAmount(),
-                welcomeText = viewModel.getText(),
-                articles = viewModel.getArticles()
-            )
+            HomeScreen(viewModel)
         }
-        composable(Screen.Profile.route) {
-            ProfileScreen(onNavigateToHome = { navController.navigate(Screen.Home.route) })
+        composable(
+            Screen.Profile.route,
+        ) {
+                val viewModel = viewModel<ProfileViewModel>()
+                ProfileScreen(
+                    viewModel
+                ) { navController.navigate(Screen.Home.route) }
         }
-    }
-}
-
-@Composable
-fun ProfileScreen(
-    onNavigateToHome: () -> Unit
-) {
-    Button(onClick = onNavigateToHome) {
-        Text(text = "Profile screen")
     }
 }
