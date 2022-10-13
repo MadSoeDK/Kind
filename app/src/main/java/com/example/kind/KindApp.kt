@@ -41,14 +41,12 @@ fun KindNavigation(navController: NavHostController) {
             HomeScreen(viewModel)
         }
         composable(
-            Screen.Profile.route + "/{userId}",
-            listOf(navArgument("userId") {type = NavType.StringType})
+            Screen.Profile.route,
         ) {
-                val userId = it.arguments?.getString("userId")
                 val viewModel = viewModel<ProfileViewModel>()
                 ProfileScreen(
                     viewModel
-                ) { navController.navigate(Screen.Profile.route + "/" + userId) }
+                ) { navController.navigate(Screen.Home.route) }
         }
     }
 }
