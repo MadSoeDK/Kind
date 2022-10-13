@@ -11,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.kind.ui.home.HomeScreen
 import com.example.kind.ui.home.HomeViewModel
+import com.example.kind.ui.home.composables.HomeScreen
 import com.example.kind.ui.theme.KindTheme
 
 @Composable
@@ -57,9 +57,7 @@ fun KindNavigation(navController: NavHostController) {
         composable(Screen.Home.route) {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(
-                donatedAmountProvider =  viewModel.getDonatedAmount(),
-                welcomeText = viewModel.getText(),
-                articles = viewModel.getArticles()
+                viewModel = viewModel
             )
         }
         composable(Screen.Profile.route) {

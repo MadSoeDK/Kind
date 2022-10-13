@@ -14,7 +14,6 @@ sealed class Screen(val route: String) {
 class KindAppState(
     val navController: NavHostController
 ) {
-
     fun navigateToBottomBarRoute(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {
