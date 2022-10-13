@@ -1,4 +1,4 @@
-package data
+package com.example.kind.data
 
 data class Charity(
     val id : Int,

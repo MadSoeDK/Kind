@@ -1,7 +1,4 @@
-package data
-
-import androidx.annotation.Nullable
-import java.text.DateFormat
+package com.example.kind.data
 
 data class User(
     val id : Int?,
