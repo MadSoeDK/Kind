@@ -14,6 +14,8 @@ import com.example.kind.ui.home.composables.HomeScreen
 import com.example.kind.ui.profile.ProfileScreen
 import com.example.kind.ui.profile.ProfileViewModel
 import com.example.kind.ui.theme.KindTheme
+import data.News
+import data.User
 
 @Composable
 fun KindApp() {
