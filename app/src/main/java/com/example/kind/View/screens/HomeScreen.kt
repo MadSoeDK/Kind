@@ -1,4 +1,4 @@
-package com.example.kind.ui.home.composables
+package com.example.kind.View.home.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.kind.ui.home.HomeViewModel
-import com.example.kind.ui.theme.Shapes
+import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.View.theme.Shapes
 
 @Composable
 fun HomeScreen(

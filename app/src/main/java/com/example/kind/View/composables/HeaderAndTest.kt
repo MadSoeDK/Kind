@@ -1,4 +1,4 @@
-package com.example.kind.ui.home.composables
+package com.example.kind.View.home.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.kind.ui.theme.Typography
+import com.example.kind.View.theme.Typography
 
 @Composable
 fun HeaderAndText(

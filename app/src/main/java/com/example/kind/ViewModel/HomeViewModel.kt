@@ -1,4 +1,4 @@
-package com.example.kind.ui.home
+package com.example.kind.ViewModel
 
 import androidx.lifecycle.ViewModel
 

@@ -6,10 +6,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object Profile : Screen("profile")
-}
+
 
 class KindAppState(
     val navController: NavHostController

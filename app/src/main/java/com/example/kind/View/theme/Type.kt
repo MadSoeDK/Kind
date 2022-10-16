@@ -1,7 +1,6 @@
-package com.example.kind.ui.theme
+package com.example.kind.View.theme
 
 import androidx.compose.material.Typography
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight

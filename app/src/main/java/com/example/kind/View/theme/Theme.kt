@@ -1,4 +1,4 @@
-package com.example.kind.ui.theme
+package com.example.kind.View.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
