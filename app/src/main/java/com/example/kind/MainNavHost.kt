@@ -16,11 +16,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.View.home.composables.HomeScreen
 import com.example.kind.View.profile.ProfileScreen
+import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.ViewModel.ProfileViewModel
 import com.example.kind.View.theme.KindTheme
+import com.example.kind.ViewModel.PortfolioViewModel
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
+    object Portfolio : Screen("Portfolio")
     object Profile : Screen("profile")
 }
 
@@ -76,6 +79,10 @@ fun KindNavigation(navController: NavHostController) {
         composable(Screen.Home.route) {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(viewModel)
+        }
+        composable(Screen.Portfolio.route) {
+            val viewModel = viewModel<PortfolioViewModel>()
+            PortfolioScreen(viewModel)
         }
         composable(
             Screen.Profile.route,
