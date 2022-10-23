@@ -1,10 +1,20 @@
 package com.example.kind
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -30,10 +40,12 @@ sealed class Screen(val route: String) {
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
-    val items = listOf(Screen.Home, Screen.Profile)
+    val items = listOf(Screen.Home, Screen.Portfolio, Screen.Profile)
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            BottomNavigation (
+                backgroundColor = Color.White,
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val destination = navBackStackEntry?.destination
                 items.forEach { screen ->
@@ -66,7 +78,21 @@ fun MainNavHost() {
             }
         }
     ) {
-        KindNavigation(navController = navController)
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .absolutePadding(
+                    top = it.calculateTopPadding(),
+                    right = it.calculateRightPadding(LayoutDirection.Rtl),
+                    bottom = it.calculateBottomPadding(),
+                    left = it.calculateLeftPadding(LayoutDirection.Ltr)
+                )
+                .verticalScroll(rememberScrollState())
+        ) {
+            //TODO: Global padding values of all screens
+            println(it)
+            KindNavigation(navController = navController)
+        }
     }
 }
 

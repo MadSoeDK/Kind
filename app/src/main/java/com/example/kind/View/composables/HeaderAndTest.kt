@@ -15,7 +15,7 @@ fun HeaderAndText(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(0.dp, 50.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -27,6 +27,7 @@ fun HeaderAndText(
                 text = donatedAmountProvider,
                 fontWeight = Typography.h1.fontWeight,
                 fontSize = Typography.h1.fontSize,
+                color = Typography.h1.color
             )
         }
         Row {
