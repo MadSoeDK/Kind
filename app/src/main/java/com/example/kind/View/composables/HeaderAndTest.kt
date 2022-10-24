@@ -10,8 +10,8 @@ import com.example.kind.View.theme.Typography
 
 @Composable
 fun HeaderAndText(
-    donatedAmountProvider: String,
-    welcomeText: String,
+    headerProvider: String,
+    textProvider: String,
 ) {
     Column(
         modifier = Modifier
@@ -24,14 +24,14 @@ fun HeaderAndText(
             modifier = Modifier.padding(0.dp, 10.dp)
         ){
             Text(
-                text = donatedAmountProvider,
+                text = headerProvider,
                 fontWeight = Typography.h1.fontWeight,
                 fontSize = Typography.h1.fontSize,
                 color = Typography.h1.color
             )
         }
         Row {
-            Text(text = welcomeText)
+            Text(text = textProvider)
         }
     }
 }
