@@ -6,8 +6,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-
-
 class KindAppState(
     val navController: NavHostController
 ) {
