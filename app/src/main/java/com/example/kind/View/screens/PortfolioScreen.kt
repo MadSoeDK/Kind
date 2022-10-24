@@ -11,7 +11,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
 
 
 
-    //TABLE
+    //TABLEs
 
 
 }
