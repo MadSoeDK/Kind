@@ -28,6 +28,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
+ * Source: https://github.com/ankitdubey021/Canvas101/blob/master/app/src/main/java/com/ankitdubey/canvas101/ui/shapes/PieChart.kt
  * Created by Ankit Dubey on 03,September,2021
  */
 
