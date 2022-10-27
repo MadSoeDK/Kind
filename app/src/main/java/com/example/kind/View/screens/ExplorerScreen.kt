@@ -10,12 +10,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.kind.View.composables.CharityHeaderAndSubsectionText
 import com.example.kind.View.composables.KindCharityCard
-import com.example.kind.ViewModel.CharityExplorerViewModel
+import com.example.kind.ViewModel.ExplorerViewModel
 
 @ExperimentalFoundationApi
 @Composable
-fun CharityExplorerScreen(
-    viewModel: CharityExplorerViewModel
+fun ExplorerScreen(
+    viewModel: ExplorerViewModel
 ) {
     Column {
         CharityHeaderAndSubsectionText(Title = "Charity Explorer", Subtitle = "Get to know other charities better", Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care"))
@@ -27,6 +27,7 @@ fun CharityExplorerScreen(
                 Category = null
             )}
         })
+
         /*Row() {
             KindCharityCard(Title = "Red Cross", Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147))
             KindCharityCard(Title = "Doctors", Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147))
@@ -48,7 +49,7 @@ fun CharityExplorerScreen(
 @Composable
 @Preview(showBackground = true)
 fun CharityExplorerPreview() {
-    CharityExplorerScreen(
-        CharityExplorerViewModel()
+    ExplorerScreen(
+        ExplorerViewModel()
     )
 }

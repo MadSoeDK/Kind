@@ -30,17 +30,17 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
         Row(modifier = Modifier.padding(0.dp, 10.dp)) {
             Text(
                 text = Subtitle,
-                fontWeight = Typography.labelLarge.fontWeight,
-                fontSize = Typography.labelLarge.fontSize,
+                fontWeight = Typography.headlineMedium.fontWeight,
+                fontSize = Typography.headlineMedium.fontSize,
                 //TODO Need to find correct color
-                color = Typography.headlineLarge.color)
+                color = Typography.headlineMedium.color)
         }
         Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
             for (i in Categories.indices){
             Text(
                 text = Categories[i] + "        ",
-                fontWeight = Typography.labelMedium.fontWeight,
-                fontSize = Typography.labelMedium.fontSize,
+                fontWeight = Typography.headlineMedium.fontWeight,
+                fontSize = Typography.headlineMedium.fontSize,
                 //TODO Need to find correct color
                 color = Typography.headlineLarge.color)
             }

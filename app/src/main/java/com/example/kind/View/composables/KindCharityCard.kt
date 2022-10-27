@@ -34,26 +34,26 @@ fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, Read
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 Text(
                     text = Title,
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.labelLarge.color)
+                    fontWeight = Typography.headlineMedium.fontWeight,
+                    fontSize = Typography.headlineMedium.fontSize,
+                    color = Typography.headlineMedium.color)
             }
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 //TODO need to center text
                 Text(
                     text = Body,
-                    fontWeight = Typography.bodyMedium.fontWeight,
-                    fontSize = Typography.bodyMedium.fontSize,
-                    color = Typography.labelLarge.color, )
+                    fontWeight = Typography.displayMedium.fontWeight,
+                    fontSize = Typography.displayMedium.fontSize,
+                    color = Typography.displayMedium.color, )
             }
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 //TODO Button works wierd and i've no clue why (it looks correct in the preview but when i change any code (even comments) it removes the text)
                 Button(onClick = { /*TODO*/ }) {
                     Text(
                         text = ReadMore,
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.titleLarge.color)
+                        fontWeight = Typography.headlineMedium.fontWeight,
+                        fontSize = Typography.headlineMedium.fontSize,
+                        color = Typography.headlineMedium.color)
                 }
             }
         }
