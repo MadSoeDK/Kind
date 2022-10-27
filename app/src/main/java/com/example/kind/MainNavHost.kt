@@ -3,18 +3,16 @@ package com.example.kind
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,7 +26,6 @@ import com.example.kind.View.home.composables.HomeScreen
 import com.example.kind.View.profile.ProfileScreen
 import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.ViewModel.ProfileViewModel
-import com.example.kind.View.theme.KindTheme
 import com.example.kind.ViewModel.PortfolioViewModel
 
 sealed class Screen(val route: String) {
@@ -37,26 +34,27 @@ sealed class Screen(val route: String) {
     object Profile : Screen("profile")
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
     val items = listOf(Screen.Home, Screen.Portfolio, Screen.Profile)
     Scaffold(
         bottomBar = {
-            BottomNavigation (
-                backgroundColor = Color.White,
+            NavigationBar (
+                containerColor = Color.White,
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val destination = navBackStackEntry?.destination
                 items.forEach { screen ->
-                    BottomNavigationItem(
+                    NavigationBarItem(
                         icon = {
                             Icon(
                                 imageVector = Icons.Filled.Favorite,
                                 contentDescription = null
                             )
                         },
-                        label = { Text(screen.route) },
+                        label = { Text(text = screen.route) },
                         selected = destination?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
                             navController.navigate(screen.route) {
@@ -113,7 +111,7 @@ fun KindNavigation(navController: NavHostController) {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 viewModel
-            ) { navController.navigate(Screen.Home.route) }
+            )
         }
     }
 }

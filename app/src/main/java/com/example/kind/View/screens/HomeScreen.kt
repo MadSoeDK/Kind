@@ -1,7 +1,7 @@
 package com.example.kind.View.home.composables
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,14 +19,14 @@ fun HomeScreen(
     Column {
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
-        Text(text = "Charity Update", color = subHeading, fontSize = Typography.h2.fontSize, fontWeight = Typography.h2.fontWeight)
+        Text(text = "Charity Update", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
         Text("The latest news from your charities")
 
         CardListHorizontalScroll(viewModel.getArticles("Article 1", "Article 2"))
         
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Explore charities", color = subHeading, fontSize = Typography.h2.fontSize, fontWeight = Typography.h2.fontWeight)
+        Text(text = "Explore charities", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
         Text("Get to know other charities better")
         CardListHorizontalScroll(listOfContent = viewModel.getCharities("Charity 1", "Charity 2"))
     }
