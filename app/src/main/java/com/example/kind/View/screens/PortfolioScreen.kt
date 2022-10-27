@@ -1,7 +1,6 @@
 package com.example.kind.View.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import com.example.kind.View.home.composables.HeaderAndText
 import com.example.kind.Model.Portfolio
 import com.example.kind.View.composables.PortfolioTable
 import com.example.kind.View.theme.Typography
-import com.example.kind.View.theme.background
 import com.example.kind.ViewModel.PortfolioViewModel
 
 @Composable
@@ -39,13 +37,12 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
             color = Typography.headlineMedium.color)
 
-        // TODO Fix background color
         PortfolioTable (
-            modifier = Modifier.background(background),
+            modifier = Modifier,
             columnCount = 4,
             cellWidth = { index ->
                 when (index) {
-                    0 -> 150.dp
+                    0 -> 120.dp
                     1 -> 50.dp
                     2 -> 90.dp
                     3 -> 65.dp
@@ -84,8 +81,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 val value = when (index) {
                     0 -> item.organization
                     1 -> item.pct.toString() + "%"
-                    2 -> item.spend.toString() + "kr."
-                    3 -> item.total.toString() + "kr."
+                    2 -> item.spend.toString() + " kr."
+                    3 -> item.total.toString() + " kr."
                     else -> ""
                 }
                 val alignment = when(index) {
