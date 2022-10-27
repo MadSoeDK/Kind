@@ -16,9 +16,10 @@ fun ProfileScreen(
     viewModel: ProfileViewModel,
     onButtonClick: () -> Unit
 ) {
-    HeaderAndText(donatedAmountProvider = "Profile info", welcomeText = "", horizontalAlignment = Alignment.Start)
-    TextField(value = "Helloworld", onValueChange = { handleChange("Change") })
-
+    Column {
+        HeaderAndText(headerProvider = "Header", textProvider = "text")
+        TextField(value = "Helloworld", onValueChange = { handleChange("Change") })
+    }
 }
 
 fun handleChange(input: String) {
