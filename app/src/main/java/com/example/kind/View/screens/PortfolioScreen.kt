@@ -41,11 +41,11 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
 
         // TODO Fix background color
         PortfolioTable (
-            modifier = Modifier.background(background),
+            modifier = Modifier,
             columnCount = 4,
             cellWidth = { index ->
                 when (index) {
-                    0 -> 150.dp
+                    0 -> 120.dp
                     1 -> 50.dp
                     2 -> 90.dp
                     3 -> 65.dp

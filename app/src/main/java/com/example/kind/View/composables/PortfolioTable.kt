@@ -10,19 +10,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.kind.View.theme.background
 
 @Composable
 fun <T> PortfolioTable (
     columnCount: Int,
     cellWidth: (index: Int) -> Dp,
     data: List<T>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     // TODO: Handle these two composables in PortfolioTable and instead only provide data
     headerCellContent: @Composable (index: Int) -> Unit,
     cellContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     Surface(
-        modifier = modifier
+        modifier = modifier.background(background), color = background
     ) {
         LazyRow(
             modifier = Modifier.padding(16.dp)
@@ -33,7 +34,7 @@ fun <T> PortfolioTable (
                         Surface(
                             //border = BorderStroke(1.dp, Color.LightGray ),
                             //contentColor = Color.Transparent,
-                            modifier = Modifier.width(cellWidth(columnIndex))
+                            modifier = Modifier.width(cellWidth(columnIndex)), color = background
                         ) {
                             if (index == 0) {
                                 headerCellContent(columnIndex)
