@@ -111,7 +111,7 @@ fun KindNavigation(navController: NavHostController) {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 viewModel
-            ) { navController.navigate(Screen.Home.route) }
+            )
         }
     }
 }
