@@ -90,7 +90,6 @@ fun MainNavHost() {
                 .verticalScroll(rememberScrollState())
         ) {
             //TODO: Global padding values of all screens
-            println(it)
             KindNavigation(navController = navController)
         }
     }
@@ -110,9 +109,7 @@ fun KindNavigation(navController: NavHostController) {
             val viewModel = viewModel<PortfolioViewModel>()
             PortfolioScreen(viewModel)
         }
-        composable(
-            Screen.Profile.route,
-        ) {
+        composable(Screen.Profile.route) {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 viewModel
