@@ -1,7 +1,7 @@
 package com.example.kind.View.home.composables
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,9 +25,9 @@ fun HeaderAndText(
         ){
             Text(
                 text = headerProvider,
-                fontWeight = Typography.h1.fontWeight,
-                fontSize = Typography.h1.fontSize,
-                color = Typography.h1.color
+                fontWeight = Typography.headlineLarge.fontWeight,
+                fontSize = Typography.headlineLarge.fontSize,
+                color = Typography.headlineLarge.color
             )
         }
         Row {

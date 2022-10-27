@@ -6,9 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -80,10 +78,8 @@ fun PieChart(
 
         val size = Size(sideSize.toFloat() - padding, sideSize.toFloat() - padding)
 
-        Canvas(
-            modifier = Modifier
-                .width(sideSize.dp)
-                .height(sideSize.dp)
+        Canvas (
+            modifier = modifier
                 .pointerInput(true) {
 
                     if (!isDonut)
@@ -107,7 +103,9 @@ fun PieChart(
                     }
                 }
         ) {
-
+            //var labelxoffset = 0F
+            //var labelyoffset = 0F
+            //var rounds = 1
             angleProgress.forEachIndexed { index, arcProgress ->
                 drawPie(
                     colors[index],
@@ -119,7 +117,18 @@ fun PieChart(
                     isActive = activePie == index
                 )
                 startAngle += arcProgress
+
+                //TODO: Draw text on piechart
+                /*println(arcProgress);
+                drawIntoCanvas {
+                    it.nativeCanvas.drawText("Hello", center.x+labelxoffset, center.y+labelyoffset, Paint())
+                    labelxoffset += arcProgress / rounds
+                    labelyoffset += 0
+                    rounds++
+                }*/
             }
+
+
 
             if (activePie != -1)
                 drawContext.canvas.nativeCanvas.apply {
@@ -183,7 +192,7 @@ private fun convertTouchEventPointToAngle(
 @Composable
 fun ChartPreview() {
     PieChart(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.size(100.dp),
         progress = listOf(10f, 20f, 5f),
         colors = listOf(
             Color(0xFFbf95d4),
