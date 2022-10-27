@@ -39,7 +39,6 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
             color = Typography.headlineMedium.color)
 
-        // TODO Fix background color
         PortfolioTable (
             modifier = Modifier,
             columnCount = 4,
@@ -84,8 +83,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 val value = when (index) {
                     0 -> item.organization
                     1 -> item.pct.toString() + "%"
-                    2 -> item.spend.toString() + "kr."
-                    3 -> item.total.toString() + "kr."
+                    2 -> item.spend.toString() + " kr."
+                    3 -> item.total.toString() + " kr."
                     else -> ""
                 }
                 val alignment = when(index) {
