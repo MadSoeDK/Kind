@@ -48,7 +48,7 @@ fun ExplorerScreen(
 @ExperimentalFoundationApi
 @Composable
 @Preview(showBackground = true)
-fun CharityExplorerPreview() {
+fun ExplorerPreview() {
     ExplorerScreen(
         ExplorerViewModel()
     )

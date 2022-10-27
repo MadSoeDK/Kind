@@ -23,7 +23,7 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
             Text(
                 text = Title,
                 fontWeight = Typography.headlineLarge.fontWeight,
-                fontSize = Typography.headlineLarge.fontSize,
+                fontSize = Typography.headlineSmall.fontSize,
                 color = Typography.headlineLarge.color
             )
         }
@@ -31,16 +31,16 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
             Text(
                 text = Subtitle,
                 fontWeight = Typography.headlineMedium.fontWeight,
-                fontSize = Typography.headlineMedium.fontSize,
+                fontSize = Typography.headlineSmall.fontSize,
                 //TODO Need to find correct color
                 color = Typography.headlineMedium.color)
         }
         Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
             for (i in Categories.indices){
             Text(
-                text = Categories[i] + "        ",
+                text = Categories[i] + "      ",
                 fontWeight = Typography.headlineMedium.fontWeight,
-                fontSize = Typography.headlineMedium.fontSize,
+                fontSize = Typography.labelLarge.fontSize,
                 //TODO Need to find correct color
                 color = Typography.headlineLarge.color)
             }
