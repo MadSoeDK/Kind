@@ -1,5 +1,6 @@
 package com.example.kind
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,16 +22,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.View.home.composables.ExplorerScreen
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.View.home.composables.HomeScreen
 import com.example.kind.View.profile.ProfileScreen
 import com.example.kind.View.screens.PortfolioScreen
+import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.ProfileViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Portfolio : Screen("Portfolio")
+    object Explorer : Screen("explorer")
     object Profile : Screen("profile")
 }
 
@@ -38,7 +42,7 @@ sealed class Screen(val route: String) {
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
-    val items = listOf(Screen.Home, Screen.Portfolio, Screen.Profile)
+    val items = listOf(Screen.Home, Screen.Portfolio, Screen.Explorer, Screen.Profile)
     Scaffold(
         bottomBar = {
             NavigationBar (
@@ -93,6 +97,7 @@ fun MainNavHost() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun KindNavigation(navController: NavHostController) {
     NavHost(
@@ -112,6 +117,10 @@ fun KindNavigation(navController: NavHostController) {
             ProfileScreen(
                 viewModel
             )
+        }
+        composable(Screen.Explorer.route) {
+            val viewModel = viewModel<ExplorerViewModel>();
+            ExplorerScreen(viewModel = viewModel)
         }
     }
 }

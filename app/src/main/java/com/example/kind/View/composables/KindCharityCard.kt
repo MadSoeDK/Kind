@@ -1,14 +1,14 @@
 package com.example.kind.View.composables
 
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -34,26 +34,26 @@ fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, Read
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 Text(
                     text = Title,
-                    fontWeight = Typography.subtitle1.fontWeight,
-                    fontSize = Typography.subtitle1.fontSize,
-                    color = Typography.subtitle1.color)
+                    fontWeight = Typography.headlineMedium.fontWeight,
+                    fontSize = Typography.headlineMedium.fontSize,
+                    color = Typography.headlineMedium.color)
             }
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 //TODO need to center text
                 Text(
                     text = Body,
-                    fontWeight = Typography.body2.fontWeight,
-                    fontSize = Typography.body2.fontSize,
-                    color = Typography.subtitle1.color, )
+                    fontWeight = Typography.displayMedium.fontWeight,
+                    fontSize = Typography.displayMedium.fontSize,
+                    color = Typography.displayMedium.color, )
             }
             Row(modifier = Modifier.padding(0.dp, 10.dp)) {
                 //TODO Button works wierd and i've no clue why (it looks correct in the preview but when i change any code (even comments) it removes the text)
                 Button(onClick = { /*TODO*/ }) {
                     Text(
                         text = ReadMore,
-                        fontWeight = Typography.subtitle1.fontWeight,
-                        fontSize = Typography.subtitle1.fontSize,
-                        color = Typography.h1.color)
+                        fontWeight = Typography.headlineMedium.fontWeight,
+                        fontSize = Typography.headlineMedium.fontSize,
+                        color = Typography.headlineMedium.color)
                 }
             }
         }
