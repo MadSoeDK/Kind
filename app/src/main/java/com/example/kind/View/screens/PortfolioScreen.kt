@@ -3,10 +3,9 @@ package com.example.kind.View.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -26,11 +25,9 @@ import com.example.kind.ViewModel.PortfolioViewModel
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
-    Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
-    ) {
+    Column {
         HeaderAndText(headerProvider = viewModel.getMonthlyDonatedAmount() + "kr.", textProvider = "Du donerer hver måned 300 kr. til 2 temaer og 2 organisationer.")
-        PieChart(modifier = Modifier,
+        PieChart(modifier = Modifier.size(250.dp).align(Alignment.CenterHorizontally),
             progress = listOf(10f, 20f, 5f),
             colors = listOf(
                 Color(0xFFbf95d4),
@@ -40,7 +37,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
         )
         Text(text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
             modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
-            color = Typography.h1.color)
+            color = Typography.headlineMedium.color)
 
         // TODO Fix background color
         PortfolioTable (
