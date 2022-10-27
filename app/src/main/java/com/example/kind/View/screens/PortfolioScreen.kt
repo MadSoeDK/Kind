@@ -1,7 +1,6 @@
 package com.example.kind.View.screens
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import com.example.kind.View.home.composables.HeaderAndText
 import com.example.kind.Model.Portfolio
 import com.example.kind.View.composables.PortfolioTable
 import com.example.kind.View.theme.Typography
-import com.example.kind.View.theme.background
 import com.example.kind.ViewModel.PortfolioViewModel
 
 @Composable
