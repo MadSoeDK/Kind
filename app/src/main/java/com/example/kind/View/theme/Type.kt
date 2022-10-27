@@ -12,6 +12,13 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Black,
         fontSize = 40.sp,
+        color = primary
+    ),
+    h2 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 26.sp,
+        color = subHeading
     ),
     body1 = TextStyle(
         fontFamily = FontFamily.Default,

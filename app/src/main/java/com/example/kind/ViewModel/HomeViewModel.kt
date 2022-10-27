@@ -12,10 +12,17 @@ class HomeViewModel : ViewModel() {
         return 1534.toString() + " kr."
     }
 
-    fun getArticles(): List<String> {
+    fun getCharities(charity1: String, charity2: String): List<String> {
         val articles = ArrayList<String>()
-        articles.add("Article 1")
-        articles.add("Article 2")
+        articles.add(charity1)
+        articles.add(charity2)
+        return articles
+    }
+
+    fun getArticles(article1: String, article2: String): List<String> {
+        val articles = ArrayList<String>()
+        articles.add(article1)
+        articles.add(article2)
         return articles
     }
 }

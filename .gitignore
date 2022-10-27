@@ -44,3 +44,9 @@ local.properties
 /.gradle/7.4/fileHashes/resourceHashesCache.bin
 /.gradle/7.4/checksums/sha1-checksums.bin
 app/build/generated/source/buildConfig/debug/com/example/kind/BuildConfig.java
+/.gradle/7.3/checksums/checksums.lock
+/.gradle/7.3/dependencies-accessors/dependencies-accessors.lock
+/.gradle/7.3/fileHashes/fileHashes.lock
+/.gradle/7.3/dependencies-accessors/gc.properties
+/.gradle/7.3/gc.properties
+/.gradle/7.3/fileChanges/last-build.bin
