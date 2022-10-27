@@ -3,7 +3,7 @@ package com.example.kind.View.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +37,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
         )
         Text(text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
             modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
-            color = Typography.h1.color)
+            color = Typography.headlineMedium.color)
 
         // TODO Fix background color
         PortfolioTable (
