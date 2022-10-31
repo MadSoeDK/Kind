@@ -16,7 +16,8 @@ import com.example.kind.ViewModel.HomeViewModel
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
-    Column {
+    Column (modifier = Modifier
+        .padding(24.dp)){
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
         Text(text = "Charity Update", color = subHeading, fontSize = Typography.h2.fontSize, fontWeight = Typography.h2.fontWeight)

@@ -1,5 +1,6 @@
 package com.example.kind.View.composables
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -10,7 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
+import com.example.kind.R
 
 
 @Composable
@@ -20,19 +24,18 @@ fun KindCard (
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(6.dp)
             .width(200.dp)
             .height(200.dp)
     ) {
         Column {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.ic_africankid_background),
+                contentDescription = "African Children",
                 modifier = Modifier
-                    .background(Color.Gray)
                     .fillMaxWidth()
                     .height(140.dp)
-            ) {
-                Text(text = "Image")
-            }
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxSize(),
