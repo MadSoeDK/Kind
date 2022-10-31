@@ -1,4 +1,4 @@
-package com.example.kind.View.home.composables
+package com.example.kind.view.home.composables
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.example.kind.R
@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.View.composables.CharityHeaderAndSubsectionText
-import com.example.kind.View.composables.KindCharityCard
+import com.example.kind.view.composables.CharityHeaderAndSubsectionText
+import com.example.kind.view.composables.KindCharityCard
 import com.example.kind.ViewModel.ExplorerViewModel
 
 @ExperimentalFoundationApi

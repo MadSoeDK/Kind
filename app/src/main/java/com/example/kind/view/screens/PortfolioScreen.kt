@@ -1,4 +1,4 @@
-package com.example.kind.View.screens
+package com.example.kind.view.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
@@ -14,11 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kind.View.composables.PieChart
-import com.example.kind.View.home.composables.HeaderAndText
-import com.example.kind.Model.Portfolio
-import com.example.kind.View.composables.PortfolioTable
-import com.example.kind.View.theme.Typography
+import com.example.kind.view.composables.PieChart
+import com.example.kind.view.home.composables.HeaderAndText
+import com.example.kind.model.Portfolio
+import com.example.kind.view.composables.PortfolioTable
+import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.PortfolioViewModel
 
 @Composable

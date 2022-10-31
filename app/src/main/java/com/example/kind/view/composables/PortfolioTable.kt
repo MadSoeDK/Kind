@@ -1,4 +1,4 @@
-package com.example.kind.View.composables
+package com.example.kind.view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.kind.View.theme.background
+import com.example.kind.view.theme.background
 
 @Composable
 fun <T> PortfolioTable (

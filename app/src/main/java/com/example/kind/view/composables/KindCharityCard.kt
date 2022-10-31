@@ -1,4 +1,4 @@
-package com.example.kind.View.composables
+package com.example.kind.view.composables
 
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
@@ -7,14 +7,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import com.example.kind.R
-import com.example.kind.View.theme.Typography
+import com.example.kind.view.theme.Typography
 
 @Composable
 fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, ReadMore: String = "Read More", Category: String?){

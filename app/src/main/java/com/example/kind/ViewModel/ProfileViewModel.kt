@@ -4,10 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.kind.View.composables.Email
-import com.example.kind.View.composables.FormState
-import com.example.kind.View.composables.KindTextField
-import com.example.kind.View.composables.Required
+import com.example.kind.view.composables.Email
+import com.example.kind.view.composables.FormState
+import com.example.kind.view.composables.KindTextField
+import com.example.kind.view.composables.Required
 
 class ProfileViewModel : ViewModel() {
 

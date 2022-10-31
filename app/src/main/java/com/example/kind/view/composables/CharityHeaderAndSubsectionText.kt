@@ -1,4 +1,4 @@
-package com.example.kind.View.composables
+package com.example.kind.view.composables
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.View.theme.Typography
+import com.example.kind.view.theme.Typography
 
 @Composable
 fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: Array<String>){
