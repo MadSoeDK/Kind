@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.View.composables.CharityHeaderAndSubsectionText
+import com.example.kind.View.composables.HeaderAndTextWithSelectionFilter
 import com.example.kind.View.composables.KindCharityCard
 import com.example.kind.ViewModel.ExplorerViewModel
 
@@ -21,14 +21,27 @@ fun ExplorerScreen(
 ) {
     Column {
         //TODO: Seperate categories composable
-        CharityHeaderAndSubsectionText(Title = "Charity Explorer", Subtitle = "Get to know other charities better", Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care"))
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
-            items(10 /*TODO: Needs to be adaptive based on the amount of organizations*/) {i -> KindCharityCard(
-                Title = "Red Cross",
-                Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
-                Category = null
-            )}
+        HeaderAndTextWithSelectionFilter(
+            Title = "Charity Explorer",
+            Subtitle = "Get to know other charities better",
+            Categories = arrayOf(
+                "All",
+                "Health",
+                "Disasters",
+                "Climate",
+                "Welfare",
+                "Children Care"
+            )
+        )
+        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {
+            items(10 /*TODO: Needs to be adaptive based on the amount of organizations*/) { i ->
+                KindCharityCard(
+                    Title = "Red Cross",
+                    Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
+                    Category = null
+                )
+            }
         })
     }
 }
