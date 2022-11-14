@@ -1,10 +1,10 @@
 package com.example.kind
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Edit
@@ -95,7 +95,13 @@ fun Screen(
     Scaffold(
         bottomBar = { NavigationBar() },
         floatingActionButton = { FloatingActionButton() },
-        content = content
+        content = {
+            Column(
+                modifier = Modifier.padding(it).verticalScroll(rememberScrollState())
+            ) {
+                content(it)
+            }
+        }
     )
 }
 
