@@ -2,7 +2,7 @@ package com.example.kind.model
 
 data class Portfolio(
     val organization : String,
-    val pct : Int,
-    val spend : Int,
-    val total : Int,
+    val pct : Float,
+    val spend : Float,
+    val total : Float,
 )
