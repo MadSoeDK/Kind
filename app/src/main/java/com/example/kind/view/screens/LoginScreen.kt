@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -66,7 +67,8 @@ fun LoginView(viewModel: LoginViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .background(subHeading)
+            .background(Color(84, 129, 53)) //farve brugt i figma
+            /*.background(subHeading)*/
             .fillMaxSize()
             .clickable { focusManager.clearFocus() }
     ){
@@ -124,7 +126,7 @@ fun LoginFields(
             keyboardActions = KeyboardActions(onDone = {focusManager.clearFocus()})
         )
 
-        Button(
+        Button( //TODO: farvefix
             onClick = {
             if (!username.isBlank() || !password.isBlank()) {
                 onLoginClick(username)
@@ -136,8 +138,8 @@ fun LoginFields(
             Text("Log ind", color = background )
         }
         Row(horizontalArrangement = Arrangement.Center) {
-            Text("Ny bruger? ")
-            ClickableText(AnnotatedString("Opret konto"), onClick = { /*TODO*/})
+            Text("Ny bruger? ", color = background)
+            ClickableText(AnnotatedString(text = "Opret konto"), onClick = { /*TODO*/}) //TODO: farvefix
 
         }
     }
