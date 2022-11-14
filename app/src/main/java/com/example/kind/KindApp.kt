@@ -24,15 +24,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.view.screens.PortfolioScreen
-import com.example.kind.viewModel.*
+import com.example.kind.ViewModel.*
 import com.example.kind.view.screens.ExplorerScreen
 import com.example.kind.view.screens.HomeScreen
 import com.example.kind.view.screens.ProfileScreen
 import com.example.kind.view.screens.LoginScreen
 import com.example.kind.view.theme.Typography
-import com.example.kind.viewModel.ExplorerViewModel
-import com.example.kind.viewModel.PortfolioViewModel
-import com.example.kind.viewModel.ProfileViewModel
+import com.example.kind.ViewModel.ExplorerViewModel
+import com.example.kind.ViewModel.PortfolioViewModel
+import com.example.kind.ViewModel.ProfileViewModel
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Login : Screen("login", Icons.Filled.Favorite)

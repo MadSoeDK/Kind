@@ -11,7 +11,7 @@ import com.example.kind.view.composables.CardListHorizontalScroll
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
-import com.example.kind.viewModel.HomeViewModel
+import com.example.kind.ViewModel.HomeViewModel
 
 @Composable
 fun HomeScreen(

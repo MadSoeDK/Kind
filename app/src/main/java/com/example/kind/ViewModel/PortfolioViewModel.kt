@@ -1,4 +1,4 @@
-package com.example.kind.viewModel
+package com.example.kind.ViewModel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
