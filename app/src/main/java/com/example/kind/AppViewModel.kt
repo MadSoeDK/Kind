@@ -13,10 +13,10 @@ class AppViewModel (
 
     fun login() {
         isLoggedIn.value = true
-        navigateToBottomBarRoute(Screen.Home.route)
+        navigate(Screen.Home.route)
     }
 
-    fun navigateToBottomBarRoute(route: String) {
+    fun navigate(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {
                 // Pop up to the start destination of the graph to

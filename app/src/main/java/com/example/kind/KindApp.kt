@@ -118,7 +118,7 @@ fun KindNavigationBar(
                 },
                 label = { Text(text = screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = { viewModel.navigateToBottomBarRoute(screen.route) }
+                onClick = { viewModel.navigate(screen.route) }
             )
         }
     }
