@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.View.theme.Typography
+import com.example.kind.view.theme.Typography
 
 @Composable
 fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categories: Array<String>) {
@@ -58,7 +58,7 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
 
 @Preview(showBackground = true)
 @Composable
-fun CharityHeaderAndSubsectionTextPreview() {
+fun CharityHeaderAndSelectionPreview() {
     HeaderAndTextWithSelectionFilter(
         Title = "Charity Explorer",
         Subtitle = "Get to know other charities better",
