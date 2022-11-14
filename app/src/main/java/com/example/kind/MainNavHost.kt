@@ -13,15 +13,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
@@ -35,12 +32,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.View.screens.PortfolioScreen
+import com.example.kind.View.screens.visible
 import com.example.kind.view.home.composables.ExplorerScreen
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.home.composables.HomeScreen
 import com.example.kind.view.profile.ProfileScreen
 import com.example.kind.view.theme.Typography
-import com.example.kind.view.theme.background
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.ProfileViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
@@ -61,7 +58,7 @@ fun MainNavHost() {
     items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
     Scaffold(
         bottomBar = {
-            NavigationBar (
+            NavigationBar(
                 containerColor = Color.White,
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -97,7 +94,13 @@ fun MainNavHost() {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    if(!visible.value) {
+                        visible.value = true
+                    } else {
+                        visible.value = false
+                    }
+                },
                 content = {
                     Icon(
                         Icons.Filled.Edit,
@@ -114,7 +117,7 @@ fun MainNavHost() {
             )
         }
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .absolutePadding(
