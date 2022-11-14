@@ -1,4 +1,4 @@
-package com.example.kind.View.screens
+package com.example.kind.view.screens
 
 import android.annotation.SuppressLint
 import android.media.MediaRouter.UserRouteInfo
