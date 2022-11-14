@@ -1,15 +1,22 @@
 package com.example.kind
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 
-class KindAppState(
+class AppViewModel (
     val navController: NavHostController
-) {
-    fun navigateToBottomBarRoute(route: String) {
+) : ViewModel() {
+
+    var isLoggedIn = mutableStateOf(false)
+
+    fun login() {
+        isLoggedIn.value = true
+        navigate(Screen.Home.route)
+    }
+
+    fun navigate(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {
                 // Pop up to the start destination of the graph to
@@ -26,12 +33,4 @@ class KindAppState(
             }
         }
     }
-
-}
-
-@Composable
-fun rememberKindAppState (
-    navController: NavHostController = rememberNavController()
-) = remember (navController) {
-    KindAppState(navController)
 }
