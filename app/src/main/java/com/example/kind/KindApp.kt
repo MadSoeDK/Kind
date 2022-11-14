@@ -23,7 +23,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.viewModel.LoginViewModel
 import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.screens.ExplorerScreen

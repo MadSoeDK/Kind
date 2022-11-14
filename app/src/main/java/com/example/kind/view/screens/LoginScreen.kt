@@ -14,10 +14,7 @@ fun LoginScreen(
     Column {
         Text(text = "Login")
         Button(onClick = { login() }) {
-            Text(text = "Signup")
-        }
-        Button(onClick = { /*TODO*/ }) {
-
+            Text(text = "Login")
         }
     }
 }
