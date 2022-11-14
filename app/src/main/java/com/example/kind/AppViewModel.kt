@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 
-class KindAppViewModel (
+class AppViewModel (
     val navController: NavHostController
 ) : ViewModel() {
 

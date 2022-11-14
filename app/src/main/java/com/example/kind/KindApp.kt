@@ -42,7 +42,7 @@ sealed class Screen(val route: String, var icon: ImageVector) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun KindApp() {
-    val viewModel = KindAppViewModel(navController = rememberNavController())
+    val viewModel = AppViewModel(navController = rememberNavController())
     NavHost(
         navController = viewModel.navController,
         startDestination = Screen.Login.route,
@@ -98,7 +98,7 @@ fun Screen(
 
 @Composable
 fun KindNavigationBar(
-    viewModel: KindAppViewModel
+    viewModel: AppViewModel
 ) {
     NavigationBar(
         containerColor = Color.White,
