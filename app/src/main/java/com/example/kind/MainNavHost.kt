@@ -36,6 +36,7 @@ sealed class Screen(val route: String) {
     object Portfolio : Screen("Portfolio")
     object Explorer : Screen("explorer")
     object Profile : Screen("profile")
+    object Organization : Screen("Organization")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,6 +120,12 @@ fun KindNavigation(navController: NavHostController) {
             )
         }
         composable(Screen.Explorer.route) {
+            val viewModel = viewModel<ExplorerViewModel>();
+            ExplorerScreen(viewModel = viewModel)
+        }
+
+        // Organization
+        composable(Screen.Organization.route) {
             val viewModel = viewModel<ExplorerViewModel>();
             ExplorerScreen(viewModel = viewModel)
         }
