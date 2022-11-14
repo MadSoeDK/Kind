@@ -1,19 +1,14 @@
 package com.example.kind.view.screens
 
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,17 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.ViewModel.LoginViewModel
-import com.example.kind.view.theme.KindTheme
-import com.example.kind.view.theme.subHeading
 import com.example.kind.view.composables.LoginHeader
+import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.background
-import com.example.kind.view.theme.primary
 
 /*class LoginScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +67,9 @@ fun LoginView(viewModel: LoginViewModel) {
         LoginFields(
             username,
             password,
-            onLoginClick = {viewModel.login(username, password)},
             onUsernameChange = {username = it},
-            onPasswordChange = {password = it}
+            onPasswordChange = {password = it},
+            onLoginClick = {viewModel.login(username, password)}
         )
     }
     Column(
@@ -136,6 +128,7 @@ fun LoginFields(
             }
         }) {
             Text("Log ind", color = background )
+            //ImageButton(context) - kan bruges til de alternative login metoder
         }
         Row(horizontalArrangement = Arrangement.Center) {
             Text("Ny bruger? ", color = background)
