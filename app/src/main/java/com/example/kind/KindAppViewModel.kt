@@ -1,14 +1,21 @@
 package com.example.kind
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 
-class KindAppState(
+class KindAppViewModel (
     val navController: NavHostController
-) {
+) : ViewModel() {
+
+    var isLoggedIn = mutableStateOf(false)
+
+    fun login() {
+        isLoggedIn.value = true
+        navigateToBottomBarRoute(Screen.Home.route)
+    }
+
     fun navigateToBottomBarRoute(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {
@@ -26,12 +33,4 @@ class KindAppState(
             }
         }
     }
-
-}
-
-@Composable
-fun rememberKindAppState (
-    navController: NavHostController = rememberNavController()
-) = remember (navController) {
-    KindAppState(navController)
 }
