@@ -1,23 +1,26 @@
 package com.example.kind
 
+import android.graphics.drawable.VectorDrawable
+import com.example.kind.R
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.materialIcon
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -26,22 +29,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.view.home.composables.ExplorerScreen
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.home.composables.HomeScreen
 import com.example.kind.view.profile.ProfileScreen
-import com.example.kind.view.theme.Typography
-import com.example.kind.view.theme.background
+import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.ProfileViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object Portfolio : Screen("Portfolio")
-    object Explorer : Screen("explorer")
-    object Profile : Screen("profile")
+sealed class Screen(val route: String, var icon: ImageVector) {
+    object Home : Screen("home", Icons.Filled.Home)
+    object Portfolio : Screen("Portfolio", Icons.Filled.Favorite)
+    object Explorer : Screen("explorer", Icons.Filled.Favorite)
+    object Profile : Screen("profile", Icons.Filled.AccountBox)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +50,8 @@ sealed class Screen(val route: String) {
 fun MainNavHost() {
     val navController = rememberNavController()
     val items = listOf(Screen.Home, Screen.Portfolio, Screen.Explorer, Screen.Profile)
+    items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
+    items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
     Scaffold(
         bottomBar = {
             NavigationBar (
@@ -60,7 +63,7 @@ fun MainNavHost() {
                     NavigationBarItem(
                         icon = {
                             Icon(
-                                imageVector = Icons.Filled.Favorite,
+                                imageVector = screen.icon,
                                 contentDescription = null
                             )
                         },
@@ -84,24 +87,6 @@ fun MainNavHost() {
                     )
                 }
             }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                content = {
-                    Icon(
-                        Icons.Filled.Edit,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .width(30.dp)
-                            .height(30.dp),
-
-                        )
-                },
-                containerColor = Typography.headlineLarge.color,
-                shape = RoundedCornerShape(10.dp)
-            )
         }
     ) {
         Column (
@@ -144,7 +129,7 @@ fun KindNavigation(navController: NavHostController) {
         }
         composable(Screen.Explorer.route) {
             val viewModel = viewModel<ExplorerViewModel>();
-            ExplorerScreen(viewModel = viewModel)
+            ExplorerScreen(viewModel)
         }
     }
 }
