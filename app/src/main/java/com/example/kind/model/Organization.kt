@@ -1,4 +1,4 @@
-package com.example.kind.Model
+package com.example.kind.model
 
 data class Organization(
     val id : Int,

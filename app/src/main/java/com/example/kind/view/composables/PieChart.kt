@@ -1,4 +1,4 @@
-package com.example.kind.View.composables
+package com.example.kind.view.composables
 
 import android.graphics.Paint
 import androidx.compose.animation.core.Animatable

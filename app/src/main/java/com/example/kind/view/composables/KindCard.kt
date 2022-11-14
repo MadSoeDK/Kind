@@ -1,4 +1,4 @@
-package com.example.kind.View.composables
+package com.example.kind.view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

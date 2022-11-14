@@ -1,4 +1,4 @@
-package com.example.kind.Model
+package com.example.kind.model
 
 data class News(
     val id : Int,
