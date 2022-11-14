@@ -13,20 +13,14 @@ class ProfileViewModel : ViewModel() {
 
     var formState by mutableStateOf(FormState())
 
-    var fields: List<List<KindTextField>> = listOf(
-        listOf(
+    var fields: List<KindTextField> = listOf (
         KindTextField(name = "Full name", label = "Full name", validators = listOf(Required())),
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
-        KindTextField(name = "Password", label = "Password", validators = listOf(Required()))
-        ),
-        listOf(
-            KindTextField(name = "Monthly payment", label = "Monthly Payment", validators = listOf(Required())),
-            KindTextField(name = "Update payment", label = "Update payment", validators = listOf(Required()))
-        ),
-        listOf(
-            KindTextField(name = "Payment method", label = "Payment method", validators = listOf(Required())),
-            KindTextField(name = "Update payment method", label = "Update payment method", validators = listOf(Required()))
-        )
+        KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
+        KindTextField(name = "Monthly payment", label = "Monthly Payment", validators = listOf(Required())),
+        KindTextField(name = "Update payment", label = "Update payment", validators = listOf(Required())),
+        KindTextField(name = "Payment method", label = "Payment method", validators = listOf(Required())),
+        KindTextField(name = "Update payment method", label = "Update payment method", validators = listOf(Required()))
     )
 
     fun onFormSubmit() {
