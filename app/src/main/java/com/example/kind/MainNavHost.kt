@@ -30,17 +30,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.view.home.composables.ExplorerScreen
-import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.home.composables.HomeScreen
 import com.example.kind.view.profile.ProfileScreen
 import com.example.kind.view.screens.PortfolioScreen
-import com.example.kind.ViewModel.ExplorerViewModel
-import com.example.kind.ViewModel.ProfileViewModel
-import com.example.kind.ViewModel.PortfolioViewModel
+import com.example.kind.view.screens.LoginScreen
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Home : Screen("home", Icons.Filled.Home)
-    object Portfolio : Screen("Portfolio", Icons.Filled.Favorite)
+    object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
 }
@@ -113,23 +110,20 @@ fun KindNavigation(navController: NavHostController) {
         navController = navController,
         startDestination = Screen.Home.route,
     ) {
+        composable("login") {
+            LoginScreen(viewModel())
+        }
         composable(Screen.Home.route) {
-            val viewModel = viewModel<HomeViewModel>()
-            HomeScreen(viewModel)
+            HomeScreen(viewModel())
         }
         composable(Screen.Portfolio.route) {
-            val viewModel = viewModel<PortfolioViewModel>()
-            PortfolioScreen(viewModel)
+            PortfolioScreen(viewModel())
         }
         composable(Screen.Profile.route) {
-            val viewModel = viewModel<ProfileViewModel>()
-            ProfileScreen(
-                viewModel
-            )
+            ProfileScreen(viewModel())
         }
         composable(Screen.Explorer.route) {
-            val viewModel = viewModel<ExplorerViewModel>();
-            ExplorerScreen(viewModel)
+            ExplorerScreen(viewModel())
         }
     }
 }
