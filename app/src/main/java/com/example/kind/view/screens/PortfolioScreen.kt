@@ -55,11 +55,12 @@ val visible = mutableStateOf(false)
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
     Column {
         if (visible.value) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(30.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
                 editPortfolio(viewModel = viewModel)
@@ -138,65 +139,73 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                     color = Typography.headlineMedium.color
                 )
             }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
 
-            PortfolioTable(
-                modifier = Modifier,
-                columnCount = 4,
-                cellWidth = { index ->
-                    when (index) {
-                        0 -> 120.dp
-                        1 -> 50.dp
-                        2 -> 90.dp
-                        3 -> 65.dp
-                        else -> 70.dp
-                    }
-                },
-                data = viewModel.getPortfolioDonation(),
-                headerCellContent = { index ->
-                    val value = when (index) {
-                        0 -> "Organization"
-                        1 -> "%"
-                        2 -> "Next month"
-                        3 -> "Total"
-                        else -> ""
-                    }
-                    val alignment = when (index) {
-                        0 -> TextAlign.Left
-                        else -> TextAlign.Center
-                    }
-                    Text(
-                        text = value,
-                        fontSize = 14.sp,
-                        textAlign = alignment,
-                        modifier = Modifier.padding(0.dp, 20.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.Bold,
-                    )
-                },
-                cellContent = { index, item ->
+                PortfolioTable(
+                    modifier = Modifier,
+                    columnCount = 4,
+                    cellWidth = { index ->
+                        when (index) {
+                            0 -> 120.dp
+                            1 -> 50.dp
+                            2 -> 90.dp
+                            3 -> 65.dp
+                            else -> 70.dp
+                        }
+                    },
+                    data = viewModel.getPortfolioDonation(),
+                    headerCellContent = { index ->
+                        val value = when (index) {
+                            0 -> "Organization"
+                            1 -> "%"
+                            2 -> "Next month"
+                            3 -> "Total"
+                            else -> ""
+                        }
+                        val alignment = when (index) {
+                            0 -> TextAlign.Left
+                            else -> TextAlign.Center
+                        }
+                        Text(
+                            text = value,
+                            fontSize = 14.sp,
+                            textAlign = alignment,
+                            modifier = Modifier.padding(0.dp, 20.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    },
+                    cellContent = { index, item ->
 
-                    val value = when (index) {
-                        0 -> item.organization
-                        1 -> item.pct.toString() + "%"
-                        2 -> item.spend.toString() + " kr."
-                        3 -> item.total.toString() + " kr."
-                        else -> ""
+                        val value = when (index) {
+                            0 -> item.organization
+                            1 -> item.pct.toString() + "%"
+                            2 -> item.spend.toString() + " kr."
+                            3 -> item.total.toString() + " kr."
+                            else -> ""
+                        }
+                        val alignment = when (index) {
+                            0 -> TextAlign.Left
+                            else -> TextAlign.Center
+                        }
+                        Text(
+                            text = value,
+                            fontSize = 12.sp,
+                            textAlign = alignment,
+                            modifier = Modifier.padding(0.dp, 20.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
-                    val alignment = when (index) {
-                        0 -> TextAlign.Left
-                        else -> TextAlign.Center
-                    }
-                    Text(
-                        text = value,
-                        fontSize = 12.sp,
-                        textAlign = alignment,
-                        modifier = Modifier.padding(0.dp, 20.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            )
+                )
+            }
         }
     }
 }
@@ -225,6 +234,7 @@ fun editPortfolio(viewModel: PortfolioViewModel) {
                         content = {
                             items(viewModel.getPortfolioDonation().size) { i ->
                                 viewModel.getPortfolioDonation()[i].organization
+
                                 Spacer(modifier = Modifier.padding(0.dp, 20.dp))
 
                                 Text(
