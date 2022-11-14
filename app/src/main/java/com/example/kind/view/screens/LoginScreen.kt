@@ -5,9 +5,12 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -18,7 +21,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +31,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.ViewModel.LoginViewModel
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.subHeading
+import com.example.kind.view.composables.LoginHeader
+import com.example.kind.view.theme.background
+import com.example.kind.view.theme.primary
 
 /*class LoginScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +58,10 @@ fun LoginView(viewModel: LoginViewModel) {
     var password by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+
+    }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,7 +69,7 @@ fun LoginView(viewModel: LoginViewModel) {
             .background(subHeading)
             .fillMaxSize()
             .clickable { focusManager.clearFocus() }
-    ) {
+    ){
         LoginFields(
             username,
             password,
@@ -65,6 +77,13 @@ fun LoginView(viewModel: LoginViewModel) {
             onUsernameChange = {username = it},
             onPasswordChange = {password = it}
         )
+    }
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.background(background)
+    ) {
+        LoginHeader(96)
     }
 }
 
@@ -79,14 +98,14 @@ fun LoginFields(
     val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(300.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Log ind")
+        Text(text="Log ind", color = background)
 
         OutlinedTextField(
+            modifier = Modifier.background(background),
             value = username,
             placeholder = { Text("Brugernavn")},
             label = {Text("Brugernavn")},
@@ -96,6 +115,7 @@ fun LoginFields(
         )
 
         OutlinedTextField(
+            modifier = Modifier.background(background),
             value = password,
             placeholder = { Text("Password")},
             label = {Text("Password")},
@@ -104,15 +124,21 @@ fun LoginFields(
             keyboardActions = KeyboardActions(onDone = {focusManager.clearFocus()})
         )
 
-        Button(onClick = {
+        Button(
+            onClick = {
             if (!username.isBlank() || !password.isBlank()) {
                 onLoginClick(username)
                 focusManager.clearFocus()
             } else{
-                //indsæt "fejl: indsæt log ind oplysninger"
+                //TODO:indsæt "fejl: indsæt log ind oplysninger", har problemer med 'toast' og 'snackbar' implementering
             }
         }) {
-            Text("Log ind")
+            Text("Log ind", color = background )
+        }
+        Row(horizontalArrangement = Arrangement.Center) {
+            Text("Ny bruger? ")
+            ClickableText(AnnotatedString("Opret konto"), onClick = { /*TODO*/})
+
         }
     }
 }
