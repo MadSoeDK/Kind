@@ -23,7 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.view.screens.PortfolioScreen
+import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
 import com.example.kind.view.screens.ExplorerScreen
 import com.example.kind.view.screens.HomeScreen
