@@ -1,6 +1,5 @@
-package com.example.kind.view.screens
+package com.example.kind.View.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
@@ -33,153 +32,165 @@ import com.example.kind.view.home.composables.HeaderAndText
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
     Column {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp, 10.dp)
-        ) {
-            HeaderAndText(
-                headerProvider = viewModel.getMonthlyDonatedAmount() + "kr.",
-                textProvider = "Du donerer hver måned 300 kr. til 2 temaer og 2 organisationer."
-            )
-        }
-        PieChart(
-            modifier = Modifier
-                .size(250.dp)
-                .align(Alignment.CenterHorizontally),
-            progress = viewModel.getPercentages(),
-            colors = viewModel.getColors()
-        )
+        if (viewModel.isOpen) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(30.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
 
-        // Labels
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(40.dp, 0.dp),
-            verticalArrangement = Arrangement.Top, Alignment.Start
-        ) {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
-                items(viewModel.getPortfolioDonation().size) { i ->
-                    viewModel.getPortfolioDonation()[i].organization
-                    Box(
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Box(
-                            Modifier
-                                .clip(RectangleShape)
-                                .background(viewModel.getColors()[i])
-                                .height(12.dp)
-                                .width(12.dp)
-                                .align(Alignment.BottomStart)
-                        )
-                    }
-                    if (!(viewModel.getPortfolioDonation()[i].organization.length > 20)) {
-                        Text(
-                            text = viewModel.getPortfolioDonation()[i].organization + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize,
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
-                    } else {
-                        Text(
-                            text = viewModel.getPortfolioDonation()[i].organization + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize.div(1.4),
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
-                    }
-                }
-            })
-        }
-
-        var hidden by remember { mutableStateOf(false) }
-
-        if (!hidden) {
-            editPortfolio(viewModel = viewModel)
-        }
-
-        editButton()
-
-        //Your charities text
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp, 10.dp)
-        ) {
-            Text(
-                text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
-                modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
-                color = Typography.headlineMedium.color
-            )
-        }
-
-        PortfolioTable(
-            modifier = Modifier,
-            columnCount = 4,
-            cellWidth = { index ->
-                when (index) {
-                    0 -> 120.dp
-                    1 -> 50.dp
-                    2 -> 90.dp
-                    3 -> 65.dp
-                    else -> 70.dp
-                }
-            },
-            data = viewModel.getPortfolioDonation(),
-            headerCellContent = { index ->
-                val value = when (index) {
-                    0 -> "Organization"
-                    1 -> "%"
-                    2 -> "Next month"
-                    3 -> "Total"
-                    else -> ""
-                }
-                val alignment = when (index) {
-                    0 -> TextAlign.Left
-                    else -> TextAlign.Center
-                }
-                Text(
-                    text = value,
-                    fontSize = 14.sp,
-                    textAlign = alignment,
-                    modifier = Modifier.padding(0.dp, 20.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold,
-                )
-            },
-            cellContent = { index, item ->
-
-                val value = when (index) {
-                    0 -> item.organization
-                    1 -> item.pct.toString() + "%"
-                    2 -> item.spend.toString() + " kr."
-                    3 -> item.total.toString() + " kr."
-                    else -> ""
-                }
-                val alignment = when (index) {
-                    0 -> TextAlign.Left
-                    else -> TextAlign.Center
-                }
-                Text(
-                    text = value,
-                    fontSize = 12.sp,
-                    textAlign = alignment,
-                    modifier = Modifier.padding(0.dp, 20.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+            ) {
+                EditPortfolio(viewModel = viewModel)
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp)
+            ) {
+                HeaderAndText(
+                    headerProvider = viewModel.getMonthlyDonatedAmount() + "kr.",
+                    textProvider = "Du donerer hver måned 300 kr. til 2 temaer og 2 organisationer."
                 )
             }
-        )
+            PieChart(
+                modifier = Modifier
+                    .size(250.dp)
+                    .align(Alignment.CenterHorizontally),
+                progress = viewModel.getPercentages(),
+                colors = viewModel.getColors()
+            )
+
+            // Labels
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(40.dp, 0.dp),
+                verticalArrangement = Arrangement.Top, Alignment.Start
+            ) {
+                LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
+                    items(viewModel.getPortfolioDonation().size) { i ->
+                        viewModel.getPortfolioDonation()[i].organization
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Box(
+                                Modifier
+                                    .clip(RectangleShape)
+                                    .background(viewModel.getColors()[i])
+                                    .height(12.dp)
+                                    .width(12.dp)
+                                    .align(Alignment.BottomStart)
+                            )
+                        }
+                        if (!(viewModel.getPortfolioDonation()[i].organization.length > 20)) {
+                            Text(
+                                text = viewModel.getPortfolioDonation()[i].organization + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize,
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
+                            )
+                        } else {
+                            Text(
+                                text = viewModel.getPortfolioDonation()[i].organization + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+                })
+            }
+
+            //Your charities text
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp)
+            ) {
+                Text(
+                    text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
+                    color = Typography.headlineMedium.color
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                PortfolioTable(
+                    modifier = Modifier,
+                    columnCount = 4,
+                    cellWidth = { index ->
+                        when (index) {
+                            0 -> 120.dp
+                            1 -> 50.dp
+                            2 -> 90.dp
+                            3 -> 65.dp
+                            else -> 70.dp
+                        }
+                    },
+                    data = viewModel.getPortfolioDonation(),
+                    headerCellContent = { index ->
+                        val value = when (index) {
+                            0 -> "Organization"
+                            1 -> "%"
+                            2 -> "Next month"
+                            3 -> "Total"
+                            else -> ""
+                        }
+                        val alignment = when (index) {
+                            0 -> TextAlign.Left
+                            else -> TextAlign.Center
+                        }
+                        Text(
+                            text = value,
+                            fontSize = 14.sp,
+                            textAlign = alignment,
+                            modifier = Modifier.padding(0.dp, 20.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    },
+                    cellContent = { index, item ->
+
+                        val value = when (index) {
+                            0 -> item.organization
+                            1 -> item.pct.toString() + "%"
+                            2 -> item.spend.toString() + " kr."
+                            3 -> item.total.toString() + " kr."
+                            else -> ""
+                        }
+                        val alignment = when (index) {
+                            0 -> TextAlign.Left
+                            else -> TextAlign.Center
+                        }
+                        Text(
+                            text = value,
+                            fontSize = 12.sp,
+                            textAlign = alignment,
+                            modifier = Modifier.padding(0.dp, 20.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                )
+            }
+        }
     }
 }
 
-@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun editPortfolio(viewModel: PortfolioViewModel) {
+fun EditPortfolio(viewModel: PortfolioViewModel) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -202,7 +213,6 @@ fun editPortfolio(viewModel: PortfolioViewModel) {
                             items(viewModel.getPortfolioDonation().size) { i ->
                                 viewModel.getPortfolioDonation()[i].organization
                                 Spacer(modifier = Modifier.padding(0.dp, 20.dp))
-
                                 Text(
                                     text = viewModel.getPortfolioDonation()[i].organization,
                                     fontWeight = Typography.headlineMedium.fontWeight,
@@ -275,12 +285,6 @@ fun editPortfolio(viewModel: PortfolioViewModel) {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun editButton() {
-
 }
 
 @Composable

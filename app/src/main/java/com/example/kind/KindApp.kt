@@ -23,7 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.view.screens.PortfolioScreen
+import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
 import com.example.kind.view.screens.ExplorerScreen
 import com.example.kind.view.screens.HomeScreen
@@ -64,10 +64,11 @@ fun KindApp() {
             )
         }
         composable(Screen.Portfolio.route) {
+            val portfolioViewModel = PortfolioViewModel()
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                FloatingActionButton = { EditPortfolioFAB() },
-                content = { PortfolioScreen(PortfolioViewModel()) }
+                FloatingActionButton = { EditPortfolioFAB { portfolioViewModel.toggleModal() } },
+                content = { PortfolioScreen(portfolioViewModel) }
             )
         }
         composable(Screen.Profile.route) {
@@ -134,9 +135,11 @@ fun KindNavigationBar(
 }
 
 @Composable
-fun EditPortfolioFAB() {
+fun EditPortfolioFAB(
+    toggle: () -> Unit,
+) {
     FloatingActionButton(
-        onClick = { /*TODO*/ },
+        onClick = toggle,
         content = {
             Icon(
                 Icons.Filled.Edit,
