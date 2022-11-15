@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -7,15 +7,14 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun StartScreen(
-    signup: () -> Unit,
-    login: () -> Unit
+    navigate: () -> Unit
 ) {
     Column {
         Text(text = "Start screen")
-        Button(onClick = signup) {
+        Button(onClick = navigate) {
             Text(text = "Signup")
         }
-        Button(onClick = login) {
+        Button(onClick = navigate) {
             Text(text = "Login")
         }
     }

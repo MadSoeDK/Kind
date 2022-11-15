@@ -41,27 +41,18 @@ sealed class Screen(val route: String, var icon: ImageVector) {
 @Composable
 fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
-
-    var startDestination = Screen.Home.route
-    if (!viewModel.isLoggedIn.value)
-        startDestination = Screen.Start.route
-
     NavHost(
         navController = viewModel.navController,
-        startDestination = startDestination,
+        startDestination = Screen.Login.route,
     ) {
-        composable(Screen.Start.route) {
+        composable(Screen.Login.route) {
             Screen(
                 content = {
-                    StartScreen(
-                        login = { viewModel.login() },
-                        signup = { viewModel.signup() }
-                    )
+                    LoginScreen {
+                        viewModel.navigate("")
+                    }
                 }
             )
-        }
-        composable(Screen.Login.route) {
-            LoginScreen()
         }
         composable(Screen.Home.route) {
             Screen(
@@ -85,7 +76,7 @@ fun KindApp() {
         composable(Screen.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                content = { ExplorerScreen(ExploreViewModel()) }
+                content = { ExplorerScreen(ExplorerViewModel()) }
             )
         }
     }
@@ -142,9 +133,11 @@ fun KindNavigationBar(
 }
 
 @Composable
-fun EditPortfolioFAB() {
+fun EditPortfolioFAB(
+    toggle: () -> Unit,
+) {
     FloatingActionButton(
-        onClick = { /*TODO*/ },
+        onClick = toggle,
         content = {
             Icon(
                 Icons.Filled.Edit,
