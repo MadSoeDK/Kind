@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,23 +28,6 @@ import com.example.kind.ViewModel.LoginViewModel
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.background
-
-/*class LoginScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            KindTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    LoginView()
-                }
-            }
-        }
-    }
-}*/
 
 @Composable
 fun LoginView(viewModel: LoginViewModel) {
@@ -81,6 +65,7 @@ fun LoginView(viewModel: LoginViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginFields(
   username: String,
