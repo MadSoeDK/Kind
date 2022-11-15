@@ -1,4 +1,4 @@
-package com.example.kind.view.home.composables
+package com.example.kind.view.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.example.kind.R

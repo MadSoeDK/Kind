@@ -1,7 +1,5 @@
 package com.example.kind.view.screens
 
-import android.provider.ContactsContract
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -20,7 +18,6 @@ import com.example.kind.view.composables.CardListHorizontalScroll
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
-import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable

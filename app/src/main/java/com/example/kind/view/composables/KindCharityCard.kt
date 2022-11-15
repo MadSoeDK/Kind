@@ -16,7 +16,13 @@ import com.example.kind.R
 import com.example.kind.view.theme.Typography
 
 @Composable
-fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, ReadMore: String = "Read More", Category: String?){
+fun KindCharityCard(
+    Title: String,
+    Body: String,
+    OrganizationIcon: Painter,
+    ReadMore: String = "Read More",
+    Category: String?
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -24,7 +30,10 @@ fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, Read
             .height(250.dp)
     ) {
 
-        Column(modifier = Modifier.padding(20.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.padding(20.dp, 0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Row(modifier = Modifier.padding(0.dp, 5.dp)) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
@@ -37,22 +46,25 @@ fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, Read
                     text = Title,
                     fontWeight = Typography.headlineMedium.fontWeight,
                     fontSize = Typography.headlineSmall.fontSize,
-                    color = Typography.headlineLarge.color)
+                    color = Typography.headlineLarge.color
+                )
             }
-            Row(modifier = Modifier.padding(0.dp, 5.dp), ) {
+            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
                 //TODO need to center text
                 Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.displayMedium.color, )
+                    color = Typography.displayMedium.color,
+                )
             }
             OutlinedButton(onClick = { /*TODO*/ }) {
                 Text(
                     text = ReadMore,
                     fontWeight = Typography.labelLarge.fontWeight,
                     fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color)
+                    color = Typography.headlineLarge.color
+                )
             }
 
         }
@@ -61,7 +73,12 @@ fun KindCharityCard(Title: String, Body: String, OrganizationIcon: Painter, Read
 
 @Preview(showBackground = true)
 @Composable
-fun KindCharityCardPreview(){
+fun KindCharityCardPreview() {
     val OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147)
-    KindCharityCard(Title = "Red Cross", Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", OrganizationIcon = OrganizationIcon, Category = null)
+    KindCharityCard(
+        Title = "Red Cross",
+        Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+        OrganizationIcon = OrganizationIcon,
+        Category = null
+    )
 }

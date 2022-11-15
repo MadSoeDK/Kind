@@ -1,4 +1,4 @@
-package com.example.kind.view.home.composables
+package com.example.kind.view.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.CardListHorizontalScroll
+import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
