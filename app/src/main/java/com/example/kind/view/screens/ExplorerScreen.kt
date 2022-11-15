@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.ViewModel.ExploreViewModel
+import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
 import com.example.kind.view.composables.KindCharityCard
 
 @ExperimentalFoundationApi
 @Composable
 fun ExplorerScreen(
-    viewModel: ExploreViewModel
+    viewModel: ExplorerViewModel
 ) {
     Column {
         //TODO: Seperate categories composable
@@ -38,6 +38,6 @@ fun ExplorerScreen(
 @Preview(showBackground = true)
 fun ExplorerPreview() {
     ExplorerScreen(
-        ExploreViewModel()
+        ExplorerViewModel()
     )
 }
