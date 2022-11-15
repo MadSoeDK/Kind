@@ -59,7 +59,7 @@ fun KindApp() {
             Screen { LoginScreen() }
         }
         composable(Screen.Signup.route) {
-            Screen { SignupScreen(SignupViewModel()) }
+            Screen { SignupScreen(SignupViewModel()) { viewModel.finishSignup() } }
         }
         composable(Screen.Home.route) {
             Screen(

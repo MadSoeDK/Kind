@@ -41,38 +41,75 @@ fun LoginScreen() {
 
 @Composable
 fun SignupScreen(
-    viewModel: SignupViewModel
+    viewModel: SignupViewModel,
+    finishSignup: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxHeight().fillMaxWidth().background(Color.Gray),
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .background(Color.Gray),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        when(viewModel.steps.value) {
+        when (viewModel.steps.value) {
             0 -> {
                 Text(text = "About")
                 Button(onClick = { viewModel.steps.value += 1 }) {
+                    Text(text = "Next")
+                }
+            }
+            1 -> Text(text = "Personal information")
+            2 -> {
+                Text(text = "Build portfolio")
+                Button(onClick = { viewModel.steps.value += 1 }) {
                     Text(text = "Start")
                 }
+                Button(onClick = { /*TODO skip rest*/ }) {
+                    Text(text = "Make it later")
+                }
             }
-            1 -> Text(text = "Build portfolio")
-            2 -> Text(text = "Build portfolio 2")
-        }
-
-        when(viewModel.steps.value) {
-            in 1..4 -> {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(onClick = { viewModel.steps.value -= 1 }) {
-                        Text(text = "Back")
-                    }
-                    Button(onClick = { viewModel.steps.value += 1 }) {
-                        Text(text = "Next")
-                    }
+            3 -> Text(text = "Donation frequency")
+            4 -> Text(text = "Donation amount")
+            5 -> Text(text = "Portfolio builder")
+            6 -> {
+                Text(text = "Donation summary")
+                Button(onClick = finishSignup) {
+                    Text(text = "Donate")
                 }
             }
         }
+        when (viewModel.steps.value) {
+            1 -> {
+                SignupNavigation(
+                    nextStep = { viewModel.steps.value += 1 },
+                    prevStep = { viewModel.steps.value -= 1 }
+                )
+            }
+            in 3..5 -> {
+                SignupNavigation(
+                    nextStep = { viewModel.steps.value += 1 },
+                    prevStep = { viewModel.steps.value -= 1 }
+                )
+            }
 
+        }
+    }
+}
+
+@Composable
+fun SignupNavigation (
+    nextStep: () -> Unit,
+    prevStep: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Button(onClick = prevStep) {
+            Text(text = "Back")
+        }
+        Button(onClick = nextStep) {
+            Text(text = "Next")
+        }
     }
 }

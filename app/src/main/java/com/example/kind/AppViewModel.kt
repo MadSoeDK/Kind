@@ -9,15 +9,9 @@ open class AppViewModel (
     val navController: NavHostController
 ) : ViewModel() {
 
-    var isLoggedIn = mutableStateOf(false)
-
-    fun login() {
-        isLoggedIn.value = true
-        navigate(Screen.Home.route)
-    }
-
-    fun signup() {
-        navigate(Screen.Signup.route)
+    fun finishSignup() {
+        // TODO: save data or something
+        navController.navigate(Screen.Home.route)
     }
 
     fun navigate(route: String) {
