@@ -23,19 +23,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
-import com.example.kind.view.screens.ExplorerScreen
-import com.example.kind.view.screens.HomeScreen
-import com.example.kind.view.screens.ProfileScreen
-import com.example.kind.view.screens.LoginScreen
+import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
-import com.example.kind.ViewModel.ExplorerViewModel
-import com.example.kind.ViewModel.PortfolioViewModel
-import com.example.kind.ViewModel.ProfileViewModel
 
 sealed class Screen(val route: String, var icon: ImageVector) {
+    object Start : Screen("start", Icons.Filled.Favorite)
     object Login : Screen("login", Icons.Filled.Favorite)
+    object Signup : Screen("signup", Icons.Filled.Favorite)
     object Home : Screen("home", Icons.Filled.Home)
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
@@ -46,16 +41,27 @@ sealed class Screen(val route: String, var icon: ImageVector) {
 @Composable
 fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
+
+    var startDestination = Screen.Home.route
+    if (!viewModel.isLoggedIn.value)
+        startDestination = Screen.Start.route
+
     NavHost(
         navController = viewModel.navController,
-        startDestination = Screen.Login.route,
+        startDestination = startDestination,
     ) {
-        composable(Screen.Login.route) {
+        composable(Screen.Start.route) {
             Screen(
                 content = {
-                    LoginScreen(viewModel = LoginViewModel(), login = { viewModel.login() })
+                    StartScreen(
+                        login = { viewModel.login() },
+                        signup = { viewModel.signup() }
+                    )
                 }
             )
+        }
+        composable(Screen.Login.route) {
+            LoginScreen()
         }
         composable(Screen.Home.route) {
             Screen(
@@ -79,7 +85,7 @@ fun KindApp() {
         composable(Screen.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                content = { ExplorerScreen(ExplorerViewModel()) }
+                content = { ExplorerScreen(ExploreViewModel()) }
             )
         }
     }
@@ -97,7 +103,9 @@ fun Screen(
         floatingActionButton = { FloatingActionButton() },
         content = {
             Column(
-                modifier = Modifier.padding(it).verticalScroll(rememberScrollState())
+                modifier = Modifier
+                    .padding(it)
+                    .verticalScroll(rememberScrollState())
             ) {
                 content(it)
             }

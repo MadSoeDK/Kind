@@ -4,17 +4,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.kind.ViewModel.LoginViewModel
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel,
+fun StartScreen(
+    signup: () -> Unit,
     login: () -> Unit
 ) {
     Column {
-        Text(text = "Login")
-        Button(onClick = { login() }) {
+        Text(text = "Start screen")
+        Button(onClick = signup) {
+            Text(text = "Signup")
+        }
+        Button(onClick = login) {
             Text(text = "Login")
         }
     }
+}
+
+@Composable
+fun LoginScreen() {
+    Text(text = "Login")
 }

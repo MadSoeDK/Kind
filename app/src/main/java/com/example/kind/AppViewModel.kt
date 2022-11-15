@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 
-class AppViewModel (
+open class AppViewModel (
     val navController: NavHostController
 ) : ViewModel() {
 
@@ -14,6 +14,10 @@ class AppViewModel (
     fun login() {
         isLoggedIn.value = true
         navigate(Screen.Home.route)
+    }
+
+    fun signup() {
+        navigate(Screen.Signup.route)
     }
 
     fun navigate(route: String) {
