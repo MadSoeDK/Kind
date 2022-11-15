@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -14,23 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
 import com.example.kind.view.theme.primary
-
-/*class LoginHeader : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            KindTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Header( 48)
-                }
-            }
-        }
-    }
-}*/
 
 @Composable
 fun LoginHeader(size: Int) {
@@ -51,7 +34,4 @@ fun LoginHeader(size: Int) {
 @Composable
 fun LoginHeaderPreview() {
     LoginHeader(96)
-    /*KindTheme {
-        Header( 96)
-    }*/
 }
