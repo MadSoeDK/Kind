@@ -27,6 +27,7 @@ import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
 import com.example.kind.view.login.LoginScreen
 import com.example.kind.view.login.SignupScreen
+import com.example.kind.view.login.SignupViewModel
 import com.example.kind.view.login.StartScreen
 import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
@@ -58,7 +59,7 @@ fun KindApp() {
             Screen { LoginScreen() }
         }
         composable(Screen.Signup.route) {
-            Screen { SignupScreen() }
+            Screen { SignupScreen(SignupViewModel()) }
         }
         composable(Screen.Home.route) {
             Screen(
