@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import com.example.kind.ViewModel.LoginViewModel
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.background
+import com.example.kind.view.theme.primary
 
 @Composable
 fun LoginView(viewModel: LoginViewModel) {
@@ -43,8 +45,8 @@ fun LoginView(viewModel: LoginViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .background(Color(84, 129, 53)) //farve brugt i figma
-            /*.background(subHeading)*/
+            //.background(Color(84, 129, 53)) //farve brugt i figma
+            .background(background)
             .fillMaxSize()
             .clickable { focusManager.clearFocus() }
     ){
@@ -61,7 +63,14 @@ fun LoginView(viewModel: LoginViewModel) {
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.background(background)
     ) {
-        LoginHeader(96)
+        Spacer(modifier = Modifier.size(80.dp))
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+            .background(background)
+            .fillMaxWidth()) {
+            LoginHeader(96)
+        }
+
+
     }
 }
 
@@ -81,13 +90,13 @@ fun LoginFields(
         verticalArrangement = Arrangement.spacedBy(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text="Log ind", color = background)
+        Text(text="Login", color = primary)
 
         OutlinedTextField(
             modifier = Modifier.background(background),
             value = username,
-            placeholder = { Text("Brugernavn")},
-            label = {Text("Brugernavn")},
+            placeholder = { Text("Username")},
+            label = {Text("Username")},
             onValueChange = onUsernameChange,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {focusManager.clearFocus()})
@@ -104,6 +113,7 @@ fun LoginFields(
         )
 
         Button( //TODO: farvefix
+            modifier = Modifier.width(280.dp),
             onClick = {
             if (!username.isBlank() || !password.isBlank()) {
                 onLoginClick(username)
@@ -112,12 +122,17 @@ fun LoginFields(
                 //TODO:indsæt "fejl: indsæt log ind oplysninger", har problemer med 'toast' og 'snackbar' implementering
             }
         }) {
-            Text("Log ind", color = background )
+            Text("Login", color = background )
             //ImageButton(context) - kan bruges til de alternative login metoder
         }
         Row(horizontalArrangement = Arrangement.Center) {
-            Text("Ny bruger? ", color = background)
-            ClickableText(AnnotatedString(text = "Opret konto"), onClick = { /*TODO*/}) //TODO: farvefix
+            Text("Forgot Password? ", color = primary)
+            ClickableText(AnnotatedString(text = "Click here"), onClick = { /*TODO*/}) //TODO: farvefix
+
+        }
+        Row(horizontalArrangement = Arrangement.Center) {
+            Text("New user? ", color = primary)
+            ClickableText(AnnotatedString(text = "Signup here"), onClick = { /*TODO*/}) //TODO: farvefix
 
         }
     }
