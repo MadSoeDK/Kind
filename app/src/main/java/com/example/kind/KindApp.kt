@@ -64,10 +64,11 @@ fun KindApp() {
             )
         }
         composable(Screen.Portfolio.route) {
+            val portfolioViewModel = PortfolioViewModel()
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                FloatingActionButton = { EditPortfolioFAB() },
-                content = { PortfolioScreen(PortfolioViewModel()) }
+                FloatingActionButton = { EditPortfolioFAB { portfolioViewModel.toggleModal() } },
+                content = { PortfolioScreen(portfolioViewModel) }
             )
         }
         composable(Screen.Profile.route) {
@@ -134,9 +135,11 @@ fun KindNavigationBar(
 }
 
 @Composable
-fun EditPortfolioFAB() {
+fun EditPortfolioFAB(
+    toggle: () -> Unit,
+) {
     FloatingActionButton(
-        onClick = { /*TODO*/ },
+        onClick = toggle,
         content = {
             Icon(
                 Icons.Filled.Edit,

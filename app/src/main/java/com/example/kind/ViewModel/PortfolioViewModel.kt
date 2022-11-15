@@ -14,9 +14,15 @@ class PortfolioViewModel : ViewModel() {
 
     var formState by mutableStateOf(FormState())
 
+    var isOpen by mutableStateOf(false)
+
     var fields: List<KindTextField> = listOf(
         KindTextField(name = "Indtast beløb", label = "Indtast beløb", validators = listOf(Required())),
     )
+
+    fun toggleModal() {
+        isOpen = !isOpen
+    }
 
     fun onFormSubmit() {
         if (formState.validate()) {

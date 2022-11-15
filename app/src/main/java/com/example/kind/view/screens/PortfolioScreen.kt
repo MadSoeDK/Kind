@@ -1,6 +1,5 @@
 package com.example.kind.view.screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
@@ -30,12 +29,10 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.view.home.composables.HeaderAndText
 
-val visible = mutableStateOf(false)
-
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
     Column {
-        if (visible.value) {
+        if (viewModel.isOpen) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -43,7 +40,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
-                editPortfolio(viewModel = viewModel)
+                EditPortfolio(viewModel = viewModel)
             }
         } else {
             Column(
@@ -184,7 +181,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun editPortfolio(viewModel: PortfolioViewModel) {
+fun EditPortfolio(viewModel: PortfolioViewModel) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -280,12 +277,6 @@ fun editPortfolio(viewModel: PortfolioViewModel) {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun editButton() {
-
 }
 
 @Composable
