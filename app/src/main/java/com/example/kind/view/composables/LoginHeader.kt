@@ -19,12 +19,12 @@ import com.example.kind.view.theme.primary
 fun LoginHeader(size: Int) {
 
     Row {
-        Column() {
+        /*Column() {
             Spacer(modifier = Modifier.size((size/2).dp))
             Text(text = "be ", fontSize = (size/2).sp, color = primary)
         }
 
-        Text(text = "Kind", fontSize = size.sp, color = primary)
+        Text(text = "Kind", fontSize = size.sp, color = primary)*/
         Image(painterResource(id = R.drawable.screenshot20220914071147), contentDescription = "", Modifier.size((size*1.75).dp))
     }
 
