@@ -4,17 +4,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 
 @Composable
 fun StartScreen(
-    navigate: () -> Unit
+    navController: NavController
 ) {
     Column {
         Text(text = "Start screen")
-        Button(onClick = navigate) {
+        Button(onClick = { navController.navigate("signup") }) {
             Text(text = "Signup")
         }
-        Button(onClick = navigate) {
+        Button(onClick = { navController.navigate("login") }) {
             Text(text = "Login")
         }
     }
@@ -23,4 +24,9 @@ fun StartScreen(
 @Composable
 fun LoginScreen() {
     Text(text = "Login")
+}
+
+@Composable
+fun SignupScreen() {
+    Text(text = "Signup")
 }

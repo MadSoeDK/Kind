@@ -1,4 +1,4 @@
-package com.example.kind.View.screens
+package com.example.kind.view.screens
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column

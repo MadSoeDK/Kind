@@ -23,8 +23,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
 import com.example.kind.view.login.LoginScreen
+import com.example.kind.view.login.SignupScreen
+import com.example.kind.view.login.StartScreen
 import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
 
@@ -44,16 +47,18 @@ fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
     NavHost(
         navController = viewModel.navController,
-        startDestination = Screen.Login.route,
+        startDestination = Screen.Start.route,
     ) {
-        composable(Screen.Login.route) {
+        composable(Screen.Start.route) {
             Screen(
-                content = {
-                    LoginScreen {
-                        viewModel.navigate("")
-                    }
-                }
+                content = { StartScreen(navController = viewModel.navController) }
             )
+        }
+        composable(Screen.Login.route) {
+            Screen { LoginScreen() }
+        }
+        composable(Screen.Signup.route) {
+            Screen { SignupScreen() }
         }
         composable(Screen.Home.route) {
             Screen(
