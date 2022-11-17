@@ -17,7 +17,8 @@ import com.example.kind.ViewModel.ExplorerViewModel
 @ExperimentalFoundationApi
 @Composable
 fun ExplorerScreen(
-    viewModel: ExplorerViewModel
+    viewModel: ExplorerViewModel,
+    onNavigateToOrganizationScreen: ()->Unit
 ) {
     Column {
         //TODO: Seperate categories composable
@@ -27,12 +28,14 @@ fun ExplorerScreen(
                 Title = "Red Cross",
                 Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
                 OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
-                Category = null
+                Category = null,
+                onNavigateToOrganizationScreen = onNavigateToOrganizationScreen
             )}
         })
     }
 }
 
+/*
 @ExperimentalFoundationApi
 @Composable
 @Preview(showBackground = true)
@@ -40,4 +43,4 @@ fun ExplorerPreview() {
     ExplorerScreen(
         ExplorerViewModel()
     )
-}
+}*/

@@ -34,8 +34,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.View.screens.PortfolioScreen
+
+//import com.example.kind.view.screens.PortfolioScreen // Being a lil ass
+//import com.example.kind.view.screens.PortfolioScreen
+
 import com.example.kind.view.home.composables.ExplorerScreen
+import com.example.kind.view.screens.OrganizationScreen
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.home.composables.HomeScreen
 import com.example.kind.view.profile.ProfileScreen
@@ -49,6 +53,7 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Home : Screen("home", Icons.Filled.Home)
     object Portfolio : Screen("Portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
+    object Organization : Screen("organization", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
 }
 
@@ -142,19 +147,30 @@ fun KindNavigation(navController: NavHostController) {
             val viewModel = viewModel<HomeViewModel>()
             HomeScreen(viewModel)
         }
+        /*
         composable(Screen.Portfolio.route) {
             val viewModel = viewModel<PortfolioViewModel>()
             PortfolioScreen(viewModel)
-        }
+        }*/
         composable(Screen.Profile.route) {
             val viewModel = viewModel<ProfileViewModel>()
             ProfileScreen(
                 viewModel
             )
         }
+        composable(Screen.Organization.route) {
+            val viewModel = viewModel<HomeViewModel>()
+            OrganizationScreen(
+                viewModel = viewModel,
+                donorAmount = "100",
+                donationAmount = "10",
+                organizationName = "Red Barnet dude plz",
+                organizationTheme = "Voksenhjælp af Mark"
+            )
+        }
         composable(Screen.Explorer.route) {
             val viewModel = viewModel<ExplorerViewModel>();
-            ExplorerScreen(viewModel)
+            ExplorerScreen(viewModel, onNavigateToOrganizationScreen = {navController.navigate(Screen.Organization.route)})
         }
     }
 }
