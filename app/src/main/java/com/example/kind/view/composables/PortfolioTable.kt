@@ -40,7 +40,11 @@ fun <T> PortfolioTable (
                                 headerCellContent(columnIndex)
                             } else {
                                 cellContent(columnIndex, data[index - 1])
-                                Spacer(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFF79747E)))
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(1.dp)
+                                        .background(Color(0xFF79747E)))
                             }
                         }
                     }

@@ -3,6 +3,7 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.kind.view.theme.paddingSize
 
 
 @Composable
@@ -20,7 +22,7 @@ fun KindCard (
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(MaterialTheme.paddingSize.s)
             .width(200.dp)
             .height(200.dp)
     ) {
@@ -45,7 +47,10 @@ fun KindCard (
                         .width(40.dp)
                 )
                 CircleShape
-                Column (modifier = Modifier.padding(8.dp, 0.dp)){
+                Column (modifier = Modifier.padding(
+                    MaterialTheme.paddingSize.s,
+                    MaterialTheme.paddingSize.default,
+                )){
                     Text(text = titleProvider)
                     Text(text = subTitleProvier)
                 }

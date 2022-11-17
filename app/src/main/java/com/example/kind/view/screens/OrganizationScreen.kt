@@ -3,6 +3,7 @@ package com.example.kind.view.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.home.composables.SmallHeaderAndText
+import com.example.kind.view.theme.paddingSize
 
 @Composable
 fun OrganizationScreen(
@@ -34,14 +36,20 @@ fun OrganizationScreen(
             .fillMaxHeight()
             .fillMaxWidth()
             .background(color = Color.White)
-            .padding(0.dp, 5.dp))
+            .padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.xs,
+            ))
 
     {
 
         // Back Button
         Box(
             modifier = Modifier
-                .padding(10.dp, 5.dp)
+                .padding(
+                    MaterialTheme.paddingSize.m,
+                    MaterialTheme.paddingSize.xs,
+                )
                 .clip(CircleShape)
                 .background(color = Color.Gray)
                 .width(50.dp)
@@ -61,7 +69,10 @@ fun OrganizationScreen(
                 .align(Alignment.Center)) {
                 Box(
                     modifier = Modifier
-                        .padding(0.dp, 10.dp)
+                        .padding(
+                            MaterialTheme.paddingSize.default,
+                            MaterialTheme.paddingSize.m,
+                        )
                         .clip(CircleShape)
                         .background(color = Color.Gray)
                         .width(150.dp)
@@ -73,7 +84,10 @@ fun OrganizationScreen(
 
         // Donations, Donors & Picture
         Row(modifier = Modifier
-            .padding(10.dp, 5.dp)
+            .padding(
+                MaterialTheme.paddingSize.m,
+                MaterialTheme.paddingSize.xs,
+            )
             .align(Alignment.CenterHorizontally)
         )
         {
@@ -97,12 +111,18 @@ fun OrganizationScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp, 10.dp),
+                .padding(
+                    MaterialTheme.paddingSize.default,
+                    MaterialTheme.paddingSize.m,
+                ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row (
-                modifier = Modifier.padding(0.dp, 10.dp)
+                modifier = Modifier.padding(
+                    MaterialTheme.paddingSize.default,
+                    MaterialTheme.paddingSize.m,
+                )
             ){
                 Text(
                     text = organizationName,

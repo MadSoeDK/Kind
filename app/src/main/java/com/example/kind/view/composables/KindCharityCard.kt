@@ -7,6 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import com.example.kind.R
 import com.example.kind.view.theme.Typography
+import com.example.kind.view.theme.paddingSize
 
 @Composable
 fun KindCharityCard(
@@ -25,23 +27,32 @@ fun KindCharityCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(MaterialTheme.paddingSize.s)
             .width(250.dp)
             .height(250.dp)
     ) {
 
         Column(
-            modifier = Modifier.padding(20.dp, 0.dp),
+            modifier = Modifier.padding(
+                20.dp,
+                MaterialTheme.paddingSize.default,
+            ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.xs,
+            )) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
                         .height(50.dp)
                         .width(50.dp)
                 )
             }
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.xs,
+            )) {
                 Text(
                     text = Title,
                     fontWeight = Typography.headlineMedium.fontWeight,
@@ -49,7 +60,10 @@ fun KindCharityCard(
                     color = Typography.headlineLarge.color
                 )
             }
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.xs,
+            )) {
                 //TODO need to center text
                 Text(
                     text = Body,

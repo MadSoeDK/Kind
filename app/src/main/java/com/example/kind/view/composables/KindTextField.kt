@@ -2,6 +2,7 @@ package com.example.kind.view.composables
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -11,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.kind.view.theme.paddingSize
 
 /**
  * author and source: https://www.section.io/engineering-education/jetpack-compose-forms/
@@ -49,7 +51,7 @@ class KindTextField (val name: String, val label: String = "", val validators: L
             value = text,
             isError = hasError,
             label = { Text(text = name) },
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(MaterialTheme.paddingSize.m),
             onValueChange = { value ->
                 hideError()
                 text = value
