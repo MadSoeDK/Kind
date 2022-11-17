@@ -67,8 +67,8 @@ fun KindCharityCard(
             }
             OutlinedButton(
                 onClick = {
-                    onNavigateToOrganizationScreen()
-                    //navController.navigate(screen.route) {}
+                    //onNavigateToOrganizationScreen()
+
                 }
             )
             {

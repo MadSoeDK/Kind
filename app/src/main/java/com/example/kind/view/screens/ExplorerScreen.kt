@@ -17,8 +17,8 @@ import com.example.kind.ViewModel.ExplorerViewModel
 @ExperimentalFoundationApi
 @Composable
 fun ExplorerScreen(
-    viewModel: ExplorerViewModel,
-    onNavigateToOrganizationScreen: ()->Unit
+    viewModel: ExplorerViewModel
+    //onNavigateToOrganizationScreen: ()->Unit
 ) {
     Column {
         //TODO: Seperate categories composable

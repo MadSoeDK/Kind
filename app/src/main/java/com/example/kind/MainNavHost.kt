@@ -30,12 +30,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
-//import com.example.kind.view.screens.PortfolioScreen // Being a lil ass
+//import com.example.kind.view.screens.PortfolioScreen
 //import com.example.kind.view.screens.PortfolioScreen
 
 import com.example.kind.view.home.composables.ExplorerScreen
@@ -158,14 +160,16 @@ fun KindNavigation(navController: NavHostController) {
                 viewModel
             )
         }
-        composable(Screen.Organization.route) {
+        composable(Screen.Organization.route + "/{id}",
+            arguments = listOf(navArgument("id"){type = NavType.IntType})
+        ) {
             val viewModel = viewModel<HomeViewModel>()
             OrganizationScreen(
                 viewModel = viewModel,
                 donorAmount = "100",
                 donationAmount = "10",
                 organizationName = "Red Barnet dude plz",
-                organizationTheme = "Voksenhjælp af Mark"
+                organizationTheme = "Voksenhjælp af Mark & mads"
             )
         }
         composable(Screen.Explorer.route) {
