@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.paddingSize
 
@@ -18,13 +17,13 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.paddingSize.l, MaterialTheme.paddingSize.xl),
+            .padding(MaterialTheme.paddingSize.xl, MaterialTheme.paddingSize.xxxxl),
         verticalArrangement = Arrangement.Top, Alignment.Start
     ) {
         Row(
             modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.m,
+                MaterialTheme.paddingSize.s,
             )
         ) {
             Text(
@@ -37,7 +36,7 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
         if (Subtitle != null) {
             Row(modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.m,
+                MaterialTheme.paddingSize.s,
             )) {
                 Text(
                     text = Subtitle,
@@ -52,7 +51,7 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
             .horizontalScroll(rememberScrollState())
             .padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.m,
+                MaterialTheme.paddingSize.s,
             )) {
             for (i in Categories.indices) {
                 Text(

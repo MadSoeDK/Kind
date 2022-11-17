@@ -22,7 +22,7 @@ fun KindCard (
 ) {
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.paddingSize.s)
+            .padding(MaterialTheme.paddingSize.xs)
             .width(200.dp)
             .height(200.dp)
     ) {
@@ -48,7 +48,7 @@ fun KindCard (
                 )
                 CircleShape
                 Column (modifier = Modifier.padding(
-                    MaterialTheme.paddingSize.s,
+                    MaterialTheme.paddingSize.xs,
                     MaterialTheme.paddingSize.default,
                 )){
                     Text(text = titleProvider)

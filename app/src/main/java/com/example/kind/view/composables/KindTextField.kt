@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.paddingSize
 
 /**
@@ -51,7 +50,7 @@ class KindTextField (val name: String, val label: String = "", val validators: L
             value = text,
             isError = hasError,
             label = { Text(text = name) },
-            modifier = Modifier.padding(MaterialTheme.paddingSize.m),
+            modifier = Modifier.padding(MaterialTheme.paddingSize.s),
             onValueChange = { value ->
                 hideError()
                 text = value

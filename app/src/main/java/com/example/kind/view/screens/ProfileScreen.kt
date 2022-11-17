@@ -17,7 +17,10 @@ fun ProfileScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeaderAndText(headerProvider = "Account Settings", textProvider = "Edit your personal settings below")
+        HeaderAndText(
+            headerProvider = "Account Settings",
+            textProvider = "Edit your personal settings below"
+        )
         Form(
             state = viewModel.formState,
             fields = viewModel.fields,

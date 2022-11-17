@@ -27,7 +27,7 @@ fun KindCharityCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.paddingSize.s)
+            .padding(MaterialTheme.paddingSize.xs)
             .width(250.dp)
             .height(250.dp)
     ) {
@@ -41,7 +41,7 @@ fun KindCharityCard(
         ) {
             Row(modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xs,
+                MaterialTheme.paddingSize.xxxs,
             )) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
@@ -51,7 +51,7 @@ fun KindCharityCard(
             }
             Row(modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xs,
+                MaterialTheme.paddingSize.xxxs,
             )) {
                 Text(
                     text = Title,
@@ -62,7 +62,7 @@ fun KindCharityCard(
             }
             Row(modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xs,
+                MaterialTheme.paddingSize.xxxs,
             )) {
                 //TODO need to center text
                 Text(

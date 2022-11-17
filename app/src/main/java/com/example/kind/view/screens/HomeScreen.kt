@@ -20,16 +20,32 @@ fun HomeScreen(
     Column {
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
-        Text(text = "Charity Update", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
+        Text(
+            text = "Charity Update",
+            color = subHeading,
+            fontSize = Typography.headlineMedium.fontSize,
+            fontWeight = Typography.headlineMedium.fontWeight,
+        )
         Text("The latest news from your charities")
 
-        CardListHorizontalScroll(viewModel.getArticles("Article 1", "Article 2"))
+        CardListHorizontalScroll(viewModel.getArticles(
+            "Article 1",
+            "Article 2",
+        ))
         
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Explore charities", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
+        Text(
+            text = "Explore charities",
+            color = subHeading,
+            fontSize = Typography.headlineMedium.fontSize,
+            fontWeight = Typography.headlineMedium.fontWeight,
+        )
         Text("Get to know other charities better")
-        CardListHorizontalScroll(listOfContent = viewModel.getCharities("Charity 1", "Charity 2"))
+        CardListHorizontalScroll(listOfContent = viewModel.getCharities(
+            "Charity 1",
+            "Charity 2"
+        ))
     }
 }
 

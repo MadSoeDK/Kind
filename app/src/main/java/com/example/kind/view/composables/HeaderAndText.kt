@@ -6,7 +6,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.paddingSize
 
@@ -20,7 +19,7 @@ fun HeaderAndText(
             .fillMaxWidth()
             .padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xl,
+                MaterialTheme.paddingSize.xxxxl,
             ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -28,7 +27,7 @@ fun HeaderAndText(
         Row (
             modifier = Modifier.padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.m,
+                MaterialTheme.paddingSize.s,
             )
         ){
             Text(

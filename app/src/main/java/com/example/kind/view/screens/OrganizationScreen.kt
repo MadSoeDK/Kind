@@ -38,7 +38,7 @@ fun OrganizationScreen(
             .background(color = Color.White)
             .padding(
                 MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xs,
+                MaterialTheme.paddingSize.xxxs,
             ))
 
     {
@@ -47,8 +47,8 @@ fun OrganizationScreen(
         Box(
             modifier = Modifier
                 .padding(
-                    MaterialTheme.paddingSize.m,
-                    MaterialTheme.paddingSize.xs,
+                    MaterialTheme.paddingSize.s,
+                    MaterialTheme.paddingSize.xxxs,
                 )
                 .clip(CircleShape)
                 .background(color = Color.Gray)
@@ -71,7 +71,7 @@ fun OrganizationScreen(
                     modifier = Modifier
                         .padding(
                             MaterialTheme.paddingSize.default,
-                            MaterialTheme.paddingSize.m,
+                            MaterialTheme.paddingSize.s,
                         )
                         .clip(CircleShape)
                         .background(color = Color.Gray)
@@ -85,8 +85,8 @@ fun OrganizationScreen(
         // Donations, Donors & Picture
         Row(modifier = Modifier
             .padding(
-                MaterialTheme.paddingSize.m,
-                MaterialTheme.paddingSize.xs,
+                MaterialTheme.paddingSize.s,
+                MaterialTheme.paddingSize.xxxs,
             )
             .align(Alignment.CenterHorizontally)
         )
@@ -113,7 +113,7 @@ fun OrganizationScreen(
                 .fillMaxWidth()
                 .padding(
                     MaterialTheme.paddingSize.default,
-                    MaterialTheme.paddingSize.m,
+                    MaterialTheme.paddingSize.s,
                 ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -121,7 +121,7 @@ fun OrganizationScreen(
             Row (
                 modifier = Modifier.padding(
                     MaterialTheme.paddingSize.default,
-                    MaterialTheme.paddingSize.m,
+                    MaterialTheme.paddingSize.s,
                 )
             ){
                 Text(
@@ -145,11 +145,20 @@ fun OrganizationScreen(
         }
 
         // About
-        SmallHeaderAndText(headerProvider = "About", textProvider = "Lorem Ipsum")
+        SmallHeaderAndText(
+            headerProvider = "About",
+            textProvider = "Lorem Ipsum"
+        )
 
         // Post
-        SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
-        CardListHorizontalScroll(viewModel.getArticles("Article 1", "Article 2"))
+        SmallHeaderAndText(
+            headerProvider = "Posts",
+            textProvider = "Read the latest posts from the organization"
+        )
+        CardListHorizontalScroll(viewModel.getArticles(
+            "Article 1",
+            "Article 2"
+        ))
 
     }
 

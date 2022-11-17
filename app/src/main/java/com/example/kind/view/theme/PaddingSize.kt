@@ -9,29 +9,16 @@ import androidx.compose.ui.unit.dp
 
 data class PaddingSize(
     val default: Dp = 0.dp,
-    val xs: Dp = 5.dp,
-    val s: Dp = 8.dp,
-    val m: Dp = 10.dp,
-    val l: Dp = 25.dp,
-    val xl: Dp = 50.dp,
-
-    //sizes to add:
-    // 6 - PortfolioScreen
-    // 16 - PortFolioTable
-    // 20 - KindCharityCard, PortfolioScreen
-    // 30 - PortfolioScreen
-    // 40 - PortfolioScreen
-
-    //5 - xxxs
-    //6 - xxs
-    //8 - xs
-    //10 - s
-    //16 - m
-    //20 - l
-    //25 - xl
-    //30 - xxl
-    //40 - xxxl
-    //50 - xxxxl
+    val xxxs: Dp = 5.dp,
+    val xxs: Dp = 6.dp,
+    val xs: Dp = 8.dp,
+    val s: Dp = 10.dp,
+    val m: Dp = 16.dp,
+    val l: Dp = 20.dp,
+    val xl: Dp = 25.dp,
+    val xxl: Dp = 30.dp,
+    val xxxl: Dp = 40.dp,
+    val xxxxl: Dp = 50.dp,
 )
 
 val LocalPaddingSize = compositionLocalOf { PaddingSize() }
