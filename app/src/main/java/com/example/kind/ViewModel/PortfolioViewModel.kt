@@ -40,12 +40,12 @@ class PortfolioViewModel : ViewModel() {
         return listOf(
             Portfolio("Røde Kors", 5f, 100f, 150f),
             Portfolio("Støt Cancer", 50f, 100f, 250f),
-            Portfolio("UNICEF", 10f, 100f, 250f),
+            /*Portfolio("UNICEF", 10f, 100f, 250f),
             Portfolio("Mødrehjælpen", 5f, 101f, 540f),
             Portfolio("Julehjælpen", 12f, 100f, 125f),
             Portfolio("Diabetesforeningen", 10f, 100f, 125f),
             Portfolio("Hjemløsefonden", 3f, 100f, 125f),
-            Portfolio("Demensforeningen", 5f, 100f, 125f)
+            Portfolio("Demensforeningen", 5f, 100f, 125f)*/
 
         )
     }
@@ -57,6 +57,14 @@ class PortfolioViewModel : ViewModel() {
 
         return percentages
     }
+    fun getSpend() : Float {
+        var spend = 0f
+        for(i in getPortfolioDonation()) {
+            spend += i.spend
+        }
+        return spend
+    }
+
     fun getColors() : List<Color> {
         val colors : MutableList<Color> = mutableListOf()
         colors.add(Color(0xFFbf95d4))
