@@ -34,7 +34,6 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.ViewModel.ProfileViewModel
-import com.example.kind.view.screens.*
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Start : Screen("start", Icons.Filled.Favorite)
