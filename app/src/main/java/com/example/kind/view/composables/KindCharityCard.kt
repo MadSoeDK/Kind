@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -21,7 +22,8 @@ fun KindCharityCard(
     Body: String,
     OrganizationIcon: Painter,
     ReadMore: String = "Read More",
-    Category: String?
+    Category: String?,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -58,7 +60,7 @@ fun KindCharityCard(
                     color = Typography.displayMedium.color,
                 )
             }
-            OutlinedButton(onClick = { /*TODO*/ }) {
+            OutlinedButton(onClick = { onClick() }) {
                 Text(
                     text = ReadMore,
                     fontWeight = Typography.labelLarge.fontWeight,
@@ -69,16 +71,4 @@ fun KindCharityCard(
 
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun KindCharityCardPreview() {
-    val OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147)
-    KindCharityCard(
-        Title = "Red Cross",
-        Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-        OrganizationIcon = OrganizationIcon,
-        Category = null
-    )
 }
