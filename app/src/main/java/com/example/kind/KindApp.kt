@@ -81,7 +81,7 @@ fun KindApp() {
         composable(Screen.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                content = { ExplorerScreen(ExplorerViewModel()) }
+                content = { ExplorerScreen(ExplorerViewModel(viewModel.navController)) }
             )
         }
         composable(Screen.Charity.route  + "/{id}",

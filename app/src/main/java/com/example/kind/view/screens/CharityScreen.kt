@@ -104,7 +104,7 @@ fun CharityScreen(
                 modifier = Modifier.padding(0.dp, 10.dp)
             ){
                 Text(
-                    text = "Some header",
+                    text = viewModel.data.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
                     fontSize = Typography.headlineLarge.fontSize,
                     color = Typography.headlineLarge.color

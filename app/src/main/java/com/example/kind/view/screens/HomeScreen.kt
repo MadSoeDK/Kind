@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kind.Screen
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
@@ -27,7 +28,7 @@ fun HomeScreen(
         LazyRow {
             viewModel.getArticles().forEach {
                 item {
-                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate("article" + it.id.toString()) })
+                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                 }
             }
         }
@@ -40,7 +41,7 @@ fun HomeScreen(
         LazyRow {
             viewModel.getCharities().forEach {
                 item {
-                    KindCard(titleProvider = it.name, subTitleProvier = it.name, onClick = { viewModel.navController.navigate("charity" + it.id.toString()) })
+                    KindCard(titleProvider = it.name, subTitleProvier = it.name, onClick = { viewModel.navController.navigate(Screen.Charity.route + "/" + it.id.toString()) })
                 }
             }
         }
