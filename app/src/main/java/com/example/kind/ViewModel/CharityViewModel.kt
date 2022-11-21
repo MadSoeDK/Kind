@@ -8,8 +8,11 @@ import com.example.kind.getFakeArticles
 import com.example.kind.getFakeCharity
 
 class CharityViewModel(
-    val navController: NavController
+    val navController: NavController,
+    id: Int,
 ): ViewModel() {
+    val data = getFakeCharity(id)
+
     fun getArticles(): List<Article> {
         return getFakeArticles()
     }

@@ -18,11 +18,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.kind.ViewModel.*
 import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
@@ -81,11 +84,13 @@ fun KindApp() {
                 content = { ExplorerScreen(ExplorerViewModel()) }
             )
         }
-        composable(Screen.Charity.route) {
+        composable(Screen.Charity.route  + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { NavBackStackEntry ->
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { CharityScreen(
-                    viewModel = CharityViewModel(navController = viewModel.navController),
+                    viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
                 ) }
             )
         }
