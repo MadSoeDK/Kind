@@ -16,8 +16,4 @@ class CharityViewModel(
     fun getArticles(): List<Article> {
         return getFakeArticles()
     }
-
-    fun getCharity(): Charity {
-        return getFakeCharity(1)
-    }
 }
