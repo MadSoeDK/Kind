@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.paddingSize
+import com.example.kind.view.theme.size
 
 
 @Composable
@@ -23,15 +24,15 @@ fun KindCard (
     Card(
         modifier = Modifier
             .padding(MaterialTheme.paddingSize.xs)
-            .width(200.dp)
-            .height(200.dp)
+            .width(MaterialTheme.size.l)
+            .height(MaterialTheme.size.l)
     ) {
         Column {
             Box(
                 modifier = Modifier
                     .background(Color.Gray)
                     .fillMaxWidth()
-                    .height(140.dp)
+                    .height(MaterialTheme.size.m)
             ) {
                 Text(text = "Image")
             }
@@ -43,8 +44,8 @@ fun KindCard (
                     Modifier
                         .clip(CircleShape)
                         .background(Color.Red)
-                        .height(40.dp)
-                        .width(40.dp)
+                        .height(MaterialTheme.size.xxxs)
+                        .width(MaterialTheme.size.xxxs)
                 )
                 CircleShape
                 Column (modifier = Modifier.padding(

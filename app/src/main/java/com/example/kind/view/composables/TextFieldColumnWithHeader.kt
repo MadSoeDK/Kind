@@ -1,22 +1,28 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import com.example.kind.view.theme.Typography
+import com.example.kind.view.theme.paddingSize
 
 @Composable
 fun TextFieldColumn(title: String, fields: List<KindTextField>, state: FormState) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp, 0.dp),
+            .padding(
+                MaterialTheme.paddingSize.l,
+                MaterialTheme.paddingSize.default,),
         verticalArrangement = Arrangement.Top
     ) {
         Row(
-            modifier = Modifier.padding(0.dp, 10.dp)
+            modifier = Modifier.padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.s)
         ) {
             Text(
                 text = title,

@@ -26,7 +26,8 @@ open class Email(var message: String = EMAIL_MESSAGE): Validator
 open class Required(var message: String = REQUIRED_MESSAGE): Validator
 open class Regex(var message: String, var regex: String = REGEX_MESSAGE): Validator
 
-class KindTextField (val name: String, val label: String = "", val validators: List<Validator>) {
+class KindTextField (val name: String, val label: String = "",
+                     val validators: List<Validator>) {
     var text: String by mutableStateOf("")
     var lbl: String by mutableStateOf(label)
     var hasError: Boolean by mutableStateOf(false)

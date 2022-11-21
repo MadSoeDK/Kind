@@ -30,6 +30,7 @@ import com.example.kind.view.screens.HomeScreen
 import com.example.kind.view.screens.ProfileScreen
 import com.example.kind.view.screens.LoginScreen
 import com.example.kind.view.theme.Typography
+import com.example.kind.view.theme.size
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.ViewModel.ProfileViewModel
@@ -148,10 +149,13 @@ fun EditPortfolioFAB(
                 modifier = Modifier
                     .width(30.dp)
                     .height(30.dp),
-
+                /*modifier = Modifier
+                    .width(MaterialTheme.size.xxxxs)
+                    .height(MaterialTheme.size.xxxxs),
+                */
                 )
         },
         containerColor = Typography.headlineLarge.color,
-        shape = RoundedCornerShape(10.dp)
+        shape = MaterialTheme.shapes.large
     )
 }

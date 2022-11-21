@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.*
@@ -23,13 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.*
-import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.view.home.composables.HeaderAndText
-import com.example.kind.view.theme.paddingSize
+import com.example.kind.view.theme.*
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
@@ -61,7 +58,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             }
             PieChart(
                 modifier = Modifier
-                    .size(250.dp)
+                    .size(MaterialTheme.size.xxl)
                     .align(Alignment.CenterHorizontally),
                 progress = viewModel.getPercentages(),
                 colors = viewModel.getColors(),
@@ -78,7 +75,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 verticalArrangement = Arrangement.Top, Alignment.Start
             ) {
                 LazyVerticalGrid(columns = GridCells.Fixed(2),
-                    Modifier.height(85.dp),
+                    Modifier.height(MaterialTheme.size.xs),
                     content = {
                     items(viewModel.getPortfolioDonation().size) { i ->
                         viewModel.getPortfolioDonation()[i].organization
@@ -89,8 +86,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                                 Modifier
                                     .clip(RectangleShape)
                                     .background(viewModel.getColors()[i])
-                                    .height(12.dp)
-                                    .width(12.dp)
+                                    .height(MaterialTheme.size.xxxxxs)
+                                    .width(MaterialTheme.size.xxxxxs)
                                     .align(Alignment.BottomStart,
                                     )
                             )
@@ -127,7 +124,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             ) {
                 Text(
                     text = "Your charities",
-                    fontSize = 24.sp,
+                    fontSize = MaterialTheme.fontSize.xl,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(MaterialTheme.paddingSize.xxs),
                     fontWeight = FontWeight.Black,
@@ -148,7 +145,14 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 PortfolioTable(
                     modifier = Modifier,
                     columnCount = 4,
-                    cellWidth = { index ->
+                    cellWidth = { index -> //TODO
+                        /*when (index) {
+                            0 -> MaterialTheme.divDpSize.xl
+                            1 -> MaterialTheme.divDpSize.xs
+                            2 -> MaterialTheme.divDpSize.l
+                            3 -> MaterialTheme.divDpSize.s
+                            else -> MaterialTheme.divDpSize.m
+                        }*/
                         when (index) {
                             0 -> 120.dp
                             1 -> 50.dp
@@ -172,7 +176,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                         }
                         Text(
                             text = value,
-                            fontSize = 14.sp,
+                            fontSize = MaterialTheme.fontSize.m,
                             textAlign = alignment,
                             modifier = Modifier.padding(
                                 MaterialTheme.paddingSize.default,
@@ -198,7 +202,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                         }
                         Text(
                             text = value,
-                            fontSize = 12.sp,
+                            fontSize = MaterialTheme.fontSize.s,
                             textAlign = alignment,
                             modifier = Modifier.padding(
                                 MaterialTheme.paddingSize.default,
@@ -222,29 +226,29 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Card(modifier = Modifier.clip(RoundedCornerShape(20.dp))) {
+        Card(modifier = Modifier.clip(MaterialTheme.shapes.large)) {
             Box(
                 Modifier
                     .clip(RectangleShape)
                     .background(Color.White)
-                    .height(420.dp)
-                    .width(320.dp)
+                    .height(MaterialTheme.size.xxxxxl)
+                    .width(MaterialTheme.size.xxxxl)
             ) {
                 Column(modifier = Modifier.padding(
                     MaterialTheme.paddingSize.default,
-                    20.dp,
+                    MaterialTheme.paddingSize.l,
                 )) {
                     // Organisationer i et grid
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(1),
-                        Modifier.height(270.dp),
+                        Modifier.height(MaterialTheme.size.xxxl),
                         horizontalArrangement = Arrangement.Start,
                         content = {
                             items(viewModel.getPortfolioDonation().size) { i ->
                                 viewModel.getPortfolioDonation()[i].organization
                                 Spacer(modifier = Modifier.padding(
                                     MaterialTheme.paddingSize.default,
-                                    20.dp,
+                                    MaterialTheme.paddingSize.l,
                                 ))
                                 Text(
                                     text = viewModel.getPortfolioDonation()[i].organization,
@@ -256,7 +260,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
 
                                 var text by rememberSaveable { mutableStateOf("") }
                                 Box(
-                                    modifier = Modifier.width(40.dp),
+                                    modifier = Modifier.width(MaterialTheme.size.xxxs),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     TextField(
@@ -273,7 +277,9 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                         colors = TextFieldDefaults.textFieldColors(
                                             containerColor = MaterialTheme.colors.primary.copy(alpha = 0.2F)
                                         ),
-                                        textStyle = TextStyle.Default.copy(fontSize = 18.sp)
+                                        textStyle = TextStyle.Default.copy(
+                                            fontSize = MaterialTheme.fontSize.l
+                                        )
                                     )
 
                                 }
@@ -305,7 +311,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                     Button(
                         onClick = { /*TODO*/ },
                         Modifier
-                            .width(200.dp)
+                            .width(MaterialTheme.size.xl)
                             .background(
                                 Typography.headlineLarge.color
                             )

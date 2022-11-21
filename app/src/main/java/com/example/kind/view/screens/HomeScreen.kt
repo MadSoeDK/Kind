@@ -1,6 +1,7 @@
 package com.example.kind.view.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,6 +13,7 @@ import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.view.theme.size
 
 @Composable
 fun HomeScreen(
@@ -33,7 +35,7 @@ fun HomeScreen(
             "Article 2",
         ))
         
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.size.xxs))
 
         Text(
             text = "Explore charities",

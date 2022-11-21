@@ -3,22 +3,27 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
+import com.example.kind.view.theme.paddingSize
 
 @Composable
 fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: Array<String>){
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(25.dp, 50.dp),
+        .padding(
+            MaterialTheme.paddingSize.xl,
+            MaterialTheme.paddingSize.xxxxl),
         verticalArrangement = Arrangement.Top, Alignment.Start) {
         Row (
-            modifier = Modifier.padding(0.dp, 10.dp)
+            modifier = Modifier.padding(
+                MaterialTheme.paddingSize.default,
+                MaterialTheme.paddingSize.s)
         ){
             Text(
                 text = Title,
@@ -27,7 +32,9 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
                 color = Typography.headlineLarge.color
             )
         }
-        Row(modifier = Modifier.padding(0.dp, 10.dp)) {
+        Row(modifier = Modifier.padding(
+            MaterialTheme.paddingSize.default,
+            MaterialTheme.paddingSize.s)) {
             Text(
                 text = Subtitle,
                 fontWeight = Typography.headlineMedium.fontWeight,

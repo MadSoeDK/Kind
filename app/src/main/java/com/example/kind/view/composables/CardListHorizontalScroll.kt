@@ -12,7 +12,10 @@ fun <T> CardListHorizontalScroll(listOfContent: List<T>) {
         modifier =  Modifier.horizontalScroll(rememberScrollState())
     ){
         for (card in listOfContent) {
-            KindCard(titleProvider = "Some organization", subTitleProvier = card.toString())
+            KindCard(
+                titleProvider = "Some organization",
+                subTitleProvier = card.toString(),
+            )
         }
     }
 }

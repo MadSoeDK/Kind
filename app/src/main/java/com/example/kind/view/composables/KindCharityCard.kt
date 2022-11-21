@@ -4,7 +4,6 @@ import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.kind.R
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.paddingSize
+import com.example.kind.view.theme.size
 
 @Composable
 fun KindCharityCard(
@@ -28,13 +28,13 @@ fun KindCharityCard(
     Card(
         modifier = Modifier
             .padding(MaterialTheme.paddingSize.xs)
-            .width(250.dp)
-            .height(250.dp)
+            .width(MaterialTheme.size.xxl)
+            .height(MaterialTheme.size.xxl)
     ) {
 
         Column(
             modifier = Modifier.padding(
-                20.dp,
+                MaterialTheme.paddingSize.l,
                 MaterialTheme.paddingSize.default,
             ),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -45,8 +45,8 @@ fun KindCharityCard(
             )) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
-                        .height(50.dp)
-                        .width(50.dp)
+                        .height(MaterialTheme.size.xxs)
+                        .width(MaterialTheme.size.xxs)
                 )
             }
             Row(modifier = Modifier.padding(

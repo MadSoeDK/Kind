@@ -13,12 +13,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.CardListHorizontalScroll
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.view.theme.size
 import com.example.kind.view.home.composables.SmallHeaderAndText
 import com.example.kind.view.theme.paddingSize
 
@@ -35,7 +35,7 @@ fun OrganizationScreen(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(color = Color.White) //TODO WRONG COLOR?
             .padding(
                 MaterialTheme.paddingSize.default,
                 MaterialTheme.paddingSize.xxxs,
@@ -51,16 +51,16 @@ fun OrganizationScreen(
                     MaterialTheme.paddingSize.xxxs,
                 )
                 .clip(CircleShape)
-                .background(color = Color.Gray)
-                .width(50.dp)
-                .height(40.dp)
+                .background(color = Color.Gray) //TODO
+                .width(MaterialTheme.size.xxs)
+                .height(MaterialTheme.size.xxxs)
                 .align(Alignment.Start)
         )
         // Background
         Box(modifier = Modifier
-            .background(color = Color.LightGray)
+            .background(color = Color.LightGray) //TODO?
             .fillMaxWidth()
-            .height(200.dp)
+            .height(MaterialTheme.size.xl)
             .align(Alignment.CenterHorizontally)
         )
         {
@@ -74,9 +74,9 @@ fun OrganizationScreen(
                             MaterialTheme.paddingSize.s,
                         )
                         .clip(CircleShape)
-                        .background(color = Color.Gray)
-                        .width(150.dp)
-                        .height(150.dp)
+                        .background(color = Color.Gray) //TODO?
+                        .width(MaterialTheme.size.l)
+                        .height(MaterialTheme.size.l)
                 )
             }
         }
@@ -97,7 +97,10 @@ fun OrganizationScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.padding(50.dp,0.dp))
+            Spacer(modifier = Modifier.padding(
+                MaterialTheme.paddingSize.xxxxl,
+                MaterialTheme.paddingSize.default
+            ))
 
             Text(text = donationAmount+"\n Donations",
                 color = subHeading,

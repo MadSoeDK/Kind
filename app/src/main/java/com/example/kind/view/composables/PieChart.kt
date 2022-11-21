@@ -7,6 +7,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.kind.view.theme.size
 import kotlin.math.atan2
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -132,7 +134,7 @@ fun PieChart(
 
             if (activePie != -1)
                 drawContext.canvas.nativeCanvas.apply {
-                    val fontSize = 60.toDp().toPx()
+                    val fontSize = 60.toDp().toPx() //TODO ???? - Espen
                     drawText(
                         "${proportions[activePie].roundToInt()}%",
                         (sideSize / 2) + fontSize / 4, (sideSize / 2) + fontSize / 3,
@@ -192,10 +194,10 @@ private fun convertTouchEventPointToAngle(
 @Composable
 fun ChartPreview() {
     PieChart(
-        modifier = Modifier.size(100.dp),
+        modifier = Modifier.size(MaterialTheme.size.s),
         progress = listOf(10f, 20f, 5f),
         colors = listOf(
-            Color(0xFFbf95d4),
+            Color(0xFFbf95d4), //TODO?
             Color(0xFFf4ac1a),
             Color(0xFF8b0a50),
         )

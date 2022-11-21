@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
+import com.example.kind.view.theme.size
 import com.example.kind.view.theme.background
 import com.example.kind.view.theme.paddingSize
 
@@ -34,7 +34,7 @@ fun <T> PortfolioTable (
                 Column {
                     (0..data.size).forEach { index ->
                         Surface(
-                            //border = BorderStroke(1.dp, Color.LightGray ),
+                            //border = BorderStroke(MaterialTheme.size.xxxxxs, Color.LightGray ),
                             //contentColor = Color.Transparent,
                             modifier = Modifier.width(cellWidth(columnIndex)), color = background
                         ) {
@@ -45,8 +45,8 @@ fun <T> PortfolioTable (
                                 Spacer(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(1.dp)
-                                        .background(Color(0xFF79747E)))
+                                        .height(MaterialTheme.size.xxxxxxs)
+                                        .background(Color(0xFF79747E))) //TODO
                             }
                         }
                     }
