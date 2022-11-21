@@ -12,23 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.ViewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
-import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
-fun OrganizationScreen(
+fun CharityScreen(
     viewModel: CharityViewModel,
-    donorAmount: String,
+    /*donorAmount: String,
     donationAmount: String,
     organizationName: String,
-    organizationTheme: String
+    organizationTheme: String*/
 )
 {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,7 +76,7 @@ fun OrganizationScreen(
             .align(Alignment.CenterHorizontally)
         )
         {
-            Text(text = donorAmount+"\n Donors",
+            Text(text = "150\n Donors",
                 color = subHeading,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
@@ -87,7 +84,7 @@ fun OrganizationScreen(
 
             Spacer(modifier = Modifier.padding(50.dp,0.dp))
 
-            Text(text = donationAmount+"\n Donations",
+            Text(text = "200\n Donations",
                 color = subHeading,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
@@ -107,14 +104,14 @@ fun OrganizationScreen(
                 modifier = Modifier.padding(0.dp, 10.dp)
             ){
                 Text(
-                    text = organizationName,
+                    text = "Some header",
                     fontWeight = Typography.headlineLarge.fontWeight,
                     fontSize = Typography.headlineLarge.fontSize,
                     color = Typography.headlineLarge.color
                 )
             }
             Row {
-                Text(text = organizationTheme)
+                Text(text = "Some category here!")
             }
         }
 
