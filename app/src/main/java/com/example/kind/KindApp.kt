@@ -23,16 +23,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.View.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
-import com.example.kind.view.screens.ExplorerScreen
-import com.example.kind.view.screens.HomeScreen
-import com.example.kind.view.screens.ProfileScreen
-import com.example.kind.view.screens.LoginScreen
 import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.ViewModel.ProfileViewModel
+import com.example.kind.view.screens.*
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Login : Screen("login", Icons.Filled.Favorite)
@@ -40,6 +36,7 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
+    object News : Screen("article", Icons.Filled.Favorite)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,7 +50,7 @@ fun KindApp() {
         composable(Screen.Login.route) {
             Screen(
                 content = {
-                    LoginScreen(viewModel = LoginViewModel(), login = { viewModel.login() })
+                    LoginScreen(viewModel = LoginViewModel()) { viewModel.login() }
                 }
             )
         }
@@ -83,6 +80,12 @@ fun KindApp() {
                 content = { ExplorerScreen(ExplorerViewModel()) }
             )
         }
+        composable(Screen.News.route) {
+            Screen(
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                content = { NewsScreen() }
+            )
+        }
     }
 }
 
@@ -98,7 +101,9 @@ fun Screen(
         floatingActionButton = { FloatingActionButton() },
         content = {
             Column(
-                modifier = Modifier.padding(it).verticalScroll(rememberScrollState())
+                modifier = Modifier
+                    .padding(it)
+                    .verticalScroll(rememberScrollState())
             ) {
                 content(it)
             }
@@ -113,7 +118,7 @@ fun KindNavigationBar(
     NavigationBar(
         containerColor = Color.White,
     ) {
-        val items = listOf(Screen.Home, Screen.Portfolio, Screen.Explorer, Screen.Profile)
+        val items = listOf(Screen.Home, Screen.Portfolio, Screen.News,Screen.Explorer, Screen.Profile)
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
         items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
         val navBackStackEntry by viewModel.navController.currentBackStackEntryAsState()
