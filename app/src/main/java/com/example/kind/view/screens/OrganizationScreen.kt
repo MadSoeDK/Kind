@@ -130,7 +130,6 @@ fun OrganizationScreen(
         // Post
         SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
         CardListHorizontalScroll(viewModel.getArticles("Article 1", "Article 2"))
-
     }
 
 }

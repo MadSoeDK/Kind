@@ -23,7 +23,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
+import com.example.kind.view.login.LoginScreen
+import com.example.kind.view.login.SignupScreen
+import com.example.kind.view.login.SignupViewModel
+import com.example.kind.view.login.StartScreen
+import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
@@ -31,7 +37,9 @@ import com.example.kind.ViewModel.ProfileViewModel
 import com.example.kind.view.screens.*
 
 sealed class Screen(val route: String, var icon: ImageVector) {
+    object Start : Screen("start", Icons.Filled.Favorite)
     object Login : Screen("login", Icons.Filled.Favorite)
+    object Signup : Screen("signup", Icons.Filled.Favorite)
     object Home : Screen("home", Icons.Filled.Home)
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
@@ -45,14 +53,18 @@ fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
     NavHost(
         navController = viewModel.navController,
-        startDestination = Screen.Login.route,
+        startDestination = Screen.Start.route,
     ) {
-        composable(Screen.Login.route) {
+        composable(Screen.Start.route) {
             Screen(
-                content = {
-                    LoginScreen(viewModel = LoginViewModel()) { viewModel.login() }
-                }
+                content = { StartScreen(navController = viewModel.navController) }
             )
+        }
+        composable(Screen.Login.route) {
+            Screen { LoginScreen() }
+        }
+        composable(Screen.Signup.route) {
+            Screen { SignupScreen(SignupViewModel()) { viewModel.finishSignup() } }
         }
         composable(Screen.Home.route) {
             Screen(
