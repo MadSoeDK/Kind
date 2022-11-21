@@ -1,6 +1,7 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
@@ -17,12 +18,14 @@ import androidx.compose.ui.unit.dp
 fun KindCard (
     titleProvider: String,
     subTitleProvier: String,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .width(200.dp)
             .height(200.dp)
+            .clickable { onClick() }
     ) {
         Column {
             Box(

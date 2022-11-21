@@ -22,13 +22,16 @@ fun ExplorerScreen(
     Column {
         //TODO: Seperate categories composable
         CharityHeaderAndSubsectionText(Title = "Charity Explorer", Subtitle = "Get to know other charities better", Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care"))
+
         LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
-            items(10 /*TODO: Needs to be adaptive based on the amount of organizations*/) {i -> KindCharityCard(
-                Title = "Red Cross",
-                Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
-                Category = null
-            )}
+            items(10 /*TODO: Needs to be adaptive based on the amount of organizations*/) {i ->
+                KindCharityCard(
+                    Title = "Red Cross",
+                    Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
+                    Category = null
+                )
+            }
         })
     }
 }

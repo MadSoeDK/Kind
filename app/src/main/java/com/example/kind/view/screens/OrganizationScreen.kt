@@ -2,6 +2,7 @@ package com.example.kind.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -14,15 +15,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kind.view.composables.CardListHorizontalScroll
+import com.example.kind.ViewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
 fun OrganizationScreen(
-    viewModel: HomeViewModel, // To be Changed
+    viewModel: CharityViewModel,
     donorAmount: String,
     donationAmount: String,
     organizationName: String,
@@ -129,21 +131,15 @@ fun OrganizationScreen(
 
         // Post
         SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
-        CardListHorizontalScroll(viewModel.getArticles("Article 1", "Article 2"))
+
+        LazyRow {
+            viewModel.getArticles().forEach {
+                item {
+                    KindCard(titleProvider = "Charity " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate("article" + it.id.toString()) })
+                }
+            }
+        }
 
     }
 
-}
-
-@Composable
-@Preview
-fun OrganizationScreenPreview()
-{
-    val viewModel = viewModel<HomeViewModel>()
-    OrganizationScreen(
-        viewModel,
-        "1.2K",
-        "15K",
-        "Red Barnet",
-        "Disasters")
 }
