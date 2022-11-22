@@ -1,32 +1,52 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.R
+import com.example.kind.view.theme.Typography
 
 @Composable
-fun LoginHeader(size: Int) {
+fun LoginHeader(size: Int, description: String? = null) {
 
-    Row {
-        /*Column() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Row {
+            /*Column() {
             Spacer(modifier = Modifier.size((size/2).dp))
             Text(text = "be ", fontSize = (size/2).sp, color = primary)
         }
 
         Text(text = "Kind", fontSize = size.sp, color = primary)*/
-        Image(painterResource(id = R.drawable.screenshot20220914071147), contentDescription = "", Modifier.size((size*1.75).dp))
+            Image(
+                painterResource(id = R.drawable.screenshot20220914071147),
+                contentDescription = "",
+                Modifier.size((size * 1.75).dp)
+            )
+        }
+        if (description != null) {
+            Text(
+                text = description,
+                fontWeight = Typography.headlineSmall.fontWeight,
+                fontSize = Typography.headlineSmall.fontSize,
+                color = Typography.headlineSmall.color,
+                textAlign = TextAlign.Center
+            )
+        }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun LoginHeaderPreview() {
-    LoginHeader(96)
+    LoginHeader(96, "")
 }

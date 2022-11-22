@@ -21,7 +21,8 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun SignupScreen(
     viewModel: SignupViewModel,
-    finishSignup: () -> Unit
+    finishSignup: () -> Unit,
+    back: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -31,24 +32,36 @@ fun SignupScreen(
     ) {
         when (viewModel.steps.value) {
             0 -> {
-                SignUpPersonalInformationScreen(viewModel = SignUpPersonalInformationViewModel(), next = { viewModel.steps.value += 1 }) {
-                    
+                Text(text = "About kind page")
+                Button(onClick = { viewModel.steps.value += 1 }) {
+                    Text(text = "Start")
                 }
             }
-            1 -> Text(text = "Personal information")
+            1 -> SignUpPersonalInformationScreen(
+                viewModel = SignUpPersonalInformationViewModel(),
+                next = { viewModel.steps.value += 1 },
+                back = back
+            )
             2 -> {
                 Text(text = "Build portfolio")
                 Button(onClick = { viewModel.steps.value += 1 }) {
                     Text(text = "Start")
                 }
-                Button(onClick = { /*TODO skip rest*/ }) {
+                Button(onClick = finishSignup) {
                     Text(text = "Make it later")
                 }
             }
-            3 -> Text(text = "Donation frequency")
-            4 -> Text(text = "Donation amount")
-            5 -> Text(text = "Portfolio builder")
-            6 -> {
+            3 -> SignUpDonationFrequencyScreen(
+                viewModel = SignUpDonationFrequencyViewModel(),
+                next = { viewModel.steps.value += 1 },
+                back = { viewModel.steps.value -= 1 })
+            4 -> SignUpDonationAmountScreen(
+                viewModel = SignUpDonationAmountViewModel(),
+                next = { viewModel.steps.value += 1 },
+                back = { viewModel.steps.value -= 1 })
+            5 -> Text(text = "Donation amount")
+            6 -> Text(text = "Portfolio builder")
+            7 -> {
                 Text(text = "Donation summary")
                 Button(onClick = finishSignup) {
                     Text(text = "Donate")
@@ -56,13 +69,7 @@ fun SignupScreen(
             }
         }
         when (viewModel.steps.value) {
-            1 -> {
-                SignupNavigation(
-                    nextStep = { viewModel.steps.value += 1 },
-                    prevStep = { viewModel.steps.value -= 1 }
-                )
-            }
-            in 3..5 -> {
+            in 5..6 -> {
                 SignupNavigation(
                     nextStep = { viewModel.steps.value += 1 },
                     prevStep = { viewModel.steps.value -= 1 }
@@ -74,7 +81,7 @@ fun SignupScreen(
 }
 
 @Composable
-fun SignupNavigation (
+fun SignupNavigation(
     nextStep: () -> Unit,
     prevStep: () -> Unit
 ) {

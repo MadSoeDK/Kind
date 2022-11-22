@@ -18,18 +18,18 @@ class SignUpPersonalInformationViewModel : ViewModel() {
         KindTextField(name = "Full name", label = "Full name", validators = listOf(Required())),
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
         KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
-        KindTextField(name = "Repeat password", label = "Repeat password", validators = listOf(Required())),
+        KindTextField(
+            name = "Repeat password",
+            label = "Repeat password",
+            validators = listOf(Required())
+        ),
     )
 
     fun onFormSubmit() {
-        if(formState.validate()) {
+        if (formState.validate()) {
             // TODO: Do something on form submission
         }
         //TODO: Add alert for user
         println("Form submission error!")
-    }
-
-    fun getButtonText(): String {
-        return "Button text";
     }
 }
