@@ -256,8 +256,7 @@ fun DonationSummary(
                 contentDescription = ""
             )
         }
-
-        /*
+    /*
         TextField(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             value = "DAS",
