@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.loginAndSignUp
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -11,8 +11,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kind.R
-import com.example.kind.ViewModel.SignUpPersonalInformationViewModel
+import com.example.kind.view.loginAndSignUp.SignUpPersonalInformationViewModel
 import com.example.kind.view.composables.Form
+import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Typography
 
 @Composable
@@ -25,11 +26,7 @@ fun SignUpPersonalInformationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
-            Image(
-                painter = painterResource(id = R.drawable.screenshot20220914071147), contentDescription = null, modifier = Modifier
-                    .height(200.dp)
-                    .width(200.dp)
-            )
+            LoginHeader(size = 150)
         }
         Text(
             text = viewModel.signUpStepDescription,
@@ -42,7 +39,10 @@ fun SignUpPersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Row(modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(0.dp, 15.dp), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.Bottom) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(0.dp, 15.dp), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.Bottom) {
             Button(onClick = {back()} ) {
                 Text("Back")
             }

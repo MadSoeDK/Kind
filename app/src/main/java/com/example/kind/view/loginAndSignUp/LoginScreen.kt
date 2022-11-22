@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.loginAndSignUp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,14 +23,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kind.ViewModel.LoginViewModel
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.background
 import com.example.kind.view.theme.primary
 
 @Composable
-fun LoginView(viewModel: LoginViewModel) {
+fun LoginScreen(viewModel: LoginViewModel, signUp: () -> Unit) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
@@ -53,7 +52,8 @@ fun LoginView(viewModel: LoginViewModel) {
             password,
             onUsernameChange = {username = it},
             onPasswordChange = {password = it},
-            onLoginClick = {viewModel.login(username, password)}
+            onLoginClick = {viewModel.login(username, password)},
+            signUp = signUp
         )
     }
     Column(
@@ -79,7 +79,8 @@ fun LoginFields(
     password: String,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: (String) -> Unit
+    onLoginClick: (String) -> Unit,
+    signUp: () -> Unit
 ){
     val focusManager = LocalFocusManager.current
     Column(
@@ -130,7 +131,7 @@ fun LoginFields(
         }
         Row(horizontalArrangement = Arrangement.Center) {
             Text("New user? ", color = primary)
-            ClickableText(AnnotatedString(text = "Signup here"), onClick = { /*TODO*/}) //TODO: farvefix
+            ClickableText(AnnotatedString(text = "Signup here"), onClick = { signUp()}) //TODO: farvefix
 
         }
     }
@@ -141,6 +142,6 @@ fun LoginFields(
 fun DefaultPreview() {
     KindTheme {
         val viewModel = viewModel<LoginViewModel>()
-        LoginView(viewModel)
+        LoginScreen(viewModel, signUp = {viewModel.login(username = "", password = "")})
     }
 }

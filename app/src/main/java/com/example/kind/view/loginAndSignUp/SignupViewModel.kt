@@ -1,4 +1,4 @@
-package com.example.kind.view.login
+package com.example.kind.view.loginAndSignUp
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

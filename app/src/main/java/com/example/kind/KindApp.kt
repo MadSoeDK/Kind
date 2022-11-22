@@ -25,15 +25,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
-import com.example.kind.view.login.LoginScreen
-import com.example.kind.view.login.SignupScreen
-import com.example.kind.view.login.SignupViewModel
-import com.example.kind.view.login.StartScreen
+import com.example.kind.view.loginAndSignUp.*
 import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
 
 sealed class Screen(val route: String, var icon: ImageVector) {
-    object Start : Screen("start", Icons.Filled.Favorite)
     object Login : Screen("login", Icons.Filled.Favorite)
     object Signup : Screen("signup", Icons.Filled.Favorite)
     object Home : Screen("home", Icons.Filled.Home)
@@ -48,15 +44,16 @@ fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
     NavHost(
         navController = viewModel.navController,
-        startDestination = Screen.Start.route,
+        startDestination = Screen.Login.route,
     ) {
-        composable(Screen.Start.route) {
+        //er ikke sikker på om vi skal have denne route, siden at start altid er ved login. beholder den for nu in case vi vil have en first time login besked eller lign.
+        /* composable(Screen.Start.route) {
             Screen(
                 content = { StartScreen(navController = viewModel.navController) }
             )
-        }
+        }*/
         composable(Screen.Login.route) {
-            Screen { LoginScreen() }
+            Screen ( content = { LoginScreen(LoginViewModel(), signUp = {viewModel.navigate("signup")}) })
         }
         composable(Screen.Signup.route) {
             Screen { SignupScreen(SignupViewModel()) { viewModel.finishSignup() } }
