@@ -51,6 +51,7 @@ fun PortfolioTemplateCard(
             }
             Row(modifier = Modifier.padding(0.dp,  15.dp)) {
                 //TODO need to center text
+                Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
