@@ -24,7 +24,6 @@ import com.example.kind.view.theme.Typography
 @ExperimentalFoundationApi
 @Composable
 fun PortfolioBuilderScreen(
-    viewModel: ExplorerViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -42,7 +41,8 @@ fun PortfolioBuilderScreen(
         }
 
         LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
-            items(10 /*TODO: Needs to be adaptive based on the templates*/) {i -> PortfolioTemplateCard(
+            items(10 /*TODO: Needs to be adaptive based on the templates*/) {
+                PortfolioTemplateCard(
                 Title = "Red Cross",
                 Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
                 OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
@@ -90,11 +90,4 @@ fun PortfolioBuilderScreen(
             }
         }
     }
-}
-
-@ExperimentalFoundationApi
-@Composable
-@Preview(showBackground = true)
-fun PortfolioBuilderPreview() {
-    PortfolioBuilderScreen(ExplorerViewModel(), next = { /*TODO*/ }, back = { /*TODO*/ })
 }

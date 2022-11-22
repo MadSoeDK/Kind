@@ -22,7 +22,6 @@ fun KindCharityCard(
     Body: String,
     OrganizationIcon: Painter,
     ReadMore: String = "Read More",
-    Category: String?,
     onClick: () -> Unit,
 ) {
     Card(

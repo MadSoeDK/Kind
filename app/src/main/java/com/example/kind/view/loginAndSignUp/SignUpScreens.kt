@@ -63,7 +63,7 @@ fun SignupScreen(
                 viewModel = SignUpDonationAmountViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
-            5 -> PortfolioBuilderScreen(viewModel = ExplorerViewModel(),
+            5 -> PortfolioBuilderScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             6 -> Text(text = "Portfolio builder")
