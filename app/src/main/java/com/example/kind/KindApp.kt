@@ -31,6 +31,9 @@ import com.example.kind.view.login.SignupViewModel
 import com.example.kind.view.login.StartScreen
 import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
+import com.example.kind.ViewModel.ExplorerViewModel
+import com.example.kind.ViewModel.PortfolioViewModel
+import com.example.kind.ViewModel.ProfileViewModel
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Start : Screen("start", Icons.Filled.Favorite)
@@ -40,6 +43,7 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
+    object News : Screen("article", Icons.Filled.Favorite)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -87,6 +91,12 @@ fun KindApp() {
                 content = { ExplorerScreen(ExplorerViewModel()) }
             )
         }
+        composable(Screen.News.route) {
+            Screen(
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                content = { NewsScreen() }
+            )
+        }
     }
 }
 
@@ -119,7 +129,7 @@ fun KindNavigationBar(
     NavigationBar(
         containerColor = Color.White,
     ) {
-        val items = listOf(Screen.Home, Screen.Portfolio, Screen.Explorer, Screen.Profile)
+        val items = listOf(Screen.Home, Screen.Portfolio, Screen.News,Screen.Explorer, Screen.Profile)
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
         items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
         val navBackStackEntry by viewModel.navController.currentBackStackEntryAsState()
