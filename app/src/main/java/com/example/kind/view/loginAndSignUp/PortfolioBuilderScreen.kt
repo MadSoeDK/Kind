@@ -24,7 +24,9 @@ import com.example.kind.view.theme.Typography
 @ExperimentalFoundationApi
 @Composable
 fun PortfolioBuilderScreen(
-    viewModel: ExplorerViewModel
+    viewModel: ExplorerViewModel,
+    next: () -> Unit,
+    back: () -> Unit
 ) {
     Column {
         Row(modifier = Modifier
@@ -67,7 +69,7 @@ fun PortfolioBuilderScreen(
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
             Column{
-                TextButton(onClick = { /*TODO*/ }) {
+                TextButton(onClick = { back() }) {
                     Text(
                         text = "← Back",
                         fontWeight = Typography.labelLarge.fontWeight,
@@ -77,12 +79,12 @@ fun PortfolioBuilderScreen(
                 }
             }
             Column{
-                OutlinedButton(onClick = { /*TODO*/ }) {
+                Button(onClick = { next() }) {
                     Text(
                         text = "Next →",
                         fontWeight = Typography.labelLarge.fontWeight,
                         fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineLarge.color
+                        color = Typography.headlineSmall.color
                     )
                 }
             }
@@ -94,7 +96,5 @@ fun PortfolioBuilderScreen(
 @Composable
 @Preview(showBackground = true)
 fun PortfolioBuilderPreview() {
-    PortfolioBuilderScreen(
-        ExplorerViewModel()
-    )
+    PortfolioBuilderScreen(ExplorerViewModel(), next = { /*TODO*/ }, back = { /*TODO*/ })
 }

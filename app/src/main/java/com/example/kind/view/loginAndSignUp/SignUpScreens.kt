@@ -1,10 +1,14 @@
 package com.example.kind.view.loginAndSignUp
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.kind.ViewModel.ExplorerViewModel
+import com.example.kind.ViewModel.PortfolioViewModel
+import com.example.kind.view.screens.PortfolioBuilderScreen
 
 /*@Composable
 fun StartScreen(
@@ -18,6 +22,7 @@ fun LoginScreen(navController: NavController) {
     LoginView()
 }*/
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SignupScreen(
     viewModel: SignupViewModel,
@@ -59,7 +64,9 @@ fun SignupScreen(
                 viewModel = SignUpDonationAmountViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
-            5 -> Text(text = "Donation amount")
+            5 -> PortfolioBuilderScreen(viewModel = ExplorerViewModel(),
+                next = { viewModel.steps.value += 1 },
+                back = { viewModel.steps.value -= 1 })
             6 -> Text(text = "Portfolio builder")
             7 -> {
                 Text(text = "Donation summary")
@@ -69,7 +76,7 @@ fun SignupScreen(
             }
         }
         when (viewModel.steps.value) {
-            in 5..6 -> {
+            6 -> {
                 SignupNavigation(
                     nextStep = { viewModel.steps.value += 1 },
                     prevStep = { viewModel.steps.value -= 1 }
@@ -90,10 +97,10 @@ fun SignupNavigation(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(onClick = prevStep) {
-            Text(text = "Back")
+            Text(text = "← Back")
         }
         Button(onClick = nextStep) {
-            Text(text = "Next")
+            Text(text = "Next →")
         }
     }
 }

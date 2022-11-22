@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,8 +30,8 @@ fun SignUpDonationFrequencyScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
                 Text(text = "Every month")
             }
@@ -38,8 +39,8 @@ fun SignUpDonationFrequencyScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
                 Text(text = "Every third month")
             }
@@ -47,8 +48,8 @@ fun SignUpDonationFrequencyScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
                 Text(text = "Every half year")
             }
@@ -56,8 +57,8 @@ fun SignUpDonationFrequencyScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
                 Text(text = "Every year")
             }
@@ -70,11 +71,11 @@ fun SignUpDonationFrequencyScreen(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
-            Button(onClick = { back() }) {
-                Text("Back")
+            TextButton(onClick = { back() }) {
+                Text("← Back")
             }
             Button(onClick = { next() }) {
-                Text("Next")
+                Text("Next →")
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ fun SignUpDonationAmountScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
+                modifier = Modifier.width(300.dp),
                 shape = Shapes.extraSmall
             ) {
                 Text(text = "50 kr.")
@@ -38,7 +39,7 @@ fun SignUpDonationAmountScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
+                modifier = Modifier.width(300.dp),
                 shape = Shapes.extraSmall
             ) {
                 Text(text = "100 kr.")
@@ -47,7 +48,7 @@ fun SignUpDonationAmountScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
+                modifier = Modifier.width(300.dp),
                 shape = Shapes.extraSmall
             ) {
                 Text(text = "200 kr.")
@@ -56,7 +57,7 @@ fun SignUpDonationAmountScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                contentPadding = PaddingValues(100.dp, 0.dp),
+                modifier = Modifier.width(300.dp),
                 shape = Shapes.extraSmall
             ) {
                 Text(text = "Custom amount")
@@ -70,11 +71,11 @@ fun SignUpDonationAmountScreen(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Bottom
         ) {
-            Button(onClick = { back() }) {
-                Text("Back")
+            TextButton(onClick = { back() }) {
+                Text("← Back")
             }
             Button(onClick = { next() }) {
-                Text("Next")
+                Text("Next →")
             }
         }
     }
@@ -84,7 +85,5 @@ fun SignUpDonationAmountScreen(
 @Composable
 fun SignUpDonationAmountScreenPreview() {
     val viewModel = SignUpDonationAmountViewModel()
-    SignUpDonationAmountScreen(viewModel = viewModel, next = { /*TODO*/ }) {
-
-    }
+    SignUpDonationAmountScreen(viewModel = viewModel, next = { /*TODO*/ }, back = { /*TODO*/ })
 }

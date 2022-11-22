@@ -3,6 +3,7 @@ package com.example.kind.view.loginAndSignUp
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,11 +32,11 @@ fun SignUpPersonalInformationScreen(
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(0.dp, 15.dp), horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.Bottom) {
-            Button(onClick = {back()} ) {
-                Text("Back")
+            TextButton(onClick = {back()} ) {
+                Text("← Back")
             }
             Button(onClick = {next()} ) {
-                Text("Next")
+                Text("Next →")
             }
         }
     }
