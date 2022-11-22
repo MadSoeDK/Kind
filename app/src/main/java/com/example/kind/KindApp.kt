@@ -26,7 +26,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.ViewModel.*
+import com.example.kind.view.loginAndSignUp.*
+import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
@@ -35,6 +38,7 @@ import com.example.kind.view.screens.*
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Login : Screen("login", Icons.Filled.Favorite)
+    object Signup : Screen("signup", Icons.Filled.Favorite)
     object Home : Screen("home", Icons.Filled.Home)
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
@@ -51,12 +55,17 @@ fun KindApp() {
         navController = viewModel.navController,
         startDestination = Screen.Login.route,
     ) {
-        composable(Screen.Login.route) {
+        //er ikke sikker på om vi skal have denne route, siden at start altid er ved login. beholder den for nu in case vi vil have en first time login besked eller lign.
+        /* composable(Screen.Start.route) {
             Screen(
-                content = {
-                    LoginScreen(viewModel = LoginViewModel(), login = { viewModel.login() })
-                }
+                content = { StartScreen(navController = viewModel.navController) }
             )
+        }*/
+        composable(Screen.Login.route) {
+            Screen ( content = { LoginScreen(LoginViewModel(), signUp = {viewModel.navigate("signup")}) })
+        }
+        composable(Screen.Signup.route) {
+            Screen { SignupScreen(SignupViewModel(), finishSignup = { viewModel.finishSignup() }, back = { viewModel.navigate("login") })  }
         }
         composable(Screen.Home.route) {
             Screen(
