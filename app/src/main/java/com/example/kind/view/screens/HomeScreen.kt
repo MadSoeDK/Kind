@@ -1,18 +1,19 @@
 package com.example.kind.view.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kind.view.composables.CardListHorizontalScroll
+import com.example.kind.Screen
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.view.composables.KindCard
 import com.example.kind.view.theme.size
 
 @Composable
@@ -30,12 +31,15 @@ fun HomeScreen(
         )
         Text("The latest news from your charities")
 
-        CardListHorizontalScroll(viewModel.getArticles(
-            "Article 1",
-            "Article 2",
-        ))
-        
-        Spacer(modifier = Modifier.height(MaterialTheme.size.xxs))
+        LazyRow {
+            viewModel.getArticles().forEach {
+                item {
+                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = "Explore charities",
@@ -44,10 +48,14 @@ fun HomeScreen(
             fontWeight = Typography.headlineMedium.fontWeight,
         )
         Text("Get to know other charities better")
-        CardListHorizontalScroll(listOfContent = viewModel.getCharities(
-            "Charity 1",
-            "Charity 2"
-        ))
+
+        LazyRow {
+            viewModel.getCharities().forEach {
+                item {
+                    KindCard(titleProvider = it.name, subTitleProvier = it.name, onClick = { viewModel.navController.navigate(Screen.Charity.route + "/" + it.id.toString()) })
+                }
+            }
+        }
     }
 }
 

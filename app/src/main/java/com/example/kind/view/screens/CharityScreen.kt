@@ -2,8 +2,12 @@ package com.example.kind.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,25 +16,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.example.kind.ViewModel.CharityViewModel
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.CardListHorizontalScroll
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
+import com.example.kind.view.composables.KindCard
 import com.example.kind.ViewModel.HomeViewModel
 import com.example.kind.view.theme.size
 import com.example.kind.view.home.composables.SmallHeaderAndText
 import com.example.kind.view.theme.paddingSize
 
 @Composable
-fun OrganizationScreen(
-    viewModel: HomeViewModel, // To be Changed
-    donorAmount: String,
-    donationAmount: String,
-    organizationName: String,
-    organizationTheme: String
-)
-{
+fun CharityScreen(
+    viewModel: CharityViewModel,
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -60,13 +62,13 @@ fun OrganizationScreen(
         Box(modifier = Modifier
             .background(color = Color.LightGray) //TODO?
             .fillMaxWidth()
-            .height(MaterialTheme.size.xl)
+            .height(200.dp)
             .align(Alignment.CenterHorizontally)
-        )
-        {
-
-            Row(modifier = Modifier
-                .align(Alignment.Center)) {
+        ) {
+            IconButton(onClick = { viewModel.navController.popBackStack() }) {
+                Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
+            }
+            Row(modifier = Modifier.align(Alignment.BottomCenter)) {
                 Box(
                     modifier = Modifier
                         .padding(
@@ -74,13 +76,12 @@ fun OrganizationScreen(
                             MaterialTheme.paddingSize.s,
                         )
                         .clip(CircleShape)
-                        .background(color = Color.Gray) //TODO?
-                        .width(MaterialTheme.size.l)
-                        .height(MaterialTheme.size.l)
+                        .background(color = Color.Gray)
+                        .width(75.dp)
+                        .height(75.dp)
                 )
             }
         }
-
 
         // Donations, Donors & Picture
         Row(modifier = Modifier
@@ -89,9 +90,8 @@ fun OrganizationScreen(
                 MaterialTheme.paddingSize.xxxs,
             )
             .align(Alignment.CenterHorizontally)
-        )
-        {
-            Text(text = donorAmount+"\n Donors",
+        ) {
+            Text(text = "150\n Donors",
                 color = subHeading,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
@@ -103,11 +103,12 @@ fun OrganizationScreen(
             ))
 
             Text(text = donationAmount+"\n Donations",
+            Spacer(modifier = Modifier.padding(50.dp,0.dp)) //TODO
+            Text(text = "200\n Donations",
                 color = subHeading,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
             )
-
         }
 
         // Header & Button
@@ -128,14 +129,14 @@ fun OrganizationScreen(
                 )
             ){
                 Text(
-                    text = organizationName,
+                    text = viewModel.data.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
                     fontSize = Typography.headlineLarge.fontSize,
                     color = Typography.headlineLarge.color
                 )
             }
             Row {
-                Text(text = organizationTheme)
+                Text(text = "Some category here!")
             }
         }
 
@@ -158,24 +159,14 @@ fun OrganizationScreen(
             headerProvider = "Posts",
             textProvider = "Read the latest posts from the organization"
         )
-        CardListHorizontalScroll(viewModel.getArticles(
-            "Article 1",
-            "Article 2"
-        ))
 
+        LazyRow {
+            viewModel.getArticles().forEach {
+                item {
+                    KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate("article" + it.id.toString()) })
+                }
+            }
+        }
     }
 
-}
-
-@Composable
-@Preview
-fun OrganizationScreenPreview()
-{
-    val viewModel = viewModel<HomeViewModel>()
-    OrganizationScreen(
-        viewModel,
-        "1.2K",
-        "15K",
-        "Red Barnet",
-        "Disasters")
 }

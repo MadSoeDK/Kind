@@ -1,6 +1,7 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
@@ -20,19 +21,21 @@ import com.example.kind.view.theme.size
 fun KindCard (
     titleProvider: String,
     subTitleProvier: String,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = Modifier
             .padding(MaterialTheme.paddingSize.xs)
-            .width(MaterialTheme.size.l)
-            .height(MaterialTheme.size.l)
+            .width(200.dp)
+            .height(200.dp)
+            .clickable { onClick() }
     ) {
         Column {
             Box(
                 modifier = Modifier
                     .background(Color.Gray)
                     .fillMaxWidth()
-                    .height(MaterialTheme.size.m)
+                    .height(140.dp)
             ) {
                 Text(text = "Image")
             }
@@ -44,8 +47,8 @@ fun KindCard (
                     Modifier
                         .clip(CircleShape)
                         .background(Color.Red)
-                        .height(MaterialTheme.size.xxxs)
-                        .width(MaterialTheme.size.xxxs)
+                        .height(40.dp)
+                        .width(40.dp)
                 )
                 CircleShape
                 Column (modifier = Modifier.padding(
