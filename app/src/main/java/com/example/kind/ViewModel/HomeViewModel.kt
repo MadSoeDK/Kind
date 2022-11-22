@@ -1,8 +1,16 @@
 package com.example.kind.ViewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.example.kind.Article
+import com.example.kind.Charity
+import com.example.kind.getFakeArticles
+import com.example.kind.getFakeCharities
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    val navController: NavController
+) : ViewModel() {
+
     // Logic etc...
     fun getText(): String {
         return "Du er blandt top 5% af donorer. Godt gået!"
@@ -12,18 +20,12 @@ class HomeViewModel : ViewModel() {
         return 1534.toString() + " kr."
     }
 
-    fun getCharities(charity1: String, charity2: String): List<String> {
-        val articles = ArrayList<String>()
-        articles.add(charity1)
-        articles.add(charity2)
-        return articles
+    fun getCharities(): List<Charity> {
+        return getFakeCharities()
     }
 
-    fun getArticles(article1: String, article2: String): List<String> {
-        val articles = ArrayList<String>()
-        articles.add(article1)
-        articles.add(article2)
-        return articles
+    fun getArticles(): List<Article> {
+        return getFakeArticles()
     }
 }
 

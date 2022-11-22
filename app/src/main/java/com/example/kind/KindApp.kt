@@ -18,21 +18,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.kind.View.screens.PortfolioScreen
+import androidx.navigation.navArgument
 import com.example.kind.ViewModel.*
-import com.example.kind.view.screens.ExplorerScreen
-import com.example.kind.view.screens.HomeScreen
-import com.example.kind.view.screens.ProfileScreen
-import com.example.kind.view.screens.LoginScreen
 import com.example.kind.view.theme.Typography
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.ViewModel.ProfileViewModel
+import com.example.kind.view.screens.*
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Login : Screen("login", Icons.Filled.Favorite)
@@ -40,6 +39,8 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
+    object Charity : Screen("charity", Icons.Filled.Favorite)
+
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -60,7 +61,7 @@ fun KindApp() {
         composable(Screen.Home.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                content = { HomeScreen(HomeViewModel()) }
+                content = { HomeScreen(HomeViewModel(viewModel.navController)) }
             )
         }
         composable(Screen.Portfolio.route) {
@@ -80,7 +81,17 @@ fun KindApp() {
         composable(Screen.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                content = { ExplorerScreen(ExplorerViewModel()) }
+                content = { ExplorerScreen(ExplorerViewModel(viewModel.navController)) }
+            )
+        }
+        composable(Screen.Charity.route  + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { NavBackStackEntry ->
+            Screen(
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                content = { CharityScreen(
+                    viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
+                ) }
             )
         }
     }
@@ -98,7 +109,9 @@ fun Screen(
         floatingActionButton = { FloatingActionButton() },
         content = {
             Column(
-                modifier = Modifier.padding(it).verticalScroll(rememberScrollState())
+                modifier = Modifier
+                    .padding(it)
+                    .verticalScroll(rememberScrollState())
             ) {
                 content(it)
             }
