@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.kind.ViewModel.ExplorerViewModel
-import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.view.screens.PortfolioBuilderScreen
 
 /*@Composable
@@ -68,12 +67,10 @@ fun SignupScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             6 -> Text(text = "Portfolio builder")
-            7 -> {
-                Text(text = "Donation summary")
-                Button(onClick = finishSignup) {
-                    Text(text = "Donate")
-                }
-            }
+            7 -> SignUpDonationSummaryScreen(
+                viewModel = SignUpDonationSummaryViewModel(),
+                next = { finishSignup() },
+                back = { viewModel.steps.value -= 1 })
         }
         when (viewModel.steps.value) {
             6 -> {
