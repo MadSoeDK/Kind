@@ -29,22 +29,16 @@ fun ExplorerScreen(
         CharityHeaderAndSubsectionText(
             Title = "Charity Explorer",
             Subtitle = "Get to know other charities better",
-            Categories = arrayOf(
-                "Health",
-                "Disasters",
-                "Climate",
-                "Welfare",
-                "Children Care"
-            ))
+            Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
+        )
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
+        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {
             viewModel.getCharities().forEach {
                 item {
                     KindCharityCard(
                         Title = it.name,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
                         OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
-                        Category = null,
                         onClick = { viewModel.navController.navigate(Screen.Charity.route + "/" + it.id) }
                     )
                 }
