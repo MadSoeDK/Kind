@@ -7,7 +7,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -194,7 +194,7 @@ private fun convertTouchEventPointToAngle(
 @Composable
 fun ChartPreview() {
     PieChart(
-        modifier = Modifier.size(MaterialTheme.size.s),
+        modifier = Modifier.size(size.s),
         progress = listOf(10f, 20f, 5f),
         colors = listOf(
             Color(0xFFbf95d4), //TODO?

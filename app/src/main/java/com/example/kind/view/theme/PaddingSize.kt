@@ -1,6 +1,6 @@
 package com.example.kind.view.theme
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
@@ -19,11 +19,14 @@ data class PaddingSize(
     val xxl: Dp = 30.dp,
     val xxxl: Dp = 40.dp,
     val xxxxl: Dp = 50.dp,
+
+    val standard: Dp = 10.dp,
+
 )
 
 val LocalPaddingSize = compositionLocalOf { PaddingSize() }
 
-val MaterialTheme.paddingSize : PaddingSize
+val paddingSize : PaddingSize
     @Composable
     @ReadOnlyComposable
     get() = LocalPaddingSize.current

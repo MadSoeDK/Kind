@@ -5,16 +5,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.R
 import com.example.kind.view.theme.Typography
+import com.example.kind.view.theme.fontSize
 import com.example.kind.view.theme.paddingSize
 import com.example.kind.view.theme.size
 
@@ -29,60 +32,73 @@ fun KindCharityCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.paddingSize.xs)
-            .width(MaterialTheme.size.xxl)
-            .height(MaterialTheme.size.xxl)
+            .padding(paddingSize.s) //½ af figma
+            .width(size.xxl)
+            .height(size.xxl)
     ) {
 
         Column(
             modifier = Modifier.padding(
-                MaterialTheme.paddingSize.l,
-                MaterialTheme.paddingSize.default,
+                paddingSize.l,
+                paddingSize.default,
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xxxs,
+                paddingSize.default,
+                paddingSize.xxxs,
             )) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
-                        .height(MaterialTheme.size.xxs)
-                        .width(MaterialTheme.size.xxs)
+                        .height(size.xxs)
+                        .width(size.xxs)
                 )
             }
             Row(modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xxxs,
+                paddingSize.default,
+                paddingSize.xxxs,
             )) {
                 Text(
                     text = Title,
                     fontWeight = Typography.headlineMedium.fontWeight,
-                    fontSize = Typography.headlineSmall.fontSize,
-                    color = Typography.headlineLarge.color
+                    fontSize = fontSize.subheader,
+                    color = Color.Black
                 )
             }
             Row(modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xxxs,
+                paddingSize.default,
+                paddingSize.xxxs,
             )) {
                 //TODO need to center text
                 Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,
-                    fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.displayMedium.color,
+                    fontSize = fontSize.body,
+                    color = Color.Black,
                 )
             }
-            OutlinedButton(onClick = { onClick() }) {
+            OutlinedButton(onClick = { /*TODO*/ }) {
                 Text(
                     text = ReadMore,
                     fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color
+                    fontSize = fontSize.buttonText,
+                    color = Typography.headlineLarge.color,
                 )
             }
 
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun KindCharityCardPreview() {
+    val OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147)
+    KindCharityCard(
+        Title = "Red Cross",
+        Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+        OrganizationIcon = OrganizationIcon,
+        Category = null,
+        onClick = (viewModel()),
+    )
 }

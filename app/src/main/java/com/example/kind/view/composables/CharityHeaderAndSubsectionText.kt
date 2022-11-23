@@ -3,7 +3,8 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
+//import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,13 +18,13 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(
-            MaterialTheme.paddingSize.xl,
-            MaterialTheme.paddingSize.xxxxl),
+            paddingSize.xl,
+            paddingSize.xxxxl),
         verticalArrangement = Arrangement.Top, Alignment.Start) {
         Row (
             modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s)
+                paddingSize.default,
+                paddingSize.s)
         ){
             Text(
                 text = Title,
@@ -33,8 +34,8 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
             )
         }
         Row(modifier = Modifier.padding(
-            MaterialTheme.paddingSize.default,
-            MaterialTheme.paddingSize.s)) {
+            paddingSize.default,
+            paddingSize.s)) {
             Text(
                 text = Subtitle,
                 fontWeight = Typography.headlineMedium.fontWeight,
@@ -48,8 +49,8 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
                 text = Categories[i] + "      ",
                 fontWeight = Typography.headlineMedium.fontWeight,
                 fontSize = Typography.labelLarge.fontSize,
-                //TODO Need to find correct color
-                color = Typography.headlineLarge.color)
+                //TODO highlight needs to be primary color and not subheading
+                color = Typography.headlineMedium.color)
             }
         }
     }

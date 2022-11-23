@@ -3,7 +3,7 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,13 +17,13 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.paddingSize.xl, MaterialTheme.paddingSize.xxxxl),
+            .padding(paddingSize.xl, paddingSize.xxxxl),
         verticalArrangement = Arrangement.Top, Alignment.Start
     ) {
         Row(
             modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s,
+                paddingSize.default,
+                paddingSize.s,
             )
         ) {
             Text(
@@ -35,8 +35,8 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
         }
         if (Subtitle != null) {
             Row(modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s,
+                paddingSize.default,
+                paddingSize.s,
             )) {
                 Text(
                     text = Subtitle,
@@ -50,8 +50,8 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
         Row(modifier = Modifier
             .horizontalScroll(rememberScrollState())
             .padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s,
+                paddingSize.default,
+                paddingSize.s,
             )) {
             for (i in Categories.indices) {
                 Text(

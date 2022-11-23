@@ -4,11 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.example.kind.view.theme.size
 import com.example.kind.view.theme.background
@@ -28,7 +29,7 @@ fun <T> PortfolioTable (
         modifier = modifier.background(background), color = background
     ) {
         LazyRow(
-            modifier = Modifier.padding(MaterialTheme.paddingSize.m)
+            modifier = Modifier.padding(paddingSize.m)
         ) {
             items((0 until columnCount).toList()) { columnIndex ->
                 Column {
@@ -45,7 +46,7 @@ fun <T> PortfolioTable (
                                 Spacer(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(MaterialTheme.size.xxxxxxs)
+                                        .height(size.xxxxxxs)
                                         .background(Color(0xFF79747E))) //TODO
                             }
                         }

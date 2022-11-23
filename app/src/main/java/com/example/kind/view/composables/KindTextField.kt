@@ -2,7 +2,7 @@ package com.example.kind.view.composables
 
 import android.util.Patterns
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -51,7 +51,7 @@ class KindTextField (val name: String, val label: String = "",
             value = text,
             isError = hasError,
             label = { Text(text = name) },
-            modifier = Modifier.padding(MaterialTheme.paddingSize.s),
+            modifier = Modifier.padding(paddingSize.s),
             onValueChange = { value ->
                 hideError()
                 text = value

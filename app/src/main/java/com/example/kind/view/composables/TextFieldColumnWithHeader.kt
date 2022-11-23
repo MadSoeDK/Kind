@@ -1,7 +1,7 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
@@ -15,14 +15,14 @@ fun TextFieldColumn(title: String, fields: List<KindTextField>, state: FormState
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                MaterialTheme.paddingSize.l,
-                MaterialTheme.paddingSize.default,),
+                paddingSize.l,
+                paddingSize.default,),
         verticalArrangement = Arrangement.Top
     ) {
         Row(
             modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s)
+                paddingSize.default,
+                paddingSize.s)
         ) {
             Text(
                 text = title,

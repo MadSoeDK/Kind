@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
+//import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -35,7 +37,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(MaterialTheme.paddingSize.xxl),
+                    .padding(paddingSize.xxl),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
 
@@ -47,8 +49,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        MaterialTheme.paddingSize.s,
-                        MaterialTheme.paddingSize.s,
+                        paddingSize.s,
+                        paddingSize.s,
                     )
             ) {
                 HeaderAndText(
@@ -58,7 +60,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
             }
             PieChart(
                 modifier = Modifier
-                    .size(MaterialTheme.size.xxl)
+                    .size(size.xxl)
                     .align(Alignment.CenterHorizontally),
                 progress = viewModel.getPercentages(),
                 colors = viewModel.getColors(),
@@ -69,13 +71,13 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        MaterialTheme.paddingSize.xxxl,
-                        MaterialTheme.paddingSize.default,
+                        paddingSize.xxxl,
+                        paddingSize.default,
                     ),
                 verticalArrangement = Arrangement.Top, Alignment.Start
             ) {
                 LazyVerticalGrid(columns = GridCells.Fixed(2),
-                    Modifier.height(MaterialTheme.size.xs),
+                    Modifier.height(size.xs),
                     content = {
                     items(viewModel.getPortfolioDonation().size) { i ->
                         viewModel.getPortfolioDonation()[i].organization
@@ -86,8 +88,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                                 Modifier
                                     .clip(RectangleShape)
                                     .background(viewModel.getColors()[i])
-                                    .height(MaterialTheme.size.xxxxxs)
-                                    .width(MaterialTheme.size.xxxxxs)
+                                    .height(size.xxxxxs)
+                                    .width(size.xxxxxs)
                                     .align(Alignment.BottomStart,
                                     )
                             )
@@ -118,15 +120,15 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        MaterialTheme.paddingSize.s,
-                        MaterialTheme.paddingSize.s,
+                        paddingSize.s,
+                        paddingSize.s,
                     )
             ) {
                 Text(
                     text = "Your charities",
-                    fontSize = MaterialTheme.fontSize.xl,
+                    fontSize = fontSize.xl,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(MaterialTheme.paddingSize.xxs),
+                    modifier = Modifier.padding(paddingSize.xxs),
                     fontWeight = FontWeight.Black,
                     color = Typography.headlineMedium.color,
                 )
@@ -135,8 +137,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        MaterialTheme.paddingSize.s,
-                        MaterialTheme.paddingSize.s,
+                        paddingSize.s,
+                        paddingSize.s,
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -176,11 +178,11 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                         }
                         Text(
                             text = value,
-                            fontSize = MaterialTheme.fontSize.m,
+                            fontSize = fontSize.m,
                             textAlign = alignment,
                             modifier = Modifier.padding(
-                                MaterialTheme.paddingSize.default,
-                                MaterialTheme.paddingSize.l,
+                                paddingSize.default,
+                                paddingSize.l,
                             ),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -202,11 +204,11 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                         }
                         Text(
                             text = value,
-                            fontSize = MaterialTheme.fontSize.s,
+                            fontSize = fontSize.s,
                             textAlign = alignment,
                             modifier = Modifier.padding(
-                                MaterialTheme.paddingSize.default,
-                                MaterialTheme.paddingSize.l,
+                                paddingSize.default,
+                                paddingSize.l,
                             ),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -231,24 +233,24 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                 Modifier
                     .clip(RectangleShape)
                     .background(Color.White)
-                    .height(MaterialTheme.size.xxxxxl)
-                    .width(MaterialTheme.size.xxxxl)
+                    .height(size.xxxxxl)
+                    .width(size.xxxxl)
             ) {
                 Column(modifier = Modifier.padding(
-                    MaterialTheme.paddingSize.default,
-                    MaterialTheme.paddingSize.l,
+                    paddingSize.default,
+                    paddingSize.l,
                 )) {
                     // Organisationer i et grid
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(1),
-                        Modifier.height(MaterialTheme.size.xxxl),
+                        Modifier.height(size.xxxl),
                         horizontalArrangement = Arrangement.Start,
                         content = {
                             items(viewModel.getPortfolioDonation().size) { i ->
                                 viewModel.getPortfolioDonation()[i].organization
                                 Spacer(modifier = Modifier.padding(
-                                    MaterialTheme.paddingSize.default,
-                                    MaterialTheme.paddingSize.l,
+                                    paddingSize.default,
+                                    paddingSize.l,
                                 ))
                                 Text(
                                     text = viewModel.getPortfolioDonation()[i].organization,
@@ -260,14 +262,14 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
 
                                 var text by rememberSaveable { mutableStateOf("") }
                                 Box(
-                                    modifier = Modifier.width(MaterialTheme.size.xxxs),
+                                    modifier = Modifier.width(size.xxxs),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     TextField(
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                         modifier = Modifier.padding(
-                                            MaterialTheme.paddingSize.default,
-                                            MaterialTheme.paddingSize.xxl,
+                                            paddingSize.default,
+                                            paddingSize.xxl,
                                         ),
                                         value = text,
                                         onValueChange = {
@@ -275,10 +277,11 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                         },
                                         label = { Text("Amount (DKK)") },
                                         colors = TextFieldDefaults.textFieldColors(
-                                            containerColor = MaterialTheme.colors.primary.copy(alpha = 0.2F)
+                                            containerColor = colorScheme.primary.copy(alpha = 0.2F)
+                                            //containerColor = colors.primary.copy(alpha = 0.2F)
                                         ),
                                         textStyle = TextStyle.Default.copy(
-                                            fontSize = MaterialTheme.fontSize.l
+                                            fontSize = fontSize.l
                                         )
                                     )
 
@@ -305,13 +308,13 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                         color = Typography.labelLarge.color,
                     )
                     Spacer(modifier = Modifier.padding(
-                        MaterialTheme.paddingSize.default,
-                        MaterialTheme.paddingSize.s,
+                        paddingSize.default,
+                        paddingSize.s,
                     ))
                     Button(
                         onClick = { /*TODO*/ },
                         Modifier
-                            .width(MaterialTheme.size.xl)
+                            .width(size.xl)
                             .background(
                                 Typography.headlineLarge.color
                             )
@@ -324,8 +327,8 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                         )
                     }
                     Spacer(modifier = Modifier.padding(
-                        MaterialTheme.paddingSize.default,
-                        MaterialTheme.paddingSize.s,
+                        paddingSize.default,
+                        paddingSize.s,
                     ))
                 }
             }

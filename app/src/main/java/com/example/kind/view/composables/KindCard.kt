@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +25,7 @@ fun KindCard (
 ) {
     Card(
         modifier = Modifier
-            .padding(MaterialTheme.paddingSize.xs)
+            .padding(paddingSize.xs)
             .width(200.dp)
             .height(200.dp)
             .clickable { onClick() }
@@ -52,8 +52,8 @@ fun KindCard (
                 )
                 CircleShape
                 Column (modifier = Modifier.padding(
-                    MaterialTheme.paddingSize.xs,
-                    MaterialTheme.paddingSize.default,
+                    paddingSize.xs,
+                    paddingSize.default,
                 )){
                     Text(text = titleProvider)
                     Text(text = subTitleProvier)

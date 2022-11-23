@@ -20,14 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.ViewModel.CharityViewModel
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.kind.view.composables.CardListHorizontalScroll
-import com.example.kind.view.theme.Typography
-import com.example.kind.view.theme.subHeading
+//import com.example.kind.view.composables.CardListHorizontalScroll
 import com.example.kind.view.composables.KindCard
 import com.example.kind.ViewModel.HomeViewModel
-import com.example.kind.view.theme.size
 import com.example.kind.view.home.composables.SmallHeaderAndText
-import com.example.kind.view.theme.paddingSize
+import com.example.kind.view.theme.*
 
 @Composable
 fun CharityScreen(
@@ -39,8 +36,8 @@ fun CharityScreen(
             .fillMaxWidth()
             .background(color = Color.White) //TODO WRONG COLOR?
             .padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xxxs,
+                paddingSize.default,
+                paddingSize.xxxs,
             ))
 
     {
@@ -49,13 +46,13 @@ fun CharityScreen(
         Box(
             modifier = Modifier
                 .padding(
-                    MaterialTheme.paddingSize.s,
-                    MaterialTheme.paddingSize.xxxs,
+                    paddingSize.s,
+                    paddingSize.xxxs,
                 )
                 .clip(CircleShape)
                 .background(color = Color.Gray) //TODO
-                .width(MaterialTheme.size.xxs)
-                .height(MaterialTheme.size.xxxs)
+                .width(size.xxs)
+                .height(size.xxxs)
                 .align(Alignment.Start)
         )
         // Background
@@ -72,8 +69,8 @@ fun CharityScreen(
                 Box(
                     modifier = Modifier
                         .padding(
-                            MaterialTheme.paddingSize.default,
-                            MaterialTheme.paddingSize.s,
+                            paddingSize.default,
+                            paddingSize.s,
                         )
                         .clip(CircleShape)
                         .background(color = Color.Gray)
@@ -86,8 +83,8 @@ fun CharityScreen(
         // Donations, Donors & Picture
         Row(modifier = Modifier
             .padding(
-                MaterialTheme.paddingSize.s,
-                MaterialTheme.paddingSize.xxxs,
+                paddingSize.s,
+                paddingSize.xxxs,
             )
             .align(Alignment.CenterHorizontally)
         ) {
@@ -98,12 +95,15 @@ fun CharityScreen(
             )
 
             Spacer(modifier = Modifier.padding(
-                MaterialTheme.paddingSize.xxxxl,
-                MaterialTheme.paddingSize.default
+                paddingSize.xxxxl,
+                paddingSize.default
             ))
 
-            Text(text = donationAmount+"\n Donations",
-            Spacer(modifier = Modifier.padding(50.dp,0.dp)) //TODO
+            Text(text = /*donationAmount+*/"150\n Donations",)
+            Spacer(modifier = Modifier.padding(
+                paddingSize.xxxxl,
+                paddingSize.default,
+            )) //TODO
             Text(text = "200\n Donations",
                 color = subHeading,
                 fontSize = Typography.headlineMedium.fontSize,
@@ -116,16 +116,16 @@ fun CharityScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    MaterialTheme.paddingSize.default,
-                    MaterialTheme.paddingSize.s,
+                    paddingSize.default,
+                    paddingSize.s,
                 ),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row (
                 modifier = Modifier.padding(
-                    MaterialTheme.paddingSize.default,
-                    MaterialTheme.paddingSize.s,
+                    paddingSize.default,
+                    paddingSize.s,
                 )
             ){
                 Text(

@@ -41,7 +41,6 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
     object Charity : Screen("charity", Icons.Filled.Favorite)
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)

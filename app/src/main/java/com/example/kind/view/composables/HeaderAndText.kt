@@ -1,7 +1,7 @@
 package com.example.kind.view.home.composables
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+//import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,16 +18,16 @@ fun HeaderAndText(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.xxxxl,
+                paddingSize.default,
+                paddingSize.xxxxl,
             ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row (
             modifier = Modifier.padding(
-                MaterialTheme.paddingSize.default,
-                MaterialTheme.paddingSize.s,
+                paddingSize.default,
+                paddingSize.s,
             )
         ){
             Text(

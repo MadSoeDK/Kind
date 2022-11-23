@@ -1,6 +1,6 @@
 package com.example.kind.view.theme
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
@@ -14,11 +14,14 @@ data class DivDpSize(
     val m: Dp = 70.dp,
     val l: Dp = 90.dp,
     val xl: Dp = 120.dp,
+
+    val stdSpacer: Dp = 20.dp,
+
 )
 
 val LocalDivDPSize = compositionLocalOf { DivDpSize() }
 
-val MaterialTheme.divDpSize : DivDpSize
+val divDpSize : DivDpSize
     @Composable
     @ReadOnlyComposable
     get() = LocalDivDPSize.current
