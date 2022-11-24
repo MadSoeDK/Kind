@@ -20,6 +20,7 @@ data class FontSize(
     val title: TextUnit = 24.sp,
     val buttonText: TextUnit = 14.sp,
     val announcement: TextUnit = 40.sp,
+    val signUpHeader: TextUnit = 20.sp,
 
     //listHeader: 15 listContent: 13
 )

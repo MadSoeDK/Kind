@@ -5,5 +5,5 @@ import androidx.lifecycle.ViewModel
 class SignUpDonationFrequencyViewModel : ViewModel() {
 
     //TODO need better naming
-    var signUpStepDescription = "How often will you make a donation"
+    var signUpStepDescription = "How often will you make a \ndonation?"
 }

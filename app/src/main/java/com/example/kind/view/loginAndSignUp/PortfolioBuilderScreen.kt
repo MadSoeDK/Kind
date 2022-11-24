@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
@@ -20,6 +21,7 @@ import com.example.kind.view.composables.KindCharityCard
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.composables.PortfolioTemplateCard
 import com.example.kind.view.theme.Typography
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @ExperimentalFoundationApi
 @Composable
@@ -37,7 +39,9 @@ fun PortfolioBuilderScreen(
                 text = "Get started with some of our templates or build your own",
                 fontWeight = Typography.labelLarge.fontWeight,
                 fontSize = Typography.headlineMedium.fontSize,
-                color = Typography.headlineLarge.color)
+                color = Typography.headlineLarge.color,
+                textAlign = TextAlign.Center,
+            )
         }
 
         LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
@@ -68,7 +72,9 @@ fun PortfolioBuilderScreen(
             .padding(10.dp,10.dp),
             horizontalArrangement = Arrangement.SpaceEvenly)
         {
-            Column{
+            Column (
+                horizontalAlignment = Alignment.Start,
+                    ){
                 TextButton(onClick = { back() }) {
                     Text(
                         text = "← Back",
@@ -78,7 +84,10 @@ fun PortfolioBuilderScreen(
                     )
                 }
             }
-            Column{
+            Column(
+                horizontalAlignment = Alignment.End,
+
+            ){
                 Button(onClick = { next() }) {
                     Text(
                         text = "Next →",

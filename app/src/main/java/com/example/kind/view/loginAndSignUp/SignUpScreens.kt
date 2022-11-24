@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.screens.PortfolioBuilderScreen
@@ -39,7 +41,7 @@ fun SignupScreen(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .padding((paddingSize.standard*2)),
+            .padding((paddingSize.standard * 2)),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         when (viewModel.steps.value) {
@@ -51,7 +53,7 @@ fun SignupScreen(
                 ) {
                     Row(horizontalArrangement = Arrangement.Center) {
                         Column() {
-                            Spacer(modifier = Modifier.size((10).dp))
+                            Spacer(modifier = Modifier.size((20).dp))
                             Text("be ",
                                 modifier = Modifier,
                                 color = primary,
@@ -99,12 +101,39 @@ fun SignupScreen(
                 back = back
             )
             2 -> {
-                Text(text = "Build portfolio")
-                Button(onClick = { viewModel.steps.value += 1 }) {
-                    Text(text = "Start")
-                }
-                Button(onClick = finishSignup) {
-                    Text(text = "Make it later")
+                Column(
+                    modifier = Modifier.padding(paddingSize.xxxxl),
+                    horizontalAlignment = Alignment.CenterHorizontally
+
+                ) {
+                    //Image
+                    Text(
+                        "Build your portfolio of charity now?\n",
+                        textAlign = TextAlign.Center,
+                        fontSize = fontSize.signUpHeader,
+                    )
+                    Text(
+                        "You can use the app for one-time donations and make your portfolio later. However you get the most benefits with at portfolio.",
+                        textAlign = TextAlign.Center,
+                        fontSize = fontSize.subheader,
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Button(onClick = { viewModel.steps.value += 1 }) {
+                        Text(
+                            text = "Start",
+                            Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            fontSize = fontSize.buttonText,
+                        )
+                    }
+                    TextButton(onClick = finishSignup) {
+                        Text(
+                            text = "Make it later",
+                            color = fieldText,
+                            textAlign = TextAlign.Center,
+                            fontSize = fontSize.buttonText
+                        )
+                    }
                 }
             }
             3 -> SignUpDonationFrequencyScreen(

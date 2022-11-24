@@ -1,17 +1,16 @@
 package com.example.kind.view.loginAndSignUp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
-import com.example.kind.view.theme.Shapes
+import com.example.kind.view.theme.*
 
 //TODO set button to fixed size, ignoring the content
 @Composable
@@ -22,7 +21,8 @@ fun SignUpDonationFrequencyScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-
+        modifier = Modifier
+            .padding(paddingSize.xxxxl)
         ) {
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             LoginHeader(size = 150, viewModel.signUpStepDescription)
@@ -31,36 +31,40 @@ fun SignUpDonationFrequencyScreen(
             OutlinedButton(
                 onClick = { /*TODO*/ },
                 shape = Shapes.extraSmall,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .fillMaxWidth(),
             ) {
-                Text(text = "Every month")
+                Text(text = "Every month", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
                 shape = Shapes.extraSmall,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .fillMaxWidth(),
             ) {
-                Text(text = "Every third month")
+                Text(text = "Every third month", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
                 shape = Shapes.extraSmall,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .fillMaxWidth(),
             ) {
-                Text(text = "Every half year")
+                Text(text = "Every half year", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
                 shape = Shapes.extraSmall,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .fillMaxWidth(),
             ) {
-                Text(text = "Every year")
+                Text(text = "Every year", color = fieldText)
             }
         }
         Row(
@@ -72,9 +76,11 @@ fun SignUpDonationFrequencyScreen(
             verticalAlignment = Alignment.Bottom
         ) {
             TextButton(onClick = { back() }) {
-                Text("← Back")
+                Text("← Back", color = primary)
             }
-            Button(onClick = { next() }) {
+            Button( //TODO Color
+                onClick = { next() },
+            ) {
                 Text("Next →")
             }
         }

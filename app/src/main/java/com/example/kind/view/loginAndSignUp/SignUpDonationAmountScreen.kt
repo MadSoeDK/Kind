@@ -1,5 +1,6 @@
 package com.example.kind.view.loginAndSignUp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
@@ -11,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
-import com.example.kind.view.theme.Shapes
+import com.example.kind.view.theme.*
 
 //TODO set button to fixed size, ignoring the content
 @Composable
@@ -22,6 +23,7 @@ fun SignUpDonationAmountScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(paddingSize.xxxl)
 
         ) {
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
@@ -30,37 +32,41 @@ fun SignUpDonationAmountScreen(
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 shape = Shapes.extraSmall
             ) {
-                Text(text = "50 kr.")
+                Text(text = "50 kr.", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 shape = Shapes.extraSmall
             ) {
-                Text(text = "100 kr.")
+                Text(text = "100 kr.", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 shape = Shapes.extraSmall
             ) {
-                Text(text = "200 kr.")
+                Text(text = "200 kr.", color = fieldText)
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
-            OutlinedButton(
+            OutlinedButton( //evt. OutlinedTextField?
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 shape = Shapes.extraSmall
             ) {
-                Text(text = "Custom amount")
+                Text(text = "Custom amount", color = fieldText)
             }
         }
         Row(
@@ -72,7 +78,7 @@ fun SignUpDonationAmountScreen(
             verticalAlignment = Alignment.Bottom
         ) {
             TextButton(onClick = { back() }) {
-                Text("← Back")
+                Text("← Back", color = primary)
             }
             Button(onClick = { next() }) {
                 Text("Next →")
