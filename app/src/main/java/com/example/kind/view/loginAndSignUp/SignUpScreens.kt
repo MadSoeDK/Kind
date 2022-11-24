@@ -3,11 +3,18 @@ package com.example.kind.view.loginAndSignUp
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.screens.PortfolioBuilderScreen
+import com.example.kind.view.theme.*
 
 /*@Composable
 fun StartScreen(
@@ -31,14 +38,59 @@ fun SignupScreen(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding((paddingSize.standard*2)),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         when (viewModel.steps.value) {
             0 -> {
-                Text(text = "About kind page")
-                Button(onClick = { viewModel.steps.value += 1 }) {
-                    Text(text = "Start")
+                Column(modifier = Modifier
+                    .padding(paddingSize.standard),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    //verticalArrangement = Arrangement.Center,
+                ) {
+                    Row(horizontalArrangement = Arrangement.Center) {
+                        Column() {
+                            Spacer(modifier = Modifier.size((10).dp))
+                            Text("be ",
+                                modifier = Modifier,
+                                color = primary,
+                                fontSize = (fontSize.announcement*2*0.75),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        Text(text = "Kind",
+                            color = primary,
+                            fontSize = (fontSize.announcement*2),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    //Image
+                    Text("Who we are",
+                        color = primary,
+                        fontSize = fontSize.header,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text("Kind is a platform available on web and mobile that makes giving personal, simple and effective by helping users build charitable portfolios they can support with just one monthly donation",
+                        color = subHeading,
+                        fontSize = fontSize.subheader,)
+                    Spacer(modifier = Modifier.size(20.dp))
+                    Text("Our Mission",
+                        color = primary,
+                        fontSize = fontSize.header,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text("To reinforce a culture of generosity by creating charitable giving solution that are fun and effective",
+                        color = subHeading,
+                        fontSize = fontSize.subheader,
+                    )
+                    Spacer(modifier = Modifier.size(20.dp))
+                    //Text(text = "About kind page")
+                    Button(
+                        onClick = { viewModel.steps.value += 1 },
+                        modifier = Modifier.fillMaxWidth()) {
+                            Text(text = "Start")
+                    }
                 }
             }
             1 -> SignUpPersonalInformationScreen(
