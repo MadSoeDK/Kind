@@ -51,7 +51,7 @@ fun SignupScreen(
                     Text(text = "Start")
                 }
                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
-                Button(onClick = { finishSignup }, modifier = Modifier
+                Button(onClick = { finishSignup() }, modifier = Modifier
                     .width(200.dp)
                     .height(40.dp), colors = ButtonDefaults.buttonColors(background)) {
                     Text(text = "Make it later", color = Color.Black)
