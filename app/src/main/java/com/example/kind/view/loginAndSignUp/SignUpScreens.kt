@@ -6,20 +6,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.screens.PortfolioBuilderScreen
-
-/*@Composable
-fun StartScreen(
-    navController: NavController
-) {
-    //er ikke sikker på om vi skal have denne route, siden at start altid er ved login. beholder den for nu in case vi vil have en first time login besked eller lign.
-}
-
-@Composable
-fun LoginScreen(navController: NavController) {
-    LoginView()
-}*/
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -41,8 +28,8 @@ fun SignupScreen(
                     Text(text = "Start")
                 }
             }
-            1 -> SignUpPersonalInformationScreen(
-                viewModel = SignUpPersonalInformationViewModel(),
+            1 -> PersonalInformationScreen(
+                viewModel = SignupViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = back
             )
@@ -55,20 +42,17 @@ fun SignupScreen(
                     Text(text = "Make it later")
                 }
             }
-            3 -> SignUpDonationFrequencyScreen(
-                viewModel = SignUpDonationFrequencyViewModel(),
+            3 -> DonationFreqScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             4 -> SignUpDonationAmountScreen(
-                viewModel = SignUpDonationAmountViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             5 -> PortfolioBuilderScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             6 -> Text(text = "Portfolio builder")
-            7 -> SignUpDonationSummaryScreen(
-                viewModel = SignUpDonationSummaryViewModel(),
+            7 -> SummaryScreen(
                 next = { finishSignup() },
                 back = { viewModel.steps.value -= 1 })
         }

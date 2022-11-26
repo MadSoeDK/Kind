@@ -13,8 +13,8 @@ import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
 
 @Composable
-fun SignUpPersonalInformationScreen(
-    viewModel: SignUpPersonalInformationViewModel,
+fun PersonalInformationScreen(
+    viewModel: SignupViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -22,7 +22,7 @@ fun SignUpPersonalInformationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
-            LoginHeader(size = 150, viewModel.signUpStepDescription)
+            LoginHeader(size = 150, "Start building your portfolio of kindness today")
         }
         Form(
             state = viewModel.formState,
@@ -39,14 +39,5 @@ fun SignUpPersonalInformationScreen(
                 Text("Next →")
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SignUpPersonalInformationScreenPreview(){
-    val viewModel = SignUpPersonalInformationViewModel()
-    SignUpPersonalInformationScreen(viewModel = viewModel, next = { /*TODO*/ }) {
-
     }
 }

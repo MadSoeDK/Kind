@@ -19,13 +19,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
 }
 
-/*allprojects {
-    repositories {
-        google()  // Google's Maven repository
-        mavenCentral()  // Maven Central repository
-    }
-}*/
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

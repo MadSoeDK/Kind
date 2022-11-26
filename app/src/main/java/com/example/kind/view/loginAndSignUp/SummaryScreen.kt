@@ -23,8 +23,7 @@ import com.example.kind.ViewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
 
 @Composable
-fun SignUpDonationSummaryScreen(
-    viewModel: SignUpDonationSummaryViewModel,
+fun SummaryScreen (
     next: () -> Unit,
     back: () -> Unit
 ) {

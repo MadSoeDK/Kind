@@ -15,8 +15,7 @@ import com.example.kind.view.theme.Shapes
 
 //TODO set button to fixed size, ignoring the content
 @Composable
-fun SignUpDonationAmountScreen(
-    viewModel: SignUpDonationAmountViewModel,
+fun DonationFreqScreen(
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -25,42 +24,42 @@ fun SignUpDonationAmountScreen(
 
         ) {
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
-            LoginHeader(size = 150, viewModel.signUpStepDescription)
+            LoginHeader(size = 150, "How often will you make a donation")
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
-                Text(text = "50 kr.")
+                Text(text = "Every month")
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
-                Text(text = "100 kr.")
+                Text(text = "Every third month")
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
-                Text(text = "200 kr.")
+                Text(text = "Every half year")
             }
         }
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             OutlinedButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(300.dp),
-                shape = Shapes.extraSmall
+                shape = Shapes.extraSmall,
+                modifier = Modifier.width(300.dp)
             ) {
-                Text(text = "Custom amount")
+                Text(text = "Every year")
             }
         }
         Row(
@@ -79,11 +78,4 @@ fun SignUpDonationAmountScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SignUpDonationAmountScreenPreview() {
-    val viewModel = SignUpDonationAmountViewModel()
-    SignUpDonationAmountScreen(viewModel = viewModel, next = { /*TODO*/ }, back = { /*TODO*/ })
 }
