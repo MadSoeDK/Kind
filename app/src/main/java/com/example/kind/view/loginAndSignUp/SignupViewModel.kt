@@ -1,6 +1,5 @@
 package com.example.kind.view.loginAndSignUp
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue

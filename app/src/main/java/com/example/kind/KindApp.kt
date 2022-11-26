@@ -44,7 +44,6 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
     object Charity : Screen("charity", Icons.Filled.Favorite)
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -77,7 +76,21 @@ fun KindApp() {
             val portfolioViewModel = PortfolioViewModel()
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                FloatingActionButton = { EditPortfolioFAB { portfolioViewModel.toggleModal() } },
+                FloatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { portfolioViewModel.toggleModal() },
+                        content = {
+                            Icon (
+                                Icons.Filled.Edit,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.width(30.dp).height(30.dp),
+                            )
+                        },
+                        containerColor = Typography.headlineLarge.color,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                },
                 content = { PortfolioScreen(portfolioViewModel) }
             )
         }
@@ -100,7 +113,7 @@ fun KindApp() {
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { CharityScreen(
                     viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
-                ) }
+                )}
             )
         }
     }
@@ -154,26 +167,4 @@ fun KindNavigationBar(
             )
         }
     }
-}
-
-@Composable
-fun EditPortfolioFAB(
-    toggle: () -> Unit,
-) {
-    FloatingActionButton(
-        onClick = toggle,
-        content = {
-            Icon(
-                Icons.Filled.Edit,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier
-                    .width(30.dp)
-                    .height(30.dp),
-
-                )
-        },
-        containerColor = Typography.headlineLarge.color,
-        shape = RoundedCornerShape(10.dp)
-    )
 }
