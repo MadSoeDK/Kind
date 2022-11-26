@@ -62,7 +62,7 @@ fun KindApp() {
             )
         }*/
         composable(Screen.Login.route) {
-            Screen ( content = { LoginScreen(LoginViewModel(), signUp = {viewModel.navigate("signup")}) })
+            Screen ( content = { LoginScreen(LoginViewModel(viewModel.navController)) })
         }
         composable(Screen.Signup.route) {
             Screen { SignupScreen(SignupViewModel(), finishSignup = { viewModel.finishSignup() }, back = { viewModel.navigate("login") })  }

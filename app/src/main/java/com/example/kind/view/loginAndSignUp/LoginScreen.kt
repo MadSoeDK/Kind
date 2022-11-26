@@ -23,52 +23,43 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.view.theme.background
 import com.example.kind.view.theme.primary
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, signUp: () -> Unit) {
-    var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-
-
-    }
+fun LoginScreen(
+    viewModel: LoginViewModel,
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            //.background(Color(84, 129, 53)) //farve brugt i figma
             .background(background)
             .fillMaxSize()
-            .clickable { focusManager.clearFocus() }
     ){
-        LoginFields(
-            username,
-            password,
-            onUsernameChange = {username = it},
-            onPasswordChange = {password = it},
-            onLoginClick = {viewModel.login(username, password)},
-            signUp = signUp
+        LoginHeader(96)
+        Form (
+            state = viewModel.formState,
+            fields = viewModel.fields,
         )
-    }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier.background(background)
-    ) {
-        Spacer(modifier = Modifier.size(80.dp))
-        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
-            .background(background)
-            .fillMaxWidth()) {
-            LoginHeader(96)
+        Button( //TODO: farvefix
+            modifier = Modifier.width(280.dp),
+            onClick = { viewModel.login(viewModel.formState.getData()) }
+        ) {
+            Text("Login", color = background )
         }
+        Row(horizontalArrangement = Arrangement.Center) {
+            Text("Forgot Password? ", color = primary)
+            ClickableText(AnnotatedString(text = "Click here"), onClick = { /*TODO*/}) //TODO: farvefix
 
-
+        }
+        Row(horizontalArrangement = Arrangement.Center) {
+            Text("New user? ", color = primary)
+            ClickableText(AnnotatedString(text = "Signup here"), onClick = { viewModel.signUp()}) //TODO: farvefix
+        }
     }
 }
 
@@ -122,7 +113,6 @@ fun LoginFields(
                 }
             }) {
             Text("Login", color = background )
-            //ImageButton(context) - kan bruges til de alternative login metoder
         }
         Row(horizontalArrangement = Arrangement.Center) {
             Text("Forgot Password? ", color = primary)
@@ -132,16 +122,6 @@ fun LoginFields(
         Row(horizontalArrangement = Arrangement.Center) {
             Text("New user? ", color = primary)
             ClickableText(AnnotatedString(text = "Signup here"), onClick = { signUp()}) //TODO: farvefix
-
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    KindTheme {
-        val viewModel = viewModel<LoginViewModel>()
-        LoginScreen(viewModel, signUp = {viewModel.login(username = "", password = "")})
     }
 }
