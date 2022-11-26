@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.kind.view.screens.PortfolioBuilderScreen
 
@@ -42,12 +44,24 @@ fun SignupScreen(
                     Text(text = "Make it later")
                 }
             }
-            3 -> DonationFreqScreen(
-                next = { viewModel.steps.value += 1 },
-                back = { viewModel.steps.value -= 1 })
-            4 -> SignUpDonationAmountScreen(
-                next = { viewModel.steps.value += 1 },
-                back = { viewModel.steps.value -= 1 })
+            3 -> {
+                val (selectedOption, onOptionSelected) = remember { mutableStateOf(DonationFrequency.Monthly) }
+                DonationFreqScreen(
+                    next = { viewModel.setFrequency(selectedOption) },
+                    back = { viewModel.steps.value -= 1 },
+                    selectedOption,
+                    onOptionSelected
+                )
+            }
+            4 -> {
+                val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
+                DonationAmountScreen(
+                    next = { viewModel.setAmount(selectedOption) },
+                    back = { viewModel.steps.value -= 1 },
+                    selectedOption,
+                    onOptionSelected,
+                )
+            }
             5 -> PortfolioBuilderScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
