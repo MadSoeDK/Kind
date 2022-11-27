@@ -70,8 +70,36 @@ fun SignupScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             7 -> SummaryScreen(
-                next = { finishSignup() },
+                next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
+            8 -> MobilePayScreen()
+        }
+        when (viewModel.steps.value) {
+            8 -> {
+                SignupNavigation(
+                    nextStep = { finishSignup() },
+                    prevStep = { viewModel.steps.value -= 1 }
+                )
+            }
+
+        }
+    }
+}
+
+@Composable
+fun SignupNavigation(
+    nextStep: () -> Unit,
+    prevStep: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Button(onClick = prevStep) {
+            Text(text = "← Back")
+        }
+        Button(onClick = nextStep) {
+            Text(text = "Next →")
         }
     }
 }
