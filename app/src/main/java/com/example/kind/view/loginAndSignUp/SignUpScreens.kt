@@ -73,32 +73,5 @@ fun SignupScreen(
                 next = { finishSignup() },
                 back = { viewModel.steps.value -= 1 })
         }
-        when (viewModel.steps.value) {
-            6 -> {
-                SignupNavigation(
-                    nextStep = { viewModel.steps.value += 1 },
-                    prevStep = { viewModel.steps.value -= 1 }
-                )
-            }
-
-        }
-    }
-}
-
-@Composable
-fun SignupNavigation(
-    nextStep: () -> Unit,
-    prevStep: () -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Button(onClick = prevStep) {
-            Text(text = "← Back")
-        }
-        Button(onClick = nextStep) {
-            Text(text = "Next →")
-        }
     }
 }
