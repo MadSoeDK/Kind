@@ -24,6 +24,7 @@ import com.example.kind.view.theme.Typography
 @ExperimentalFoundationApi
 @Composable
 fun PortfolioBuilderScreen(
+    buildMyOwn: () -> Unit,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -53,7 +54,7 @@ fun PortfolioBuilderScreen(
             .padding(0.dp, 10.dp)
             .align(Alignment.CenterHorizontally))
         {
-            OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier.width(300.dp)) {
+            OutlinedButton(onClick = { buildMyOwn() }, modifier = Modifier.width(300.dp)) {
                 Text(
                     text = "Build my own",
                     fontWeight = Typography.labelLarge.fontWeight,

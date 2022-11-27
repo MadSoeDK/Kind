@@ -63,7 +63,8 @@ fun SignupScreen(
                 )
             }
             5 -> PortfolioBuilderScreen(
-                next = { viewModel.steps.value += 1 },
+                buildMyOwn = { viewModel.steps.value += 1 },
+                next = { viewModel.steps.value += 2 },
                 back = { viewModel.steps.value -= 1 })
             6 -> SignUpDonationSelectionScreen(
                 next = { viewModel.steps.value += 1 },
