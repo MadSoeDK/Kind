@@ -12,20 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.kind.ViewModel.ExplorerViewModel
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.example.kind.view.screens.PortfolioBuilderScreen
 import com.example.kind.view.theme.background
-
-/*@Composable
-fun StartScreen(
-    navController: NavController
-) {
-    //er ikke sikker på om vi skal have denne route, siden at start altid er ved login. beholder den for nu in case vi vil have en first time login besked eller lign.
-}
-
-@Composable
-fun LoginScreen(navController: NavController) {
-    LoginView()
-}*/
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -57,8 +47,8 @@ fun SignupScreen(
                     Text(text = "Make it later", color = Color.Black)
                 }
             }
-            1 -> SignUpPersonalInformationScreen(
-                viewModel = SignUpPersonalInformationViewModel(),
+            1 -> PersonalInformationScreen(
+                viewModel = SignupViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = back
             )
@@ -71,20 +61,29 @@ fun SignupScreen(
                     Text(text = "Make it later")
                 }
             }
-            3 -> SignUpDonationFrequencyScreen(
-                viewModel = SignUpDonationFrequencyViewModel(),
-                next = { viewModel.steps.value += 1 },
-                back = { viewModel.steps.value -= 1 })
-            4 -> SignUpDonationAmountScreen(
-                viewModel = SignUpDonationAmountViewModel(),
-                next = { viewModel.steps.value += 1 },
-                back = { viewModel.steps.value -= 1 })
+            3 -> {
+                val (selectedOption, onOptionSelected) = remember { mutableStateOf(DonationFrequency.Monthly) }
+                DonationFreqScreen(
+                    next = { viewModel.setFrequency(selectedOption) },
+                    back = { viewModel.steps.value -= 1 },
+                    selectedOption,
+                    onOptionSelected
+                )
+            }
+            4 -> {
+                val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
+                DonationAmountScreen(
+                    next = { viewModel.setAmount(selectedOption) },
+                    back = { viewModel.steps.value -= 1 },
+                    selectedOption,
+                    onOptionSelected,
+                )
+            }
             5 -> PortfolioBuilderScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
             6 -> Text(text = "Portfolio builder")
-            7 -> SignUpDonationSummaryScreen(
-                viewModel = SignUpDonationSummaryViewModel(),
+            7 -> SummaryScreen(
                 next = { finishSignup() },
                 back = { viewModel.steps.value -= 1 })
         }

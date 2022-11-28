@@ -21,12 +21,6 @@ fun LoginHeader(size: Int, description: String? = null) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
         Row {
-            /*Column() {
-            Spacer(modifier = Modifier.size((size/2).dp))
-            Text(text = "be ", fontSize = (size/2).sp, color = primary)
-        }
-
-        Text(text = "Kind", fontSize = size.sp, color = primary)*/
             Image(
                 painterResource(id = R.drawable.screenshot20220914071147),
                 contentDescription = "",
