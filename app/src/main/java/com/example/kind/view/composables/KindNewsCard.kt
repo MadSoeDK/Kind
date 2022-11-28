@@ -105,7 +105,7 @@ fun KindNewsCard(Title: String, Body: String, OrganizationIcon: Painter, ReadMor
 @Preview(showBackground = true)
 @Composable
 fun KindNewsCardPreview(){
-    val OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147)
+    val OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1)
     KindNewsCard(
         Title = "Alle kender til krig, men ikke alle kender til krigens regler",
         Body = "Flere tusinde børn har i denne måned vist glæde af støttepakker fra red barnet",

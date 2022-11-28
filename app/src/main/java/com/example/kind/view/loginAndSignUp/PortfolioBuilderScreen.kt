@@ -13,11 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.kind.view.composables.CharityHeaderAndSubsectionText
-import com.example.kind.view.composables.KindCharityCard
-import com.example.kind.ViewModel.ExplorerViewModel
 import com.example.kind.view.composables.PortfolioTemplateCard
 import com.example.kind.view.theme.Typography
 
@@ -46,7 +42,7 @@ fun PortfolioBuilderScreen(
                 PortfolioTemplateCard(
                 Title = "Red Cross",
                 Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
+                OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
             )}
         })
 

@@ -22,7 +22,7 @@ fun NewsScreen() {
             items(10 /*TODO: Needs to be adaptive based on the amount of organizations*/) {i -> KindNewsCard(
                 Title = "Krig rammer ukraines ungdom",
                 Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
+                OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
                 Category = "War",
                 Subcategory = "War never changes"
             )

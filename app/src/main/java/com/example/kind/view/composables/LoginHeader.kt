@@ -22,7 +22,7 @@ fun LoginHeader(size: Int, description: String? = null) {
 
         Row {
             Image(
-                painterResource(id = R.drawable.screenshot20220914071147),
+                painterResource(id = R.drawable.bekindsplashart1),
                 contentDescription = "",
                 Modifier.size((size * 1.75).dp)
             )

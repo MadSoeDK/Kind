@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,7 +32,7 @@ fun SignUpDonationSelectionScreen (
                 PortfolioTemplateCard(
                     Title = "Red Cross",
                     Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                    OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147),
+                    OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
                 )
             }
         })

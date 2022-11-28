@@ -31,34 +31,30 @@ fun SignupScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //TODO this might need to be done in a different way since using the phone back button at any time takes the user back to the start of the signup flow
+
         when (viewModel.steps.value) {
-            0 -> {
-                SignUpIntroScreen(
-                    viewModel = SignUpDonationSummaryViewModel())
-                Button(onClick = { viewModel.steps.value += 1 }, modifier = Modifier
-                    .width(200.dp)
-                    .height(40.dp)) {
-                    Text(text = "Start")
-                }
-                Spacer(modifier = Modifier.padding(vertical = 10.dp))
-                Button(onClick = { finishSignup() }, modifier = Modifier
-                    .width(200.dp)
-                    .height(40.dp), colors = ButtonDefaults.buttonColors(background)) {
-                    Text(text = "Make it later", color = Color.Black)
-                }
-            }
+            0 -> AboutKindScreen(
+                next = { viewModel.steps.value += 1 }
+            )
             1 -> PersonalInformationScreen(
                 viewModel = SignupViewModel(),
                 next = { viewModel.steps.value += 1 },
                 back = back
             )
             2 -> {
-                Text(text = "Build portfolio")
-                Button(onClick = { viewModel.steps.value += 1 }) {
+                SignUpIntroScreen(
+                )
+                Button(onClick = { viewModel.steps.value += 1 }, modifier = Modifier
+                    .width(200.dp)
+                    .height(40.dp)) {
                     Text(text = "Start")
                 }
-                Button(onClick = finishSignup) {
-                    Text(text = "Make it later")
+                Spacer(modifier = Modifier.padding(vertical = 10.dp))
+                Button(onClick = { finishSignup() /*Might need to direct somewhere else*/}, modifier = Modifier
+                    .width(200.dp)
+                    .height(40.dp), colors = ButtonDefaults.buttonColors(background)) {
+                    Text(text = "Make it later", color = Color.Black)
                 }
             }
             3 -> {

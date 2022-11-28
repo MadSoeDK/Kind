@@ -26,7 +26,7 @@ data class PortfolioState (
 )
 
 class SignupViewModel : ViewModel() {
-    var steps = mutableStateOf(0)
+    var steps = mutableStateOf(1)
 
     private var portfolioState = MutableStateFlow(PortfolioState())
 
