@@ -34,15 +34,15 @@ fun SignupScreen(
         //TODO this might need to be done in a different way since using the phone back button at any time takes the user back to the start of the signup flow
 
         when (viewModel.steps.value) {
-            0 -> AboutKindScreen(
+            1 -> AboutKindScreen(
                 next = { viewModel.steps.value += 1 }
             )
-            1 -> PersonalInformationScreen(
+            2 -> PersonalInformationScreen(
                 viewModel = SignupViewModel(),
                 next = { viewModel.steps.value += 1 },
-                back = back
+                back = { viewModel.steps.value -= 1 }
             )
-            2 -> {
+            3 -> {
                 SignUpIntroScreen(
                 )
                 Button(onClick = { viewModel.steps.value += 1 }, modifier = Modifier
@@ -57,7 +57,7 @@ fun SignupScreen(
                     Text(text = "Make it later", color = Color.Black)
                 }
             }
-            3 -> {
+            4 -> {
                 val (selectedOption, onOptionSelected) = remember { mutableStateOf(DonationFrequency.Monthly) }
                 DonationFreqScreen(
                     next = { viewModel.setFrequency(selectedOption) },
@@ -66,7 +66,7 @@ fun SignupScreen(
                     onOptionSelected
                 )
             }
-            4 -> {
+            5 -> {
                 val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
                 DonationAmountScreen(
                     next = { viewModel.setAmount(selectedOption) },
@@ -75,20 +75,26 @@ fun SignupScreen(
                     onOptionSelected,
                 )
             }
-            5 -> PortfolioBuilderScreen(
+            6 -> PortfolioBuilderScreen(
                 buildMyOwn = { viewModel.steps.value += 1 },
                 next = { viewModel.steps.value += 2 },
                 back = { viewModel.steps.value -= 1 })
-            6 -> SignUpDonationSelectionScreen(
+            7 -> SignUpDonationSelectionScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
-            7 -> SummaryScreen(
+            8 -> SummaryScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
-            8 -> MobilePayScreen()
+            9 -> MobilePayScreen()
         }
         when (viewModel.steps.value) {
-            8 -> {
+            1 -> {
+                SignupNavigation(
+                    nextStep = { viewModel.steps.value += 1 },
+                    prevStep = { back }
+                )
+            }
+            9 -> {
                 SignupNavigation(
                     nextStep = { finishSignup() },
                     prevStep = { viewModel.steps.value -= 1 }
