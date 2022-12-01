@@ -7,7 +7,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.Alignment
@@ -74,7 +73,7 @@ fun PortfolioTemplateCard(
 @Preview(showBackground = true)
 @Composable
 fun PortfolioTemplateCardPreview() {
-    val OrganizationIcon = painterResource(id = R.drawable.screenshot20220914071147)
+    val OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1)
     PortfolioTemplateCard(
         Title = "Red Cross",
         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",

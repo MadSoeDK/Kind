@@ -31,37 +31,33 @@ fun SignupScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //TODO this might need to be done in a different way since using the phone back button at any time takes the user back to the start of the signup flow
+
         when (viewModel.steps.value) {
-            0 -> {
+            1 -> AboutKindScreen(
+                next = { viewModel.steps.value += 1 }
+            )
+            2 -> PersonalInformationScreen(
+                viewModel = SignupViewModel(),
+                next = { viewModel.steps.value += 1 },
+                back = { viewModel.steps.value -= 1 }
+            )
+            3 -> {
                 SignUpIntroScreen(
-                    viewModel = SignUpDonationSummaryViewModel())
+                )
                 Button(onClick = { viewModel.steps.value += 1 }, modifier = Modifier
                     .width(200.dp)
                     .height(40.dp)) {
                     Text(text = "Start")
                 }
                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
-                Button(onClick = { finishSignup() }, modifier = Modifier
+                Button(onClick = { finishSignup() /*Might need to direct somewhere else*/}, modifier = Modifier
                     .width(200.dp)
                     .height(40.dp), colors = ButtonDefaults.buttonColors(background)) {
                     Text(text = "Make it later", color = Color.Black)
                 }
             }
-            1 -> PersonalInformationScreen(
-                viewModel = SignupViewModel(),
-                next = { viewModel.steps.value += 1 },
-                back = back
-            )
-            2 -> {
-                Text(text = "Build portfolio")
-                Button(onClick = { viewModel.steps.value += 1 }) {
-                    Text(text = "Start")
-                }
-                Button(onClick = finishSignup) {
-                    Text(text = "Make it later")
-                }
-            }
-            3 -> {
+            4 -> {
                 val (selectedOption, onOptionSelected) = remember { mutableStateOf(DonationFrequency.Monthly) }
                 DonationFreqScreen(
                     next = { viewModel.setFrequency(selectedOption) },
@@ -70,7 +66,7 @@ fun SignupScreen(
                     onOptionSelected
                 )
             }
-            4 -> {
+            5 -> {
                 val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
                 DonationAmountScreen(
                     next = { viewModel.setAmount(selectedOption) },
@@ -79,18 +75,28 @@ fun SignupScreen(
                     onOptionSelected,
                 )
             }
-            5 -> PortfolioBuilderScreen(
+            6 -> PortfolioBuilderScreen(
+                buildMyOwn = { viewModel.steps.value += 1 },
+                next = { viewModel.steps.value += 2 },
+                back = { viewModel.steps.value -= 1 })
+            7 -> SignUpDonationSelectionScreen(
                 next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
-            6 -> Text(text = "Portfolio builder")
-            7 -> SummaryScreen(
-                next = { finishSignup() },
+            8 -> SummaryScreen(
+                next = { viewModel.steps.value += 1 },
                 back = { viewModel.steps.value -= 1 })
+            9 -> MobilePayScreen()
         }
         when (viewModel.steps.value) {
-            6 -> {
+            1 -> {
                 SignupNavigation(
                     nextStep = { viewModel.steps.value += 1 },
+                    prevStep = { back }
+                )
+            }
+            9 -> {
+                SignupNavigation(
+                    nextStep = { finishSignup() },
                     prevStep = { viewModel.steps.value -= 1 }
                 )
             }

@@ -33,7 +33,7 @@ fun SummaryScreen (
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.screenshot20220914071147),
+            painter = painterResource(id = R.drawable.bekindsplashart1),
             contentDescription = "",
             contentScale = ContentScale.FillBounds
         )

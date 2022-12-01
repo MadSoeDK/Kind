@@ -28,8 +28,8 @@ fun ProfileScreen(
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun ProfileScreenPreview() {
-    ProfileScreen(viewModel = ProfileViewModel())
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun ProfileScreenPreview() {
+//    ProfileScreen(viewModel = ProfileViewModel())
+//}

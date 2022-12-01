@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +19,6 @@ import com.example.kind.R
 
 @Composable
 fun SignUpIntroScreen(
-    viewModel: SignUpDonationSummaryViewModel, //change
 ) {
     Column(
         modifier = Modifier.padding(10.dp),
@@ -28,7 +26,7 @@ fun SignUpIntroScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.screenshot20220914071147),
+            painter = painterResource(id = R.drawable.bekindsplashart1),
             contentDescription = "",
             contentScale = ContentScale.FillBounds
         )
