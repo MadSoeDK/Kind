@@ -1,9 +1,8 @@
-package com.example.kind.ViewModel
+package com.example.kind.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.kind.Article
-import com.example.kind.Charity
 import com.example.kind.getFakeArticles
 import com.example.kind.getFakeCharity
 

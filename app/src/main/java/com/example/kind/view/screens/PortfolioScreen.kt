@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.*
 import com.example.kind.view.theme.Typography
-import com.example.kind.ViewModel.PortfolioViewModel
+import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.home.composables.HeaderAndText
 
 @Composable

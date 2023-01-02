@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.kind.ViewModel.CharityViewModel
+import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.view.composables.KindCard

@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,14 +26,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.kind.view.screens.PortfolioScreen
-import com.example.kind.ViewModel.*
+import com.example.kind.viewModel.*
 import com.example.kind.view.loginAndSignUp.*
 import com.example.kind.view.screens.*
 import com.example.kind.view.theme.Typography
-import com.example.kind.ViewModel.ExplorerViewModel
-import com.example.kind.ViewModel.PortfolioViewModel
-import com.example.kind.ViewModel.ProfileViewModel
-import com.example.kind.view.screens.*
+import com.example.kind.viewModel.ExplorerViewModel
+import com.example.kind.viewModel.PortfolioViewModel
+import com.example.kind.viewModel.ProfileViewModel
 
 sealed class Screen(val route: String, var icon: ImageVector) {
     object Login : Screen("login", Icons.Filled.Favorite)

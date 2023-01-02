@@ -12,7 +12,7 @@ import com.example.kind.Screen
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
-import com.example.kind.ViewModel.HomeViewModel
+import com.example.kind.viewModel.HomeViewModel
 import com.example.kind.view.composables.KindCard
 
 @Composable

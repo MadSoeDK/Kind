@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.Screen
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
 import com.example.kind.view.composables.KindCharityCard
-import com.example.kind.ViewModel.ExplorerViewModel
+import com.example.kind.viewModel.ExplorerViewModel
 
 @ExperimentalFoundationApi
 @Composable
