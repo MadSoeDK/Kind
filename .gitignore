@@ -50,3 +50,5 @@ app/build/generated/source/buildConfig/debug/com/example/kind/BuildConfig.java
 /.gradle/7.3/dependencies-accessors/gc.properties
 /.gradle/7.3/gc.properties
 /.gradle/7.3/fileChanges/last-build.bin
+.gradle/workspace-id.txt.lock
+.gradle/workspace-id.txt
