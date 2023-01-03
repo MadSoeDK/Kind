@@ -3,7 +3,7 @@ package com.example.kind.model.service
 interface StorageService {
 
     // Users
-    suspend fun addUser()
+    suspend fun addUser(email: String, password: String)
     suspend fun deleteUser()
 
     // Subscriptions
