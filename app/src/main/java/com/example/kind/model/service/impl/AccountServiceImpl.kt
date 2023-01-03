@@ -1,27 +1,31 @@
 package com.example.kind.model.service.impl
 
 import com.example.kind.model.service.AccountService
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class AccountServiceImpl : AccountService {
+class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth): AccountService {
     override val userid: String
-        get() = TODO("Not yet implemented")
-    override var hasUser: Boolean
-        get() = TODO("Not yet implemented")
-        set(value) {}
+        get() = auth.currentUser?.uid.orEmpty()
+    override val hasUser: Boolean
+        get() = auth.currentUser != null
+
 
     override suspend fun authenticateUser(email: String, password: String) {
-        TODO("Not yet implemented")
+        auth.signInWithEmailAndPassword(email, password).await()
     }
 
     override suspend fun signOut() {
-        TODO("Not yet implemented")
+        auth.signOut()
     }
 
     override suspend fun deleteAccount() {
-        TODO("Not yet implemented")
+        auth.currentUser!!.delete().await()
     }
 
-    override suspend fun changePassword() {
-        TODO("Not yet implemented")
+    override suspend fun changePassword(email: String, newPassword : String) {
+        auth.sendPasswordResetEmail(email)
+        auth.currentUser!!.updatePassword(newPassword).await()
     }
 }
