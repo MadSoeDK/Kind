@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.kind.AuthenticationDirections
 import com.example.kind.Screen
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.Email
@@ -36,7 +37,7 @@ class LoginViewModel(
     }
 
     fun signUp() {
-        navController.navigate(Screen.Signup.route)
+        navController.navigate(AuthenticationDirections.Signup.route)
     }
     fun CoroutineScope.callMethodInCoroutine() {
         storage = StorageServiceImpl()

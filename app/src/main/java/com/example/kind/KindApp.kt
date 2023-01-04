@@ -18,13 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.kind.view.screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.loginAndSignUp.*
@@ -35,13 +34,19 @@ import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
 
 sealed class Screen(val route: String, var icon: ImageVector) {
-    object Login : Screen("login", Icons.Filled.Favorite)
-    object Signup : Screen("signup", Icons.Filled.Favorite)
     object Home : Screen("home", Icons.Filled.Home)
     object Portfolio : Screen("portfolio", Icons.Filled.Favorite)
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
     object Charity : Screen("charity", Icons.Filled.Favorite)
+}
+
+sealed class AuthenticationDirections(val route: String) {
+    object Root : AuthenticationDirections("root")
+    object Login : AuthenticationDirections("login")
+    object Signup : AuthenticationDirections("signup")
+    object Authenticate : AuthenticationDirections("authentication")
+    object ForgotPassword : AuthenticationDirections("forgot_password")
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -50,7 +55,7 @@ fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
     NavHost(
         navController = viewModel.navController,
-        startDestination = Screen.Login.route,
+        startDestination = AuthenticationDirections.Root.route//Screen.Home.route,
     ) {
         //er ikke sikker på om vi skal have denne route, siden at start altid er ved login. beholder den for nu in case vi vil have en first time login besked eller lign.
         /* composable(Screen.Start.route) {
@@ -58,18 +63,20 @@ fun KindApp() {
                 content = { StartScreen(navController = viewModel.navController) }
             )
         }*/
-        composable(Screen.Login.route) {
+        /*composable(Screen.Login.route) {
             Screen ( content = { LoginScreen(LoginViewModel(viewModel.navController)) })
         }
         composable(Screen.Signup.route) {
             Screen { SignupScreen(SignupViewModel(), finishSignup = { viewModel.finishSignup() }, back = { viewModel.navigate("login") })  }
-        }
+        }*/
+
         composable(Screen.Home.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { HomeScreen(HomeViewModel(viewModel.navController)) }
             )
         }
+
         composable(Screen.Portfolio.route) {
             val portfolioViewModel = PortfolioViewModel()
             Screen(
@@ -82,7 +89,9 @@ fun KindApp() {
                                 Icons.Filled.Edit,
                                 contentDescription = null,
                                 tint = Color.White,
-                                modifier = Modifier.width(30.dp).height(30.dp),
+                                modifier = Modifier
+                                    .width(30.dp)
+                                    .height(30.dp),
                             )
                         },
                         containerColor = Typography.headlineLarge.color,
@@ -92,18 +101,21 @@ fun KindApp() {
                 content = { PortfolioScreen(portfolioViewModel) }
             )
         }
+
         composable(Screen.Profile.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { ProfileScreen(ProfileViewModel()) }
             )
         }
+
         composable(Screen.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { ExplorerScreen(ExplorerViewModel(viewModel.navController)) }
             )
         }
+
         composable(Screen.Charity.route  + "/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { NavBackStackEntry ->
@@ -114,6 +126,30 @@ fun KindApp() {
                 )}
             )
         }
+
+        navigation (
+            startDestination = AuthenticationDirections.Authenticate.route,
+            route = AuthenticationDirections.Root.route
+        ) {
+
+            composable(route = AuthenticationDirections.Authenticate.route) {
+                Authentication(viewModel.navController)
+            }
+            composable(route = AuthenticationDirections.Login.route) {
+                Screen ( content = { LoginScreen(LoginViewModel(viewModel.navController)) })
+            }
+            composable(route = AuthenticationDirections.Signup.route) {
+                Screen { SignupScreen(SignupViewModel(), finishSignup = { viewModel.finishSignup() }, back = { viewModel.navigate("login") })  }
+            }
+        }
+    }
+}
+
+@Composable
+fun Authentication(navController: NavController) {
+    Text("Hello world")
+    Button(onClick = { navController.navigate(AuthenticationDirections.Login.route) }) {
+        Text(text = "To login")
     }
 }
 
