@@ -1,9 +1,11 @@
 package com.example.kind.model.service
 
+import com.example.kind.model.User
+
 interface StorageService {
 
     // Users
-    suspend fun addUser(email: String, password: String)
+    suspend fun addUser(user: User)
     suspend fun deleteUser(userId : String)
 
     // Subscriptions

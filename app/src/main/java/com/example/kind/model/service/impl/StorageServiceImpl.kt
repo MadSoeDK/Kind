@@ -17,12 +17,10 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
 
     // Users
-    override suspend fun addUser(email: String, password: String) {
-        val userId = System.currentTimeMillis().toString()
-        val user = User(userId, "Johnson", email, password, 0, 20.0)
-        
+    override suspend fun addUser(user : User) {
         database.collection("Users").add(user)
     }
+
 
     override suspend fun deleteUser(userId: String) {
         database.collection("Users").document(userId).delete()
