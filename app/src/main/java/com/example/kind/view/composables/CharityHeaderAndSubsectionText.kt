@@ -3,6 +3,7 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +25,7 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
                 text = Title,
                 fontWeight = Typography.headlineLarge.fontWeight,
                 fontSize = Typography.headlineSmall.fontSize,
-                color = Typography.headlineLarge.color
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Row(modifier = Modifier.padding(0.dp, 10.dp)) {
@@ -33,7 +34,8 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
                 fontWeight = Typography.headlineMedium.fontWeight,
                 fontSize = Typography.headlineSmall.fontSize,
                 //TODO Need to find correct color
-                color = Typography.headlineMedium.color)
+                color = MaterialTheme.colorScheme.secondary
+            )
         }
         Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
             for (i in Categories.indices){
@@ -42,7 +44,8 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
                 fontWeight = Typography.headlineMedium.fontWeight,
                 fontSize = Typography.labelLarge.fontSize,
                 //TODO Need to find correct color
-                color = Typography.headlineLarge.color)
+                color = MaterialTheme.colorScheme.primary
+            )
             }
         }
     }

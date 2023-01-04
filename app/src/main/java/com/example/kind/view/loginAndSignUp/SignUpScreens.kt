@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.example.kind.view.screens.PortfolioBuilderScreen
-import com.example.kind.view.theme.background
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -51,8 +51,8 @@ fun SignupScreen(
                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
                 Button(onClick = { finishSignup() /*Might need to direct somewhere else*/}, modifier = Modifier
                     .width(200.dp)
-                    .height(40.dp), colors = ButtonDefaults.buttonColors(background)) {
-                    Text(text = "Make it later", color = Color.Black)
+                    .height(40.dp), colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.background)) {
+                    Text(text = "Make it later", color = MaterialTheme.colorScheme.onBackground) //TODO: SKAL FIKSES
                 }
             }
             4 -> {

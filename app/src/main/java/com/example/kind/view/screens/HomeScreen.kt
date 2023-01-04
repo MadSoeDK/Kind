@@ -1,19 +1,25 @@
 package com.example.kind.view.screens
 
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.Screen
 import com.example.kind.view.home.composables.HeaderAndText
-import com.example.kind.view.theme.Typography
-import com.example.kind.view.theme.subHeading
+import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
 import com.example.kind.view.composables.KindCard
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun HomeScreen(
@@ -22,20 +28,31 @@ fun HomeScreen(
     Column {
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
-        Text(text = "Charity Update", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
+        Text(text = "Charity Update", color = MaterialTheme.colorScheme.primary, style = Typography.headlineMedium)
         Text("The latest news from your charities")
-
-        LazyRow {
-            viewModel.getArticles().forEach {
+        LazyRow{
+            viewModel.getArticles().forEachIndexed { i,element ->
                 item {
-                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+                    if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
+                    /*if (i==0) {
+                        KindCard(
+                            modifier = Modifier.padding(),
+                            titleProvider = element.header,
+                            subTitleProvier = element.header,
+                            onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+                            }*/
+                    KindCard(
+                        titleProvider = element.header,
+                        subTitleProvier = element.header,
+                        onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                 }
             }
         }
+        
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Explore charities", color = subHeading, fontSize = Typography.headlineMedium.fontSize, fontWeight = Typography.headlineMedium.fontWeight)
+        Text(text = "Explore charities", color = MaterialTheme.colorScheme.secondary, style = Typography.headlineLarge)
         Text("Get to know other charities better")
 
         LazyRow {

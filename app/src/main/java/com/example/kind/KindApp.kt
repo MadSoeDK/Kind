@@ -81,11 +81,13 @@ fun KindApp() {
                             Icon (
                                 Icons.Filled.Edit,
                                 contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.width(30.dp).height(30.dp),
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier
+                                    .width(30.dp)
+                                    .height(30.dp),
                             )
                         },
-                        containerColor = Typography.headlineLarge.color,
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
                         shape = RoundedCornerShape(10.dp)
                     )
                 },
@@ -144,7 +146,7 @@ fun KindNavigationBar(
     viewModel: AppViewModel
 ) {
     NavigationBar(
-        containerColor = Color.White,
+        //containerColor = Color.Black,
     ) {
         val items = listOf(Screen.Home, Screen.Portfolio, Screen.Explorer, Screen.Profile)
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
@@ -161,7 +163,14 @@ fun KindNavigationBar(
                 },
                 label = { Text(text = screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = { viewModel.navigate(screen.route) }
+                onClick = { viewModel.navigate(screen.route) },
+                colors = NavigationBarItemDefaults.colors(
+                    MaterialTheme.colorScheme.surfaceVariant, //logo for valgt
+                    MaterialTheme.colorScheme.onSurface, //tekst under valgt
+                    MaterialTheme.colorScheme.primary, //knap/omrids
+                    MaterialTheme.colorScheme.onSurface, //logo ikke valgt
+                    MaterialTheme.colorScheme.onSurface //tekst ikke valgt
+                )
             )
         }
     }

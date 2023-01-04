@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.*
 import com.example.kind.view.theme.Typography
@@ -200,7 +201,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
             Box(
                 Modifier
                     .clip(RectangleShape)
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.background)
                     .height(420.dp)
                     .width(320.dp)
             ) {
@@ -236,7 +237,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                         label = { Text("Amount (DKK)") },
                                         colors = TextFieldDefaults.textFieldColors(
                                             containerColor = Color(
-                                                0xFF1385623
+                                                (MaterialTheme.colorScheme.primary).toString().toColorInt()
                                             ).copy(alpha = 0.2F)
                                         ),
                                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)
@@ -277,7 +278,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                             text = "Save",
                             fontWeight = Typography.labelLarge.fontWeight,
                             fontSize = Typography.labelLarge.fontSize,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.background,
                         )
                     }
                     Spacer(modifier = Modifier.padding(0.dp, 10.dp))

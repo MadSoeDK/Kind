@@ -4,13 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.kind.view.theme.background
 
 @Composable
 fun <T> PortfolioTable (
@@ -23,7 +23,8 @@ fun <T> PortfolioTable (
     cellContent: @Composable (index: Int, item: T) -> Unit,
 ) {
     Surface(
-        modifier = modifier.background(background), color = background
+        modifier = modifier.background(MaterialTheme.colorScheme.background),
+        color = MaterialTheme.colorScheme.background
     ) {
         LazyRow(
             modifier = Modifier.padding(16.dp)
@@ -34,7 +35,7 @@ fun <T> PortfolioTable (
                         Surface(
                             //border = BorderStroke(1.dp, Color.LightGray ),
                             //contentColor = Color.Transparent,
-                            modifier = Modifier.width(cellWidth(columnIndex)), color = background
+                            modifier = Modifier.width(cellWidth(columnIndex)), color = MaterialTheme.colorScheme.background
                         ) {
                             if (index == 0) {
                                 headerCellContent(columnIndex)
