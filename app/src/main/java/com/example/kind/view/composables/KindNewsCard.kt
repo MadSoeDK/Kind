@@ -30,7 +30,9 @@ fun KindNewsCard(Title: String, Body: String, OrganizationIcon: Painter, ReadMor
         Row(modifier = Modifier.padding(0.dp, 5.dp))
         {
             Image(
-                painter = OrganizationIcon, contentDescription = null, modifier = Modifier
+                painter = OrganizationIcon,
+                contentDescription = null,
+                modifier = Modifier
                     .height(50.dp)
                     .width(90.dp)
                     .padding(20.dp, 0.dp)
