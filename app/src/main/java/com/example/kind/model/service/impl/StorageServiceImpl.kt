@@ -14,38 +14,37 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class StorageServiceImpl : StorageService {
-    private val database = FirebaseFirestore.getInstance()
+    private val database = Firebase.firestore
 
     // Users
-    override suspend fun addUser(email: String, password: String){
-
+    override suspend fun addUser(email: String, password: String) {
         val userId = System.currentTimeMillis().toString()
-        val user = User(userId,"John", email,password,0, 20.0)
-
-        database.collection("Users").add
-
-        println("THIS IS OUR USERS: " + FirebaseFirestore.getInstance().collection("Users").path)
-
+        val user = User(userId, "Johnson", email, password, 0, 20.0)
+        
+        database.collection("Users").add(user)
     }
-    override suspend fun deleteUser(){}
+
+    override suspend fun deleteUser(userId: String) {
+        database.collection("Users").document(userId).delete()
+    }
 
     // Subscriptions
-    override suspend fun addSubscription(){}
-    override suspend fun deleteSubscription(){}
-    override suspend fun modifySubscriptionAmount(){}
-    override suspend fun modifySubscriptionPlan(){}
+    override suspend fun addSubscription() {}
+    override suspend fun deleteSubscription() {}
+    override suspend fun modifySubscriptionAmount() {}
+    override suspend fun modifySubscriptionPlan() {}
 
     // Donations
-    override suspend fun addDonation(){}
-    override suspend fun deleteDonation(){}
+    override suspend fun addDonation() {}
+    override suspend fun deleteDonation() {}
 
     // Charity
-    override suspend fun increaseCharityDonationNumber(){}
-    override suspend fun decreaseCharityDonationNumber(){}
-    override suspend fun increaseCharityDonaterNumber(){}
-    override suspend fun decreaseCharityDonaterNumber(){}
-    override suspend fun addCharityAdministator(){}
-    override suspend fun deleteCharityAdministrator(){}
-    override suspend fun addCharityArticle(){}
-    override suspend fun deleteArticle(){}
+    override suspend fun increaseCharityDonationNumber() {}
+    override suspend fun decreaseCharityDonationNumber() {}
+    override suspend fun increaseCharityDonaterNumber() {}
+    override suspend fun decreaseCharityDonaterNumber() {}
+    override suspend fun addCharityAdministator() {}
+    override suspend fun deleteCharityAdministrator() {}
+    override suspend fun addCharityArticle() {}
+    override suspend fun deleteArticle() {}
 }

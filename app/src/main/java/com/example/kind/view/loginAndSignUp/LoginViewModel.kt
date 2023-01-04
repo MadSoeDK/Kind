@@ -43,7 +43,7 @@ class LoginViewModel(
         launch(Dispatchers.IO) {
             // Call method here
             storage.addUser("mpnvip@gmail.com", "fajosdji")
-
+            storage.deleteUser("wLb0SmIObjH9VVSxbzOL")
         }
     }
 }

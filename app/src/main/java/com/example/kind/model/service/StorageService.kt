@@ -4,7 +4,7 @@ interface StorageService {
 
     // Users
     suspend fun addUser(email: String, password: String)
-    suspend fun deleteUser()
+    suspend fun deleteUser(userId : String)
 
     // Subscriptions
     suspend fun addSubscription()
