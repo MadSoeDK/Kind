@@ -24,13 +24,14 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.view.theme.subHeading
 import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
+import com.example.kind.viewModel.ArticleViewModel
 
 @Composable
 fun ArticleScreen(
-    title: String, paragraf: String, charityName: String
+    viewModel: ArticleViewModel
 )
 {
-    IconButton(onClick = { }) {
+    IconButton(onClick = {viewModel.navController.popBackStack()}) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
     }
 
@@ -45,14 +46,14 @@ fun ArticleScreen(
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Charity
-        Text(text = charityName,
+        Text(text = viewModel.charityName,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Left
         )
 
         // Title
-        Text(text = title,
+        Text(text = viewModel.title,
             color = Color.Black,
             fontWeight = Typography.headlineMedium.fontWeight,
             fontSize = Typography.headlineMedium.fontSize,
@@ -62,7 +63,7 @@ fun ArticleScreen(
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Article Text
-        Text(text = paragraf,
+        Text(text = viewModel.paragraf,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Center
@@ -74,5 +75,5 @@ fun ArticleScreen(
 @Composable
 @Preview
 fun previewArticle(){
-    ArticleScreen("Putin dræber 2000 børn om dagen", "Dette er ikke så godt. fordi børn normalt ikke burde dø", "Red Barnet")
+    //ArticleScreen("Putin dræber 2000 børn om dagen", "Dette er ikke så godt. fordi børn normalt ikke burde dø", "Red Barnet")
 }

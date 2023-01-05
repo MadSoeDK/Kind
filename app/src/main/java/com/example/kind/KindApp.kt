@@ -42,6 +42,7 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Explorer : Screen("explorer", Icons.Filled.Favorite)
     object Profile : Screen("profile", Icons.Filled.AccountBox)
     object Charity : Screen("charity", Icons.Filled.Favorite)
+    object Article : Screen("article", Icons.Filled.Favorite)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -112,6 +113,16 @@ fun KindApp() {
                 content = { CharityScreen(
                     viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
                 )}
+            )
+        }
+        composable(Screen.Article.route  + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { NavBackStackEntry ->
+            Screen(
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                content = {
+                    ArticleScreen(viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)))
+                }
             )
         }
     }

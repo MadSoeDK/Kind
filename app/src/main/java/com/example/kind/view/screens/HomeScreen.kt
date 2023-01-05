@@ -28,7 +28,7 @@ fun HomeScreen(
         LazyRow {
             viewModel.getArticles().forEach {
                 item {
-                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+                    KindCard(titleProvider = it.header, subTitleProvier = it.header, onClick = { viewModel.navController.navigate(Screen.Article.route + "/" + it.id.toString()) }) //TODO: Home for now!
                 }
             }
         }
