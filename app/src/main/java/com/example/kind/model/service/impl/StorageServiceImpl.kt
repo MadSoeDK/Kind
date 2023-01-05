@@ -5,7 +5,11 @@ import com.example.kind.model.Donation
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
+import com.google.firebase.FirebaseApp
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.sql.Timestamp
@@ -16,17 +20,12 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
 
     // Users
-    override suspend fun addUser(email: String, password: String){
-
-        val userId = System.currentTimeMillis().toString()
-        val user = User(userId,"John", email,password,0, 20.0)
-
+    override suspend fun addUser(user : User) {
         database.collection("Users").add(user)
-
-        println("THIS IS OUR USERS: " + FirebaseFirestore.getInstance().collection("Users").path)
-
     }
-    override suspend fun deleteUser(){}
+    override suspend fun deleteUser(userId: String) {
+        database.collection("Users").document(userId).delete()
+    }
 
     // Subscriptions
     override suspend fun addSubscription(amount : Double, user : String, charity : String){
