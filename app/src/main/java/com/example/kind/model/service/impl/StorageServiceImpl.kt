@@ -34,8 +34,24 @@ class StorageServiceImpl : StorageService {
     override suspend fun modifySubscriptionPlan(){}
 
     // Donations
-    override suspend fun addDonation(){}
-    override suspend fun deleteDonation(){}
+    override suspend fun addDonation(amount : Double, user : String, charity : String, Desc : String){
+        val charityDocRef = database.collection("Charity").document(charity)
+        val userDocRef = database.collection("User").document(user)
+        val date = com.google.firebase.Timestamp.now()
+        val id = System.currentTimeMillis().toString()
+        database.runTransaction{ transaction ->
+            val charitySnapshot = transaction.get(charityDocRef)
+            val charityID = charitySnapshot.getString("ID")!!
+            val charityName = charitySnapshot.getString("Name")!!
+            val userSnapshot = transaction.get(userDocRef)
+            val currency = userSnapshot.getString("Currency")!!
+            val donation = Donation(amount, charityID, charityName, currency, date, Desc, id)
+            database.collection("User").document(user).collection("Donation").add(donation)
+        }
+    }
+    override suspend fun deleteDonation(user : String, donation : String){
+        database.collection("User").document(user).collection("Donations").document(donation).delete()
+    }
 
     // Charity
     override suspend fun increaseCharityDonationNumber(charity : String){
