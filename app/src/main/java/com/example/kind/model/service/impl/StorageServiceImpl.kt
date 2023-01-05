@@ -2,6 +2,7 @@ package com.example.kind.model.service.impl
 
 import com.example.kind.model.Article
 import com.example.kind.model.Donation
+import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,15 +29,36 @@ class StorageServiceImpl : StorageService {
     override suspend fun deleteUser(){}
 
     // Subscriptions
-    override suspend fun addSubscription(){}
-    override suspend fun deleteSubscription(){}
-    override suspend fun modifySubscriptionAmount(){}
-    override suspend fun modifySubscriptionPlan(){}
+    override suspend fun addSubscription(amount : Double, user : String, charity : String){
+        val charityDocRef = database.collection("Charity").document(charity)
+        val userDocRef = database.collection("User").document(user)
+
+        val date = com.google.firebase.Timestamp.now()
+        val id = System.currentTimeMillis().toString()
+
+        database.runTransaction { transaction ->
+            val charitySnapshot = transaction.get(charityDocRef)
+            val charityID = charitySnapshot.getString("ID")!!
+            val subscription = Subscription(amount, charityID, id, date)
+            userDocRef.collection("Subscription").add(subscription)
+        }
+    }
+    override suspend fun deleteSubscription(user : String, subscription : String){
+        database.collection("User").document(user).collection("Subscription").document(subscription).delete()
+
+    }
+    override suspend fun modifySubscriptionAmount(user : String, subscription : String, amount : Double){
+        val docRef = database.collection("User").document(user).collection("Subscription").document(subscription)
+        database.runTransaction{ transaction ->
+            transaction.update(docRef, "Amount", amount)
+        }
+    }
 
     // Donations
     override suspend fun addDonation(amount : Double, user : String, charity : String, Desc : String){
         val charityDocRef = database.collection("Charity").document(charity)
         val userDocRef = database.collection("User").document(user)
+
         val date = com.google.firebase.Timestamp.now()
         val id = System.currentTimeMillis().toString()
         database.runTransaction{ transaction ->
