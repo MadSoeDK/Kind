@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Shapes
-import com.example.kind.view.theme.primary
 
 //TODO set button to fixed size, ignoring the content
 @Composable
@@ -30,8 +29,8 @@ fun DonationAmountScreen(
                 modifier = Modifier
                     .width(300.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = if (it == selectedOption) primary else primary.copy(alpha = 0.2F),
-                    contentColor = if(it == selectedOption) Color.White else Color.Black
+                    containerColor = if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = if(it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer //måske skal onBackground skiftes
                 )
             ) {
                 Text(text = it.toString())

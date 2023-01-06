@@ -145,7 +145,7 @@ fun KindApp() {
                 }
             }
         }
-        
+
         val signupViewModel = SignupViewModel (
             navigateAmount = { viewModel.navigate(SignupScreens.SetFreq.route) },
             navigateFreq = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
@@ -227,9 +227,7 @@ fun Screen(
 fun KindNavigationBar(
     viewModel: AppViewModel
 ) {
-    NavigationBar(
-        containerColor = Color.White,
-    ) {
+    NavigationBar {
         val items = listOf(NavbarScreens.Home, NavbarScreens.Portfolio, NavbarScreens.Explorer, NavbarScreens.Profile)
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
         items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
@@ -245,7 +243,14 @@ fun KindNavigationBar(
                 },
                 label = { Text(text = screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = { viewModel.navigate(screen.route) }
+                onClick = { viewModel.navigate(screen.route) },
+                colors = NavigationBarItemDefaults.colors(
+                    MaterialTheme.colorScheme.surfaceVariant, //logo for valgt
+                    MaterialTheme.colorScheme.onSurface, //tekst under valgt
+                    MaterialTheme.colorScheme.primary, //knap/omrids
+                    MaterialTheme.colorScheme.onSurface, //logo ikke valgt
+                    MaterialTheme.colorScheme.onSurface //tekst ikke valgt
+                )
             )
         }
     }
