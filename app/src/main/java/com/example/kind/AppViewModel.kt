@@ -10,7 +10,7 @@ open class AppViewModel (
 
     fun finishSignup() {
         // TODO: save data or something
-        navController.navigate(Screen.Home.route)
+        navController.navigate(NavbarScreens.Home.route)
     }
 
     fun navigate(route: String) {

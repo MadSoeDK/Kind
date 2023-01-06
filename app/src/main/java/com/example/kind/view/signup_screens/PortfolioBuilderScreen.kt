@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.example.kind.R
@@ -20,7 +20,7 @@ import com.example.kind.view.theme.Typography
 @ExperimentalFoundationApi
 @Composable
 fun PortfolioBuilderScreen(
-    buildMyOwn: () -> Unit,
+    navigateToPortfolioBuilder: () -> Unit,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -50,7 +50,7 @@ fun PortfolioBuilderScreen(
             .padding(0.dp, 10.dp)
             .align(Alignment.CenterHorizontally))
         {
-            OutlinedButton(onClick = { buildMyOwn() }, modifier = Modifier.width(300.dp)) {
+            OutlinedButton(onClick = navigateToPortfolioBuilder, modifier = Modifier.width(300.dp)) {
                 Text(
                     text = "Build my own",
                     fontWeight = Typography.labelLarge.fontWeight,

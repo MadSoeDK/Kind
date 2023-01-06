@@ -22,7 +22,8 @@ class StorageServiceImpl : StorageService {
         val userId = System.currentTimeMillis().toString()
         val user = User(userId,"John", email,password,0, 20.0)
 
-        database.collection("Users").add
+        //database.collection("Users").add(user)
+        //database.collection("Users").add()
 
         println("THIS IS OUR USERS: " + FirebaseFirestore.getInstance().collection("Users").path)
 

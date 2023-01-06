@@ -1,4 +1,4 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,9 +25,10 @@ data class PortfolioState (
     var charities: List<Charity>? = null,
 )
 
-class SignupViewModel : ViewModel() {
-    var steps = mutableStateOf(1)
-
+class SignupViewModel(
+    val navigateAmount: () -> Unit,
+    val navigateFreq: () -> Unit,
+) : ViewModel() {
     private var portfolioState = MutableStateFlow(PortfolioState())
 
     var formState by mutableStateOf(FormState())
@@ -52,12 +53,12 @@ class SignupViewModel : ViewModel() {
 
     fun setFrequency(frequency: DonationFrequency) {
         portfolioState.update { it.copy(frequency = frequency) }
-        steps.value += 1
+        navigateFreq()
     }
 
     fun setAmount(amount: Int) {
         portfolioState.update { it.copy(amount = amount) }
-        steps.value += 1
+        navigateAmount()
     }
 
 }

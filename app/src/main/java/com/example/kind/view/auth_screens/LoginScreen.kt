@@ -1,4 +1,4 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,10 +14,11 @@ import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.background
 import com.example.kind.view.theme.primary
+import com.example.kind.viewModel.AuthViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel,
+    viewModel: AuthViewModel,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,

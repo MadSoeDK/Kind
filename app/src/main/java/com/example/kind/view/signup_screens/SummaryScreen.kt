@@ -1,4 +1,4 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

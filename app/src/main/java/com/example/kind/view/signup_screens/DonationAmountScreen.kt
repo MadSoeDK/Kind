@@ -1,12 +1,8 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,18 +13,17 @@ import com.example.kind.view.theme.primary
 
 //TODO set button to fixed size, ignoring the content
 @Composable
-fun DonationFreqScreen(
+fun DonationAmountScreen(
     next: () -> Unit,
     back: () -> Unit,
-    selectedOption: DonationFrequency,
-    onOptionSelected: (DonationFrequency) -> Unit
+    selectedOption: Int,
+    onOptionSelected: (Int) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-        LoginHeader(size = 150, "How often will you make a donation")
-
-        DonationFrequency.values().forEach {
+        LoginHeader(size = 150, "How much would you like to donate")
+        listOf(50, 100, 200).forEach {
             OutlinedButton (
                 onClick = { onOptionSelected(it) },
                 shape = Shapes.extraSmall,
@@ -44,6 +39,9 @@ fun DonationFreqScreen(
         }
         Button(onClick = next) {
             Text(text = "Continue")
+        }
+        Button(onClick = back) {
+            Text(text = "Back")
         }
     }
 }
