@@ -134,10 +134,13 @@ fun KindApp() {
             route = AuthenticationScreens.Root.route
         ) {
             composable(route = AuthenticationScreens.Authenticate.route) {
-                AuthenticationScreen(viewModel.navController)
+                AuthenticationScreen(
+                    navigateToLogin = { viewModel.navigate(AuthenticationScreens.Login.route) },
+                    navigateToSignup = { viewModel.navigate(SignupScreens.Root.route) }
+                )
             }
             composable(route = AuthenticationScreens.Login.route) {
-                Screen ( content = { LoginScreen(AuthViewModel(viewModel.navController)) })
+                LoginScreen(AuthViewModel(viewModel.navController))
             }
             composable(route = AuthenticationScreens.About.route) {
                 AboutKindScreen {
