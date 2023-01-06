@@ -21,10 +21,10 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
 
     // Users
-    override suspend fun addUser(email: String, password: String) {
+    override suspend fun addUser(user: User) {
 
         val userId = System.currentTimeMillis().toString()
-        val user = User(userId, "John", email, password, 0, 20.0)
+        val user = User(userId, user.name, user.email, user.password, 0, 20.0)
 
         val data = listOf("Amount", "CharityID", "ID", "initDate")
 
@@ -109,28 +109,12 @@ class StorageServiceImpl : StorageService {
         changeCharityField(charity, "Donations", -1)
     }
 
-    override suspend fun increaseCharityDonationNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", amount)
-    }
-
-    override suspend fun decreaseCharityDonationNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", -amount)
-    }
-
     override suspend fun increaseCharityDonaterNumber(charity: String) {
         changeCharityField(charity, "Donators", 1)
     }
 
     override suspend fun decreaseCharityDonaterNumber(charity: String) {
         changeCharityField(charity, "Donators", -1)
-    }
-
-    override suspend fun increaseCharityDonaterNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", amount)
-    }
-
-    override suspend fun decreaseCharityDonaterNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", -amount)
     }
 
     //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
