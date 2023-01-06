@@ -1,7 +1,5 @@
 package com.example.kind.model.service
 
-import com.google.firebase.firestore.CollectionReference
-
 interface StorageService {
 
     // Users
@@ -19,14 +17,10 @@ interface StorageService {
     suspend fun deleteDonation(user : String, donation : String)
 
     // Charity
-    suspend fun increaseCharityDonationNumber(charity : String)
-    suspend fun decreaseCharityDonationNumber(charity : String)
-    suspend fun increaseCharityDonationNumber(amount :Int, charity : String)
-    suspend fun decreaseCharityDonationNumber(amount :Int, charity : String)
-    suspend fun increaseCharityDonaterNumber(charity : String)
-    suspend fun decreaseCharityDonaterNumber(charity : String)
-    suspend fun increaseCharityDonaterNumber(amount :Int, charity : String)
-    suspend fun decreaseCharityDonaterNumber(amount :Int, charity : String)
+    suspend fun increaseCharityDonationNumber()
+    suspend fun decreaseCharityDonationNumber()
+    suspend fun increaseCharityDonaterNumber()
+    suspend fun decreaseCharityDonaterNumber()
     suspend fun addCharityAdministator()
     suspend fun deleteCharityAdministrator()
     suspend fun addCharityArticle(articleContent : String, charity : String)

@@ -5,12 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.kind.model.Charity
+import com.example.kind.model.User
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.Email
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.UUID
 
 enum class DonationFrequency {
     Monthly,
@@ -19,13 +25,15 @@ enum class DonationFrequency {
     Yearly
 }
 
-data class PortfolioState (
+data class PortfolioState(
     var frequency: DonationFrequency? = null,
     var amount: Int? = 0,
     var charities: List<Charity>? = null,
 )
 
 class SignupViewModel : ViewModel() {
+    lateinit var storage: StorageServiceImpl
+
     var steps = mutableStateOf(1)
 
     private var portfolioState = MutableStateFlow(PortfolioState())
@@ -41,6 +49,26 @@ class SignupViewModel : ViewModel() {
             validators = listOf(Required())
         ),
     )
+
+    fun createUser() {
+        val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+        coroutineScope.fillInfo()
+    }
+    fun CoroutineScope.fillInfo() {
+        storage = StorageServiceImpl()
+        launch(Dispatchers.IO) {
+            // Call method here
+            val userId = UUID.randomUUID().toString()
+            val user = User(
+                userId,
+                formState.getData().get("Full name"),
+                formState.getData().get("Email"),
+                formState.getData().get("Password")
+            )
+            storage.addUser(user)
+        }
+    }
 
     fun onFormSubmit() {
         if (formState.validate()) {
@@ -59,6 +87,5 @@ class SignupViewModel : ViewModel() {
         portfolioState.update { it.copy(amount = amount) }
         steps.value += 1
     }
-
 }
 

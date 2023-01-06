@@ -2,6 +2,10 @@ package com.example.kind.model.service.impl
 
 import com.example.kind.Global
 import com.example.kind.model.*
+import android.content.ContentValues.TAG
+import android.util.Log
+import com.example.kind.model.Charity
+import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
@@ -35,8 +39,9 @@ class StorageServiceImpl : StorageService {
     override suspend fun getSubscription(userPath: String): CollectionReference {
         return database.collection("Users").document(userPath).collection("Subscription")
     }
-
-    override suspend fun deleteUser() {}
+    override suspend fun deleteUser(userId: String) {
+        database.collection("Users").document(userId).delete()
+    }
 
     // Subscriptions
     override suspend fun addSubscription(amount: Double, user: String, charity: String) {
