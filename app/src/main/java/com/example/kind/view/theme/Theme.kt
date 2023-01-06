@@ -82,7 +82,6 @@ fun KindTheme(
     } else {
         DarkColors
     }
-
     MaterialTheme(
         colorScheme = colors,
         typography = Typography,
