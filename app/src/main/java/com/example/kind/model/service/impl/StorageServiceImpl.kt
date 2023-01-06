@@ -26,7 +26,7 @@ class StorageServiceImpl : StorageService {
         val userId = System.currentTimeMillis().toString()
         val user = User(userId, user.name, user.email, user.password, 0, 20.0)
 
-        val data = listOf("Amount", "CharityID", "ID", "initDate")
+        val data = user
 
         database.collection("Users").add(user).addOnSuccessListener { document ->
             Global.currentUser = document.id
