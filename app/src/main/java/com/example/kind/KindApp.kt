@@ -46,10 +46,10 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Article : Screen("article", Icons.Filled.Favorite)
 }
 
-public class Global : Application() {
+class Global : Application() {
     companion object {
         @JvmField
-        var currentUser: String = "defaultValue"
+        var currentUser: String = ""
     }
 }
 
