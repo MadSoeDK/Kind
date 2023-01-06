@@ -32,6 +32,7 @@ import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
 import com.example.kind.view.main_screens.*
+import com.example.kind.view.screens.ArticleScreen
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel

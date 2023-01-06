@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
+import com.example.kind.viewModel.SignupViewModel
 
 @Composable
 fun PersonalInformationScreen(
