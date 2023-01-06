@@ -1,5 +1,6 @@
 package com.example.kind.model.service
 
+import com.example.kind.model.Charity
 import com.example.kind.model.User
 
 interface StorageService {
@@ -19,6 +20,7 @@ interface StorageService {
     suspend fun deleteDonation()
 
     // Charity
+    suspend fun addCharity(charity : Charity)
     suspend fun increaseCharityDonationNumber()
     suspend fun decreaseCharityDonationNumber()
     suspend fun increaseCharityDonaterNumber()

@@ -2,6 +2,7 @@ package com.example.kind.model.service.impl
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.kind.model.Charity
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 import com.google.firebase.FirebaseApp
@@ -37,6 +38,9 @@ class StorageServiceImpl : StorageService {
     override suspend fun deleteDonation() {}
 
     // Charity
+    override suspend fun addCharity(charity: Charity) {
+        database.collection("Charity").add(charity)
+    }
     override suspend fun increaseCharityDonationNumber() {}
     override suspend fun decreaseCharityDonationNumber() {}
     override suspend fun increaseCharityDonaterNumber() {}
