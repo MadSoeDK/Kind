@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.kind.Global
 import com.example.kind.model.Charity
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.StorageServiceImpl
@@ -52,7 +53,6 @@ class SignupViewModel : ViewModel() {
 
     fun createUser() {
         val coroutineScope = CoroutineScope(Dispatchers.IO)
-
         coroutineScope.fillInfo()
     }
     fun CoroutineScope.fillInfo() {

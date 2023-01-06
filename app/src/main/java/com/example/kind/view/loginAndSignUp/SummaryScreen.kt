@@ -119,7 +119,7 @@ fun SummaryScreen (
                 modifier = Modifier.padding(horizontal = 25.dp)
             )
             Text(
-                text = PortfolioViewModel().getSpend().toString() + " kr.",
+                text = "PortfolioViewModel().getSpend().toString() +  kr",
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )

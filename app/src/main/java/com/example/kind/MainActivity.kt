@@ -13,6 +13,8 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
