@@ -1,5 +1,6 @@
 package com.example.kind
 
+import android.app.Application
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -43,6 +44,7 @@ sealed class NavbarScreens(val route: String, var icon: ImageVector) {
     object Explorer : NavbarScreens("explorer", Icons.Filled.Favorite)
     object Profile : NavbarScreens("profile", Icons.Filled.AccountBox)
     object Charity : NavbarScreens("charity", Icons.Filled.Favorite)
+    object Article : NavbarScreens("article", Icons.Filled.Favorite)
 }
 
 sealed class AuthenticationScreens(val route: String) {
@@ -61,6 +63,13 @@ sealed class SignupScreens(val route: String) {
     object SetFreq : SignupScreens("portfolio_freq")
     object BuildPortfolio : SignupScreens("build_portfolio")
     object Summary : SignupScreens("portfolio_summary")
+}
+
+class Global : Application() {
+    companion object {
+        @JvmField
+        var currentUser: String = ""
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -125,6 +134,16 @@ fun KindApp() {
                     content = { CharityScreen(
                         viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
                     )}
+                )
+            }
+            composable(NavbarScreens.Article.route  + "/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) { NavBackStackEntry ->
+                Screen(
+                    NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                    content = {
+                        ArticleScreen(viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)))
+                    }
                 )
             }
         }

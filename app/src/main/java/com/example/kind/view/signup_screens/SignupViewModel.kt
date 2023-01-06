@@ -19,7 +19,7 @@ enum class DonationFrequency {
     Yearly
 }
 
-data class PortfolioState (
+data class PortfolioState(
     var frequency: DonationFrequency? = null,
     var amount: Int? = 0,
     var charities: List<Charity>? = null,
@@ -29,6 +29,7 @@ class SignupViewModel(
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
 ) : ViewModel() {
+    lateinit var storage: StorageServiceImpl
     private var portfolioState = MutableStateFlow(PortfolioState())
 
     var formState by mutableStateOf(FormState())
@@ -42,6 +43,26 @@ class SignupViewModel(
             validators = listOf(Required())
         ),
     )
+
+    fun createUser() {
+        val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+        coroutineScope.fillInfo()
+    }
+    fun CoroutineScope.fillInfo() {
+        storage = StorageServiceImpl()
+        launch(Dispatchers.IO) {
+            // Call method here
+            val userId = UUID.randomUUID().toString()
+            val user = User(
+                userId,
+                formState.getData().get("Full name"),
+                formState.getData().get("Email"),
+                formState.getData().get("Password")
+            )
+            storage.addUser(user)
+        }
+    }
 
     fun onFormSubmit() {
         if (formState.validate()) {

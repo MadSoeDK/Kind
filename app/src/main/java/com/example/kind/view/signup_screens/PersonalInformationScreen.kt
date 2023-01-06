@@ -27,6 +27,9 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
+        Button(onClick = {viewModel.createUser()} ) {
+            Text("Submit")
+        }
         Row(modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()

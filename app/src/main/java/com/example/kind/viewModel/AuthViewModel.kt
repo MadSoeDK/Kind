@@ -28,9 +28,9 @@ class AuthViewModel(
     )
 
     fun login(data: Map<String, String>) {
-        val coroutineScope = CoroutineScope(Dispatchers.IO)
+        /*val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-        coroutineScope.callMethodInCoroutine()
+        coroutineScope.callMethodInCoroutine()*/
 
         navController.navigate(NavbarScreens.Root.route)
     }
@@ -38,12 +38,13 @@ class AuthViewModel(
     fun signUp() {
         navController.navigate(AuthenticationScreens.About.route)
     }
+
+    /*
     fun CoroutineScope.callMethodInCoroutine() {
         storage = StorageServiceImpl()
         launch(Dispatchers.IO) {
             // Call method here
-            storage.addUser("mpnvip@gmail.com", "fajosdji")
-
         }
     }
+    */
 }
