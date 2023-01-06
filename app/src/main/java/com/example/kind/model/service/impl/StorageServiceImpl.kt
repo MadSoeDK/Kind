@@ -1,11 +1,15 @@
 package com.example.kind.model.service.impl
 
+import com.example.kind.Global
 import com.example.kind.model.Article
 import com.example.kind.model.Donation
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.sql.Timestamp
@@ -16,16 +20,21 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
 
     // Users
-    override suspend fun addUser(email: String, password: String){
+    override suspend fun addUser(email: String, password: String) {
 
         val userId = System.currentTimeMillis().toString()
         val user = User(userId,"John", email,password,0, 20.0)
 
-        database.collection("Users").add(user)
-
-        println("THIS IS OUR USERS: " + FirebaseFirestore.getInstance().collection("Users").path)
+        database.collection("Users").add(user).addOnSuccessListener { document ->
+            Global.currentUser = document.id
+        }
 
     }
+
+    override suspend fun getSubscription(userPath : String) : CollectionReference {
+        return database.collection("Users").document(userPath).collection("Subscription")
+    }
+
     override suspend fun deleteUser(){}
 
     // Subscriptions

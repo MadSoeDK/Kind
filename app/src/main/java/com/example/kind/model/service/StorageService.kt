@@ -1,5 +1,7 @@
 package com.example.kind.model.service
 
+import com.google.firebase.firestore.CollectionReference
+
 interface StorageService {
 
     // Users
@@ -7,6 +9,7 @@ interface StorageService {
     suspend fun deleteUser()
 
     // Subscriptions
+    suspend fun getSubscription(userPath : String) : CollectionReference
     suspend fun addSubscription(amount : Double, user : String, charity : String)
     suspend fun deleteSubscription(user : String, subscription : String)
     suspend fun modifySubscriptionAmount(user : String, subscription : String, amount : Double)

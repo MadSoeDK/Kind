@@ -1,5 +1,6 @@
 package com.example.kind
 
+import android.app.Application
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -43,6 +44,13 @@ sealed class Screen(val route: String, var icon: ImageVector) {
     object Profile : Screen("profile", Icons.Filled.AccountBox)
     object Charity : Screen("charity", Icons.Filled.Favorite)
     object Article : Screen("article", Icons.Filled.Favorite)
+}
+
+public class Global : Application() {
+    companion object {
+        @JvmField
+        var currentUser: String = "defaultValue"
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
