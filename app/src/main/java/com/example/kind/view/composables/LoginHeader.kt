@@ -32,7 +32,6 @@ fun LoginHeader(size: Int, description: String? = null) {
                 text = description,
                 fontWeight = Typography.headlineSmall.fontWeight,
                 fontSize = Typography.headlineSmall.fontSize,
-                color = Typography.headlineSmall.color,
                 textAlign = TextAlign.Center
             )
         }

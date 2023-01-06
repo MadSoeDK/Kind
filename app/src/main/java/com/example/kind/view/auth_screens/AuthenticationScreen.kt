@@ -19,13 +19,16 @@ fun AuthenticationScreen(
     navigateToSignup: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
+        verticalArrangement = Arrangement.Bottom,
     ) {
         LoginHeader(96)
         Spacer(modifier = Modifier.height(40.dp))
-        Text("Your Portfolio of Kindness")
+        Text("Your Portfolio of Kindness", color = MaterialTheme.colorScheme.onBackground)
         Spacer(modifier = Modifier.height(40.dp))
         Button(
             modifier = Modifier
@@ -42,7 +45,10 @@ fun AuthenticationScreen(
         ) {
             Text(text = "Continue with Google")
         }
-        Text(text = "Login", modifier = Modifier.clickable { navigateToLogin() }  )
+        Text(text = "Login",
+            modifier = Modifier
+                .clickable { navigateToLogin() },
+            color = MaterialTheme.colorScheme.onBackground,)
         Spacer(modifier = Modifier.height(40.dp))
     }
 }
