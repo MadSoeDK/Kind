@@ -2,19 +2,15 @@ package com.example.kind.model.service.impl
 
 import com.example.kind.Global
 import com.example.kind.model.*
-import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.QuerySnapshot
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 import java.util.UUID
-
-import java.util.*
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
@@ -114,14 +110,6 @@ class StorageServiceImpl : StorageService {
         changeCharityField(charity, "Donations", -1)
     }
 
-    override suspend fun increaseCharityDonationNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", amount)
-    }
-
-    override suspend fun decreaseCharityDonationNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", -amount)
-    }
-
     override suspend fun increaseCharityDonaterNumber(charity: String) {
         changeCharityField(charity, "Donators", 1)
     }
@@ -130,13 +118,6 @@ class StorageServiceImpl : StorageService {
         changeCharityField(charity, "Donators", -1)
     }
 
-    override suspend fun increaseCharityDonaterNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", amount)
-    }
-
-    override suspend fun decreaseCharityDonaterNumber(amount: Int, charity: String) {
-        changeCharityField(charity, "Donations", -amount)
-    }
 
     //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
     override suspend fun addCharityAdministator() {}
