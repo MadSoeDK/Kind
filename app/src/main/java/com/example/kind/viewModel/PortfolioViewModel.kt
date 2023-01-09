@@ -5,16 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.example.kind.Global
 import com.example.kind.model.Portfolio
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class PortfolioViewModel : ViewModel() {
 
     var formState by mutableStateOf(FormState())
 
     var isOpen by mutableStateOf(false)
+
+    lateinit var storage : StorageServiceImpl
 
     var fields: List<KindTextField> = listOf(
         KindTextField(name = "Indtast beløb", label = "Indtast beløb", validators = listOf(Required())),
@@ -37,17 +43,10 @@ class PortfolioViewModel : ViewModel() {
         return amount.toString()
     }
     fun getPortfolioDonation() : List<Portfolio> {
-        return listOf(
-            Portfolio("Røde Kors", 5f, 100f, 150f),
-            Portfolio("Støt Cancer", 50f, 100f, 250f),
-            /*Portfolio("UNICEF", 10f, 100f, 250f),
-            Portfolio("Mødrehjælpen", 5f, 101f, 540f),
-            Portfolio("Julehjælpen", 12f, 100f, 125f),
-            Portfolio("Diabetesforeningen", 10f, 100f, 125f),
-            Portfolio("Hjemløsefonden", 3f, 100f, 125f),
-            Portfolio("Demensforeningen", 5f, 100f, 125f)*/
+        storage = StorageServiceImpl()
 
-        )
+
+        return listOf()
     }
     fun getPercentages() : List<Float> {
         val percentages : MutableList<Float> = mutableListOf()
@@ -56,6 +55,22 @@ class PortfolioViewModel : ViewModel() {
         }
 
         return percentages
+    }
+    fun getUserSubscriptions() : List<Portfolio>
+    {
+        storage = StorageServiceImpl()
+        var subscriptions = listOf<Portfolio>()
+
+        // Get the collection of subscriptions
+        runBlocking {
+            // launch a coroutine
+            launch {
+                val subRef = storage.getSubscription(Global.currentUser)
+                subscriptions += Portfolio("Støt Studenter",50.0f,10f,100f)
+            }
+        }
+
+        return subscriptions
     }
     fun getSpend() : Float {
         var spend = 0f

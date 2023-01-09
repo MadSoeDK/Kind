@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Typography
+import com.example.kind.viewModel.SignupViewModel
 
 @Composable
 fun PersonalInformationScreen(
@@ -32,6 +33,9 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
+        Button(onClick = {viewModel.createUser()} ) {
+            Text("Submit")
+        }
         Row(modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()

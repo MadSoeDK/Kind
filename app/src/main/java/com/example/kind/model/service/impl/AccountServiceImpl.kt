@@ -24,8 +24,8 @@ class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth): A
         auth.currentUser!!.delete().await()
     }
 
-    override suspend fun changePassword(email: String, newPassword : String) {
+    override suspend fun changePassword(email: String, password : String) {
         auth.sendPasswordResetEmail(email)
-        auth.currentUser!!.updatePassword(newPassword).await()
+        auth.currentUser!!.updatePassword(password).await()
     }
 }

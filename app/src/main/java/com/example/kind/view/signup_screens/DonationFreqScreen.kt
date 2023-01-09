@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Shapes
+import com.example.kind.viewModel.DonationFrequency
 
 //TODO set button to fixed size, ignoring the content
 @Composable
