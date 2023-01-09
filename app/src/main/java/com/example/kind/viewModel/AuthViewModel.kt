@@ -70,13 +70,4 @@ class AuthViewModel (
         }
         navController.navigate(AuthenticationScreens.Authenticate.route)
     }
-
-    /*
-    fun CoroutineScope.callMethodInCoroutine() {
-        storage = StorageServiceImpl()
-        launch(Dispatchers.IO) {
-            // Call method here
-        }
-    }
-    */
 }
