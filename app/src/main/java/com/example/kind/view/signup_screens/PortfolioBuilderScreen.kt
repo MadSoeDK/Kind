@@ -1,4 +1,4 @@
-package com.example.kind.view.main_screens
+package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -23,8 +23,9 @@ fun PortfolioBuilderScreen(
     back: () -> Unit
 ) {
     Column (modifier = Modifier
-        //.fillMaxSize()
+        .fillMaxSize()
         .background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Top,
     ) {
         Row(modifier = Modifier
             .padding(20.dp, 20.dp),
@@ -35,10 +36,10 @@ fun PortfolioBuilderScreen(
                 text = "Get started with some of our templates or build your own",
                 fontWeight = Typography.labelLarge.fontWeight,
                 fontSize = Typography.headlineMedium.fontSize,
-                color = Typography.headlineLarge.color)
+                color = MaterialTheme.colorScheme.onBackground)
         }
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
+        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp),content = {
             items(6 /*TODO: Needs to be adaptive based on the templates*/) {
                 PortfolioTemplateCard(
                 Title = "Red Cross",
@@ -91,10 +92,10 @@ fun PortfolioBuilderScreen(
         }*/
 
         Column(
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-                OutlinedButton(onClick = {navigateToPortfolioBuilder()}, modifier = Modifier.width(300.dp)) {
+                OutlinedButton(onClick = {/*navigateToPortfolioBuilder()*/ next()}, modifier = Modifier.width(300.dp)) {
                     Text(
                         text = "Build my own",
                         fontWeight = Typography.labelLarge.fontWeight,
@@ -102,27 +103,42 @@ fun PortfolioBuilderScreen(
                         color = Typography.headlineLarge.color
                     )
             }
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp, 10.dp),
-                //horizontalArrangement = Arrangement.SpaceBetween,
-            )
-            {
-                TextButton(onClick = { back() }) {
-                    Text(
-                        text = "← Back",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineLarge.color
-                    )
-                }
-                Button(onClick = { next() }) {
-                    Text(
-                        text = "Next →",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineSmall.color
-                    )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp),
+                )
+                {
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        //modifier = Modifier.fillMaxWidth()
+                    ) {
+                        TextButton(onClick = { back() }) {
+                            Text(
+                                text = "← Back",
+                                fontWeight = Typography.labelLarge.fontWeight,
+                                fontSize = Typography.labelLarge.fontSize,
+                                color = Typography.headlineLarge.color
+                            )
+                        }
+                    }
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Button(onClick = { next() }) {
+                            Text(
+                                text = "Next →",
+                                fontWeight = Typography.labelLarge.fontWeight,
+                                fontSize = Typography.labelLarge.fontSize,
+                                color = Typography.headlineSmall.color
+                            )
+                        }
+                    }
                 }
             }
         }
