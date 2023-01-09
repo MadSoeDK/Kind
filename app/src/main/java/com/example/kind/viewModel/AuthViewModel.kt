@@ -51,6 +51,19 @@ class AuthViewModel (
         navController.navigate(AuthenticationScreens.About.route)
     }
 
+    fun onLogout() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                auth.signOut()
+                isLoggedIn = false
+                println("Successfully logged out")
+            } catch (e: Exception) {
+                println("Error logged in" + e.printStackTrace())
+            }
+        }
+        navController.navigate(AuthenticationScreens.Authenticate.route)
+    }
+
     /*
     fun CoroutineScope.callMethodInCoroutine() {
         storage = StorageServiceImpl()

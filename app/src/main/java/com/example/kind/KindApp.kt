@@ -121,7 +121,7 @@ fun KindApp() {
             composable(NavbarScreens.Profile.route) {
                 Screen(
                     NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                    content = { ProfileScreen(ProfileViewModel()) }
+                    content = { ProfileScreen(ProfileViewModel(), authViewModel) }
                 )
             }
             composable(NavbarScreens.Explorer.route) {
