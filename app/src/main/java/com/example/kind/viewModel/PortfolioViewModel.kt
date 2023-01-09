@@ -7,23 +7,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.kind.Global
 import com.example.kind.model.Portfolio
+import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.Source
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PortfolioViewModel : ViewModel() {
 
     var storage: StorageServiceImpl = StorageServiceImpl()
+
+    var subscriptions : MutableList<Subscription> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
 
@@ -36,6 +36,10 @@ class PortfolioViewModel : ViewModel() {
             validators = listOf(Required())
         ),
     )
+
+    init {
+        getPortfolioDonation()
+    }
 
     fun toggleModal() {
         isOpen = !isOpen
@@ -54,41 +58,21 @@ class PortfolioViewModel : ViewModel() {
         return amount.toString()
     }
 
-    fun getPortfolioDonation(): List<Portfolio> {
-        val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-        return coroutineScope.getPortfolio()
-    }
-
-    fun CoroutineScope.getPortfolio(): List<Portfolio> {
-        var portfolio: MutableList<Portfolio> = mutableListOf()
-        launch(Dispatchers.IO) {
-            // Call method here
-            val subscription = storage.getSubscriptions(Global.currentUser)
-            subscription.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val documents = task.result
-                    println(documents.documents)
-                    documents!!.forEach { document ->
-                        println("HELP US: " + document.getDouble("amount") +
-                                " " + document.get("charityID"))
-                        portfolio.add(
-                            Portfolio(
-                                "Red Cross",
-                                25.0,
-                                document.getDouble("amount")!!,
-                                200.0
-                            )
-                        )
-                    }
-                }
+    fun getPortfolioDonation() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val portfolio = storage.getSubscriptions(Global.currentUser)
+                subscriptions.addAll(portfolio)
+                println("HELP $portfolio")
+            } catch (e: Exception) {
+                println(e.printStackTrace())
             }
         }
-        return portfolio
     }
 
-    fun getPercentages(): List<Float> {
 
+    fun getPercentages(): List<Float> {
+/*
         fun CoroutineScope.getPercentages() {
             launch(Dispatchers.IO) {
                 // Call method here
@@ -105,7 +89,7 @@ class PortfolioViewModel : ViewModel() {
                 }
             }
         }
-
+*/
         val percentages: MutableList<Float> = mutableListOf()
         /*for (i in getPortfolioDonation()) {
             percentages.add(25f)

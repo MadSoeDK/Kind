@@ -7,10 +7,12 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,8 +34,30 @@ class StorageServiceImpl : StorageService {
         }
     }
 
-    override suspend fun getSubscriptions(userPath: String): CollectionReference {
-        return database.collection("Users").document(userPath).collection("Subscriptions")
+    override suspend fun getSubscriptions(userPath: String): List<Subscription> {
+        val subscriptions = database.collection("Users").document(userPath).collection("Subscriptions")
+        // Call method here
+        val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
+
+        /*.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result
+                    println(documents.documents)
+                    documents!!.forEach { document ->
+                        println("HELP US: " + document.getDouble("amount") +
+                                " " + document.get("charityID"))
+                        portfolio.add(
+                                Portfolio(
+                                        "Red Cross",
+                                        25.0,
+                                        document.getDouble("amount")!!,
+                                        200.0
+                                )
+                        )
+                    }
+                }
+            }*/
+        return portfolio
     }
 
     override suspend fun deleteUser(userId: String) {

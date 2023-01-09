@@ -1,5 +1,7 @@
 package com.example.kind.model.service
 
+import com.example.kind.model.Portfolio
+import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
@@ -10,7 +12,7 @@ interface StorageService {
     // Users
     suspend fun addUser(user: User)
     suspend fun deleteUser(userId : String)
-    suspend fun getSubscriptions(userPath: String) : CollectionReference
+    suspend fun getSubscriptions(userPath: String) : List<Subscription>
 
     // Subscriptions
     suspend fun addSubscription(amount : Double, user : String, charity : String)
