@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
 import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
@@ -33,9 +34,11 @@ import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
 import com.example.kind.view.main_screens.*
 import com.example.kind.view.screens.ArticleScreen
+import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 sealed class NavbarScreens(val route: String, var icon: ImageVector) {
     object Root : NavbarScreens("root", Icons.Filled.Favorite)
@@ -65,20 +68,21 @@ sealed class SignupScreens(val route: String) {
     object Summary : SignupScreens("portfolio_summary")
 }
 
-class Global : Application() {
+/*class Global : Application() {
     companion object {
         @JvmField
         var currentUser: String = ""
     }
-}
+}*/
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun KindApp() {
     val viewModel = AppViewModel(navController = rememberNavController())
+    val authViewModel = AuthViewModel(viewModel.navController, auth = AccountServiceImpl())
     NavHost(
         navController = viewModel.navController,
-        startDestination = AuthenticationScreens.Root.route
+        startDestination = if (authViewModel.isLoggedIn) NavbarScreens.Root.route else AuthenticationScreens.Root.route
     ) {
         navigation(
             startDestination = NavbarScreens.Home.route,
@@ -118,7 +122,7 @@ fun KindApp() {
             composable(NavbarScreens.Profile.route) {
                 Screen(
                     NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                    content = { ProfileScreen(ProfileViewModel()) }
+                    content = { ProfileScreen(ProfileViewModel(), authViewModel) }
                 )
             }
             composable(NavbarScreens.Explorer.route) {
@@ -160,7 +164,7 @@ fun KindApp() {
                 )
             }
             composable(route = AuthenticationScreens.Login.route) {
-                LoginScreen(AuthViewModel(viewModel.navController))
+                LoginScreen(authViewModel)
             }
             composable(route = AuthenticationScreens.About.route) {
                 AboutKindScreen {
@@ -179,14 +183,14 @@ fun KindApp() {
             route = SignupScreens.Root.route
         ) {
             composable(route = SignupScreens.Signup.route) {
+
                 Screen(
-                    content ={PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }) {
-                        viewModel.navigate(AuthenticationScreens.Root.route)
-                    }}
+                    content = {
+                        PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }, auth = authViewModel) {
+                            viewModel.navigate(AuthenticationScreens.Root.route)
+                        }
+                    }
                 )
-                /*PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }) {
-                    viewModel.navigate(AuthenticationScreens.Root.route)
-                }*/
             }
             composable(route = SignupScreens.CreatePortfolio.route) {
                 SignUpIntroScreen(

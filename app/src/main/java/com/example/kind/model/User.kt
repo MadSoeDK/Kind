@@ -1,7 +1,7 @@
 package com.example.kind.model
 
 data class User(
-    val id: String,
+    var id: String,
     var name: String?,
     var email: String?,
     var password: String?,

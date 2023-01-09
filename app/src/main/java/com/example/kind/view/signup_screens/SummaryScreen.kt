@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
+import com.example.kind.model.Portfolio
+import com.example.kind.model.Subscription
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
 
@@ -67,7 +69,7 @@ fun SummaryScreen (
                     else -> 70.dp
                 }
             },
-            data = PortfolioViewModel().getPortfolioDonation(),
+            data = listOf<Portfolio>(),
             headerCellContent = { index ->
                 val value = when (index) {
                     0 -> "Organization"
@@ -124,7 +126,7 @@ fun SummaryScreen (
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                text = PortfolioViewModel().getSpend().toString() + " kr.",
+                text = "PortfolioViewModel().getSpend().toString() +  kr",
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 15.dp),
                 color = MaterialTheme.colorScheme.onBackground,

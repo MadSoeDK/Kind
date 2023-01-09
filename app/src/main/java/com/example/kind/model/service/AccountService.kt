@@ -8,4 +8,5 @@ interface AccountService {
     suspend fun signOut()
     suspend fun deleteAccount()
     suspend fun changePassword(email: String, password: String)
+    suspend fun createUserWithEmailAndPassword(email: String, password : String)
 }

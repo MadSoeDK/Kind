@@ -2,43 +2,44 @@ package com.example.kind.model.service.impl
 
 import com.example.kind.Global
 import com.example.kind.model.*
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.example.kind.model.Charity
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
-import java.sql.Timestamp
-import java.time.LocalDate
-import java.util.Date
+import kotlinx.coroutines.tasks.await
+import java.util.UUID
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+
+    val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
     // Users
     override suspend fun addUser(user: User) {
+        database.collection("Users").add(user).addOnSuccessListener { documentReference ->
+            val documentId = documentReference.id
+            Global.currentUser = documentId
 
-        val userId = System.currentTimeMillis().toString()
-        val user = User(userId, user.name, user.email, user.password, 0, 20.0)
-
-        val data = user
-
-        database.collection("Users").add(user).addOnSuccessListener { document ->
-            Global.currentUser = document.id
-            database.collection("Users").document(Global.currentUser).collection("Subscription")
-                .add(data)
+            database.collection("Users").document(documentId).collection("Subscriptions")
+                .add(subscription)
+            database.collection("Users").document(documentId).collection("Donations")
+                .add(subscription)
         }
-
     }
 
-    override suspend fun getSubscription(userPath: String): CollectionReference {
-        return database.collection("Users").document(userPath).collection("Subscription")
+    override suspend fun getSubscriptions(userPath: String): List<Subscription> {
+        val subscriptions = database.collection("Users").document(userPath).collection("Subscriptions")
+        // Call method here
+        val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
+
+
+        return portfolio
     }
+
     override suspend fun deleteUser(userId: String) {
         database.collection("Users").document(userId).delete()
     }
@@ -49,7 +50,7 @@ class StorageServiceImpl : StorageService {
         val userDocRef = database.collection("User").document(user)
 
         val date = com.google.firebase.Timestamp.now()
-        val id = System.currentTimeMillis().toString()
+        val id = UUID.randomUUID().toString()
 
         database.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
@@ -83,7 +84,7 @@ class StorageServiceImpl : StorageService {
         val userDocRef = database.collection("User").document(user)
 
         val date = com.google.firebase.Timestamp.now()
-        val id = System.currentTimeMillis().toString()
+        val id = UUID.randomUUID().toString()
         database.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
             val charityID = charitySnapshot.getString("ID")!!
@@ -117,8 +118,10 @@ class StorageServiceImpl : StorageService {
         changeCharityField(charity, "Donators", -1)
     }
 
+
     //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
     override suspend fun addCharityAdministator() {}
+
     override suspend fun deleteCharityAdministrator() {}
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {

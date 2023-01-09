@@ -1,6 +1,5 @@
 package com.example.kind.view.main_screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -8,15 +7,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.example.kind.view.composables.Form
 import com.example.kind.view.home.composables.HeaderAndText
+import com.example.kind.viewModel.AuthViewModel
 import com.example.kind.viewModel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
+    auth : AuthViewModel
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,6 +36,9 @@ fun ProfileScreen(
             )) {
             Text("Delete User")
 
+        }
+        Button(onClick = { auth.onLogout() }) {
+            Text(text = "Logout")
         }
     }
 }

@@ -71,36 +71,37 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                 verticalArrangement = Arrangement.Top, Alignment.Start
             ) {
                 LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
-                    items(viewModel.getPortfolioDonation().size) { i ->
-                        viewModel.getPortfolioDonation()[i].organization
-                        Box(
-                            contentAlignment = Alignment.Center
-                        ) {
+                    viewModel.subscriptions.forEach {
+                        item {
                             Box(
-                                Modifier
-                                    .clip(RectangleShape)
-                                    .background(viewModel.getColors()[i])
-                                    .height(12.dp)
-                                    .width(12.dp)
-                                    .align(Alignment.BottomStart)
-                            )
-                        }
-                        if (!(viewModel.getPortfolioDonation()[i].organization.length > 20)) {
-                            Text(
-                                text = viewModel.getPortfolioDonation()[i].organization + "",
-                                fontWeight = Typography.headlineMedium.fontWeight,
-                                fontSize = Typography.labelSmall.fontSize,
-                                color = Typography.headlineLarge.color,
-                                textAlign = TextAlign.Center,
-                            )
-                        } else {
-                            Text(
-                                text = viewModel.getPortfolioDonation()[i].organization + "",
-                                fontWeight = Typography.headlineMedium.fontWeight,
-                                fontSize = Typography.labelSmall.fontSize.div(1.4),
-                                color = Typography.headlineLarge.color,
-                                textAlign = TextAlign.Center,
-                            )
+                                    contentAlignment = Alignment.Center
+                            ) {
+                                Box(
+                                        Modifier
+                                                .clip(RectangleShape)
+                                                .background(viewModel.getColors().random())
+                                                .height(12.dp)
+                                                .width(12.dp)
+                                                .align(Alignment.BottomStart)
+                                )
+                            }
+                            if (!(it.charityID.length > 20)) {
+                                Text(
+                                        text = it.charityID + "",
+                                        fontWeight = Typography.headlineMedium.fontWeight,
+                                        fontSize = Typography.labelSmall.fontSize,
+                                        color = Typography.headlineLarge.color,
+                                        textAlign = TextAlign.Center,
+                                )
+                            } else {
+                                Text(
+                                        text = it.charityID + "",
+                                        fontWeight = Typography.headlineMedium.fontWeight,
+                                        fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                        color = Typography.headlineLarge.color,
+                                        textAlign = TextAlign.Center,
+                                )
+                            }
                         }
                     }
                 })
@@ -138,7 +139,7 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                             else -> 70.dp
                         }
                     },
-                    data = viewModel.getPortfolioDonation(),
+                    data = viewModel.subscriptions,
                     headerCellContent = { index ->
                         val value = when (index) {
                             0 -> "Organization"
@@ -164,10 +165,10 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                     cellContent = { index, item ->
 
                         val value = when (index) {
-                            0 -> item.organization
-                            1 -> item.pct.toString() + "%"
-                            2 -> item.spend.toString() + " kr."
-                            3 -> item.total.toString() + " kr."
+                            0 -> item.charityID
+                            1 -> "%"
+                            2 -> " kr."
+                            3 -> " kr."
                             else -> ""
                         }
                         val alignment = when (index) {
@@ -211,11 +212,11 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                         columns = GridCells.Fixed(1),
                         Modifier.height(270.dp), horizontalArrangement = Arrangement.Start,
                         content = {
-                            items(viewModel.getPortfolioDonation().size) { i ->
-                                viewModel.getPortfolioDonation()[i].organization
+                            items(viewModel.subscriptions.size) { i ->
+                                viewModel.subscriptions[i].charityID
                                 Spacer(modifier = Modifier.padding(0.dp, 20.dp))
                                 Text(
-                                    text = viewModel.getPortfolioDonation()[i].organization,
+                                    text = viewModel.subscriptions[i].charityID,
                                     fontWeight = Typography.headlineMedium.fontWeight,
                                     fontSize = Typography.labelSmall.fontSize.times(1.5),
                                     color = Typography.headlineLarge.color,

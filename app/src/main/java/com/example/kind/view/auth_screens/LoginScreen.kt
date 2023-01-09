@@ -30,7 +30,7 @@ fun LoginScreen(
         Button(
             modifier = Modifier
                 .width(280.dp),
-            onClick = { viewModel.login(viewModel.formState.getData()) },
+            onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
         ) {
             Text("Login", color = MaterialTheme.colorScheme.onPrimary)
         }
