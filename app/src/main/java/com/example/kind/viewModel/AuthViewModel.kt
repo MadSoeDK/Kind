@@ -44,10 +44,16 @@ class AuthViewModel (
             }
         }
         navController.navigate(NavbarScreens.Root.route)
-        println(auth.hasUser)
-    }
+   }
 
-    fun signUp() {
+    fun onSignUp(data: Map<String, String>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                auth.signInWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+            } catch (e: Exception) {
+                println("Could not sign in: " + e.printStackTrace())
+            }
+        }
         navController.navigate(AuthenticationScreens.About.route)
     }
 

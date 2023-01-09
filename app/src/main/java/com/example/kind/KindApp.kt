@@ -182,7 +182,7 @@ fun KindApp() {
             route = SignupScreens.Root.route
         ) {
             composable(route = SignupScreens.Signup.route) {
-                PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }) {
+                PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }, auth = authViewModel) {
                     viewModel.navigate(AuthenticationScreens.Root.route)
                 }
             }

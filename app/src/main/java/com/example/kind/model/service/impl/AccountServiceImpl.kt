@@ -28,4 +28,8 @@ class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth = F
         auth.sendPasswordResetEmail(email)
         auth.currentUser!!.updatePassword(password).await()
     }
+
+    override suspend fun signInWithEmailAndPassword(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+    }
 }
