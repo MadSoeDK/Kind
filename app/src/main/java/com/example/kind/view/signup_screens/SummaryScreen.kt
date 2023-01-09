@@ -1,11 +1,9 @@
 package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +26,10 @@ fun SummaryScreen (
     back: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(10.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -44,13 +45,15 @@ fun SummaryScreen (
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(10.dp),
             fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground,
         )
 
         Text(
             text = "Adjust the percentages to each organization below.",
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp),
+            color = MaterialTheme.colorScheme.onBackground,
         )
 
         PortfolioTable(
@@ -111,17 +114,20 @@ fun SummaryScreen (
         Row {
             Text(
                 text = "Pr. month donation. ",
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
                 text = "100% ",
                 fontSize = 14.sp,
-                modifier = Modifier.padding(horizontal = 25.dp)
+                modifier = Modifier.padding(horizontal = 25.dp),
+                color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
                 text = PortfolioViewModel().getSpend().toString() + " kr.",
                 fontSize = 14.sp,
-                modifier = Modifier.padding(horizontal = 15.dp)
+                modifier = Modifier.padding(horizontal = 15.dp),
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
@@ -133,7 +139,8 @@ fun SummaryScreen (
                 text = "Accept terms of service.",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(vertical = 14.dp)
+                modifier = Modifier.padding(vertical = 14.dp),
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
         Row(modifier = Modifier.height(60.dp)) {

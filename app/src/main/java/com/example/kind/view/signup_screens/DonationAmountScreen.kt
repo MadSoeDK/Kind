@@ -1,5 +1,6 @@
 package com.example.kind.view.signup_screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,8 +21,11 @@ fun DonationAmountScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         ) {
-        LoginHeader(size = 150, "How much would you like to donate")
+        LoginHeader(size = 150, "How much would you like to donate",)
         listOf(50, 100, 200).forEach {
             OutlinedButton (
                 onClick = { onOptionSelected(it) },

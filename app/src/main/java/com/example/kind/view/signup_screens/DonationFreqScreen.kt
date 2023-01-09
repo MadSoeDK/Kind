@@ -1,5 +1,6 @@
 package com.example.kind.view.signup_screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,6 +21,9 @@ fun DonationFreqScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         ) {
         LoginHeader(size = 150, "How often will you make a donation")
 
@@ -39,6 +43,9 @@ fun DonationFreqScreen(
         }
         Button(onClick = next) {
             Text(text = "Continue")
+        }
+        Button(onClick = back) {
+            Text(text = "Back")
         }
     }
 }

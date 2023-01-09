@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +55,7 @@ fun SignUpIntroScreen(
         Button(onClick = navigateToHome) {
             Text(text = "Build portfolio later")
         }
-        Button(onClick = navigateToPortfolio) {
+        TextButton(onClick = navigateToPortfolio) {
             Text(text = "Build now")
         }
     }
