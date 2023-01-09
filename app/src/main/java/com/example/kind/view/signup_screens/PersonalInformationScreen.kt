@@ -25,10 +25,10 @@ fun PersonalInformationScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
-        Text(text = "Start building your portfolio of kindness today", style = Typography.headlineSmall, color = MaterialTheme.colorScheme.onBackground)
-        /*Row(modifier = Modifier.padding(0.dp, 15.dp)) {
+        //Text(text = "Start building your portfolio of kindness today", style = Typography.headlineSmall, color = MaterialTheme.colorScheme.onBackground)
+        Row(modifier = Modifier.padding(0.dp, 15.dp)) {
             LoginHeader(size = 150, "Start building your portfolio of kindness today")
-        }*/
+        }
         Form(
             state = viewModel.formState,
             fields = viewModel.fields,
