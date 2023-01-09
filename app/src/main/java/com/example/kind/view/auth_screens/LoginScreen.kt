@@ -1,4 +1,4 @@
-package com.example.kind.view.signup_screens
+package com.example.kind.view.auth_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +18,8 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
         Spacer(modifier = Modifier.height(50.dp))
