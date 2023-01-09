@@ -34,8 +34,8 @@ fun DonationFreqScreen(
                 modifier = Modifier
                     .width(300.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = if(it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer //onBackground skal måske skiftes
+                    containerColor = if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = if(it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer //onBackground skal måske skiftes
                 )
             ) {
                 Text(text = it.toString())
