@@ -195,9 +195,11 @@ fun KindApp() {
                 )
             }
             composable(route = SignupScreens.Summary.route) {
-                SummaryScreen(
-                    next = { viewModel.navigate(NavbarScreens.Root.route) },
-                    back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
+                Screen(
+                    content = { SummaryScreen(
+                        next = { viewModel.navigate(NavbarScreens.Root.route) },
+                        back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
+                    )}
                 )
             }
         }
