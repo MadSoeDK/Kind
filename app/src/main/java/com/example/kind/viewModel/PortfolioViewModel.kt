@@ -5,14 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.kind.Global
 import com.example.kind.model.Portfolio
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class PortfolioViewModel : ViewModel() {
 
@@ -56,9 +53,8 @@ class PortfolioViewModel : ViewModel() {
 
         return percentages
     }
-    fun getUserSubscriptions() : List<Portfolio>
-    {
-        storage = StorageServiceImpl()
+    fun getUserSubscriptions(): List<Portfolio> {
+        /*storage = StorageServiceImpl()
         var subscriptions = listOf<Portfolio>()
 
         // Get the collection of subscriptions
@@ -70,7 +66,8 @@ class PortfolioViewModel : ViewModel() {
             }
         }
 
-        return subscriptions
+        return subscriptions*/
+        return listOf()
     }
     fun getSpend() : Float {
         var spend = 0f
