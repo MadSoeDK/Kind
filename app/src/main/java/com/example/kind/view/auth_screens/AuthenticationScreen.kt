@@ -1,5 +1,6 @@
 package com.example.kind.view.auth_screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -15,13 +16,16 @@ fun AuthenticationScreen(
     navigateToSignup: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
+        verticalArrangement = Arrangement.Bottom,
     ) {
         LoginHeader(96)
         Spacer(modifier = Modifier.height(40.dp))
-        Text("Your Portfolio of Kindness")
+        Text("Your Portfolio of Kindness",
+            color = MaterialTheme.colorScheme.onBackground)
         Spacer(modifier = Modifier.height(40.dp))
         Button(
             modifier = Modifier
@@ -34,11 +38,16 @@ fun AuthenticationScreen(
             onClick = {},
             modifier = Modifier
                 .width(280.dp),
-            colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background)
+            colors = ButtonDefaults
+                .outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background)
         ) {
             Text(text = "Continue with Google")
         }
-        Text(text = "Login", modifier = Modifier.clickable { navigateToLogin() }  )
+        Text(
+            text = "Login",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.clickable { navigateToLogin() },
+        )
         Spacer(modifier = Modifier.height(40.dp))
     }
 }
