@@ -18,11 +18,10 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primary)
-        ,
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
     ){
+        Spacer(modifier = Modifier.height(50.dp))
         Form (
             state = viewModel.formState,
             fields = viewModel.fields,
