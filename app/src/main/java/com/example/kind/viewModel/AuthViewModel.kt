@@ -50,6 +50,7 @@ class AuthViewModel (
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 auth.signInWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+                println("New user created")
             } catch (e: Exception) {
                 println("Could not sign in: " + e.printStackTrace())
             }
