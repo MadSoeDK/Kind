@@ -88,17 +88,18 @@ fun KindApp() {
                     FloatingActionButton = {
                         FloatingActionButton(
                             onClick = { portfolioViewModel.toggleModal() },
+                            containerColor = MaterialTheme.colorScheme.primary,
                             content = {
                                 Icon (
                                     Icons.Filled.Edit,
                                     contentDescription = null,
-                                    tint = Color.White,
+                                    tint = MaterialTheme.colorScheme.background,
                                     modifier = Modifier
                                         .width(30.dp)
                                         .height(30.dp),
                                 )
+
                             },
-                            containerColor = Typography.headlineLarge.color,
                             shape = RoundedCornerShape(10.dp)
                         )
                     },
