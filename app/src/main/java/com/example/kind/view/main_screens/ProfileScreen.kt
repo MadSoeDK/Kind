@@ -3,6 +3,8 @@ package com.example.kind.view.main_screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,8 +29,14 @@ fun ProfileScreen(
         Button(onClick = {viewModel.onFormSubmit()} ) {
             Text("Submit")
         }
-        Button(onClick = {viewModel.deleteUser()} ) {
+        Button(
+            onClick = {viewModel.deleteUser()},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            )) {
             Text("Delete User")
+
         }
     }
 }
