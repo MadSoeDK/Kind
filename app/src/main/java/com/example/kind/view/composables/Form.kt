@@ -23,7 +23,7 @@ class FormState {
 }
 
 @Composable
-fun Form(state: FormState, fields: List<KindTextField>){
+fun Form(state: FormState, fields: List<KindTextField>) {
     state.fields = fields
 
     Column {

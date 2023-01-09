@@ -1,10 +1,11 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,8 @@ import com.example.kind.R
 
 @Composable
 fun SignUpIntroScreen(
+    navigateToHome : () -> Unit,
+    navigateToPortfolio : () -> Unit
 ) {
     Column(
         modifier = Modifier.padding(10.dp),
@@ -31,7 +34,6 @@ fun SignUpIntroScreen(
             contentScale = ContentScale.FillBounds
         )
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
-
         Text(
             text = "Build your portfolio of charity now?",
             fontSize = 24.sp,
@@ -39,14 +41,17 @@ fun SignUpIntroScreen(
             modifier = Modifier.padding(10.dp),
             fontWeight = FontWeight.SemiBold,
         )
-
         Text(
             text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
             fontSize = 14.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(10.dp)
         )
-
-
+        Button(onClick = navigateToHome) {
+            Text(text = "Build portfolio later")
+        }
+        Button(onClick = navigateToPortfolio) {
+            Text(text = "Build now")
+        }
     }
 }

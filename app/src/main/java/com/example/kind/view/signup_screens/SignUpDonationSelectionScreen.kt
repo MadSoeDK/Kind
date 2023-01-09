@@ -1,4 +1,4 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -21,9 +21,7 @@ fun SignUpDonationSelectionScreen (
     back: () -> Unit
 ){
     Column {
-        Row(
-        )
-        {
+        Row {
             HeaderAndTextWithSelectionFilter(Title = "Who would you like to donate to", Subtitle = "You can adjust the amount to each organization on the next page", Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care"))
         }
 

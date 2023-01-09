@@ -1,4 +1,4 @@
-package com.example.kind.view.loginAndSignUp
+package com.example.kind.viewModel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 
 enum class DonationFrequency {
     Monthly,
@@ -32,11 +32,11 @@ data class PortfolioState(
     var charities: List<Charity>? = null,
 )
 
-class SignupViewModel : ViewModel() {
+class SignupViewModel(
+    val navigateAmount: () -> Unit,
+    val navigateFreq: () -> Unit,
+) : ViewModel() {
     lateinit var storage: StorageServiceImpl
-
-    var steps = mutableStateOf(1)
-
     private var portfolioState = MutableStateFlow(PortfolioState())
 
     var formState by mutableStateOf(FormState())
@@ -80,12 +80,13 @@ class SignupViewModel : ViewModel() {
 
     fun setFrequency(frequency: DonationFrequency) {
         portfolioState.update { it.copy(frequency = frequency) }
-        steps.value += 1
+        navigateFreq()
     }
 
     fun setAmount(amount: Int) {
         portfolioState.update { it.copy(amount = amount) }
-        steps.value += 1
+        navigateAmount()
     }
+
 }
 

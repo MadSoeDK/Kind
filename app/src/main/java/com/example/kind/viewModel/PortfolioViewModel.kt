@@ -69,45 +69,24 @@ class PortfolioViewModel : ViewModel() {
             }
         }
     }
-
-
-    fun getPercentages(): List<Float> {
-/*
-        fun CoroutineScope.getPercentages() {
-            launch(Dispatchers.IO) {
-                // Call method here
-                val subscription = storage.getSubscriptions(Global.currentUser)
-                subscription.get().addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val documents = task.result
-                        documents!!.forEach { document ->
-                            var amounts: ArrayList<Double> = ArrayList()
-
-                        }
-                    }
-
-                }
-            }
-        }
-*/
-        val percentages: MutableList<Float> = mutableListOf()
+    fun getPercentages() : List<Float> {
+        val percentages : MutableList<Float> = mutableListOf()
         /*for (i in getPortfolioDonation()) {
-            percentages.add(25f)
+            percentages.add(i.pct)
         }*/
 
         return percentages
     }
-
-    /*fun getSpend(): Float {
+    fun getSpend() : Float {
         var spend = 0f
-        for (i in getPortfolioDonation()) {
-            spend += 25f
-        }
+        /*for(i in getPortfolioDonation()) {
+            spend += i.spend
+        }*/
         return spend
-    }*/
+    }
 
-    fun getColors(): List<Color> {
-        val colors: MutableList<Color> = mutableListOf()
+    fun getColors() : List<Color> {
+        val colors : MutableList<Color> = mutableListOf()
         colors.add(Color(0xFFbf95d4))
         colors.add(Color(0xFFf4ac1a))
         colors.add(Color(0xFF8b0a50))

@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.example.kind.R
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.kind.Screen
+import com.example.kind.NavbarScreens
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
 import com.example.kind.view.composables.KindCharityCard
 import com.example.kind.viewModel.ExplorerViewModel
@@ -34,7 +34,7 @@ fun ExplorerScreen(
                         Title = it.name,
                         Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
                         OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
-                        onClick = { viewModel.navController.navigate(Screen.Charity.route + "/" + it.id) }
+                        onClick = { viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + it.id) }
                     )
                 }
             }

@@ -1,11 +1,7 @@
 package com.example.kind.model.service
 
-import com.example.kind.model.Portfolio
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.QuerySnapshot
 
 interface StorageService {
 
@@ -24,14 +20,10 @@ interface StorageService {
     suspend fun deleteDonation(user : String, donation : String)
 
     // Charity
-    suspend fun increaseCharityDonationNumber(charity : String)
-    suspend fun decreaseCharityDonationNumber(charity : String)
-    suspend fun increaseCharityDonationNumber(amount :Int, charity : String)
-    suspend fun decreaseCharityDonationNumber(amount :Int, charity : String)
-    suspend fun increaseCharityDonaterNumber(charity : String)
-    suspend fun decreaseCharityDonaterNumber(charity : String)
-    suspend fun increaseCharityDonaterNumber(amount :Int, charity : String)
-    suspend fun decreaseCharityDonaterNumber(amount :Int, charity : String)
+    suspend fun increaseCharityDonationNumber(charity: String)
+    suspend fun decreaseCharityDonationNumber(charity: String)
+    suspend fun increaseCharityDonaterNumber(charity: String)
+    suspend fun decreaseCharityDonaterNumber(charity: String)
     suspend fun addCharityAdministator()
     suspend fun deleteCharityAdministrator()
     suspend fun addCharityArticle(articleContent : String, charity : String)

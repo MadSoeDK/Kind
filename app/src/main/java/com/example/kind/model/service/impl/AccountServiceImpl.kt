@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth): AccountService {
+class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth = FirebaseAuth.getInstance()): AccountService {
     override val userid: String
         get() = auth.currentUser?.uid.orEmpty()
     override val hasUser: Boolean
@@ -27,5 +27,9 @@ class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth): A
     override suspend fun changePassword(email: String, password : String) {
         auth.sendPasswordResetEmail(email)
         auth.currentUser!!.updatePassword(password).await()
+    }
+
+    override suspend fun signInWithEmailAndPassword(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
     }
 }

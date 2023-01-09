@@ -2,22 +2,23 @@ package com.example.kind.model.service.impl
 
 import com.example.kind.Global
 import com.example.kind.model.*
+import com.example.kind.model.*
+import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import java.util.UUID
+
 import java.util.*
-import kotlin.collections.ArrayList
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
@@ -39,24 +40,7 @@ class StorageServiceImpl : StorageService {
         // Call method here
         val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
 
-        /*.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val documents = task.result
-                    println(documents.documents)
-                    documents!!.forEach { document ->
-                        println("HELP US: " + document.getDouble("amount") +
-                                " " + document.get("charityID"))
-                        portfolio.add(
-                                Portfolio(
-                                        "Red Cross",
-                                        25.0,
-                                        document.getDouble("amount")!!,
-                                        200.0
-                                )
-                        )
-                    }
-                }
-            }*/
+
         return portfolio
     }
 
@@ -70,7 +54,7 @@ class StorageServiceImpl : StorageService {
         val userDocRef = database.collection("User").document(user)
 
         val date = com.google.firebase.Timestamp.now()
-        val id = System.currentTimeMillis().toString()
+        val id = UUID.randomUUID().toString()
 
         database.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
@@ -104,7 +88,7 @@ class StorageServiceImpl : StorageService {
         val userDocRef = database.collection("User").document(user)
 
         val date = com.google.firebase.Timestamp.now()
-        val id = System.currentTimeMillis().toString()
+        val id = UUID.randomUUID().toString()
         database.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
             val charityID = charitySnapshot.getString("ID")!!
@@ -156,6 +140,7 @@ class StorageServiceImpl : StorageService {
 
     //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
     override suspend fun addCharityAdministator() {}
+
     override suspend fun deleteCharityAdministrator() {}
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {

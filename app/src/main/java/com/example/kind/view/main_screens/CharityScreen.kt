@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -6,10 +6,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,24 +16,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
-import com.example.kind.view.theme.subHeading
 import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
-fun CharityScreen(
+fun CharityScreen( //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(0.dp, 5.dp))
     {
         // Background
         Box(modifier = Modifier
-            .background(color = Color.LightGray)
+            .background(color = MaterialTheme.colorScheme.onBackground)
             .fillMaxWidth()
             .height(200.dp)
             .align(Alignment.CenterHorizontally)
@@ -61,13 +57,13 @@ fun CharityScreen(
             .align(Alignment.CenterHorizontally)
         ) {
             Text(text = "150\n Donors",
-                color = subHeading,
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.padding(50.dp,0.dp))
             Text(text = "200\n Donations",
-                color = subHeading,
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
             )

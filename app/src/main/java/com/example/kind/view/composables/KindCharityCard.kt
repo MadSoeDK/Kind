@@ -37,7 +37,9 @@ fun KindCharityCard(
         ) {
             Row(modifier = Modifier.padding(0.dp, 5.dp)) {
                 Image(
-                    painter = OrganizationIcon, contentDescription = null, modifier = Modifier
+                    painter = OrganizationIcon,
+                    contentDescription = null,
+                    modifier = Modifier
                         .height(50.dp)
                         .width(50.dp)
                 )
@@ -67,7 +69,6 @@ fun KindCharityCard(
                     color = Typography.headlineLarge.color
                 )
             }
-
         }
     }
 }

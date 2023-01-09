@@ -1,10 +1,12 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,31 +28,35 @@ fun KindCard (
             .width(200.dp)
             .height(200.dp)
             .clickable { onClick() }
+            .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = MaterialTheme.shapes.medium)
     ) {
         Column {
             Box(
                 modifier = Modifier
-                    .background(Color.Gray)
+                    .background(MaterialTheme.colorScheme.background)
                     .fillMaxWidth()
                     .height(140.dp)
+                    //.padding(10.dp, 0.dp, 0.dp, 0.dp)
             ) {
                 Text(text = "Image")
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = MaterialTheme.colorScheme.background),
             ) {
                 Box (
                     Modifier
                         .clip(CircleShape)
-                        .background(Color.Red)
+                        .background(MaterialTheme.colorScheme.onTertiaryContainer)
                         .height(40.dp)
                         .width(40.dp)
                 )
                 CircleShape
                 Column (modifier = Modifier.padding(8.dp, 0.dp)){
-                    Text(text = titleProvider)
-                    Text(text = subTitleProvier)
+                    Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
+                    Text(text = subTitleProvier, color = MaterialTheme.colorScheme.onBackground)
                 }
             }
         }
