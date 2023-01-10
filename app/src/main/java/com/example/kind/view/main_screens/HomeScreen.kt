@@ -28,8 +28,19 @@ fun HomeScreen(
     Column {
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
-        Text(text = "Charity Update", color = MaterialTheme.colorScheme.primary, style = Typography.headlineMedium)
-        Text("The latest news from your charities")
+        Column() {
+            Row() {
+                Spacer(modifier = Modifier.width(10.dp))
+                Column() {
+                    Text(
+                        text = "Charity Update",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = Typography.headlineMedium
+                    )
+                    Text("The latest news from your charities")
+                }
+            }
+        }
         LazyRow{
             viewModel.getArticles().forEachIndexed { i,element ->
                 item {
@@ -52,13 +63,32 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(text = "Explore charities", color = MaterialTheme.colorScheme.secondary, style = Typography.headlineLarge)
-        Text("Get to know other charities better")
+        Column() {
+            Row() {
+                Spacer(modifier = Modifier.width(10.dp))
+                Column() {
+                    Text(
+                        text = "Explore charities",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = Typography.headlineLarge
+                    )
+                    Text("Get to know other charities better")
+                }
+            }
+        }
 
         LazyRow {
-            viewModel.getCharities().forEach {
+            viewModel.getCharities().forEachIndexed { i, element ->
                 item {
-                    KindCard(titleProvider = it.name, subTitleProvier = it.name, onClick = { viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + it.id.toString()) })
+                    if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
+                    KindCard(
+                        titleProvider = element.name,
+                        subTitleProvier = element.name,
+                        onClick = {
+                            viewModel.navController.navigate(
+                                NavbarScreens.Charity.route
+                                        + "/" + element.id.toString())},
+                    )
                 }
             }
         }

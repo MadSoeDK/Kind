@@ -51,25 +51,6 @@ class SignupViewModel(
         ),
     )
 
-    fun createUser() {
-        val coroutineScope = CoroutineScope(Dispatchers.IO)
-        coroutineScope.fillInfo()
-    }
-    fun CoroutineScope.fillInfo() {
-        storage = StorageServiceImpl()
-        launch(Dispatchers.IO) {
-            // Call method here
-            val userId = UUID.randomUUID().toString()
-            val user = User(
-                userId,
-                formState.getData().get("Full name"),
-                formState.getData().get("Email"),
-                formState.getData().get("Password")
-            )
-            storage.addUser(user)
-        }
-    }
-
     fun onFormSubmit() {
         if (formState.validate()) {
             // TODO: Do something on form submission

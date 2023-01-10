@@ -17,7 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -29,6 +28,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
+import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
@@ -68,13 +68,6 @@ sealed class SignupScreens(val route: String) {
     object Summary : SignupScreens("portfolio_summary")
 }
 
-/*class Global : Application() {
-    companion object {
-        @JvmField
-        var currentUser: String = ""
-    }
-}*/
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun KindApp() {
@@ -101,17 +94,18 @@ fun KindApp() {
                     FloatingActionButton = {
                         FloatingActionButton(
                             onClick = { portfolioViewModel.toggleModal() },
+                            containerColor = MaterialTheme.colorScheme.primary,
                             content = {
                                 Icon (
                                     Icons.Filled.Edit,
                                     contentDescription = null,
-                                    tint = Color.White,
+                                    tint = MaterialTheme.colorScheme.background,
                                     modifier = Modifier
                                         .width(30.dp)
                                         .height(30.dp),
                                 )
+
                             },
-                            containerColor = Typography.headlineLarge.color,
                             shape = RoundedCornerShape(10.dp)
                         )
                     },
@@ -182,9 +176,14 @@ fun KindApp() {
             route = SignupScreens.Root.route
         ) {
             composable(route = SignupScreens.Signup.route) {
-                PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }, auth = authViewModel) {
-                    viewModel.navigate(AuthenticationScreens.Root.route)
-                }
+
+                Screen(
+                    content = {
+                        PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }, auth = authViewModel) {
+                            viewModel.navigate(AuthenticationScreens.Root.route)
+                        }
+                    }
+                )
             }
             composable(route = SignupScreens.CreatePortfolio.route) {
                 SignUpIntroScreen(
@@ -218,9 +217,11 @@ fun KindApp() {
                 )
             }
             composable(route = SignupScreens.Summary.route) {
-                SummaryScreen(
-                    next = { viewModel.navigate(NavbarScreens.Root.route) },
-                    back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
+                Screen(
+                    content = { SummaryScreen(
+                        next = { viewModel.navigate(NavbarScreens.Root.route) },
+                        back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
+                    )}
                 )
             }
         }

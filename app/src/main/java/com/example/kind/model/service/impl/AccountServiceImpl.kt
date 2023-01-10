@@ -1,11 +1,16 @@
 package com.example.kind.model.service.impl
 
+import com.example.kind.model.User
 import com.example.kind.model.service.AccountService
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth = FirebaseAuth.getInstance()): AccountService {
+class AccountServiceImpl @Inject constructor(
+    private val auth : FirebaseAuth = FirebaseAuth.getInstance(),
+    private val storage : FirebaseFirestore = FirebaseFirestore.getInstance()
+): AccountService {
     override val userid: String
         get() = auth.currentUser?.uid.orEmpty()
     override val hasUser: Boolean
@@ -29,7 +34,10 @@ class AccountServiceImpl @Inject constructor(private val auth : FirebaseAuth = F
         auth.currentUser!!.updatePassword(password).await()
     }
 
-    override suspend fun signInWithEmailAndPassword(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
+    override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
+        val uid = auth.createUserWithEmailAndPassword(email, password).await().user?.uid
+        if (uid != null) {
+            storage.collection("Users").document(uid).set(User("John"))
+        }
     }
 }

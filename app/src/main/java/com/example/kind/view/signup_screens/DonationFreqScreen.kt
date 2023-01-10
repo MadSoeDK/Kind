@@ -1,5 +1,7 @@
 package com.example.kind.view.signup_screens
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,6 +23,9 @@ fun DonationFreqScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         ) {
         LoginHeader(size = 150, "How often will you make a donation")
 
@@ -31,8 +36,16 @@ fun DonationFreqScreen(
                 modifier = Modifier
                     .width(300.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = if(it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer //onBackground skal måske skiftes
+                    containerColor = if (isSystemInDarkTheme()) {
+                        if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary
+                    } else {
+                        if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
+                    },
+                    contentColor = if (isSystemInDarkTheme()) {
+                        if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
+                    },
                 )
             ) {
                 Text(text = it.toString())
@@ -40,6 +53,9 @@ fun DonationFreqScreen(
         }
         Button(onClick = next) {
             Text(text = "Continue")
+        }
+        Button(onClick = back) {
+            Text(text = "Back")
         }
     }
 }
