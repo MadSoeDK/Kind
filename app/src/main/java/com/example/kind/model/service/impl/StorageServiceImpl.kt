@@ -36,7 +36,6 @@ class StorageServiceImpl : StorageService {
         // Call method here
         val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
 
-
         return portfolio
     }
 
@@ -102,6 +101,17 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
+    override suspend fun getCharities(): List<Charity>{
+
+        val charityList: List<Charity> = database.collection("Charity").get().await().toObjects()
+
+        println("Here:" + charityList.toString())
+
+        //charityList = database.collection("Charities").get().await().toObjects()
+
+        return charityList
+    }
+
     override suspend fun increaseCharityDonationNumber(charity: String) {
         changeCharityField(charity, "Donations", 1)
     }

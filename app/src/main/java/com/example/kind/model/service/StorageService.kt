@@ -1,5 +1,6 @@
 package com.example.kind.model.service
 
+import com.example.kind.model.Charity
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
 
@@ -20,6 +21,7 @@ interface StorageService {
     suspend fun deleteDonation(user : String, donation : String)
 
     // Charity
+    suspend fun getCharities(): List<Charity>
     suspend fun increaseCharityDonationNumber(charity: String)
     suspend fun decreaseCharityDonationNumber(charity: String)
     suspend fun increaseCharityDonaterNumber(charity: String)
