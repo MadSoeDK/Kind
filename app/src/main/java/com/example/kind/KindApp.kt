@@ -68,13 +68,6 @@ sealed class SignupScreens(val route: String) {
     object Summary : SignupScreens("portfolio_summary")
 }
 
-/*class Global : Application() {
-    companion object {
-        @JvmField
-        var currentUser: String = ""
-    }
-}*/
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun KindApp() {
