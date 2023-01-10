@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
+import kotlin.text.Typography
 
 @Composable
 fun AuthenticationScreen(
@@ -24,7 +25,9 @@ fun AuthenticationScreen(
     ) {
         LoginHeader(96)
         Spacer(modifier = Modifier.height(40.dp))
-        Text("Your Portfolio of Kindness",
+        Text(
+            "Your Portfolio of Kindness",
+            style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground)
         Spacer(modifier = Modifier.height(40.dp))
         Button(
@@ -32,7 +35,10 @@ fun AuthenticationScreen(
                 .width(280.dp),
             onClick = navigateToSignup,
         ) {
-            Text("Signup", color = MaterialTheme.colorScheme.onPrimary)
+            Text(
+                "Signup",
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
         OutlinedButton(
             onClick = {},
