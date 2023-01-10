@@ -32,7 +32,7 @@ fun ExplorerScreen(
                 item {
                     KindCharityCard(
                         Title = it.name,
-                        Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                        Body = it.desc,
                         OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
                         onClick = { viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + it.id) }
                     )
