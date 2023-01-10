@@ -34,7 +34,11 @@ fun LoginScreen(
         ) {
             Text("Login", color = MaterialTheme.colorScheme.onPrimary)
         }
-        Text(text = "Forgot password", modifier = Modifier.clickable { /* TODO */ }  )
+        Text(
+            text = "Forgot password",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.clickable { /* TODO */ }
+        )
         Spacer(modifier = Modifier.height(40.dp))
     }
 }
