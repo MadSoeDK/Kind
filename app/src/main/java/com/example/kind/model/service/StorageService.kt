@@ -21,6 +21,7 @@ interface StorageService {
     suspend fun deleteDonation(user : String, donation : String)
 
     // Charity
+    suspend fun getCharity(id: String): Charity
     suspend fun getCharities(): List<Charity>
     suspend fun increaseCharityDonationNumber(charity: String)
     suspend fun decreaseCharityDonationNumber(charity: String)

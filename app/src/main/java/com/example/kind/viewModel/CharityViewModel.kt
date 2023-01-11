@@ -5,12 +5,25 @@ import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
 import com.example.kind.getFakeCharity
+import com.example.kind.model.Charity
+import com.example.kind.model.service.impl.StorageServiceImpl
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CharityViewModel(
     val navController: NavController,
-    id: Int,
+    id: String,
 ): ViewModel() {
-    val data = getFakeCharity(id)
+
+    val storage: StorageServiceImpl = StorageServiceImpl()
+    var data = Charity()//storage.getCharity(id)
+
+    init
+    {
+        GlobalScope.launch {
+            data = storage.getCharity(id)
+        }
+    }
 
     fun getArticles(): List<Article> {
         return getFakeArticles()

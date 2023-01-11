@@ -101,6 +101,11 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
+    override suspend fun getCharity(id: String): Charity{
+
+        return Charity()
+    }
+
     override suspend fun getCharities(): List<Charity>{
 
         val charityList: List<Charity> = database.collection("Charity").get().await().toObjects()
