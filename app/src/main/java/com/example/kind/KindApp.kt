@@ -135,12 +135,13 @@ fun KindApp() {
                 )
             }
             composable(NavbarScreens.Article.route  + "/{id}",
-                arguments = listOf(navArgument("id") { type = NavType.IntType })
+                arguments = listOf(navArgument("id") { type = NavType.StringType })
             ) { NavBackStackEntry ->
                 Screen(
                     NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                     content = {
-                        ArticleScreen(viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)))
+                        ArticleScreen(
+                            viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
                     }
                 )
             }

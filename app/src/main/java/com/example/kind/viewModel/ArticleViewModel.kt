@@ -8,7 +8,7 @@ import com.example.kind.getFakeCharity
 
 class ArticleViewModel(
     val navController: NavController,
-    id: Int,
+    id: String,
 ): ViewModel() {
     val id = id
     val title = "Dummy Title"

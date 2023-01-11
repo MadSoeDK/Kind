@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.kind.NavbarScreens
 import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.composables.KindCard
@@ -114,7 +115,7 @@ fun CharityScreen( //TODO:farver skal fikses
         LazyRow {
             viewModel.getArticles().forEach {
                 item {
-                    KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate("article" + it.id.toString()) })
+                    KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) })
                 }
             }
         }
