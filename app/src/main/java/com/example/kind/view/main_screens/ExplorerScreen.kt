@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,9 @@ import com.example.kind.viewModel.ExplorerViewModel
 fun ExplorerScreen(
     viewModel: ExplorerViewModel
 ) {
+
+    val state by viewModel.data.collectAsState()
+
     Column {
         //TODO: Seperate categories composable
         CharityHeaderAndSubsectionText(
@@ -28,7 +33,7 @@ fun ExplorerScreen(
         )
 
         LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {
-            viewModel.getCharities().forEach {
+            state.forEach {
                 item {
                     KindCharityCard(
                         Title = it.name,
