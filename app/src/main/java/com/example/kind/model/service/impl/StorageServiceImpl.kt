@@ -6,7 +6,9 @@ import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -101,9 +103,17 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
-    override suspend fun getCharity(id: String): Charity{
+    override suspend fun getCharity(id: String): Charity?{
 
-        return Charity()
+        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+
+        try {
+            return database.collection("Charity").document(id).get().await().toObject()
+        }
+        catch (e: Exception)
+        {
+            return Charity(0,0,"","Sorry, we are unable to find this charity page. Come back later")
+        }
     }
 
     override suspend fun getCharities(): List<Charity>{

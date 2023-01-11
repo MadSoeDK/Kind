@@ -8,6 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +25,9 @@ import com.example.kind.view.home.composables.SmallHeaderAndText
 fun CharityScreen( //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
+
+    val state by viewModel.data.collectAsState()
+
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -56,13 +61,13 @@ fun CharityScreen( //TODO:farver skal fikses
             .padding(10.dp, 5.dp)
             .align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "150\n Donors",
+            Text(text = state.donaters.toString()+"\n Donors",
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.padding(50.dp,0.dp))
-            Text(text = "200\n Donations",
+            Text(text = state.donations.toString()+"\n Donations",
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
@@ -81,7 +86,7 @@ fun CharityScreen( //TODO:farver skal fikses
                 modifier = Modifier.padding(0.dp, 10.dp)
             ){
                 Text(
-                    text = viewModel.data.name,
+                    text = state.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
                     fontSize = Typography.headlineLarge.fontSize,
                     color = Typography.headlineLarge.color
@@ -101,7 +106,7 @@ fun CharityScreen( //TODO:farver skal fikses
         }
 
         // About
-        SmallHeaderAndText(headerProvider = "About", textProvider = "Lorem Ipsum")
+        SmallHeaderAndText(headerProvider = "About", textProvider = state.desc)
 
         // Post
         SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
