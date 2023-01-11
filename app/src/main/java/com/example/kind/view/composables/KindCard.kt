@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun KindCard (
     titleProvider: String,
-    subTitleProvier: String,
+    subTitleProvier: String = "",
+    iconImage: String,
+    mainImage: String,
     onClick: () -> Unit,
 ) {
     Card(
