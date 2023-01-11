@@ -55,6 +55,8 @@ fun HomeScreen(
                     KindCard(
                         titleProvider = element.header,
                         subTitleProvier = element.header,
+                        iconImage = " ", /*TODO*/
+                        mainImage = " ", /*TODO*/
                         onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                 }
             }
@@ -83,11 +85,10 @@ fun HomeScreen(
                     if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
                     KindCard(
                         titleProvider = element.name,
-                        subTitleProvier = element.name,
+                        iconImage = element.iconImage,
+                        mainImage = element.mainImage,
                         onClick = {
-                            viewModel.navController.navigate(
-                                NavbarScreens.Charity.route
-                                        + "/" + element.id.toString())},
+                            viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + element.id)},
                     )
                 }
             }
