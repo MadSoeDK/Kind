@@ -31,6 +31,7 @@ interface StorageService {
     suspend fun addCharityAdministator()
     suspend fun deleteCharityAdministrator()
     suspend fun getArticle(id: String): Article?
+    suspend fun getArticles(id: String): List<Article>
     suspend fun addCharityArticle(articleContent : String, charity : String)
     suspend fun deleteArticle(article : String, charity : String)
 }

@@ -154,20 +154,22 @@ class StorageServiceImpl : StorageService {
 
         println("This is the id: "+id)
         val article: Article? = database.collection("Articles").document(id).get().await().toObject()
-        /*
-        runBlocking {
-            article = database.collection("Articles").document(id).get().await().toObject()
-        }
-        println("Jeg giver denne article: "+ article.toString())
-        if (article != null)
-        {
-            return database.collection("Articles").document(id).get().await().toObject()
-        }
-        else
-        {
-            return Article("","Sorry we are unable to recover this article")
-        }*/
+
         return article
+    }
+
+    override suspend fun getArticles(id: String): List<Article>{
+
+        val articleList: List<Article> = database.collection("Charity").document(id).collection("Articles").get().await().toObjects()
+
+        //val articleList: List<Article> = database.collection("Charity").get().await().toObjects()
+
+
+        println("Here:" + articleList.toString())
+
+        //charityList = database.collection("Charities").get().await().toObjects()
+
+        return articleList
     }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {
