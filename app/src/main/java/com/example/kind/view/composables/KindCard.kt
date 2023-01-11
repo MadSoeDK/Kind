@@ -13,7 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 
 
 @Composable
@@ -40,7 +42,7 @@ fun KindCard (
                     .height(140.dp)
                     //.padding(10.dp, 0.dp, 0.dp, 0.dp)
             ) {
-                Text(text = "Image")
+                AsyncImage(model = iconImage, contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.FillBounds)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -48,14 +50,7 @@ fun KindCard (
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
-                Box (
-                    Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.onTertiaryContainer)
-                        .height(40.dp)
-                        .width(40.dp)
-                )
-                CircleShape
+                AsyncImage(model = mainImage, contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape), contentScale = ContentScale.FillBounds)
                 Column (modifier = Modifier.padding(8.dp, 0.dp)){
                     Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
                     Text(text = subTitleProvier, color = MaterialTheme.colorScheme.onBackground)

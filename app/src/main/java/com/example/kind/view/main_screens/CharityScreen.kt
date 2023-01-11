@@ -46,7 +46,7 @@ fun CharityScreen( //TODO:farver skal fikses
             .align(Alignment.CenterHorizontally)
         ) {
             AsyncImage(model = state.mainImage.toString(), contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.Crop)
-            AsyncImage(model = state.iconImage.toString(), contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape).align(alignment = Alignment.BottomCenter), contentScale = ContentScale.Crop)
+            AsyncImage(model = state.iconImage.toString(), contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape).align(alignment = Alignment.BottomCenter), contentScale = ContentScale.FillBounds)
             Row(modifier = Modifier.align(Alignment.BottomCenter)) {
             }
         }
