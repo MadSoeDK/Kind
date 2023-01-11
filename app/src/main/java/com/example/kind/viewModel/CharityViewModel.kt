@@ -38,7 +38,8 @@ class CharityViewModel(
                     desc = charity.desc,
                     iconImage = charity.iconImage,
                     mainImage = charity.mainImage,
-                    name = charity.name
+                    name = charity.name,
+                    articles = charity.articles
                 )
             }
         }

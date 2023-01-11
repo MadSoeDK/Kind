@@ -113,11 +113,19 @@ fun CharityScreen( //TODO:farver skal fikses
         SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
 
         LazyRow {
+            /*state.articles.forEach {
+                item {
+                    KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.title, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) })
+                }
+            }
+            */
+
+            /*
             viewModel.getArticles().forEach {
                 item {
                     KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) })
                 }
-            }
+            }*/
         }
     }
 
