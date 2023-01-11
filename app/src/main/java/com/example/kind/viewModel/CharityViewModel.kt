@@ -21,6 +21,7 @@ class CharityViewModel(
     id: String,
 ): ViewModel() {
 
+    // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
     val data: StateFlow<Charity> = _data.asStateFlow()
@@ -31,7 +32,7 @@ class CharityViewModel(
             _data.update {
                 val charity = storage.getCharity(id)
                 it.copy(
-                    donaters = charity.donaters,
+                    donaters = charity!!.donaters,
                     donations = charity.donations,
                     id = charity.id,
                     desc = charity.desc,

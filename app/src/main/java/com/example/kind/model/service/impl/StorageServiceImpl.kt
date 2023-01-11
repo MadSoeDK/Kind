@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
@@ -148,6 +149,26 @@ class StorageServiceImpl : StorageService {
     override suspend fun addCharityAdministator() {}
 
     override suspend fun deleteCharityAdministrator() {}
+
+    override suspend fun getArticle(id: String): Article?{
+
+        println("This is the id: "+id)
+        val article: Article? = database.collection("Articles").document(id).get().await().toObject()
+        /*
+        runBlocking {
+            article = database.collection("Articles").document(id).get().await().toObject()
+        }
+        println("Jeg giver denne article: "+ article.toString())
+        if (article != null)
+        {
+            return database.collection("Articles").document(id).get().await().toObject()
+        }
+        else
+        {
+            return Article("","Sorry we are unable to recover this article")
+        }*/
+        return article
+    }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {
         val articleId = System.currentTimeMillis().toString()
