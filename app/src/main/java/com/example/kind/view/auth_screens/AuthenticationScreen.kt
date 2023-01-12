@@ -9,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
-import kotlin.text.Typography
 
 @Composable
 fun AuthenticationScreen(
