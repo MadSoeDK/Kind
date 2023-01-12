@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.HeaderAndText
+import com.example.kind.view.composables.KindButton
+import com.example.kind.view.composables.KindButtonDanger
 import com.example.kind.viewModel.ProfileViewModel
 
 @Composable
@@ -24,10 +26,12 @@ fun ProfileScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(onClick = { viewModel.onFormSubmit() }) {
+        KindButton(Onclick = { viewModel.onFormSubmit() }, TextProvider = "Submit")
+        /*Button(onClick = { viewModel.onFormSubmit() }) {
             Text("Submit")
-        }
-        Button(
+        }*/
+        KindButtonDanger(Onclick = { viewModel.deleteUser() }, TextProvider = "Delete User")
+        /*Button(
             onClick = { viewModel.deleteUser() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -35,9 +39,10 @@ fun ProfileScreen(
             )
         ) {
             Text("Delete User")
-        }
-        Button(onClick = onLogout) {
+        }*/
+        KindButton(Onclick = { onLogout }, TextProvider = "Logout")
+        /*Button(onClick = onLogout) {
             Text(text = "Logout")
-        }
+        }*/
     }
 }
