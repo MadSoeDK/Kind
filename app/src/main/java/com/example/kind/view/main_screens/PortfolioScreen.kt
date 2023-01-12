@@ -28,7 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.view.composables.*
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.PortfolioViewModel
-import com.example.kind.view.home.composables.HeaderAndText
+import com.example.kind.view.composables.HeaderAndText
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {

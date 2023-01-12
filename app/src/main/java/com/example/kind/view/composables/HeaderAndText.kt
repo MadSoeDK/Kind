@@ -1,4 +1,4 @@
-package com.example.kind.view.home.composables
+package com.example.kind.view.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text

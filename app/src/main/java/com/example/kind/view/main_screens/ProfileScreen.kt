@@ -5,7 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.example.kind.view.composables.Form
-import com.example.kind.view.home.composables.HeaderAndText
+import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.viewModel.ProfileViewModel
 
 @Composable

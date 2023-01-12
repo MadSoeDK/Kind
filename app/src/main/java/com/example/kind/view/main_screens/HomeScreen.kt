@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kind.HomeScreens
-import com.example.kind.view.home.composables.HeaderAndText
+import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
 import com.example.kind.view.composables.KindCard
