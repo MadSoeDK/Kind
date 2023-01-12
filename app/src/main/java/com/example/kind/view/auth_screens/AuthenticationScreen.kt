@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.kind.view.composables.KindButton
+import com.example.kind.view.composables.KindButtonOutlined
 import com.example.kind.view.composables.LoginHeader
 
 @Composable
@@ -30,7 +32,7 @@ fun AuthenticationScreen(
             color = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.height(40.dp))
-        Button(
+        /*Button(
             modifier = Modifier
                 .width(280.dp),
             onClick = navigateToSignup,
@@ -39,17 +41,21 @@ fun AuthenticationScreen(
                 "Signup",
                 color = MaterialTheme.colorScheme.onPrimary
             )
-        }
+        }*/
+        KindButton(Onclick = navigateToSignup, TextProvider = "Signup")
         Spacer(modifier = Modifier.height(8.dp))
-        OutlinedButton(
+        KindButtonOutlined(Onclick = {}, TextProvider = "Continue with Google")
+        /*OutlinedButton(
             onClick = {},
             modifier = Modifier
                 .width(280.dp),
             colors = ButtonDefaults
-                .outlinedButtonColors(containerColor = MaterialTheme.colorScheme.background)
+                .outlinedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                )
         ) {
             Text(text = "Continue with Google")
-        }
+        }*/
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Login",
