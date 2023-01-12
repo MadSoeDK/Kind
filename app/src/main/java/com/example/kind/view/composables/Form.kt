@@ -8,9 +8,7 @@ import androidx.compose.runtime.Composable
  */
 class FormState {
     var fields: List<KindTextField> = listOf()
-        set(value) {
-            field = value
-        }
+        set(value) { field = value }
 
     fun validate(): Boolean {
         var valid = true

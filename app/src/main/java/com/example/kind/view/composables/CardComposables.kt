@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
 
 @Composable
-fun KindeCard(
+fun KindeCard (
     titleProvider: String,
     subTitleProvider: String,
     onClick: () -> Unit,
@@ -52,7 +52,7 @@ fun KindeCard(
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
-                Box(
+                Box (
                     Modifier
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.onTertiaryContainer)
@@ -60,7 +60,7 @@ fun KindeCard(
                         .width(40.dp)
                 )
                 CircleShape
-                Column(modifier = Modifier.padding(8.dp, 0.dp)) {
+                Column (modifier = Modifier.padding(8.dp, 0.dp)){
                     Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
                     Text(text = subTitleProvider, color = MaterialTheme.colorScheme.onBackground)
                 }
@@ -77,9 +77,8 @@ fun KindeNewsCard(
     ReadMore: String = "Read More",
     Category: String,
     Subcategory: String
-) {
-    Card(
-        modifier = Modifier
+){
+    Card(modifier = Modifier
             .padding(8.dp)
             .width(350.dp)
             .height(550.dp)
@@ -101,21 +100,16 @@ fun KindeNewsCard(
                     text = Category,
                     fontWeight = Typography.headlineMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.headlineSmall.color
-                )
+                    color = Typography.headlineSmall.color)
                 Text(
                     textAlign = TextAlign.Center,
                     text = Subcategory,
                     fontWeight = Typography.headlineSmall.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.headlineSmall.color
-                )
+                    color = Typography.headlineSmall.color)
             }
         }
-        Column(
-            modifier = Modifier.padding(20.dp, 0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = Modifier.padding(20.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.padding(0.dp, 15.dp)) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
@@ -131,9 +125,8 @@ fun KindeNewsCard(
                     color = Typography.headlineSmall.color,
                 )
             }
-            Row(
-                modifier = Modifier
-                    .padding(0.dp, 5.dp),
+            Row(modifier = Modifier
+                .padding(0.dp, 5.dp),
                 horizontalArrangement = Arrangement.Center,
             ) {
                 //TODO need to center text
@@ -146,17 +139,15 @@ fun KindeNewsCard(
             }
             Row()
             {
-                OutlinedButton(
-                    modifier = Modifier
-                        .padding(10.dp, 20.dp),
+                OutlinedButton(modifier = Modifier
+                    .padding(10.dp, 20.dp),
                     onClick = { /*TODO*/ },
-                ) {
+                    ) {
                     Text(
                         text = ReadMore,
                         fontWeight = Typography.labelLarge.fontWeight,
                         fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineLarge.color
-                    )
+                        color = Typography.headlineLarge.color)
                 }
                 OutlinedButton(
                     onClick = { /*TODO*/ },
@@ -248,7 +239,7 @@ private fun CardEditor(
 ) {
     Card(
         colors = CardDefaults.cardColors()
-    ) {
+    ){
         /*Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier

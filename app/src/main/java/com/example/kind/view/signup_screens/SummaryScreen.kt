@@ -23,7 +23,7 @@ import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
 
 @Composable
-fun SummaryScreen(
+fun SummaryScreen (
     next: () -> Unit,
     back: () -> Unit
 ) {

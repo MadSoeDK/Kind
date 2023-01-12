@@ -20,13 +20,14 @@ import com.example.kind.R
 
 @Composable
 fun SignUpIntroScreen(
-    navigateToHome: () -> Unit,
-    navigateToPortfolio: () -> Unit
+    navigateToHome : () -> Unit,
+    navigateToPortfolio : () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+        ,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

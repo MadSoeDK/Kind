@@ -20,14 +20,7 @@ import com.example.kind.R
 import com.example.kind.view.theme.Typography
 
 @Composable
-fun KindNewsCard(
-    Title: String,
-    Body: String,
-    OrganizationIcon: Painter,
-    ReadMore: String = "Read More",
-    Category: String,
-    Subcategory: String
-) {
+fun KindNewsCard(Title: String, Body: String, OrganizationIcon: Painter, ReadMore: String = "Read More", Category: String, Subcategory: String){
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -51,21 +44,16 @@ fun KindNewsCard(
                     text = Category,
                     fontWeight = Typography.headlineMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.headlineSmall.color
-                )
+                    color = Typography.headlineSmall.color)
                 Text(
                     textAlign = TextAlign.Center,
                     text = Subcategory,
                     fontWeight = Typography.headlineSmall.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.headlineSmall.color
-                )
+                    color = Typography.headlineSmall.color)
             }
         }
-        Column(
-            modifier = Modifier.padding(20.dp, 0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(modifier = Modifier.padding(20.dp, 0.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.padding(0.dp, 15.dp)) {
                 Image(
                     painter = OrganizationIcon, contentDescription = null, modifier = Modifier
@@ -78,17 +66,15 @@ fun KindNewsCard(
                     text = Title,
                     fontWeight = Typography.headlineMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.headlineSmall.color
-                )
+                    color = Typography.headlineSmall.color)
             }
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(0.dp, 5.dp), ) {
                 //TODO need to center text
                 Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,
                     fontSize = Typography.displayMedium.fontSize,
-                    color = Typography.displayMedium.color,
-                )
+                    color = Typography.displayMedium.color, )
             }
             Row()
             {
@@ -97,15 +83,13 @@ fun KindNewsCard(
                         text = ReadMore,
                         fontWeight = Typography.labelLarge.fontWeight,
                         fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineLarge.color
-                    )
+                        color = Typography.headlineLarge.color)
                 }
                 OutlinedButton(
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .padding(10.dp, 20.dp)
-                        .background(Typography.headlineLarge.color)
-                ) {
+                        .background(Typography.headlineLarge.color)) {
                     Text(
                         text = "Donate",
                         fontWeight = Typography.labelLarge.fontWeight,
@@ -123,7 +107,7 @@ fun KindNewsCard(
 
 @Preview(showBackground = true)
 @Composable
-fun KindNewsCardPreview() {
+fun KindNewsCardPreview(){
     val OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1)
     KindNewsCard(
         Title = "Alle kender til krig, men ikke alle kender til krigens regler",

@@ -15,7 +15,7 @@ import com.example.kind.R
 @Composable
 fun AboutKindScreen(
     next: () -> Unit
-) {
+){
     Column {
         val textLogo = painterResource(id = R.drawable.textlogo)
         Image(

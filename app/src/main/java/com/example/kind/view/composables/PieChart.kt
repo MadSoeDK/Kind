@@ -78,7 +78,7 @@ fun PieChart(
 
         val size = Size(sideSize.toFloat() - padding, sideSize.toFloat() - padding)
 
-        Canvas(
+        Canvas (
             modifier = modifier
                 .pointerInput(true) {
 

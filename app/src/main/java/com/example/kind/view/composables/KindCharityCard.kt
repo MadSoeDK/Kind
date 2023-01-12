@@ -42,17 +42,9 @@ fun KindCharityCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(modifier = Modifier.padding(0.dp, 5.dp)) {
-                AsyncImage(
-                    model = iconImage,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(
-                            CircleShape
-                        )
-                        .border(1.dp, Color.Black, CircleShape),
-                    contentScale = ContentScale.FillBounds
-                )
+                AsyncImage(model = iconImage, contentDescription = null, modifier = Modifier.size(64.dp).clip(
+                    CircleShape
+                ).border(1.dp, Color.Black, CircleShape), contentScale = ContentScale.FillBounds)
             }
             Row(modifier = Modifier.padding(0.dp, 5.dp)) {
                 Text(

@@ -16,20 +16,16 @@ import com.example.kind.view.composables.PortfolioTemplateCard
 import com.example.kind.view.theme.Typography
 
 @Composable
-fun SignUpDonationSelectionScreen(
+fun SignUpDonationSelectionScreen (
     next: () -> Unit,
     back: () -> Unit
-) {
+){
     Column {
         Row {
-            HeaderAndTextWithSelectionFilter(
-                Title = "Who would you like to donate to",
-                Subtitle = "You can adjust the amount to each organization on the next page",
-                Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
-            )
+            HeaderAndTextWithSelectionFilter(Title = "Who would you like to donate to", Subtitle = "You can adjust the amount to each organization on the next page", Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care"))
         }
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {
+        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp),content = {
             items(10 /*TODO: Needs to be adaptive based on the templates*/) {
                 PortfolioTemplateCard(
                     Title = "Red Cross",
@@ -39,14 +35,12 @@ fun SignUpDonationSelectionScreen(
             }
         })
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp, 10.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        )
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp, 10.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly)
         {
-            Column {
+            Column{
                 TextButton(onClick = { back() }) {
                     Text(
                         text = "← Back",
@@ -56,7 +50,7 @@ fun SignUpDonationSelectionScreen(
                     )
                 }
             }
-            Column {
+            Column{
                 Button(onClick = { next() }) {
                     Text(
                         text = "Next →",

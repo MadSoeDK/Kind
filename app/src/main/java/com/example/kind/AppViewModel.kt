@@ -14,11 +14,13 @@ class Global : Application() {
 }
 
 
-open class AppViewModel(
+open class AppViewModel (
     val navController: NavHostController
 ) : ViewModel() {
 
     lateinit var storage: StorageServiceImpl
+
+
 
 
     fun finishSignup() {

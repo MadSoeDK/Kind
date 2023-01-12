@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.R
 
 @Composable
-fun MobilePayScreen() {
+fun MobilePayScreen(){
     //TODO Implement, currently just a temp image
     val painter = painterResource(id = R.drawable.mobilepayscreen)
     Image(
@@ -21,8 +21,8 @@ fun MobilePayScreen() {
     )
 }
 
-@Preview()
+@Preview ()
 @Composable
-fun MobilepayScreenPreview() {
+fun MobilepayScreenPreview(){
     MobilePayScreen()
 }

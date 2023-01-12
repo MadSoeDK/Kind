@@ -48,7 +48,7 @@ fun PortfolioTemplateCard(
                     color = Typography.headlineLarge.color
                 )
             }
-            Row(modifier = Modifier.padding(0.dp, 15.dp)) {
+            Row(modifier = Modifier.padding(0.dp,  15.dp)) {
                 //TODO need to center text
                 Text(
                     text = Body,

@@ -25,10 +25,10 @@ fun DonationAmountScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-    ) {
-        LoginHeader(size = 150, "How much would you like to donate")
+        ) {
+        LoginHeader(size = 150, "How much would you like to donate",)
         listOf(50, 100, 200).forEach {
-            OutlinedButton(
+            OutlinedButton (
                 onClick = { onOptionSelected(it) },
                 shape = Shapes.extraSmall,
                 modifier = Modifier

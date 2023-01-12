@@ -40,11 +40,9 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
                 )
             }
         }
-        Row(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .padding(0.dp, 10.dp)
-        ) {
+        Row(modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .padding(0.dp, 10.dp)) {
             for (i in Categories.indices) {
                 Text(
                     text = Categories[i] + "      ",

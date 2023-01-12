@@ -22,34 +22,30 @@ fun PortfolioBuilderScreen(
     next: () -> Unit,
     back: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+    Column (modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.Top,
     ) {
-        Row(
-            modifier = Modifier
-                .padding(20.dp, 20.dp),
+        Row(modifier = Modifier
+            .padding(20.dp, 20.dp),
             //.align(Alignment.CenterHorizontally)
-        )
+            )
         {
             Text(
                 text = "Get started with some of our templates or build your own",
                 fontWeight = Typography.labelLarge.fontWeight,
                 fontSize = Typography.headlineMedium.fontSize,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+                color = MaterialTheme.colorScheme.onBackground)
         }
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp), content = {
+        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp),content = {
             items(6 /*TODO: Needs to be adaptive based on the templates*/) {
                 PortfolioTemplateCard(
-                    Title = "Red Cross",
-                    Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-                    OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
-                )
-            }
+                Title = "Red Cross",
+                Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
+            )}
         })
 
         /*Column(
@@ -99,26 +95,22 @@ fun PortfolioBuilderScreen(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedButton(
-                onClick = {/*navigateToPortfolioBuilder()*/ next() },
-                modifier = Modifier.width(300.dp)
-            ) {
-                Text(
-                    text = "Build my own",
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color
-                )
+                OutlinedButton(onClick = {/*navigateToPortfolioBuilder()*/ next()}, modifier = Modifier.width(300.dp)) {
+                    Text(
+                        text = "Build my own",
+                        fontWeight = Typography.labelLarge.fontWeight,
+                        fontSize = Typography.labelLarge.fontSize,
+                        color = Typography.headlineLarge.color
+                    )
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 10.dp),
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp, 10.dp),
                 )
                 {
                     Column(

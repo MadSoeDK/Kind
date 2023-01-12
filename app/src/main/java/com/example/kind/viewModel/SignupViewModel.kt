@@ -20,7 +20,10 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 enum class DonationFrequency {
-    Monthly, Quarterly, HalfYearly, Yearly
+    Monthly,
+    Quarterly,
+    HalfYearly,
+    Yearly
 }
 
 data class PortfolioState(
@@ -38,17 +41,13 @@ class SignupViewModel(
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
+        KindTextField(name = "Full name", label = "Full name", validators = listOf(Required())),
+        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
+        KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
         KindTextField(
-            name = "Full name", label = "Full name", validators = listOf(Required())
-        ),
-        KindTextField(
-            name = "Email", label = "Email", validators = listOf(Required(), Email())
-        ),
-        KindTextField(
-            name = "Password", label = "Password", validators = listOf(Required())
-        ),
-        KindTextField(
-            name = "Repeat password", label = "Repeat password", validators = listOf(Required())
+            name = "Repeat password",
+            label = "Repeat password",
+            validators = listOf(Required())
         ),
     )
 
