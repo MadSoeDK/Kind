@@ -1,7 +1,6 @@
 package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import com.example.kind.R
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -11,9 +10,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.kind.NavbarScreens
+import com.example.kind.HomeScreens
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
 import com.example.kind.view.composables.KindCharityCard
 import com.example.kind.viewModel.ExplorerViewModel
@@ -23,9 +21,7 @@ import com.example.kind.viewModel.ExplorerViewModel
 fun ExplorerScreen(
     viewModel: ExplorerViewModel
 ) {
-
     val state by viewModel.data.collectAsState()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -36,8 +32,7 @@ fun ExplorerScreen(
             Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
         )
 
-
-        if(state.isEmpty()) {
+        if (state.isEmpty()) {
             CircularProgressIndicator()
         } else {
             LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {
@@ -47,7 +42,7 @@ fun ExplorerScreen(
                             Title = it.name,
                             Body = it.desc,
                             iconImage = it.iconImage,
-                            onClick = { viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + it.id) }
+                            onClick = { viewModel.navController.navigate(HomeScreens.Charity.route + "/" + it.id) }
                         )
                     }
                 }

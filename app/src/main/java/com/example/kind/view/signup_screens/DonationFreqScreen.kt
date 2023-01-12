@@ -26,11 +26,11 @@ fun DonationFreqScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        ) {
+    ) {
         LoginHeader(size = 150, "How often will you make a donation")
 
         DonationFrequency.values().forEach {
-            OutlinedButton (
+            OutlinedButton(
                 onClick = { onOptionSelected(it) },
                 shape = Shapes.extraSmall,
                 modifier = Modifier

@@ -23,7 +23,7 @@ import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
 
 @Composable
-fun SummaryScreen (
+fun SummaryScreen(
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -126,7 +126,7 @@ fun SummaryScreen (
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                text = "PortfolioViewModel().getSpend().toString() +  kr",
+                text = PortfolioViewModel().getSpend().toString() + " kr",
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 15.dp),
                 color = MaterialTheme.colorScheme.onBackground,
@@ -136,7 +136,10 @@ fun SummaryScreen (
 
         val checkedState = remember { mutableStateOf(true) }
         Row {
-            Checkbox(checked = checkedState.value, onCheckedChange = { checkedState.value = it })
+            Checkbox(
+                checked = checkedState.value,
+                onCheckedChange = { checkedState.value = it }
+            )
             Text(
                 text = "Accept terms of service.",
                 fontSize = 14.sp,

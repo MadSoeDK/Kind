@@ -8,18 +8,27 @@ import androidx.compose.runtime.Composable
  */
 class FormState {
     var fields: List<KindTextField> = listOf()
-        set(value) { field = value }
+        set(value) {
+            field = value
+        }
 
     fun validate(): Boolean {
         var valid = true
-        for (field in fields) if (!field.validate()) {
-            valid = false
-            break
+        fields.forEach {
+            if (!it.validate()) {
+                valid = false
+            }
         }
         return valid
     }
 
     fun getData(): Map<String, String> = fields.map { it.name to it.text }.toMap()
+
+    fun showError(message: String) {
+        fields.forEach {
+            it.showError(message)
+        }
+    }
 }
 
 @Composable

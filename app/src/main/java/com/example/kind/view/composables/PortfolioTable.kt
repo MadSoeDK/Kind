@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> PortfolioTable (
+fun <T> PortfolioTable(
     columnCount: Int,
     cellWidth: (index: Int) -> Dp,
     data: List<T>,
@@ -35,13 +35,19 @@ fun <T> PortfolioTable (
                         Surface(
                             //border = BorderStroke(1.dp, Color.LightGray ),
                             //contentColor = Color.Transparent,
-                            modifier = Modifier.width(cellWidth(columnIndex)), color = MaterialTheme.colorScheme.background
+                            modifier = Modifier.width(cellWidth(columnIndex)),
+                            color = MaterialTheme.colorScheme.background
                         ) {
                             if (index == 0) {
                                 headerCellContent(columnIndex)
                             } else {
                                 cellContent(columnIndex, data[index - 1])
-                                Spacer(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFF79747E)))
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(1.dp)
+                                        .background(Color(0xFF79747E))
+                                )
                             }
                         }
                     }

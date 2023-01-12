@@ -20,9 +20,9 @@ fun HeaderAndText(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row (
+        Row(
             modifier = Modifier.padding(0.dp, 10.dp)
-        ){
+        ) {
             Text(
                 text = headerProvider,
                 fontWeight = Typography.headlineLarge.fontWeight,

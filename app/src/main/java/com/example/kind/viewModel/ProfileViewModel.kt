@@ -15,20 +15,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
-    lateinit var storage : StorageServiceImpl
+    lateinit var storage: StorageServiceImpl
     var formState by mutableStateOf(FormState())
 
     var fields: List<KindTextField> = listOf(
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
         KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
-        KindTextField(name = "Monthly payment", label = "Monthly Payment", validators = listOf(Required())),
-        KindTextField(name = "Update payment", label = "Update payment", validators = listOf(Required())),
-        KindTextField(name = "Payment method", label = "Payment method", validators = listOf(Required())),
-        KindTextField(name = "Update payment method", label = "Update payment method", validators = listOf(Required()))
+        KindTextField(
+            name = "Monthly payment",
+            label = "Monthly Payment",
+            validators = listOf(Required())
+        ),
+        KindTextField(
+            name = "Update payment",
+            label = "Update payment",
+            validators = listOf(Required())
+        ),
+        KindTextField(
+            name = "Payment method",
+            label = "Payment method",
+            validators = listOf(Required())
+        ),
+        KindTextField(
+            name = "Update payment method",
+            label = "Update payment method",
+            validators = listOf(Required())
+        )
     )
 
     fun onFormSubmit() {
-        if(formState.validate()) {
+        if (formState.validate()) {
             // TODO: Do something on form submission
         }
         //TODO: Add alert for user

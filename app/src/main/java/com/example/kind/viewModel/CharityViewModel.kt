@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
-import com.example.kind.getFakeCharity
 import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.GlobalScope
@@ -20,15 +19,14 @@ import kotlinx.coroutines.launch
 class CharityViewModel(
     val navController: NavController,
     id: String,
-): ViewModel() {
+) : ViewModel() {
 
     // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
     val data: StateFlow<Charity> = _data.asStateFlow()
 
-    init
-    {
+    init {
         GlobalScope.launch {
             _data.update {
                 val charity = storage.getCharity(id)

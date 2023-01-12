@@ -1,31 +1,50 @@
 package com.example.kind
 
-import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import com.example.kind.model.service.impl.StorageServiceImpl
+import com.example.kind.model.service.impl.AccountServiceImpl
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class Global : Application() {
-    companion object {
-        @JvmField
-        var currentUser: String = ""
-    }
-}
-
-
-open class AppViewModel (
-    val navController: NavHostController
+class AppViewModel(
+    val navController: NavController,
+    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
 ) : ViewModel() {
 
-    lateinit var storage: StorageServiceImpl
+    var loggedIn by mutableStateOf(auth.hasUser)
 
+    fun onLogout() {
+        viewModelScope.launch {
+            try {
+                auth.signOut()
+                println("Successfully logged out")
+            } catch (e: Exception) {
+                println("Error logged in" + e.printStackTrace())
+            }
+        }
+        navController.navigate(AuthenticationScreens.Root.route)
+    }
 
-
-
-    fun finishSignup() {
-        // TODO: save data or something
-        navController.navigate(NavbarScreens.Home.route)
+    fun onSignUp(data: Map<String, String>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
+                println("New user created")
+            } catch (e: Exception) {
+                println("Could not sign in: " + e.printStackTrace())
+            }
+        }
+        navController.navigate(AuthenticationScreens.About.route)
     }
 
     fun navigate(route: String) {

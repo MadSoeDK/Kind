@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.kind.Global
 import com.example.kind.model.Portfolio
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
@@ -13,6 +12,7 @@ import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -23,7 +23,7 @@ class PortfolioViewModel : ViewModel() {
 
     var storage: StorageServiceImpl = StorageServiceImpl()
 
-    var subscriptions : MutableList<Subscription> = mutableListOf()
+    var subscriptions: MutableList<Subscription> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
 
@@ -59,9 +59,10 @@ class PortfolioViewModel : ViewModel() {
     }
 
     fun getPortfolioDonation() {
+        val user = FirebaseAuth.getInstance().currentUser
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val portfolio = storage.getSubscriptions(Global.currentUser)
+                val portfolio = storage.getSubscriptions(user!!.uid)
                 subscriptions.addAll(portfolio)
                 println("HELP $portfolio")
             } catch (e: Exception) {
@@ -69,15 +70,17 @@ class PortfolioViewModel : ViewModel() {
             }
         }
     }
-    fun getPercentages() : List<Float> {
-        val percentages : MutableList<Float> = mutableListOf()
+
+    fun getPercentages(): List<Float> {
+        val percentages: MutableList<Float> = mutableListOf()
         /*for (i in getPortfolioDonation()) {
             percentages.add(i.pct)
         }*/
 
         return percentages
     }
-    fun getSpend() : Float {
+
+    fun getSpend(): Float {
         var spend = 0f
         /*for(i in getPortfolioDonation()) {
             spend += i.spend
@@ -85,8 +88,8 @@ class PortfolioViewModel : ViewModel() {
         return spend
     }
 
-    fun getColors() : List<Color> {
-        val colors : MutableList<Color> = mutableListOf()
+    fun getColors(): List<Color> {
+        val colors: MutableList<Color> = mutableListOf()
         colors.add(Color(0xFFbf95d4))
         colors.add(Color(0xFFf4ac1a))
         colors.add(Color(0xFF8b0a50))
