@@ -20,18 +20,6 @@ class AppViewModel (
 
     var loggedIn by mutableStateOf(auth.hasUser)
 
-    fun onAuthentication(data: Map<String, String>) {
-        viewModelScope.launch {
-            try {
-                auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
-                println("Succesfully logged in $loggedIn")
-            } catch (e: Exception) {
-                println("Error login:" + loggedIn + e.printStackTrace())
-            }
-        }
-        navController.navigate(HomeScreens.Root.route)
-    }
-
     fun onLogout() {
         viewModelScope.launch {
             try {
