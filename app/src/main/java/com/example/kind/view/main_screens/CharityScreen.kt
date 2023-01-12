@@ -24,43 +24,64 @@ import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
-fun CharityScreen( //TODO:farver skal fikses
+fun CharityScreen(
+    //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
 
     val state by viewModel.data.collectAsState()
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(0.dp, 5.dp))
-    {
+            .padding(0.dp, 5.dp)
+    ) {
         // Background
-        Box(modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.onBackground)
-            .fillMaxWidth()
-            .height(200.dp)
-            .align(Alignment.CenterHorizontally)
+        Box(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.onBackground)
+                .fillMaxWidth()
+                .height(200.dp)
+                .align(Alignment.CenterHorizontally)
         ) {
-            AsyncImage(model = state.mainImage.toString(), contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.Crop)
-            AsyncImage(model = state.iconImage.toString(), contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape).align(alignment = Alignment.BottomCenter), contentScale = ContentScale.FillBounds)
-            Row(modifier = Modifier.align(Alignment.BottomCenter)) {
-            }
+            AsyncImage(
+                model = state.mainImage.toString(),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                contentScale = ContentScale.Crop
+            )
+            AsyncImage(
+                model = state.iconImage.toString(),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .border(1.dp, Color.Black, CircleShape)
+                    .align(alignment = Alignment.BottomCenter),
+                contentScale = ContentScale.FillBounds
+            )
+            Row(modifier = Modifier.align(Alignment.BottomCenter)) {}
         }
         // Donations, Donors & Picture
-        Row(modifier = Modifier
-            .padding(10.dp, 5.dp)
-            .align(Alignment.CenterHorizontally)
+        Row(
+            modifier = Modifier
+                .padding(10.dp, 5.dp)
+                .align(Alignment.CenterHorizontally)
         ) {
-            Text(text = state.donaters.toString()+"\n Donors",
+            Text(
+                text = state.donaters.toString() + "\n Donors",
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.padding(50.dp,0.dp))
-            Text(text = state.donations.toString()+"\n Donations",
+            Spacer(modifier = Modifier.padding(50.dp, 0.dp))
+            Text(
+                text = state.donations.toString() + "\n Donations",
                 color = MaterialTheme.colorScheme.secondary,
                 fontSize = Typography.headlineMedium.fontSize,
                 textAlign = TextAlign.Center
@@ -75,9 +96,9 @@ fun CharityScreen( //TODO:farver skal fikses
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row (
+            Row(
                 modifier = Modifier.padding(0.dp, 10.dp)
-            ){
+            ) {
                 Text(
                     text = state.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
@@ -95,19 +116,28 @@ fun CharityScreen( //TODO:farver skal fikses
                 text = "Donate Now",
                 fontWeight = Typography.labelLarge.fontWeight,
                 fontSize = Typography.labelLarge.fontSize,
-                color = Typography.headlineLarge.color)
+                color = Typography.headlineLarge.color
+            )
         }
 
         // About
         SmallHeaderAndText(headerProvider = "About", textProvider = state.desc)
 
         // Post
-        SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
+        SmallHeaderAndText(
+            headerProvider = "Posts", textProvider = "Read the latest posts from the organization"
+        )
 
         LazyRow {
             state.articles.forEach {
                 item {
-                    KindCard(titleProvider = it.title, subTitleProvider = it.charityName, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) }, /*TODO*/ iconImage = " ", mainImage = " " /*TODO*/)
+                    KindCard(
+                        titleProvider = it.title,
+                        subTitleProvider = it.charityName,
+                        onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) }, /*TODO*/
+                        iconImage = " ",
+                        mainImage = " " /*TODO*/
+                    )
                 }
             }
             /*

@@ -96,7 +96,7 @@ fun KindApp() {
                             onClick = { portfolioViewModel.toggleModal() },
                             containerColor = MaterialTheme.colorScheme.primary,
                             content = {
-                                Icon (
+                                Icon(
                                     Icons.Filled.Edit,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.background,
@@ -124,30 +124,41 @@ fun KindApp() {
                     content = { ExplorerScreen(ExplorerViewModel(viewModel.navController)) }
                 )
             }
-            composable(NavbarScreens.Charity.route  + "/{id}",
+            composable(
+                NavbarScreens.Charity.route + "/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.StringType })
             ) { NavBackStackEntry ->
                 Screen(
                     NavigationBar = { KindNavigationBar(viewModel = viewModel) },
-                    content = { CharityScreen(
-                        viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")),
-                    )}
+                    content = {
+                        CharityScreen(
+                            viewModel = CharityViewModel(
+                                navController = viewModel.navController,
+                                id = NavBackStackEntry.arguments!!.getString("id", "")
+                            ),
+                        )
+                    }
                 )
             }
-            composable(NavbarScreens.Article.route  + "/{id}",
+            composable(
+                NavbarScreens.Article.route + "/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.StringType })
             ) { NavBackStackEntry ->
                 Screen(
                     NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                     content = {
                         ArticleScreen(
-                            viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
+                            viewModel = ArticleViewModel(
+                                navController = viewModel.navController,
+                                id = NavBackStackEntry.arguments!!.getString("id", "")
+                            )
+                        )
                     }
                 )
             }
         }
 
-        navigation (
+        navigation(
             startDestination = AuthenticationScreens.Authenticate.route,
             route = AuthenticationScreens.Root.route
         ) {
@@ -167,7 +178,7 @@ fun KindApp() {
             }
         }
 
-        val signupViewModel = SignupViewModel (
+        val signupViewModel = SignupViewModel(
             navigateAmount = { viewModel.navigate(SignupScreens.SetFreq.route) },
             navigateFreq = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
         )
@@ -180,7 +191,11 @@ fun KindApp() {
 
                 Screen(
                     content = {
-                        PersonalInformationScreen(viewModel = signupViewModel, next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) }, auth = authViewModel) {
+                        PersonalInformationScreen(
+                            viewModel = signupViewModel,
+                            next = { viewModel.navigate(SignupScreens.CreatePortfolio.route) },
+                            auth = authViewModel
+                        ) {
                             viewModel.navigate(AuthenticationScreens.Root.route)
                         }
                     }
@@ -192,7 +207,7 @@ fun KindApp() {
                     navigateToHome = { viewModel.navigate(NavbarScreens.Root.route) }
                 )
             }
-            composable(route = SignupScreens.SetAmount.route){
+            composable(route = SignupScreens.SetAmount.route) {
                 val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
                 DonationAmountScreen(
                     next = { signupViewModel.setAmount(selectedOption) },
@@ -219,10 +234,12 @@ fun KindApp() {
             }
             composable(route = SignupScreens.Summary.route) {
                 Screen(
-                    content = { SummaryScreen(
-                        next = { viewModel.navigate(NavbarScreens.Root.route) },
-                        back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
-                    )}
+                    content = {
+                        SummaryScreen(
+                            next = { viewModel.navigate(NavbarScreens.Root.route) },
+                            back = { viewModel.navigate(SignupScreens.BuildPortfolio.route) }
+                        )
+                    }
                 )
             }
         }
@@ -256,7 +273,12 @@ fun KindNavigationBar(
     viewModel: AppViewModel
 ) {
     NavigationBar {
-        val items = listOf(NavbarScreens.Home, NavbarScreens.Portfolio, NavbarScreens.Explorer, NavbarScreens.Profile)
+        val items = listOf(
+            NavbarScreens.Home,
+            NavbarScreens.Portfolio,
+            NavbarScreens.Explorer,
+            NavbarScreens.Profile
+        )
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
         items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
         val navBackStackEntry by viewModel.navController.currentBackStackEntryAsState()

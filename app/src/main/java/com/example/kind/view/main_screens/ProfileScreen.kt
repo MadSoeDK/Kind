@@ -12,25 +12,29 @@ import com.example.kind.viewModel.ProfileViewModel
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
-    auth : AuthViewModel
+    auth: AuthViewModel
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeaderAndText(headerProvider = "Account Settings", textProvider = "Edit your personal settings below")
+        HeaderAndText(
+            headerProvider = "Account Settings",
+            textProvider = "Edit your personal settings below"
+        )
         Form(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(onClick = {viewModel.onFormSubmit()} ) {
+        Button(onClick = { viewModel.onFormSubmit() }) {
             Text("Submit")
         }
         Button(
-            onClick = {viewModel.deleteUser()},
+            onClick = { viewModel.deleteUser() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer,
                 contentColor = MaterialTheme.colorScheme.onErrorContainer
-            )) {
+            )
+        ) {
             Text("Delete User")
 
         }

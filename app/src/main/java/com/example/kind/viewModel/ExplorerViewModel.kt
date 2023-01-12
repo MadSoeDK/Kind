@@ -24,7 +24,8 @@ class ExplorerViewModel(
 
     var charityList: List<com.example.kind.model.Charity> = mutableListOf()
 
-    private val _data = MutableStateFlow(listOf<com.example.kind.model.Charity>()) //storage.getCharity(id)
+    private val _data =
+        MutableStateFlow(listOf<com.example.kind.model.Charity>()) //storage.getCharity(id)
     val data: StateFlow<List<com.example.kind.model.Charity>> = _data.asStateFlow()
 
     init {
@@ -33,19 +34,19 @@ class ExplorerViewModel(
 
     fun getCharities(): List<com.example.kind.model.Charity> {
 
-            println("Attempting to get list of charities")
-            viewModelScope.launch {
-                try {
-                    _data.update {
-                        storage.getCharities()
-                    }
-                    println("Succesfully fethced charity data!")
-
-                } catch (e: Exception) {
-                    println(e.printStackTrace())
+        println("Attempting to get list of charities")
+        viewModelScope.launch {
+            try {
+                _data.update {
+                    storage.getCharities()
                 }
+                println("Succesfully fethced charity data!")
+
+            } catch (e: Exception) {
+                println(e.printStackTrace())
             }
-            println("Returning this data: " + charityList.toString())
+        }
+        println("Returning this data: " + charityList.toString())
 
         return charityList
     }

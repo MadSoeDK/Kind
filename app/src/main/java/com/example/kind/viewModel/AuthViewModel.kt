@@ -19,15 +19,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
 
-class AuthViewModel (
+class AuthViewModel(
     private val navController: NavController,
-    private val auth : AccountServiceImpl
+    private val auth: AccountServiceImpl
 ) : ViewModel() {
-    lateinit var storage : StorageServiceImpl
+    lateinit var storage: StorageServiceImpl
 
     var isLoggedIn by mutableStateOf(auth.hasUser)
     var formState by mutableStateOf(FormState())
-    var fields: List<KindTextField> = listOf (
+    var fields: List<KindTextField> = listOf(
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
         KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
     )
@@ -44,12 +44,15 @@ class AuthViewModel (
             }
         }
         navController.navigate(NavbarScreens.Root.route)
-   }
+    }
 
     fun onSignUp(data: Map<String, String>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+                auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
                 println("New user created")
             } catch (e: Exception) {
                 println("Could not sign in: " + e.printStackTrace())

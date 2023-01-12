@@ -21,30 +21,32 @@ private const val REQUIRED_MESSAGE = "this field is required"
 private const val REGEX_MESSAGE = "value does not match the regex"
 
 sealed interface Validator
-open class Email(var message: String = EMAIL_MESSAGE): Validator
-open class Required(var message: String = REQUIRED_MESSAGE): Validator
-open class Regex(var message: String, var regex: String = REGEX_MESSAGE): Validator
+open class Email(var message: String = EMAIL_MESSAGE) : Validator
+open class Required(var message: String = REQUIRED_MESSAGE) : Validator
+open class Regex(var message: String, var regex: String = REGEX_MESSAGE) : Validator
 
-class KindTextField (val name: String, val label: String = "", val validators: List<Validator>) {
+class KindTextField(val name: String, val label: String = "", val validators: List<Validator>) {
     var text: String by mutableStateOf("")
     var lbl: String by mutableStateOf(label)
     var hasError: Boolean by mutableStateOf(false)
 
-    fun clear() { text = "" }
+    fun clear() {
+        text = ""
+    }
 
-    private fun showError(error: String){
+    private fun showError(error: String) {
         hasError = true
         lbl = error
     }
 
-    private fun hideError(){
+    private fun hideError() {
         lbl = label
         hasError = false
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Content(){
+    fun Content() {
         TextField(
             value = text,
             isError = hasError,
@@ -60,23 +62,23 @@ class KindTextField (val name: String, val label: String = "", val validators: L
 
     fun validate(): Boolean {
         return validators.map {
-            when (it){
+            when (it) {
                 is Email -> {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()){
+                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
                         showError(it.message)
                         return@map false
                     }
                     true
                 }
                 is Required -> {
-                    if (text.isEmpty()){
+                    if (text.isEmpty()) {
                         showError(it.message)
-                        return@map  false
+                        return@map false
                     }
                     true
                 }
                 is Regex -> {
-                    if (!it.regex.toRegex().containsMatchIn(text)){
+                    if (!it.regex.toRegex().containsMatchIn(text)) {
                         showError(it.message)
                         return@map false
                     }

@@ -35,10 +35,12 @@ fun HomeScreen(
                 }
             }
         }
-        LazyRow{
-            viewModel.getArticles().forEachIndexed { i,element ->
+        LazyRow {
+            viewModel.getArticles().forEachIndexed { i, element ->
                 item {
-                    if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
+                    if (i == 0) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
                     /*if (i==0) {
                         KindCard(
                             modifier = Modifier.padding(),
@@ -55,7 +57,7 @@ fun HomeScreen(
                 }
             }
         }
-        
+
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -76,14 +78,17 @@ fun HomeScreen(
         LazyRow {
             viewModel.getCharities().forEachIndexed { i, element ->
                 item {
-                    if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
+                    if (i == 0) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
                     KindCard(
                         titleProvider = element.name,
                         iconImage = element.iconImage,
                         mainImage = element.mainImage,
                         subTitleProvider = element.name,
                         onClick = {
-                            viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + element.id)},
+                            viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + element.id)
+                        },
                     )
                 }
             }

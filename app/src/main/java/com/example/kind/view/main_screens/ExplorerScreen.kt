@@ -37,7 +37,7 @@ fun ExplorerScreen(
         )
 
 
-        if(state.isEmpty()) {
+        if (state.isEmpty()) {
             CircularProgressIndicator()
         } else {
             LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(500.dp), content = {

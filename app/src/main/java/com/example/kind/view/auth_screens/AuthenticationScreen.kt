@@ -28,7 +28,8 @@ fun AuthenticationScreen(
         Text(
             "Your Portfolio of Kindness",
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground)
+            color = MaterialTheme.colorScheme.onBackground
+        )
         Spacer(modifier = Modifier.height(40.dp))
         Button(
             modifier = Modifier

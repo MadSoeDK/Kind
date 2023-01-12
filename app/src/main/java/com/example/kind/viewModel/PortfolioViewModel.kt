@@ -23,7 +23,7 @@ class PortfolioViewModel : ViewModel() {
 
     var storage: StorageServiceImpl = StorageServiceImpl()
 
-    var subscriptions : MutableList<Subscription> = mutableListOf()
+    var subscriptions: MutableList<Subscription> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
 
@@ -69,15 +69,17 @@ class PortfolioViewModel : ViewModel() {
             }
         }
     }
-    fun getPercentages() : List<Float> {
-        val percentages : MutableList<Float> = mutableListOf()
+
+    fun getPercentages(): List<Float> {
+        val percentages: MutableList<Float> = mutableListOf()
         /*for (i in getPortfolioDonation()) {
             percentages.add(i.pct)
         }*/
 
         return percentages
     }
-    fun getSpend() : Float {
+
+    fun getSpend(): Float {
         var spend = 0f
         /*for(i in getPortfolioDonation()) {
             spend += i.spend
@@ -85,8 +87,8 @@ class PortfolioViewModel : ViewModel() {
         return spend
     }
 
-    fun getColors() : List<Color> {
-        val colors : MutableList<Color> = mutableListOf()
+    fun getColors(): List<Color> {
+        val colors: MutableList<Color> = mutableListOf()
         colors.add(Color(0xFFbf95d4))
         colors.add(Color(0xFFf4ac1a))
         colors.add(Color(0xFF8b0a50))

@@ -7,4 +7,4 @@ data class Subscription(
     val charityID: String = "",
     val id: String = "",
     val initDate: Timestamp? = null
-    )
+)
