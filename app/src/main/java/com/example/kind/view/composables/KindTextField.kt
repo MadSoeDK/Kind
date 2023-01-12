@@ -80,7 +80,7 @@ class KindTextField(
         return validators.map {
             when (it) {
                 is Email -> {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(text.replace("\n", "")).matches()) {
                         showError(it.message)
                         return@map false
                     }

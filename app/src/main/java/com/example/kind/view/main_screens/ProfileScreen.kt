@@ -28,7 +28,7 @@ fun ProfileScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        if(read) {
+        if (read) {
             Button(onClick = {
                 read = !read
                 viewModel.updateChanges()
@@ -46,7 +46,11 @@ fun ProfileScreen(
             }
         }
         Button(
-            onClick = { viewModel.deleteUser() },
+            onClick = {
+
+                viewModel.deleteUser()
+                onLogout()
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer,
                 contentColor = MaterialTheme.colorScheme.onErrorContainer

@@ -71,7 +71,7 @@ class ProfileViewModel : ViewModel() {
     fun CoroutineScope.deleteUser() {
         launch(Dispatchers.IO) {
             // Call method here
-            storage.deleteUser("e1onBFGdGk1PVwSsBh9M")
+            storage.deleteUser()
         }
     }
 }

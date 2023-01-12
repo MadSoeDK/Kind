@@ -78,8 +78,9 @@ class StorageServiceImpl : StorageService {
         return portfolio
     }
 
-    override suspend fun deleteUser(userId: String) {
-        database.collection("Users").document(userId).delete()
+    override suspend fun deleteUser() {
+        database.collection("Users").document("${currentUser?.uid}").delete()
+        currentUser!!.delete()
     }
 
     // Subscriptions
