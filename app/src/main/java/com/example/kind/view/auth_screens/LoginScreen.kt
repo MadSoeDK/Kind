@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
+import com.example.kind.view.composables.KindButton
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.viewModel.LoginViewModel
 
@@ -36,13 +37,17 @@ fun LoginScreen(
                 state = viewModel.formState,
                 fields = viewModel.fields,
             )
-            Button(
+            KindButton(
+                onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
+                textProvider = "Login"
+            )
+            /*Button(
                 modifier = Modifier
                     .width(280.dp),
                 onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
             ) {
                 Text("Login", color = MaterialTheme.colorScheme.onPrimary)
-            }
+            }*/
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Forgot password",
