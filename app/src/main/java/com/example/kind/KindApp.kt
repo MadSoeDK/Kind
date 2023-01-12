@@ -103,13 +103,13 @@ fun NavGraphBuilder.homeNavGraph(
                             Icon(
                                 Icons.Filled.Edit,
                                 contentDescription = null,
-                                tint = Color.White,
+                                tint = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier
                                     .width(30.dp)
                                     .height(30.dp),
                             )
                         },
-                        containerColor = Typography.headlineLarge.color,
+                        containerColor = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(10.dp)
                     )
                 },
