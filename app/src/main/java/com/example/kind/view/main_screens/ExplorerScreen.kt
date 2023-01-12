@@ -21,9 +21,7 @@ import com.example.kind.viewModel.ExplorerViewModel
 fun ExplorerScreen(
     viewModel: ExplorerViewModel
 ) {
-
     val state by viewModel.data.collectAsState()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -43,7 +41,7 @@ fun ExplorerScreen(
                         KindCharityCard(
                             Title = it.name,
                             Body = it.desc,
-                            OrganizationIcon = it.iconImage,
+                            iconImage = it.iconImage,
                             onClick = { viewModel.navController.navigate(HomeScreens.Charity.route + "/" + it.id) }
                         )
                     }
