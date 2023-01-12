@@ -5,12 +5,11 @@ import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
@@ -22,22 +21,27 @@ class StorageServiceImpl : StorageService {
 
     // Users
     override suspend fun addUser(user: User) {
-        /*database.collection("Users").add(user).addOnSuccessListener { documentReference ->
-            val documentId = documentReference.id
-            Global.currentUser = documentId
+        database.collection("Users").add(user).addOnSuccessListener { documentReference ->
+            val documentId = currentUser?.uid.toString()
 
-            database.collection("Users").document(documentId).collection("Subscriptions")
+            database.collection("Users").document("$documentId").collection("Subscriptions")
                 .add(subscription)
-            database.collection("Users").document(documentId).collection("Donations")
+            database.collection("Users").document("$documentId").collection("Donations")
                 .add(subscription)
-        }*/
+        }
     }
 
-    override suspend fun getSubscriptions(userPath: String): List<Subscription> {
-        val subscriptions = database.collection("Users").document(userPath).collection("Subscriptions")
+    override suspend fun getSubscriptions(): List<Subscription> {
+        val documentId = currentUser?.uid.toString()
+        val subscriptions =
+            database.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
-        val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
-
+        var portfolio: List<Subscription> = ArrayList()
+        try {
+            portfolio = subscriptions.get().await().toObjects(Subscription::class.java)
+        } catch (e: Exception) {
+            println(e.printStackTrace())
+        }
         return portfolio
     }
 
@@ -67,15 +71,21 @@ class StorageServiceImpl : StorageService {
     }
 
     override suspend fun modifySubscriptionAmount(
-        user: String,
-        subscription: String,
+        subscription: Subscription,
         amount: Double
     ) {
-        val docRef = database.collection("User").document(user).collection("Subscription")
-            .document(subscription)
-        database.runTransaction { transaction ->
-            transaction.update(docRef, "Amount", amount)
-        }
+        val documentId = currentUser?.uid.toString()
+        database.collection("Users").document(documentId)
+            .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get().addOnSuccessListener { documents ->
+                documents.forEach {
+                    val docRef: DocumentReference =
+                        database.collection("Users").document(currentUser?.uid.toString())
+                            .collection("Subscriptions").document(it.id)
+                    database.runTransaction { transaction ->
+                        transaction.update(docRef, "amount", amount)
+                    }
+                }
+            }
     }
 
     // Donations

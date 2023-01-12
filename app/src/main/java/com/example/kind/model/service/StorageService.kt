@@ -10,12 +10,12 @@ interface StorageService {
     // Users
     suspend fun addUser(user: User)
     suspend fun deleteUser(userId : String)
-    suspend fun getSubscriptions(userPath: String) : List<Subscription>
+    suspend fun getSubscriptions() : List<Subscription>
 
     // Subscriptions
     suspend fun addSubscription(amount : Double, user : String, charity : String)
     suspend fun deleteSubscription(user : String, subscription : String)
-    suspend fun modifySubscriptionAmount(user : String, subscription : String, amount : Double)
+    suspend fun modifySubscriptionAmount(subscription: Subscription, amount: Double)
 
     // Donations
     suspend fun addDonation(amount : Double, user : String, charity : String, Desc : String = "")
