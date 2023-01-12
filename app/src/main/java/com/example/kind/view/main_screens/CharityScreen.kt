@@ -122,8 +122,6 @@ fun CharityScreen( //TODO:farver skal fikses
                 }
             }*/
         }
-
-         */
     }
 
 }

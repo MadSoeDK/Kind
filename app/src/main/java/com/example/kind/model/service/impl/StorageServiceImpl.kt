@@ -172,6 +172,19 @@ class StorageServiceImpl : StorageService {
         return articleList
     }
 
+    override suspend fun getHomeArticles(id: String): List<Article>{
+
+        //val articleList: List<Article> = database.collection("Charity").document(id).collection("Articles").get().await().toObjects()
+
+        val articleList: List<Article> = database.collection("Articles").limit(5).get().await().toObjects()
+
+        println("Here:" + articleList.toString())
+
+        //charityList = database.collection("Charities").get().await().toObjects()
+
+        return articleList
+    }
+
     override suspend fun addCharityArticle(articleContent: String, charity: String) {
         val articleId = System.currentTimeMillis().toString()
         val article = Article(articleId, articleContent)

@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +27,9 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
+
+    val state by viewModel.data.collectAsState()
+
     Column {
         HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
@@ -42,7 +47,7 @@ fun HomeScreen(
             }
         }
         LazyRow{
-            viewModel.getArticles().forEachIndexed { i,element ->
+            state.articles.forEachIndexed { i,element ->
                 item {
                     if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
                     /*if (i==0) {
@@ -53,8 +58,8 @@ fun HomeScreen(
                             onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                             }*/
                     KindCard(
-                        titleProvider = element.header,
-                        subTitleProvier = element.header,
+                        titleProvider = element.title,
+                        subTitleProvier = element.charityName,
                         iconImage = " ", /*TODO*/
                         mainImage = " ", /*TODO*/
                         onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
@@ -80,7 +85,7 @@ fun HomeScreen(
         }
 
         LazyRow {
-            viewModel.getCharities().forEachIndexed { i, element ->
+            state.charities.forEachIndexed { i, element ->
                 item {
                     if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
                     KindCard(
