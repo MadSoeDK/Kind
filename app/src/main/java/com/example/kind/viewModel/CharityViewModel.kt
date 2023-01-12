@@ -3,6 +3,7 @@ package com.example.kind.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
@@ -37,13 +38,20 @@ class CharityViewModel(
                     desc = charity.desc,
                     iconImage = charity.iconImage,
                     mainImage = charity.mainImage,
-                    name = charity.name
+                    name = charity.name,
+                    articles = storage.getArticles(charity.id)//charity.articles
                 )
             }
         }
     }
 
-    fun getArticles(): List<Article> {
-        return getFakeArticles()
+    /*
+    fun getArticles(): List<com.example.kind.model.Article> {
+        var articleList: List<com.example.kind.model.Article> = listOf()
+        viewModelScope.launch {
+            articleList = storage.getArticles(data.value.id)
+        }
+        return articleList
     }
+    */
 }
