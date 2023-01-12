@@ -1,36 +1,49 @@
 package com.example.kind.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.Charity
 import com.example.kind.getFakeArticles
 import com.example.kind.getFakeCharities
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     val navController: NavController
 ) : ViewModel() {
 
-    var storage: StorageServiceImpl = StorageServiceImpl()
-    var charityList: List<com.example.kind.model.Charity> = mutableListOf()
+    // Setup the homeState Dataclass
+    data class HomeState(
+        var amountDonated: Int = 0,
+        var articles: List<com.example.kind.model.Article> = listOf(),
+        var charities: List<com.example.kind.model.Charity> = listOf()
+    )
 
-    fun getCharities(): List<com.example.kind.model.Charity> {
+    // State setup
+    val storage: StorageServiceImpl = StorageServiceImpl()
+    private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
+    val data: StateFlow<HomeState> = _data.asStateFlow()
 
-        println("Attempting to get list of charities")
-        runBlocking {
-            try {
-                charityList = storage.getCharities()
-                println("Succesfully fethced charity data!")
-
-            } catch (e: Exception) {
-                println(e.printStackTrace())
+    init
+    {
+        viewModelScope.launch {
+            _data.update {
+                val charities = storage.getCharities()
+                val articles = storage.getHomeArticles(charities.get(0).id)
+                it.copy(
+                    amountDonated = data.value.amountDonated,
+                    articles = articles,
+                    charities = charities//data.value.charities
+                )
             }
         }
-        println("Returning this data: " + charityList.toString())
-
-        return charityList
     }
 
     // Logic etc...
@@ -42,7 +55,13 @@ class HomeViewModel(
         return 1534.toString() + " kr."
     }
 
-    fun getArticles(): List<Article> {
-        return getFakeArticles()
+    fun getCharities(): List<com.example.kind.model.Charity> {
+        println("Charities Passed: "+data.value.charities.toString())
+        return data.value.charities//getFakeCharities()
+    }
+
+    fun getArticles(): List<com.example.kind.model.Article> {
+        println("Charities Passed: "+data.value.articles.toString())
+        return data.value.articles//getFakeArticles()
     }
 }

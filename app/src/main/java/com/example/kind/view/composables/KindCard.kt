@@ -66,7 +66,7 @@ fun KindCard(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .border(1.dp, Color.Black, CircleShape),
+                        .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape),
                     contentScale = ContentScale.FillBounds
                 )
                 Column(modifier = Modifier.padding(8.dp, 0.dp)) {

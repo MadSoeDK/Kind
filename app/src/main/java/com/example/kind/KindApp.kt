@@ -225,10 +225,12 @@ fun NavGraphBuilder.signupNavGraph(
         }
 
         composable(route = SignupScreens.Summary.route) {
-            SummaryScreen(
-                next = { navController.navigate(HomeScreens.Root.route) },
-                back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
-            )
+            Screen(content = {
+                SummaryScreen(
+                    next = { navController.navigate(HomeScreens.Root.route) },
+                    back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
+                )
+            })
         }
     }
 }
