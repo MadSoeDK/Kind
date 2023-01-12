@@ -3,17 +3,15 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-import com.google.firebase.Timestamp
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class StorageServiceImpl : StorageService {
@@ -46,6 +44,17 @@ class StorageServiceImpl : StorageService {
                 Subscribed = true
             }
         }
+    override suspend fun updateUser(email: String, password: String) {
+        currentUser!!.updateEmail(email)
+        currentUser.updatePassword(password)
+
+        /*try {
+            currentUser!!.updateEmail(email)
+            currentUser.updatePassword(password)
+        } catch (e : FirebaseAuthRecentLoginRequiredException) {
+            currentUser!!.reauthenticate(EmailAuthProvider.getCredential(currentUser?.email.toString(), password))
+        }*/
+    }
 
         // If not, then add it to your subscriptions
         if (!Subscribed) {
@@ -137,6 +146,9 @@ class StorageServiceImpl : StorageService {
 
     // Charity
     override suspend fun getCharity(id: String): Charity?{
+
+        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+
         try {
             return database.collection("Charity").document(id).get().await().toObject()
         }

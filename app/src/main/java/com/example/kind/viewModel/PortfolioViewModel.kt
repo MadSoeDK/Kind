@@ -28,6 +28,15 @@ class PortfolioViewModel : ViewModel() {
     private val _data = MutableStateFlow(PortState())
     val data: StateFlow<PortState> = _data.asStateFlow()
 
+    var isOpen by mutableStateOf(false)
+
+    var fields: List<KindTextField> = listOf(
+        KindTextField(
+            name = "Indtast beløb",
+            label = "Indtast beløb",
+            validators = listOf(Required()),
+        ),
+    )
     var popupIsOpen by mutableStateOf(false)
 
     init {
@@ -53,13 +62,14 @@ class PortfolioViewModel : ViewModel() {
     fun onFormSubmit() {
         /*if (formState.validate()) {
             // TODO: Do something on form submission
-        }*/
+        }
         //TODO: Add alert for user
         println("Form submission error!")
     }
 
-    fun getSpend(): Float {
-        return 0f
+    fun getMonthlyDonatedAmount(): String {
+        var amount = 300
+        return amount.toString()
     }
 
     fun updateSubscription() {
@@ -92,5 +102,4 @@ class PortfolioViewModel : ViewModel() {
 
         return colors
     }
-
 }
