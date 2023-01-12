@@ -268,7 +268,12 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                 )
                 Spacer(modifier = Modifier.padding(0.dp, 10.dp))
                 val openDialog = remember { mutableStateOf(false) }
-                Button(
+                KindButton(onClick = {
+                    viewModel.updateSubscription()
+                    openDialog.value = true
+                                     },
+                    textProvider = "Save")
+                /*Button(
                     onClick = {
                         viewModel.updateSubscription()
                         openDialog.value = true
@@ -285,7 +290,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                         fontSize = Typography.labelLarge.fontSize,
                         color = MaterialTheme.colorScheme.background,
                     )
-                }
+                }*/
                 if (openDialog.value == true) {
                     AlertDialog(
                         onDismissRequest = {
