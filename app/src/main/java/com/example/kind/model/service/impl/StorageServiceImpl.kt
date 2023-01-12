@@ -1,6 +1,5 @@
 package com.example.kind.model.service.impl
 
-import com.example.kind.Global
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
@@ -20,7 +19,7 @@ class StorageServiceImpl : StorageService {
 
     // Users
     override suspend fun addUser(user: User) {
-        database.collection("Users").add(user).addOnSuccessListener { documentReference ->
+        /*database.collection("Users").add(user).addOnSuccessListener { documentReference ->
             val documentId = documentReference.id
             Global.currentUser = documentId
 
@@ -28,7 +27,7 @@ class StorageServiceImpl : StorageService {
                 .add(subscription)
             database.collection("Users").document(documentId).collection("Donations")
                 .add(subscription)
-        }
+        }*/
     }
 
     override suspend fun getSubscriptions(userPath: String): List<Subscription> {
@@ -63,7 +62,6 @@ class StorageServiceImpl : StorageService {
     override suspend fun deleteSubscription(user: String, subscription: String) {
         database.collection("User").document(user).collection("Subscription").document(subscription)
             .delete()
-
     }
 
     override suspend fun modifySubscriptionAmount(

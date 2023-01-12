@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.example.kind.view.composables.Form
 import com.example.kind.view.home.composables.HeaderAndText
-import com.example.kind.viewModel.AuthViewModel
 import com.example.kind.viewModel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
-    auth : AuthViewModel
+    onLogout: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -26,17 +25,11 @@ fun ProfileScreen(
         Button(onClick = {viewModel.onFormSubmit()} ) {
             Text("Submit")
         }
-        Button(onClick = {viewModel.deleteUser()} ) {
+        Button(onClick = { viewModel.deleteUser() } ) {
             Text("Delete User")
         }
-        Button(onClick = { auth.onLogout() }) {
+        Button(onClick = onLogout) {
             Text(text = "Logout")
         }
     }
 }
-
-//@Composable
-//@Preview(showBackground = true)
-//fun ProfileScreenPreview() {
-//    ProfileScreen(viewModel = ProfileViewModel())
-//}

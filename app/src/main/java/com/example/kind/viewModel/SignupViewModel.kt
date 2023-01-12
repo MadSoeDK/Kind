@@ -4,20 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.kind.Global
 import com.example.kind.model.Charity
-import com.example.kind.model.User
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.Email
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import java.util.*
 
 enum class DonationFrequency {
     Monthly,

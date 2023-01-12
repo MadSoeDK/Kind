@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ArticleViewModel
@@ -25,7 +24,6 @@ fun ArticleScreen(
     IconButton(onClick = {viewModel.navController.popBackStack()}) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
     }
-
 
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -61,10 +59,4 @@ fun ArticleScreen(
         )
     }
 
-}
-
-@Composable
-@Preview
-fun previewArticle(){
-    //ArticleScreen("Putin dræber 2000 børn om dagen", "Dette er ikke så godt. fordi børn normalt ikke burde dø", "Red Barnet")
 }

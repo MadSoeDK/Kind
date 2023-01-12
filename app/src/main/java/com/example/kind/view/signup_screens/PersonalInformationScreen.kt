@@ -8,15 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.kind.AppViewModel
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.LoginHeader
-import com.example.kind.viewModel.AuthViewModel
 import com.example.kind.viewModel.SignupViewModel
 
 @Composable
 fun PersonalInformationScreen(
     viewModel: SignupViewModel,
-    auth: AuthViewModel,
+    appViewModel: AppViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -30,7 +30,7 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(onClick = {auth.onSignUp(viewModel.formState.getData())} ) {
+        Button(onClick = {appViewModel.onSignUp(viewModel.formState.getData())} ) {
             Text("Submit")
         }
         Row(modifier = Modifier

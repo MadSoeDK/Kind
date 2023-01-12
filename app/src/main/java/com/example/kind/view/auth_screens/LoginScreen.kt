@@ -7,12 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.kind.AppViewModel
 import com.example.kind.view.composables.Form
-import com.example.kind.viewModel.AuthViewModel
+import com.example.kind.viewModel.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: AuthViewModel,
+    appViewModel: AppViewModel,
+    viewModel: LoginViewModel,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -26,7 +28,7 @@ fun LoginScreen(
         Button(
             modifier = Modifier
                 .width(280.dp),
-            onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
+            onClick = { appViewModel.onAuthentication(viewModel.formState.getData()) },
         ) {
             Text("Login", color = MaterialTheme.colorScheme.onPrimary)
         }
