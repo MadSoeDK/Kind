@@ -21,7 +21,7 @@ import coil.compose.AsyncImage
 @Composable
 fun KindCard (
     titleProvider: String,
-    subTitleProvier: String = "",
+    subTitleProvider: String = "",
     iconImage: String,
     mainImage: String,
     onClick: () -> Unit,
@@ -40,9 +40,8 @@ fun KindCard (
                     .background(MaterialTheme.colorScheme.background)
                     .fillMaxWidth()
                     .height(140.dp)
-                    //.padding(10.dp, 0.dp, 0.dp, 0.dp)
             ) {
-                AsyncImage(model = iconImage, contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.FillBounds)
+                AsyncImage(model = mainImage, contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.FillBounds)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -50,10 +49,10 @@ fun KindCard (
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
-                AsyncImage(model = mainImage, contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape), contentScale = ContentScale.FillBounds)
+                AsyncImage(model = iconImage, contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape), contentScale = ContentScale.FillBounds)
                 Column (modifier = Modifier.padding(8.dp, 0.dp)){
                     Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
-                    Text(text = subTitleProvier, color = MaterialTheme.colorScheme.onBackground)
+                    Text(text = subTitleProvider, color = MaterialTheme.colorScheme.onBackground)
                 }
             }
         }

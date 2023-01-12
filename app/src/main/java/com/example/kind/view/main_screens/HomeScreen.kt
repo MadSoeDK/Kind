@@ -1,25 +1,19 @@
 package com.example.kind.view.main_screens
 
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kind.NavbarScreens
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
 import com.example.kind.view.composables.KindCard
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun HomeScreen(
@@ -54,7 +48,7 @@ fun HomeScreen(
                             }*/
                     KindCard(
                         titleProvider = element.header,
-                        subTitleProvier = element.header,
+                        subTitleProvider = element.header,
                         iconImage = " ", /*TODO*/
                         mainImage = " ", /*TODO*/
                         onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
@@ -87,6 +81,7 @@ fun HomeScreen(
                         titleProvider = element.name,
                         iconImage = element.iconImage,
                         mainImage = element.mainImage,
+                        subTitleProvider = element.name,
                         onClick = {
                             viewModel.navController.navigate(NavbarScreens.Charity.route + "/" + element.id)},
                     )

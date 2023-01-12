@@ -5,8 +5,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import coil.compose.AsyncImage
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -106,15 +104,12 @@ fun CharityScreen( //TODO:farver skal fikses
         // Post
         SmallHeaderAndText(headerProvider = "Posts", textProvider = "Read the latest posts from the organization")
 
-
         LazyRow {
             state.articles.forEach {
                 item {
-                    KindCard(titleProvider = it.title, subTitleProvier = it.charityName, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) }, /*TODO*/ iconImage = " ", mainImage = " " /*TODO*/)
+                    KindCard(titleProvider = it.title, subTitleProvider = it.charityName, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) }, /*TODO*/ iconImage = " ", mainImage = " " /*TODO*/)
                 }
             }
-
-
             /*
             viewModel.getArticles().forEach {
                 item {
@@ -122,8 +117,5 @@ fun CharityScreen( //TODO:farver skal fikses
                 }
             }*/
         }
-
-         */
     }
-
 }
