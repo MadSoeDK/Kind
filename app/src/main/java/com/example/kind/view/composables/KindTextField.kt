@@ -38,7 +38,7 @@ class KindTextField (val name: String, val label: String = "", val validators: L
         errorText = ""
     }
 
-    private fun showError(error: String) {
+    fun showError(error: String) {
         hasError = true
         errorText = error
     }

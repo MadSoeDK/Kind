@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
-import com.example.kind.getFakeCharity
 import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.GlobalScope

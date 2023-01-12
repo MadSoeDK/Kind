@@ -15,30 +15,33 @@ import com.example.kind.viewModel.LoginViewModel
 fun LoginScreen(
     viewModel: LoginViewModel,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ){
-        Spacer(modifier = Modifier.height(50.dp))
-        Form (
-            state = viewModel.formState,
-            fields = viewModel.fields,
-        )
-        Button(
+    if(!viewModel.isLoading) {
+        Column(
             modifier = Modifier
-                .width(280.dp),
-            onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
-        ) {
-            Text("Login", color = MaterialTheme.colorScheme.onPrimary)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+            ,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ){
+            Spacer(modifier = Modifier.height(50.dp))
+            Form (
+                state = viewModel.formState,
+                fields = viewModel.fields,
+            )
+            Button(
+                modifier = Modifier
+                    .width(280.dp),
+                onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
+            ) {
+                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
+            }
+            Text(
+                text = "Forgot password",
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.clickable { /* TODO */ }
+            )
+            Spacer(modifier = Modifier.height(40.dp))
         }
-        Text(
-            text = "Forgot password",
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.clickable { /* TODO */ }
-        )
-        Spacer(modifier = Modifier.height(40.dp))
-    }
+    } else
+        CircularProgressIndicator()
 }

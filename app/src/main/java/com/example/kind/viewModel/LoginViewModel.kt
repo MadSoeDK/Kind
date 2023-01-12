@@ -10,14 +10,15 @@ import com.example.kind.HomeScreens
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.view.composables.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     val navController: NavController,
     private val auth : AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
 ) : ViewModel() {
-
-    var loggedIn by mutableStateOf(auth.hasUser)
+    var isLoggedIn by mutableStateOf(auth.hasUser)
+    var isLoading by mutableStateOf(false)
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf (
@@ -26,6 +27,7 @@ class LoginViewModel(
     )
 
     fun onAuthentication(data: Map<String, String>) {
+        isLoading = true
         if (!formState.validate()) {
             return
         }
@@ -33,11 +35,18 @@ class LoginViewModel(
         viewModelScope.launch {
             try {
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
-                println("Succesfully logged in $loggedIn")
+                isLoading = false
+                isLoggedIn = true
+                navController.navigate(HomeScreens.Root.route)
+                println("Succesfully logged in $isLoggedIn")
+            } catch (e: FirebaseAuthInvalidUserException) {
+                formState.showError("Email or password is invalid")
             } catch (e: Exception) {
-                println("Error login:" + loggedIn + e.printStackTrace())
+                println("Error login:" + isLoggedIn + e.printStackTrace())
+            } finally {
+                isLoading = false
+                isLoggedIn = false
             }
         }
-        navController.navigate(HomeScreens.Root.route)
     }
 }

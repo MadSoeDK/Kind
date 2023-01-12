@@ -21,6 +21,12 @@ class FormState {
     }
 
     fun getData(): Map<String, String> = fields.map { it.name to it.text }.toMap()
+
+    fun showError(message: String) {
+        fields.forEach {
+            it.showError(message)
+        }
+    }
 }
 
 @Composable
