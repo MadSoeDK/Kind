@@ -49,9 +49,10 @@ fun LoginScreen(
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.clickable { /* TODO */ }
             )
-        } else
+        } else {
             CircularProgressIndicator()
-
+            Spacer(modifier = Modifier.height(20.dp))
+        }
         Spacer(modifier = Modifier.height(40.dp))
 
     }

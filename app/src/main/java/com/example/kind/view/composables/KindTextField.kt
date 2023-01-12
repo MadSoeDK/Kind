@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 /**
@@ -27,7 +29,11 @@ open class Required(var message: String = REQUIRED_MESSAGE): Validator
 open class Password(var message: String = PASSWORD_MESSAGE): Validator
 open class Regex(var message: String, var regex: String = REGEX_MESSAGE): Validator
 
-class KindTextField (val name: String, val label: String = "", val validators: List<Validator>) {
+class KindTextField (
+    val name: String,
+    val label: String = "",
+    val validators: List<Validator>
+) {
     var text: String by mutableStateOf("")
     var lbl: String by mutableStateOf(label)
     var errorText: String by mutableStateOf("")
@@ -61,7 +67,8 @@ class KindTextField (val name: String, val label: String = "", val validators: L
                 text = value
             },
             singleLine = true,
-            supportingText = { if (hasError) Text(text = errorText) }
+            supportingText = { if (hasError) Text(text = errorText) },
+            visualTransformation = if(name == "Password") PasswordVisualTransformation() else VisualTransformation.None
         )
     }
 

@@ -31,7 +31,6 @@ class LoginViewModel(
         if (!formState.validate()) {
             return
         }
-
         viewModelScope.launch {
             try {
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
