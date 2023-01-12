@@ -37,7 +37,9 @@ class LoginViewModel(
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
                 isLoggedIn = true
-                navController.navigate(HomeScreens.Root.route)
+                navController.navigate(HomeScreens.Root.route) {
+                    popUpTo(HomeScreens.Root.route)
+                }
                 println("Succesfully logged in $isLoggedIn")
             } catch (e: FirebaseAuthInvalidUserException) {
                 formState.showError("Email or password is invalid")

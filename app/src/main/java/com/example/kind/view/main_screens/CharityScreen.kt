@@ -115,7 +115,7 @@ fun CharityScreen( //TODO:farver skal fikses
         LazyRow {
             state.articles.forEach {
                 item {
-                    KindCard(titleProvider = it.title, subTitleProvier = it.charityName, onClick = { viewModel.navController.navigate(NavbarScreens.Article.route + "/" + it.id.toString()) })
+                    KindCard(titleProvider = it.title, subTitleProvier = it.charityName, onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id.toString()) })
                 }
             }
 
