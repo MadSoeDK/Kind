@@ -58,43 +58,6 @@ fun HomeScreen(
                 }
             }
         }
-        
-    HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
-    Column {
-        Row {
-            Spacer(modifier = Modifier.width(10.dp))
-            Column {
-                Text(
-                    text = "Charity Update",
-                    color = MaterialTheme.colorScheme.primary,
-                    style = Typography.headlineMedium
-                )
-                Text("The latest news from your charities")
-            }
-        }
-    }
-    LazyRow {
-        viewModel.getArticles().forEachIndexed { i, element ->
-            item {
-                if (i == 0) {
-                    Spacer(modifier = Modifier.width(10.dp))
-                }
-                /*if (i==0) {
-                    KindCard(
-                        modifier = Modifier.padding(),
-                        titleProvider = element.header,
-                        subTitleProvier = element.header,
-                        onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
-                        }*/
-                KindCard(
-                    titleProvider = element.title,
-                    subTitleProvider = element.charityName,
-                    iconImage = " ", /*TODO*/
-                    mainImage = " ", /*TODO*/
-                    onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
-            }
-        }
-    }
 
 
     Spacer(modifier = Modifier.height(50.dp))
