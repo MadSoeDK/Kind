@@ -8,7 +8,8 @@ data class Charity(
     val desc: String = "Check out this charity with the botton below",
     val iconImage: String = "",
     val mainImage: String = "",
-    var name: String = ""
+    var name: String = "",
+    val articles: List<Article> = listOf()
 
     /*
     val id : Int,
