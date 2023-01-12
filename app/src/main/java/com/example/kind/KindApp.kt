@@ -127,22 +127,23 @@ fun NavGraphBuilder.homeNavGraph(
             )
         }
         composable(HomeScreens.Charity.route  + "/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
-                NavigationBar = { KindNavigationBar(navController) },
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = { CharityScreen(
-                    viewModel = CharityViewModel(navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)),
+                    viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")),
                 )}
             )
         }
         composable(HomeScreens.Article.route  + "/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
-                NavigationBar = { KindNavigationBar(navController) },
+                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
                 content = {
-                    ArticleScreen(viewModel = ArticleViewModel(navController = navController, id = NavBackStackEntry.arguments!!.getInt("id", 0)))
+                    ArticleScreen(
+                        viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
                 }
             )
         }

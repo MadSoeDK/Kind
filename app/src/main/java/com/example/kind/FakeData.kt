@@ -19,6 +19,6 @@ fun getFakeArticle(id: Int): Article {
     return articles[id]
 }
 
-fun getFakeCharity(id: Int): Charity {
-    return charities[id]
+fun getFakeCharity(id: String): Charity {
+    return Charity(0, "Charity 1")//charities[id]
 }

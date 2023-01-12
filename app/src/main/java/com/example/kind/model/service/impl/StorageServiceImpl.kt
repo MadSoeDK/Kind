@@ -5,9 +5,12 @@ import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
@@ -34,7 +37,6 @@ class StorageServiceImpl : StorageService {
         val subscriptions = database.collection("Users").document(userPath).collection("Subscriptions")
         // Call method here
         val portfolio: List<Subscription> = subscriptions.get().await().toObjects()
-
 
         return portfolio
     }
@@ -100,6 +102,30 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
+    override suspend fun getCharity(id: String): Charity?{
+
+        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+
+        try {
+            return database.collection("Charity").document(id).get().await().toObject()
+        }
+        catch (e: Exception)
+        {
+            return Charity(0,0,"","Sorry, we are unable to find this charity page. Come back later")
+        }
+    }
+
+    override suspend fun getCharities(): List<Charity>{
+
+        val charityList: List<Charity> = database.collection("Charity").get().await().toObjects()
+
+        println("Here:" + charityList.toString())
+
+        //charityList = database.collection("Charities").get().await().toObjects()
+
+        return charityList
+    }
+
     override suspend fun increaseCharityDonationNumber(charity: String) {
         changeCharityField(charity, "Donations", 1)
     }
@@ -121,6 +147,26 @@ class StorageServiceImpl : StorageService {
     override suspend fun addCharityAdministator() {}
 
     override suspend fun deleteCharityAdministrator() {}
+
+    override suspend fun getArticle(id: String): Article?{
+
+        println("This is the id: "+id)
+        val article: Article? = database.collection("Articles").document(id).get().await().toObject()
+        /*
+        runBlocking {
+            article = database.collection("Articles").document(id).get().await().toObject()
+        }
+        println("Jeg giver denne article: "+ article.toString())
+        if (article != null)
+        {
+            return database.collection("Articles").document(id).get().await().toObject()
+        }
+        else
+        {
+            return Article("","Sorry we are unable to recover this article")
+        }*/
+        return article
+    }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {
         val articleId = System.currentTimeMillis().toString()

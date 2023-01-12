@@ -8,6 +8,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +23,8 @@ fun ArticleScreen(
     viewModel: ArticleViewModel
 )
 {
+    val state by viewModel.data.collectAsState()
+
     IconButton(onClick = {viewModel.navController.popBackStack()}) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
     }
@@ -35,14 +39,14 @@ fun ArticleScreen(
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Charity
-        Text(text = viewModel.charityName,
+        Text(text = state.charityName,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Left
         )
 
         // Title
-        Text(text = viewModel.title,
+        Text(text = state.title,
             color = Color.Black,
             fontWeight = Typography.headlineMedium.fontWeight,
             fontSize = Typography.headlineMedium.fontSize,
@@ -52,7 +56,7 @@ fun ArticleScreen(
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Article Text
-        Text(text = viewModel.paragraf,
+        Text(text = state.paragraf,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Center

@@ -1,5 +1,6 @@
-package com.example.kind.view.signup_screens
+package com.example.kind.view.auth_screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -17,10 +18,13 @@ fun LoginScreen(
     viewModel: LoginViewModel,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+        ,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
     ){
+        Spacer(modifier = Modifier.height(50.dp))
         Form (
             state = viewModel.formState,
             fields = viewModel.fields,
@@ -32,7 +36,11 @@ fun LoginScreen(
         ) {
             Text("Login", color = MaterialTheme.colorScheme.onPrimary)
         }
-        Text(text = "Forgot password", modifier = Modifier.clickable { /* TODO */ }  )
+        Text(
+            text = "Forgot password",
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.clickable { /* TODO */ }
+        )
         Spacer(modifier = Modifier.height(40.dp))
     }
 }
