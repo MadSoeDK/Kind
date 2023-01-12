@@ -125,15 +125,8 @@ class StorageServiceImpl : StorageService {
         }
     }
 
-    override suspend fun getCharities(): List<Charity>{
-
-        val charityList: List<Charity> = database.collection("Charity").get().await().toObjects()
-
-        println("Here:" + charityList.toString())
-
-        //charityList = database.collection("Charities").get().await().toObjects()
-
-        return charityList
+    override suspend fun getCharities(): List<Charity> {
+        return database.collection("Charity").get().await().toObjects()
     }
 
     override suspend fun increaseCharityDonationNumber(charity: String) {
@@ -158,39 +151,17 @@ class StorageServiceImpl : StorageService {
 
     override suspend fun deleteCharityAdministrator() {}
 
-    override suspend fun getArticle(id: String): Article?{
-
-        println("This is the id: "+id)
-        val article: Article? = database.collection("Articles").document(id).get().await().toObject()
-
-        return article
+    override suspend fun getArticle(id: String): Article? {
+        return database.collection("Articles").document(id).get().await().toObject()
     }
 
-    override suspend fun getArticles(id: String): List<Article>{
-
-        val articleList: List<Article> = database.collection("Charity").document(id).collection("Articles").get().await().toObjects()
-
-        //val articleList: List<Article> = database.collection("Charity").get().await().toObjects()
-
-
-        println("Here:" + articleList.toString())
-
-        //charityList = database.collection("Charities").get().await().toObjects()
-
-        return articleList
+    override suspend fun getArticles(id: String): List<Article> {
+        return database.collection("Charity").document(id).collection("Articles").get().await()
+            .toObjects()
     }
 
-    override suspend fun getHomeArticles(id: String): List<Article>{
-
-        //val articleList: List<Article> = database.collection("Charity").document(id).collection("Articles").get().await().toObjects()
-
-        val articleList: List<Article> = database.collection("Articles").limit(5).get().await().toObjects()
-
-        println("Here:" + articleList.toString())
-
-        //charityList = database.collection("Charities").get().await().toObjects()
-
-        return articleList
+    override suspend fun getHomeArticles(id: String): List<Article> {
+        return database.collection("Articles").limit(5).get().await().toObjects()
     }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {

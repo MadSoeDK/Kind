@@ -31,22 +31,6 @@ class PortfolioViewModel : ViewModel() {
     var popupIsOpen by mutableStateOf(false)
 
     init {
-        getPortfolioDonation()
-    }
-
-    fun toggleModal() {
-        popupIsOpen = !popupIsOpen
-    }
-
-    fun onFormSubmit() {
-        /*if (formState.validate()) {
-            // TODO: Do something on form submission
-        }*/
-        //TODO: Add alert for user
-        println("Form submission error!")
-    }
-
-    fun getPortfolioDonation() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val subscriptions = storage.getSubscriptions()
@@ -62,14 +46,26 @@ class PortfolioViewModel : ViewModel() {
         }
     }
 
+    fun toggleModal() {
+        popupIsOpen = !popupIsOpen
+    }
+
+    fun onFormSubmit() {
+        /*if (formState.validate()) {
+            // TODO: Do something on form submission
+        }*/
+        //TODO: Add alert for user
+        println("Form submission error!")
+    }
+
     fun getSpend(): Float {
         return 0f
     }
 
     fun updateSubscription() {
         CoroutineScope(Dispatchers.IO).launch {
-            _data.value.subscription.forEachIndexed { i, e ->
-                storage.modifySubscriptionAmount(e, e.amount)
+            _data.value.subscription.forEach {
+                storage.modifySubscriptionAmount(it, it.amount)
             }
         }
     }

@@ -3,12 +3,7 @@ package com.example.kind.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.Article
-import com.example.kind.Charity
-import com.example.kind.getFakeArticles
-import com.example.kind.getFakeCharities
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,8 +26,7 @@ class HomeViewModel(
     private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
     val data: StateFlow<HomeState> = _data.asStateFlow()
 
-    init
-    {
+    init {
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()

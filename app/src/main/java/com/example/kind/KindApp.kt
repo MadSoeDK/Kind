@@ -82,6 +82,11 @@ fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
     appViewModel: AppViewModel
 ) {
+    val homeViewModel = HomeViewModel(navController)
+    val portfolioViewModel = PortfolioViewModel()
+    val explorerViewModel = ExplorerViewModel(navController)
+    val profileViewModel = ProfileViewModel()
+
     navigation(
         startDestination = HomeScreens.Home.route,
         route = HomeScreens.Root.route
@@ -89,11 +94,10 @@ fun NavGraphBuilder.homeNavGraph(
         composable(HomeScreens.Home.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },
-                content = { HomeScreen(HomeViewModel(navController)) }
+                content = { HomeScreen(homeViewModel) }
             )
         }
         composable(HomeScreens.Portfolio.route) {
-            val portfolioViewModel = PortfolioViewModel()
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },
                 FloatingActionButton = {
@@ -119,12 +123,12 @@ fun NavGraphBuilder.homeNavGraph(
         composable(HomeScreens.Profile.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) }
-            ) { ProfileScreen(ProfileViewModel()) { appViewModel.onLogout() } }
+            ) { ProfileScreen(profileViewModel) { appViewModel.onLogout() } }
         }
         composable(HomeScreens.Explorer.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },
-                content = { ExplorerScreen(ExplorerViewModel(navController)) }
+                content = { ExplorerScreen(explorerViewModel) }
             )
         }
         composable(
@@ -311,7 +315,9 @@ fun KindNavigationBar(
                 },
                 label = { Text(text = screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = { navController.navigate(screen.route) },
+                onClick = { navController.navigate(screen.route) {
+                    restoreState = true
+                } },
                 colors = NavigationBarItemDefaults.colors(
                     MaterialTheme.colorScheme.surfaceVariant, //logo for valgt
                     MaterialTheme.colorScheme.onSurface, //tekst under valgt

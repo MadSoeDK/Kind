@@ -56,8 +56,8 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
 fun PortfolioContent(viewModel: PortfolioViewModel) {
     val state by viewModel.data.collectAsState()
     HeaderAndText(
-        headerProvider = "${state.subscription.sumOf { it.amount }} kr.",
-        textProvider = "You currently donate ${state.subscription.sumOf { it.amount }} kr. to ${state.subscription.size} organizations."
+        headerProvider = "${state.subscription.sumOf { it.amount }.roundToInt()} kr.",
+        textProvider = "You currently donate ${state.subscription.sumOf { it.amount }.roundToInt()} kr. to ${state.subscription.size} organizations."
     )
 
     PieChart(
@@ -149,7 +149,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
                 1 -> "${
                     ((item.amount / state.subscription.sumOf { it.amount }) * 100).roundToInt()
                 }%"
-                2 -> "${item.amount} kr."
+                2 -> "${item.amount.roundToInt()} kr."
                 else -> ""
             }
             val alignment = when (index) {
@@ -158,7 +158,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
             }
             Text(
                 text = value,
-                fontSize = 12.sp,
+                fontSize = 13.sp,
                 textAlign = alignment,
                 modifier = Modifier.padding(0.dp, 20.dp),
                 maxLines = 1,
