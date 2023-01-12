@@ -42,20 +42,9 @@ fun AuthenticationScreen(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }*/
-        KindButton(Onclick = navigateToSignup, TextProvider = "Signup")
+        KindButton(onClick = navigateToSignup, textProvider = "Signup")
         Spacer(modifier = Modifier.height(8.dp))
-        KindButtonOutlined(Onclick = {}, TextProvider = "Continue with Google")
-        /*OutlinedButton(
-            onClick = {},
-            modifier = Modifier
-                .width(280.dp),
-            colors = ButtonDefaults
-                .outlinedButtonColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
-        ) {
-            Text(text = "Continue with Google")
-        }*/
+        KindButtonOutlined(onClick = {}, textProvider = "Continue with Google")
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Login",

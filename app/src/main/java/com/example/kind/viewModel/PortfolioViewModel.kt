@@ -63,6 +63,10 @@ class PortfolioViewModel : ViewModel() {
         }
     }
 
+    fun getSpend(): Float {
+        return 0f
+    }
+
     fun updateSubscription() {
         CoroutineScope(Dispatchers.IO).launch {
             _data.value.subscription.forEachIndexed { i, e ->

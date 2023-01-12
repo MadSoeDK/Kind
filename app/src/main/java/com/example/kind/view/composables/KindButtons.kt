@@ -1,29 +1,24 @@
 package com.example.kind.view.composables
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun KindButton(Onclick: () -> Unit, TextProvider: String,) {
+fun KindButton(onClick: () -> Unit, textProvider: String) {
     Button(
-        onClick = { Onclick },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
             .width(280.dp)
-            //.fillMaxWidth()
     ) {
         Text(
-            text = TextProvider,
+            text = textProvider,
             color = MaterialTheme.colorScheme.onPrimary,
         )
     }
@@ -81,27 +76,24 @@ fun KindButtonBackground(Onclick: () -> Unit, Width: Int, TextProvider: String,)
 }
 
 @Composable
-fun KindButtonOutlined(Onclick: () -> Unit, TextProvider: String,) {
-    Button(
-        onClick = { Onclick },
-        colors = ButtonDefaults.buttonColors(
-            //containerColor = MaterialTheme.colorScheme.background,
-            containerColor = Color.Transparent,
-        ),
+fun KindButtonOutlined(onClick: () -> Unit, textProvider: String) {
+    OutlinedButton(
+        onClick = onClick,
         modifier = Modifier
-            .width(280.dp)
+            .width(280.dp),
+        colors = ButtonDefaults
+            .outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.background
+            )
     ) {
-        Text(
-            text = TextProvider,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
+        Text(text = textProvider)
     }
 }
 
 @Composable
-fun KindButtonOutlined(Onclick: () -> Unit, Width: Int, TextProvider: String,) {
+fun KindButtonOutlined(onClick: () -> Unit, Width: Int, TextProvider: String,) {
     Button(
-        onClick = { Onclick },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             //containerColor = MaterialTheme.colorScheme.background,
             containerColor = Color.Transparent,
