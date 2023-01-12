@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kind.view.auth_screens.AuthenticationScreen
+import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
@@ -130,9 +131,9 @@ fun NavGraphBuilder.homeNavGraph(
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
-                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                NavigationBar = { KindNavigationBar(navController) },
                 content = { CharityScreen(
-                    viewModel = CharityViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")),
+                    viewModel = CharityViewModel(navController = navController, id = NavBackStackEntry.arguments!!.getString("id", "")),
                 )}
             )
         }
@@ -140,10 +141,10 @@ fun NavGraphBuilder.homeNavGraph(
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
-                NavigationBar = { KindNavigationBar(viewModel = viewModel) },
+                NavigationBar = { KindNavigationBar(navController) },
                 content = {
                     ArticleScreen(
-                        viewModel = ArticleViewModel(navController = viewModel.navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
+                        viewModel = ArticleViewModel(navController = navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
                 }
             )
         }

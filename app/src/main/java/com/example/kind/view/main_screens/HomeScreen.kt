@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.kind.MainScreens
+import com.example.kind.HomeScreens
 import com.example.kind.view.home.composables.HeaderAndText
 import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
@@ -19,10 +19,10 @@ fun HomeScreen(
 ) {
     HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
 
-        Column() {
-            Row() {
+        Column {
+            Row {
                 Spacer(modifier = Modifier.width(10.dp))
-                Column() {
+                Column {
                     Text(
                         text = "Charity Update",
                         color = MaterialTheme.colorScheme.primary,
@@ -54,10 +54,10 @@ fun HomeScreen(
 
     Spacer(modifier = Modifier.height(50.dp))
 
-        Column() {
-            Row() {
+        Column {
+            Row {
                 Spacer(modifier = Modifier.width(10.dp))
-                Column() {
+                Column {
                     Text(
                         text = "Explore charities",
                         color = MaterialTheme.colorScheme.primary,
@@ -77,7 +77,7 @@ fun HomeScreen(
                         subTitleProvier = element.name,
                         onClick = {
                             viewModel.navController.navigate(
-                                MainScreens.Charity.route
+                                HomeScreens.Charity.route
                                         + "/" + element.id.toString())},
                     )
                 }
