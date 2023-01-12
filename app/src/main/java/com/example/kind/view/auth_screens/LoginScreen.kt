@@ -43,7 +43,7 @@ fun LoginScreen(
             ) {
                 Text("Login", color = MaterialTheme.colorScheme.onPrimary)
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Forgot password",
                 color = MaterialTheme.colorScheme.onBackground,

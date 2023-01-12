@@ -29,7 +29,7 @@ fun AuthenticationScreen(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground)
         Spacer(modifier = Modifier.height(40.dp))
-        Button(
+        Button (
             modifier = Modifier
                 .width(280.dp),
             onClick = navigateToSignup,
@@ -39,6 +39,7 @@ fun AuthenticationScreen(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
+        Spacer(modifier = Modifier.height(8.dp))
         OutlinedButton(
             onClick = {},
             modifier = Modifier
@@ -48,6 +49,7 @@ fun AuthenticationScreen(
         ) {
             Text(text = "Continue with Google")
         }
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Login",
             color = MaterialTheme.colorScheme.onBackground,
