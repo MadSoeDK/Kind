@@ -33,6 +33,7 @@ class LoginViewModel(
     fun onAuthentication(data: Map<String, String>) {
         isLoading = true
         if (!formState.validate()) {
+            isLoading = false
             return
         }
         viewModelScope.launch {
