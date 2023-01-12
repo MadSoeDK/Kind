@@ -10,6 +10,7 @@ import com.example.kind.HomeScreens
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.view.composables.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.launch
 
@@ -45,9 +46,13 @@ class LoginViewModel(
                     popUpTo(HomeScreens.Root.route)
                 }
                 println("Succesfully logged in $isLoggedIn")
+                return@launch
             } catch (e: FirebaseAuthInvalidUserException) {
-                formState.showError("Email or password is invalid")
+                formState.fields[0].showError("Could not find user with this email")
+            } catch (e: FirebaseAuthInvalidCredentialsException) {
+                formState.fields[1].showError("Wrong password")
             } catch (e: Exception) {
+                formState.showError("Some error happened. Try again later")
                 println("Error login:" + isLoggedIn + e.printStackTrace())
             } finally {
                 isLoading = false
