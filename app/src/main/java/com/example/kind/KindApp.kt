@@ -252,7 +252,7 @@ fun NavGraphBuilder.authNavGraph(
             LoginScreen(LoginViewModel(navController))
         }
         composable(route = AuthenticationScreens.About.route) {
-            AboutKindScreen { navController.navigate(SignupScreens.Root.route) }
+            AboutKindScreen { navController.navigate(SignupScreens.CreatePortfolio.route) }
         }
     }
 }

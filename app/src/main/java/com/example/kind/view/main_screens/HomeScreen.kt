@@ -52,8 +52,8 @@ fun HomeScreen(
                     KindCard(
                         titleProvider = element.title,
                         subTitleProvider = element.charityName,
-                        iconImage = " ", /*TODO*/
-                        mainImage = " ", /*TODO*/
+                        iconImage = element.iconImage,
+                        mainImage = element.mainImage,
                         onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                 }
             }

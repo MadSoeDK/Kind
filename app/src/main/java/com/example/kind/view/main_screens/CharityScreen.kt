@@ -138,8 +138,8 @@ fun CharityScreen(
                         titleProvider = it.title,
                         subTitleProvider = it.charityName,
                         onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id) },
-                        iconImage = " ",/*TODO*/
-                        mainImage = " " /*TODO*/
+                        iconImage = it.iconImage,
+                        mainImage = it.mainImage
                     )
                 }
             }
