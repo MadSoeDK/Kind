@@ -34,20 +34,21 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(onClick = {appViewModel.onSignUp(viewModel.formState.getData())} ) {
+        Button(onClick = { appViewModel.onSignUp(viewModel.formState.getData()) }) {
             Text("Submit")
         }
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(0.dp, 15.dp)
-            .background(MaterialTheme.colorScheme.background)
-            ,
-            horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.Bottom) {
-            TextButton(onClick = {back()} ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(0.dp, 15.dp)
+                .background(MaterialTheme.colorScheme.background),
+            horizontalArrangement = Arrangement.SpaceAround, verticalAlignment = Alignment.Bottom
+        ) {
+            TextButton(onClick = { back() }) {
                 Text("← Back")
             }
-            Button(onClick = {next()} ) {
+            Button(onClick = { next() }) {
                 Text("Next →")
             }
         }

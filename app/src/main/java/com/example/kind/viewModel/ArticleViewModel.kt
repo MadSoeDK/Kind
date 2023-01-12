@@ -17,14 +17,14 @@ import kotlinx.coroutines.launch
 class ArticleViewModel(
     val navController: NavController,
     id: String,
-): ViewModel() {
+) : ViewModel() {
 
     // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(com.example.kind.model.Article()) //storage.getCharity(id)
     val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
 
-    init{
+    init {
         GlobalScope.launch {
             _data.update {
                 val articleData = storage.getArticle(id)

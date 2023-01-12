@@ -1,4 +1,4 @@
-package com.example.kind.view.screens
+package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,42 +21,46 @@ import com.example.kind.viewModel.ArticleViewModel
 @Composable
 fun ArticleScreen(
     viewModel: ArticleViewModel
-)
-{
+) {
     val state by viewModel.data.collectAsState()
 
-    IconButton(onClick = {viewModel.navController.popBackStack()}) {
+    IconButton(onClick = { viewModel.navController.popBackStack() }) {
         Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
     }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(color = Color.White)
-            .padding(20.dp, 25.dp))
+            .padding(20.dp, 25.dp)
+    )
     {
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Charity
-        Text(text = state.charityName,
+        Text(
+            text = state.charityName,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Left
         )
 
         // Title
-        Text(text = state.title,
+        Text(
+            text = state.title,
             color = Color.Black,
             fontWeight = Typography.headlineMedium.fontWeight,
             fontSize = Typography.headlineMedium.fontSize,
             textAlign = TextAlign.Center
         )
-        
+
         Spacer(modifier = Modifier.padding(20.dp))
 
         // Article Text
-        Text(text = state.paragraf,
+        Text(
+            text = state.paragraf,
             color = Color.Black,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Center

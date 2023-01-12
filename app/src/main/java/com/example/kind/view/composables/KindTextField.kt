@@ -24,12 +24,12 @@ private const val REGEX_MESSAGE = "Value does not match the regex"
 private const val PASSWORD_MESSAGE = "The password must have minimum 6 characters"
 
 sealed interface Validator
-open class Email(var message: String = EMAIL_MESSAGE): Validator
-open class Required(var message: String = REQUIRED_MESSAGE): Validator
-open class Password(var message: String = PASSWORD_MESSAGE): Validator
-open class Regex(var message: String, var regex: String = REGEX_MESSAGE): Validator
+open class Email(var message: String = EMAIL_MESSAGE) : Validator
+open class Required(var message: String = REQUIRED_MESSAGE) : Validator
+open class Password(var message: String = PASSWORD_MESSAGE) : Validator
+open class Regex(var message: String, var regex: String = REGEX_MESSAGE) : Validator
 
-class KindTextField (
+class KindTextField(
     val name: String,
     val label: String = "",
     val validators: List<Validator>
@@ -68,7 +68,7 @@ class KindTextField (
             },
             singleLine = true,
             supportingText = { if (hasError) Text(text = errorText) },
-            visualTransformation = if(name == "Password") PasswordVisualTransformation() else VisualTransformation.None
+            visualTransformation = if (name == "Password") PasswordVisualTransformation() else VisualTransformation.None
         )
     }
 
@@ -76,21 +76,21 @@ class KindTextField (
         return validators.map {
             when (it) {
                 is Email -> {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()){
+                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
                         showError(it.message)
                         return@map false
                     }
                     true
                 }
                 is Required -> {
-                    if (text.isEmpty()){
+                    if (text.isEmpty()) {
                         showError(it.message)
-                        return@map  false
+                        return@map false
                     }
                     true
                 }
                 is Regex -> {
-                    if (!it.regex.toRegex().containsMatchIn(text)){
+                    if (!it.regex.toRegex().containsMatchIn(text)) {
                         showError(it.message)
                         return@map false
                     }

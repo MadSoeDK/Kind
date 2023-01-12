@@ -19,8 +19,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-        ,
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
@@ -29,10 +28,11 @@ fun LoginScreen(
         Text(
             "Your Portfolio of Kindness",
             style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground)
+            color = MaterialTheme.colorScheme.onBackground
+        )
         Spacer(modifier = Modifier.height(40.dp))
-        if(!viewModel.isLoading) {
-            Form (
+        if (!viewModel.isLoading) {
+            Form(
                 state = viewModel.formState,
                 fields = viewModel.fields,
             )

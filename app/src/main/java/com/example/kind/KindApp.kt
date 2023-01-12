@@ -29,7 +29,7 @@ import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
 import com.example.kind.view.main_screens.*
-import com.example.kind.view.screens.ArticleScreen
+import com.example.kind.view.main_screens.ArticleScreen
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
@@ -100,7 +100,7 @@ fun NavGraphBuilder.homeNavGraph(
                     FloatingActionButton(
                         onClick = { portfolioViewModel.toggleModal() },
                         content = {
-                            Icon (
+                            Icon(
                                 Icons.Filled.Edit,
                                 contentDescription = null,
                                 tint = Color.White,
@@ -127,24 +127,35 @@ fun NavGraphBuilder.homeNavGraph(
                 content = { ExplorerScreen(ExplorerViewModel(navController)) }
             )
         }
-        composable(HomeScreens.Charity.route  + "/{id}",
+        composable(
+            HomeScreens.Charity.route + "/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },
-                content = { CharityScreen(
-                    viewModel = CharityViewModel(navController = navController, id = NavBackStackEntry.arguments!!.getString("id", "")),
-                )}
+                content = {
+                    CharityScreen(
+                        viewModel = CharityViewModel(
+                            navController = navController,
+                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                        ),
+                    )
+                }
             )
         }
-        composable(HomeScreens.Article.route  + "/{id}",
+        composable(
+            HomeScreens.Article.route + "/{id}",
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },
                 content = {
                     ArticleScreen(
-                        viewModel = ArticleViewModel(navController = navController, id = NavBackStackEntry.arguments!!.getString("id", "")))
+                        viewModel = ArticleViewModel(
+                            navController = navController,
+                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                        )
+                    )
                 }
             )
         }
@@ -156,7 +167,7 @@ fun NavGraphBuilder.signupNavGraph(
     navController: NavController,
     appViewModel: AppViewModel
 ) {
-    val signupViewModel = SignupViewModel (
+    val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
         navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) }
     )
@@ -167,7 +178,9 @@ fun NavGraphBuilder.signupNavGraph(
         composable(route = SignupScreens.Signup.route) {
             Screen(
                 content = {
-                    PersonalInformationScreen(viewModel = signupViewModel, next = { navController.navigate(SignupScreens.CreatePortfolio.route) },
+                    PersonalInformationScreen(
+                        viewModel = signupViewModel,
+                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) },
                         appViewModel = appViewModel
                     ) {
                         navController.navigate(AuthenticationScreens.Root.route)
@@ -183,7 +196,7 @@ fun NavGraphBuilder.signupNavGraph(
             )
         }
 
-        composable(route = SignupScreens.SetAmount.route){
+        composable(route = SignupScreens.SetAmount.route) {
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
             DonationAmountScreen(
                 next = { signupViewModel.setAmount(selectedOption) },
@@ -220,10 +233,10 @@ fun NavGraphBuilder.signupNavGraph(
     }
 }
 
-fun NavGraphBuilder.authNavGraph (
+fun NavGraphBuilder.authNavGraph(
     navController: NavController,
 ) {
-    navigation (
+    navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route
     ) {
@@ -276,7 +289,12 @@ fun KindNavigationBar(
     navController: NavController
 ) {
     NavigationBar {
-        val items = listOf(HomeScreens.Home, HomeScreens.Portfolio, HomeScreens.Explorer, HomeScreens.Profile)
+        val items = listOf(
+            HomeScreens.Home,
+            HomeScreens.Portfolio,
+            HomeScreens.Explorer,
+            HomeScreens.Profile
+        )
         items[1].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_analytics_24)
         items[2].icon = ImageVector.vectorResource(id = R.drawable.ic_baseline_travel_explore_24)
         val navBackStackEntry by navController.currentBackStackEntryAsState()

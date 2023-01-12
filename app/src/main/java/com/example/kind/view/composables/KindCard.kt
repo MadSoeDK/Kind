@@ -19,7 +19,7 @@ import coil.compose.AsyncImage
 
 
 @Composable
-fun KindCard (
+fun KindCard(
     titleProvider: String,
     subTitleProvider: String = "",
     iconImage: String,
@@ -32,7 +32,11 @@ fun KindCard (
             .width(200.dp)
             .height(200.dp)
             .clickable { onClick() }
-            .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = MaterialTheme.shapes.medium)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.medium
+            )
     ) {
         Column {
             Box(
@@ -41,7 +45,14 @@ fun KindCard (
                     .fillMaxWidth()
                     .height(140.dp)
             ) {
-                AsyncImage(model = mainImage, contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.FillBounds)
+                AsyncImage(
+                    model = mainImage,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    contentScale = ContentScale.FillBounds
+                )
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -49,8 +60,16 @@ fun KindCard (
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
-                AsyncImage(model = iconImage, contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape), contentScale = ContentScale.FillBounds)
-                Column (modifier = Modifier.padding(8.dp, 0.dp)){
+                AsyncImage(
+                    model = iconImage,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, Color.Black, CircleShape),
+                    contentScale = ContentScale.FillBounds
+                )
+                Column(modifier = Modifier.padding(8.dp, 0.dp)) {
                     Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
                     Text(text = subTitleProvider, color = MaterialTheme.colorScheme.onBackground)
                 }

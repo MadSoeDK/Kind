@@ -32,6 +32,7 @@ class HomeViewModel(
 
         return charityList
     }
+
     // Logic etc...
     fun getText(): String {
         return "Du er blandt top 5% af donorer. Godt gået!"

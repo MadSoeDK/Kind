@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AppViewModel (
+class AppViewModel(
     val navController: NavController,
-    private val auth : AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
 ) : ViewModel() {
 
     var loggedIn by mutableStateOf(auth.hasUser)
@@ -35,7 +35,10 @@ class AppViewModel (
     fun onSignUp(data: Map<String, String>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+                auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
                 println("New user created")
             } catch (e: Exception) {
                 println("Could not sign in: " + e.printStackTrace())

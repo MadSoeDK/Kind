@@ -74,32 +74,36 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
                     viewModel.subscriptions.forEach {
                         item {
                             Box(
-                                    contentAlignment = Alignment.Center
+                                contentAlignment = Alignment.Center
                             ) {
                                 Box(
-                                        Modifier
-                                                .clip(RectangleShape)
-                                                .background(viewModel.getColors().random())
-                                                .height(12.dp)
-                                                .width(12.dp)
-                                                .align(Alignment.BottomStart)
+                                    Modifier
+                                        .clip(RectangleShape)
+                                        .background(
+                                            viewModel
+                                                .getColors()
+                                                .random()
+                                        )
+                                        .height(12.dp)
+                                        .width(12.dp)
+                                        .align(Alignment.BottomStart)
                                 )
                             }
                             if (!(it.charityID.length > 20)) {
                                 Text(
-                                        text = it.charityID + "",
-                                        fontWeight = Typography.headlineMedium.fontWeight,
-                                        fontSize = Typography.labelSmall.fontSize,
-                                        color = Typography.headlineLarge.color,
-                                        textAlign = TextAlign.Center,
+                                    text = it.charityID + "",
+                                    fontWeight = Typography.headlineMedium.fontWeight,
+                                    fontSize = Typography.labelSmall.fontSize,
+                                    color = Typography.headlineLarge.color,
+                                    textAlign = TextAlign.Center,
                                 )
                             } else {
                                 Text(
-                                        text = it.charityID + "",
-                                        fontWeight = Typography.headlineMedium.fontWeight,
-                                        fontSize = Typography.labelSmall.fontSize.div(1.4),
-                                        color = Typography.headlineLarge.color,
-                                        textAlign = TextAlign.Center,
+                                    text = it.charityID + "",
+                                    fontWeight = Typography.headlineMedium.fontWeight,
+                                    fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                    color = Typography.headlineLarge.color,
+                                    textAlign = TextAlign.Center,
                                 )
                             }
                         }
@@ -238,7 +242,8 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                         label = { Text("Amount (DKK)") },
                                         colors = TextFieldDefaults.textFieldColors(
                                             containerColor = Color(
-                                                (MaterialTheme.colorScheme.primary).toString().toColorInt()
+                                                (MaterialTheme.colorScheme.primary).toString()
+                                                    .toColorInt()
                                             ).copy(alpha = 0.2F)
                                         ),
                                         textStyle = TextStyle.Default.copy(fontSize = 18.sp)

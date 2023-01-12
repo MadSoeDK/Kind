@@ -15,15 +15,19 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     val navController: NavController,
-    private val auth : AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
 ) : ViewModel() {
     var isLoggedIn by mutableStateOf(auth.hasUser)
     var isLoading by mutableStateOf(false)
 
     var formState by mutableStateOf(FormState())
-    var fields: List<KindTextField> = listOf (
+    var fields: List<KindTextField> = listOf(
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
-        KindTextField(name = "Password", label = "Password", validators = listOf(Required(), Password())),
+        KindTextField(
+            name = "Password",
+            label = "Password",
+            validators = listOf(Required(), Password())
+        ),
     )
 
     fun onAuthentication(data: Map<String, String>) {
