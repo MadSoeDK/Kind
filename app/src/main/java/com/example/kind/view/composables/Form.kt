@@ -12,9 +12,10 @@ class FormState {
 
     fun validate(): Boolean {
         var valid = true
-        for (field in fields) if (!field.validate()) {
-            valid = false
-            break
+        fields.forEach {
+            if (!it.validate()) {
+                valid = false
+            }
         }
         return valid
     }
