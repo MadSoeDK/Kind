@@ -18,7 +18,6 @@ fun HomeScreen(
     viewModel: HomeViewModel
 ) {
     HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
-
         Column {
             Row {
                 Spacer(modifier = Modifier.width(10.dp))
@@ -45,7 +44,9 @@ fun HomeScreen(
                             }*/
                     KindCard(
                         titleProvider = element.header,
-                        subTitleProvier = element.header,
+                        subTitleProvider = element.header,
+                        iconImage = " ", /*TODO*/
+                        mainImage = " ", /*TODO*/
                         onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                 }
             }
@@ -74,11 +75,11 @@ fun HomeScreen(
                     if (i==0) {Spacer(modifier = Modifier.width(10.dp))}
                     KindCard(
                         titleProvider = element.name,
-                        subTitleProvier = element.name,
+                        iconImage = element.iconImage,
+                        mainImage = element.mainImage,
+                        subTitleProvider = element.name,
                         onClick = {
-                            viewModel.navController.navigate(
-                                HomeScreens.Charity.route
-                                        + "/" + element.id.toString())},
+                            viewModel.navController.navigate(HomeScreens.Charity.route + "/" + element.id)},
                     )
                 }
             }

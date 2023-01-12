@@ -1,11 +1,11 @@
 package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import coil.compose.AsyncImage
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.kind.HomeScreens
@@ -43,20 +44,11 @@ fun CharityScreen( //TODO:farver skal fikses
             .height(200.dp)
             .align(Alignment.CenterHorizontally)
         ) {
-            IconButton(onClick = { viewModel.navController.popBackStack() }) {
-                Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = "Back")
-            }
+            AsyncImage(model = state.mainImage.toString(), contentDescription = null, modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentScale = ContentScale.Crop)
+            AsyncImage(model = state.iconImage.toString(), contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape).border(1.dp, Color.Black, CircleShape).align(alignment = Alignment.BottomCenter), contentScale = ContentScale.FillBounds)
             Row(modifier = Modifier.align(Alignment.BottomCenter)) {
-                Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(color = Color.Gray)
-                        .width(75.dp)
-                        .height(75.dp)
-                )
             }
         }
-
         // Donations, Donors & Picture
         Row(modifier = Modifier
             .padding(10.dp, 5.dp)
@@ -115,18 +107,14 @@ fun CharityScreen( //TODO:farver skal fikses
         LazyRow {
             state.articles.forEach {
                 item {
-                    KindCard(titleProvider = it.title, subTitleProvier = it.charityName, onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id.toString()) })
+                    KindCard(
+                        titleProvider = it.title,
+                        subTitleProvider = it.charityName,
+                        onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id) },
+                        iconImage = " ",/*TODO*/
+                        mainImage = " " /*TODO*/)
                 }
             }
-
-
-            /*
-            viewModel.getArticles().forEach {
-                item {
-                    KindCard(titleProvider = "Article " + it.id.toString(), subTitleProvier = it.header, onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id.toString()) })
-                }
-            }*/
         }
     }
-
 }

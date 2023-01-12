@@ -1,7 +1,6 @@
 package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import com.example.kind.R
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -11,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
@@ -45,7 +43,7 @@ fun ExplorerScreen(
                         KindCharityCard(
                             Title = it.name,
                             Body = it.desc,
-                            OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
+                            OrganizationIcon = it.iconImage,
                             onClick = { viewModel.navController.navigate(HomeScreens.Charity.route + "/" + it.id) }
                         )
                     }
