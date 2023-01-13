@@ -2,7 +2,7 @@ package com.example.kind.view.theme
 
 import androidx.compose.ui.graphics.Color
 
-/** Farvedesign af Tera Zwergius Teilmann Sverud **/
+/** Colorscheme design by Tera Zwergius Teilmann Sverud **/
 
 val md_theme_light_primary = Color(0xFF63AF6F)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
