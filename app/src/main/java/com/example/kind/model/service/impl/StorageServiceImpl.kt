@@ -31,6 +31,10 @@ class StorageServiceImpl : StorageService {
         }
     }
 
+    override suspend fun addToPortfolio(charityId: String){
+        database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").document(charityId)
+    }
+
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = currentUser?.uid.toString()
         val subscriptions =
@@ -113,9 +117,6 @@ class StorageServiceImpl : StorageService {
 
     // Charity
     override suspend fun getCharity(id: String): Charity?{
-
-        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
-
         try {
             return database.collection("Charity").document(id).get().await().toObject()
         }
@@ -160,8 +161,36 @@ class StorageServiceImpl : StorageService {
             .toObjects()
     }
 
-    override suspend fun getHomeArticles(id: String): List<Article> {
-        return database.collection("Articles").limit(5).get().await().toObjects()
+    override suspend fun getHomeArticles(id: String): List<Article>{
+        // Setup vairables
+        var subscriptions = listOf<Subscription>()
+        var charities = listOf<Charity?>()
+        var articlePointers = listOf<String>()
+        var articleList: List<Article> = listOf()//database.collection("Articles").limit(5).get().await().toObjects()
+
+        // Get the subscriptions from User
+        subscriptions = database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").get().await().toObjects()
+
+        println("Generate this users feed: "+currentUser!!.email.toString())
+        println("Retrieved these subscriptions: "+subscriptions.toString())
+
+        // Get charities from subscription
+        subscriptions.forEach(){
+
+            charities += database.collection("Charity").document(it.charityID).get().await().toObject<Charity>()
+        }
+        println("Retrieved these Charities: "+charities.toString())
+
+        // Get article pointers from charities
+        charities.forEach(){
+
+            articleList += database.collection("Charity").document(it!!.id).collection("Articles").get().await().toObjects()
+        }
+        println("Retrieved these Articles: "+articleList.toString())
+
+        // article
+
+        return articleList
     }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {

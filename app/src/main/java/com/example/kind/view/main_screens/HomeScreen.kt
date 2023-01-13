@@ -25,7 +25,7 @@ fun HomeScreen(
     val state by viewModel.data.collectAsState()
 
     Column {
-        HeaderAndText(viewModel.getDonatedAmount(), viewModel.getText())
+        HeaderAndText(state.amountDonated.toString()+" kr.", viewModel.getText())
         Text(
             text = "Charity Update",
             color = MaterialTheme.colorScheme.primary,

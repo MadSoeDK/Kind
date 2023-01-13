@@ -122,6 +122,15 @@ fun CharityScreen(
             )
         }
 
+        OutlinedButton(onClick = { viewModel.addToPortfolio() }) {
+            Text(
+                text = "Add to Portfolio",
+                fontWeight = Typography.labelLarge.fontWeight,
+                fontSize = Typography.labelLarge.fontSize,
+                color = Typography.headlineLarge.color
+            )
+        }
+
         // About
         SmallHeaderAndText(headerProvider = "About", textProvider = state.desc)
 

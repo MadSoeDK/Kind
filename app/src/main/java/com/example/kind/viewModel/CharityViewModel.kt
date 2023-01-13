@@ -44,6 +44,12 @@ class CharityViewModel(
         }
     }
 
+    fun addToPortfolio(){
+        viewModelScope.launch {
+            storage.addToPortfolio(data.value.id)
+        }
+    }
+
     /*
     fun getArticles(): List<com.example.kind.model.Article> {
         var articleList: List<com.example.kind.model.Article> = listOf()
