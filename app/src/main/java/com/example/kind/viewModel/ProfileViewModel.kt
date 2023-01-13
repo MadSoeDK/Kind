@@ -35,7 +35,20 @@ class ProfileViewModel : ViewModel() {
             label = "Password",
             validators = listOf(Required(), Password()),
             readOnly = true
+        ),
+        KindTextField(
+            name = "Confirm Email",
+            label = "Confirm Email",
+            validators = listOf(Required(), Email()),
+            readOnly = false
+        ),
+        KindTextField(
+            name = "Confirm Password",
+            label = "Confirm Password",
+            validators = listOf(Required(), Password()),
+            readOnly = false
         )
+
     )
 
     fun onFormSubmit() {
@@ -55,6 +68,7 @@ class ProfileViewModel : ViewModel() {
 
         coroutineScope.saveChanges()
     }
+
     fun CoroutineScope.saveChanges() {
         launch(Dispatchers.IO) {
             // Call method here
@@ -71,7 +85,7 @@ class ProfileViewModel : ViewModel() {
     fun CoroutineScope.deleteUser() {
         launch(Dispatchers.IO) {
             // Call method here
-            storage.deleteUser()
+            storage.deleteUser(formState.fields.get(0).text, formState.fields.get(1).text)
         }
     }
 }

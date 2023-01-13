@@ -3,8 +3,11 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
+import com.example.kind.view.composables.Password
+import com.google.firebase.auth.EmailAuthProvider
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -18,7 +21,8 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
-    val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
+    val subscription =
+        Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
     // Users
     override suspend fun addUser(user: User) {
@@ -44,12 +48,18 @@ class StorageServiceImpl : StorageService {
                 Subscribed = true
             }
         }
+
     override suspend fun updateUser(email: String, password: String) {
         try {
             currentUser!!.updateEmail(email)
             currentUser.updatePassword(password)
-        } catch (e : FirebaseAuthRecentLoginRequiredException) {
-            currentUser!!.reauthenticate(EmailAuthProvider.getCredential(currentUser?.email.toString(), password))
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            currentUser!!.reauthenticate(
+                EmailAuthProvider.getCredential(
+                    currentUser?.email.toString(),
+                    password
+                )
+            )
         }
     }
 
@@ -75,9 +85,16 @@ class StorageServiceImpl : StorageService {
         return portfolio
     }
 
-    override suspend fun deleteUser() {
-        database.collection("Users").document(currentUser?.uid.toString()).delete()
-        currentUser!!.delete()
+    override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
+        currentUser!!.reauthenticate(
+            EmailAuthProvider.getCredential(
+                currentUser.email.toString(),
+                confirmPassword
+            )
+        )
+
+        database.collection("Users").document(currentUser.uid).delete()
+        currentUser.delete()
     }
 
     // Subscriptions
@@ -107,7 +124,8 @@ class StorageServiceImpl : StorageService {
     ) {
         val documentId = currentUser?.uid.toString()
         database.collection("Users").document(documentId)
-            .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get().addOnSuccessListener { documents ->
+            .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get()
+            .addOnSuccessListener { documents ->
                 documents.forEach {
                     val docRef: DocumentReference =
                         database.collection("Users").document(currentUser?.uid.toString())
@@ -143,16 +161,19 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
-    override suspend fun getCharity(id: String): Charity?{
+    override suspend fun getCharity(id: String): Charity? {
 
         //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
 
         try {
             return database.collection("Charity").document(id).get().await().toObject()
-        }
-        catch (e: Exception)
-        {
-            return Charity(0,0,"","Sorry, we are unable to find this charity page. Come back later")
+        } catch (e: Exception) {
+            return Charity(
+                0,
+                0,
+                "",
+                "Sorry, we are unable to find this charity page. Come back later"
+            )
         }
     }
 
