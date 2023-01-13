@@ -224,13 +224,14 @@ fun NavGraphBuilder.signupNavGraph(
             PortfolioBuilderScreen(
                 navigateToPortfolioBuilder = { navController.navigate(SignupScreens.BuildPortfolio.route) },
                 next = { navController.navigate(SignupScreens.Summary.route) },
-                back = { navController.navigate(SignupScreens.Summary.route) }
+                back = { navController.navigate(SignupScreens.SetFreq.route) }
             )
         }
 
         composable(route = SignupScreens.Summary.route) {
             Screen(content = {
                 SummaryScreen(
+                    viewModel = signupViewModel,
                     next = { navController.navigate(HomeScreens.Root.route) },
                     back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
                 )
