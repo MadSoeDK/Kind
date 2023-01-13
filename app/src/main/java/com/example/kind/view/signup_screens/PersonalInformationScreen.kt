@@ -34,7 +34,11 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(onClick = { appViewModel.onSignUp(viewModel.formState.getData()) }) {
+        Button(
+            onClick = {
+                viewModel.onFormSubmit(viewModel.formState.getData())
+                appViewModel.onSignUp(viewModel.formState.getData())
+                }) {
             Text("Submit")
         }
         Row(

@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
+import com.example.kind.viewModel.SignupViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,18 +28,23 @@ class AppViewModel(
             try {
                 auth.signOut()
                 storage.updateCurrentUser()
+                navController.navigate(AuthenticationScreens.Root.route)
                 println("Successfully logged out")
             } catch (e: Exception) {
-                println("Error logged in" + e.printStackTrace())
+                println("Error logging out" + e.printStackTrace())
             }
         }
-        navController.navigate(AuthenticationScreens.Root.route)
     }
 
     fun onSignUp(data: Map<String, String>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+
                 auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
+                auth.authenticateUser(
                     data.getValue("Email"),
                     data.getValue("Password")
                 )

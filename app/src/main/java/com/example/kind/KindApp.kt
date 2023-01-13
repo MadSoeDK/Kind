@@ -196,7 +196,7 @@ fun NavGraphBuilder.signupNavGraph(
         composable(route = SignupScreens.CreatePortfolio.route) {
             SignUpIntroScreen(
                 navigateToPortfolio = { navController.navigate(SignupScreens.SetAmount.route) },
-                navigateToHome = { navController.navigate(HomeScreens.Root.route) }
+                navigateToHome = { navController.navigate(SignupScreens.Summary.route) }
             )
         }
 

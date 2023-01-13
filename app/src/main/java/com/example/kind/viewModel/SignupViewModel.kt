@@ -5,13 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kind.HomeScreens
 import com.example.kind.model.Charity
 import com.example.kind.model.User
+import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.Email
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -34,6 +38,7 @@ class SignupViewModel(
     val navigateFreq: () -> Unit,
 ) : ViewModel() {
     private val storage: StorageServiceImpl = StorageServiceImpl()
+    private val auth: AccountServiceImpl = AccountServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
 
     var formState by mutableStateOf(FormState())
@@ -48,12 +53,10 @@ class SignupViewModel(
         ),
     )
 
-    fun onFormSubmit() {
-        if (formState.validate()) {
-            // TODO: Do something on form submission
+    fun onFormSubmit(data: Map<String, String>) {
+        if (!formState.validate()) {
+            return
         }
-        //TODO: Add alert for user
-        println("Form submission error!")
     }
 
     fun setFrequency(frequency: DonationFrequency) {
@@ -91,6 +94,7 @@ class SignupViewModel(
     fun addDataToUser(){
         viewModelScope.launch {
             try {
+                storage.updateCurrentUser()
                 storage.changeUser(generateUser(), storage.getUIDofCurrentUser())
             }
             catch (e: Exception) {
