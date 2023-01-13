@@ -2,6 +2,7 @@ package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +49,9 @@ fun SignUpIntroScreen(
             text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
             fontSize = 14.sp,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = if (isSystemInDarkTheme()) {
+                MaterialTheme.colorScheme.primary} else {
+                MaterialTheme.colorScheme.onBackground},
             modifier = Modifier.padding(10.dp)
         )
         Button(onClick = navigateToHome) {

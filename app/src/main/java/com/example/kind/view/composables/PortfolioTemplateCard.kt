@@ -1,12 +1,15 @@
 package com.example.kind.view.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.Alignment
@@ -26,7 +29,12 @@ fun PortfolioTemplateCard(
         modifier = Modifier
             .padding(8.dp)
             .width(250.dp)
-            .height(250.dp)
+            .height(250.dp),
+        border = BorderStroke(
+            2.dp,
+            color = if (isSystemInDarkTheme()) {
+                MaterialTheme.colorScheme.primary} else {
+                    MaterialTheme.colorScheme.outline})
     ) {
 
         Column(
@@ -62,7 +70,7 @@ fun PortfolioTemplateCard(
                     text = ReadMore,
                     fontWeight = Typography.labelLarge.fontWeight,
                     fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
 
