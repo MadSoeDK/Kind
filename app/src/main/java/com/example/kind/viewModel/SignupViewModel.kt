@@ -33,7 +33,7 @@ class SignupViewModel(
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
 ) : ViewModel() {
-    lateinit var storage: StorageServiceImpl
+    private val storage: StorageServiceImpl = StorageServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
 
     var formState by mutableStateOf(FormState())
@@ -88,10 +88,10 @@ class SignupViewModel(
         return User(formState.getData().getValue("Full name"), monthlyPayment)
     }
 
-    fun createUserInDatabase(){
+    fun addDataToUser(){
         viewModelScope.launch {
             try {
-                storage.addUser(generateUser())
+                storage.changeUser(generateUser(), storage.getUIDofCurrentUser())
             }
             catch (e: Exception) {
                 println(e.printStackTrace())

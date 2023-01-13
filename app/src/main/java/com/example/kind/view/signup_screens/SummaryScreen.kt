@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
 import com.example.kind.model.Portfolio
-import com.example.kind.model.Subscription
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
 import com.example.kind.viewModel.SignupViewModel
@@ -170,7 +169,7 @@ fun SummaryScreen(
                 Text("← Back")
             }
             Button(onClick = {
-                viewModel.createUserInDatabase()
+                viewModel.addDataToUser()
                 next() }) {
                 Text("Next →")
             }

@@ -18,7 +18,7 @@ import java.util.UUID
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
-    private val currentUser = FirebaseAuth.getInstance().currentUser
+    private var currentUser = FirebaseAuth.getInstance().currentUser
 
     val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
@@ -32,6 +32,26 @@ class StorageServiceImpl : StorageService {
             database.collection("Users").document("$documentId").collection("Donations")
                 .add(subscription)
         }
+    }
+
+    override suspend fun changeUser(user: User, uid : String) {
+        database.collection("Users").document(uid).set(user).addOnSuccessListener { documentReference ->
+            val documentId = currentUser?.uid.toString()
+
+            /*
+            TODO
+            database.collection("Users").document("$documentId").collection("Subscriptions")
+                .add(subscription)
+            database.collection("Users").document("$documentId").collection("Donations")
+                .add(subscription)
+             */
+        }
+    }
+
+
+    override suspend fun getUIDofCurrentUser(): String{
+        currentUser = FirebaseAuth.getInstance().currentUser
+        return currentUser?.uid ?: ""
     }
 
     override suspend fun addToPortfolio(charityId: String){
