@@ -3,6 +3,7 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
+import com.google.firebase.Timestamp
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -11,6 +12,8 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class StorageServiceImpl : StorageService {
@@ -32,7 +35,27 @@ class StorageServiceImpl : StorageService {
     }
 
     override suspend fun addToPortfolio(charityId: String){
-        database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").document(charityId)
+
+        val checkList = getSubscriptions()
+        var Subscribed = false
+
+        // Check if you are already subscribed
+        checkList.forEach{
+            println("Matching: "+it.charityID+" with "+charityId)
+            if (it.charityID == charityId)
+            {
+                Subscribed = true
+                println("The charity is already in the portfolio")
+            }
+        }
+
+        // If not, then add it to your subscriptions
+        if (!Subscribed) {
+            val subscription = Subscription(0.0,charityId,charityId, Timestamp(1,1))
+
+            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").add(subscription)
+            println("Adding to portfolio")
+        }
     }
 
     override suspend fun getSubscriptions(): List<Subscription> {
