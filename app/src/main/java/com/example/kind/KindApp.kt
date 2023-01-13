@@ -13,9 +13,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -30,10 +30,10 @@ import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
 import com.example.kind.view.main_screens.*
 import com.example.kind.view.main_screens.ArticleScreen
-import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
+import java.util.*
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Root : HomeScreens("root", Icons.Filled.Favorite)
@@ -313,7 +313,11 @@ fun KindNavigationBar(
                         contentDescription = null
                     )
                 },
-                label = { Text(text = screen.route) },
+                label = { Text(text = screen.route.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = { navController.navigate(screen.route) {
                     restoreState = true
