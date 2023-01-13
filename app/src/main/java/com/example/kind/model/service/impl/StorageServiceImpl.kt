@@ -41,11 +41,9 @@ class StorageServiceImpl : StorageService {
 
         // Check if you are already subscribed
         checkList.forEach{
-            println("Matching: "+it.charityID+" with "+charityId)
             if (it.charityID == charityId)
             {
                 Subscribed = true
-                println("The charity is already in the portfolio")
             }
         }
 
@@ -54,7 +52,6 @@ class StorageServiceImpl : StorageService {
             val subscription = Subscription(0.0,charityId,charityId, Timestamp(1,1))
 
             database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").add(subscription)
-            println("Adding to portfolio")
         }
     }
 
@@ -194,22 +191,17 @@ class StorageServiceImpl : StorageService {
         // Get the subscriptions from User
         subscriptions = database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").get().await().toObjects()
 
-        println("Generate this users feed: "+currentUser!!.email.toString())
-        println("Retrieved these subscriptions: "+subscriptions.toString())
-
         // Get charities from subscription
         subscriptions.forEach(){
 
             charities += database.collection("Charity").document(it.charityID).get().await().toObject<Charity>()
         }
-        println("Retrieved these Charities: "+charities.toString())
 
         // Get article pointers from charities
         charities.forEach(){
 
             articleList += database.collection("Charity").document(it!!.id).collection("Articles").get().await().toObjects()
         }
-        println("Retrieved these Articles: "+articleList.toString())
 
         // article
 
