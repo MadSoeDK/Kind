@@ -1,6 +1,5 @@
 package com.example.kind.view.main_screens
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -28,165 +26,146 @@ import kotlin.math.roundToInt
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
-    val state by viewModel.data.collectAsState()
-    Column {
-        if (viewModel.popupControl) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(30.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-                EditPortfolio(viewModel = viewModel)
-            }
+    Column(
+        modifier = Modifier
+            .padding(20.dp, 0.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        val state by viewModel.data.collectAsState()
+        if (state.subscription.isEmpty()) {
+            CircularProgressIndicator()
         } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, 10.dp)
-            ) {
-                HeaderAndText(
-                    headerProvider = "${state.subscription.sumOf { it.amount }} kr.",
-                    textProvider = "You currently donate ${state.subscription.sumOf { it.amount }} kr. to ${state.subscription.size} organizations."
-                )
-            }
+            if (viewModel.popupIsOpen) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(30.dp),
 
-            PieChart(
-                modifier = Modifier
-                    .size(250.dp)
-                    .align(Alignment.CenterHorizontally),
-                progress = state.subscription.map { it -> return@map (it.amount / state.subscription.sumOf { it.amount }).toFloat() },
-                colors = state.color
-            )
-
-            // Labels
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(40.dp, 0.dp),
-                verticalArrangement = Arrangement.Top, Alignment.Start
-            ) {
-                LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
-                    var j = 0
-                    state.subscription.forEach {
-                        item {
-                            Box(
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Box(
-                                    Modifier
-                                        .clip(RectangleShape)
-                                        .background(
-                                            state.color.get(j)
-                                        )
-                                        .height(12.dp)
-                                        .width(12.dp)
-                                        .align(Alignment.BottomStart)
-                                )
-                            }
-                            if (!(it.charityID.length > 20)) {
-                                Text(
-                                    text = it.charityID + "",
-                                    fontWeight = Typography.headlineMedium.fontWeight,
-                                    fontSize = Typography.labelSmall.fontSize,
-                                    color = Typography.headlineLarge.color,
-                                    textAlign = TextAlign.Center,
-                                )
-                            } else {
-                                Text(
-                                    text = it.charityID + "",
-                                    fontWeight = Typography.headlineMedium.fontWeight,
-                                    fontSize = Typography.labelSmall.fontSize.div(1.4),
-                                    color = Typography.headlineLarge.color,
-                                    textAlign = TextAlign.Center,
-                                )
-                            }
-                            j++
-                        }
-                    }
-                })
-            }
-
-            //Your charities text
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, 10.dp)
-            ) {
-                Text(
-                    text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
-                    color = Typography.headlineMedium.color
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, 10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                PortfolioTable(
-                    modifier = Modifier,
-                    columnCount = 4,
-                    cellWidth = { index ->
-                        when (index) {
-                            0 -> 120.dp
-                            1 -> 70.dp
-                            2 -> 110.dp
-                            else -> 70.dp
-                        }
-                    },
-                    data = state.subscription,
-                    headerCellContent = { index ->
-                        val value = when (index) {
-                            0 -> "Organization"
-                            1 -> "%"
-                            2 -> "Next month"
-                            else -> ""
-                        }
-                        val alignment = when (index) {
-                            0 -> TextAlign.Left
-                            else -> TextAlign.Center
-                        }
-                        Text(
-                            text = value,
-                            fontSize = 14.sp,
-                            textAlign = alignment,
-                            modifier = Modifier.padding(0.dp, 20.dp),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    cellContent = { index, item ->
-                        val value = when (index) {
-                            0 -> item.charityID
-                            1 -> "${
-                                ((item.amount / state.subscription.sumOf { it.amount })*100).roundToInt()
-                            }%"
-                            2 -> "${item.amount} kr."
-                            else -> ""
-                        }
-                        val alignment = when (index) {
-                            0 -> TextAlign.Left
-                            else -> TextAlign.Center
-                        }
-                        Text(
-                            text = value,
-                            fontSize = 12.sp,
-                            textAlign = alignment,
-                            modifier = Modifier.padding(0.dp, 20.dp),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
-                )
+                    ) {
+                    EditPortfolio(viewModel = viewModel)
+                }
+            } else {
+                PortfolioContent(viewModel)
             }
         }
     }
+}
+
+@Composable
+fun PortfolioContent(viewModel: PortfolioViewModel) {
+    val state by viewModel.data.collectAsState()
+    HeaderAndText(
+        headerProvider = "${state.subscription.sumOf { it.amount }.roundToInt()} kr.",
+        textProvider = "You currently donate ${state.subscription.sumOf { it.amount }.roundToInt()} kr. to ${state.subscription.size} organizations."
+    )
+
+    PieChart(
+        modifier = Modifier
+            .size(250.dp),
+        progress = state.subscription.map { it -> return@map (it.amount / state.subscription.sumOf { it.amount }).toFloat() },
+        colors = state.color
+    )
+
+    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
+        state.subscription.forEachIndexed { i, it ->
+            item {
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    Box(
+                        Modifier
+                            .clip(RectangleShape)
+                            .background(
+                                state.color[i]
+                            )
+                            .height(12.dp)
+                            .width(12.dp)
+                            .align(Alignment.BottomStart)
+                    )
+                    if (it.charityID.length <= 20) {
+                        Text(
+                            text = it.charityID + "",
+                            fontWeight = Typography.headlineMedium.fontWeight,
+                            fontSize = Typography.labelSmall.fontSize,
+                            color = Typography.headlineLarge.color,
+                            textAlign = TextAlign.Center,
+                        )
+                    } else {
+                        Text(
+                            text = it.charityID + "",
+                            fontWeight = Typography.headlineMedium.fontWeight,
+                            fontSize = Typography.labelSmall.fontSize.div(1.4),
+                            color = Typography.headlineLarge.color,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+            }
+        }
+    })
+
+    Text(
+        text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
+        modifier = Modifier.padding(6.dp), fontWeight = FontWeight.Black,
+        color = Typography.headlineMedium.color
+    )
+    PortfolioTable(
+        modifier = Modifier,
+        columnCount = 4,
+        cellWidth = { index ->
+            when (index) {
+                0 -> 120.dp
+                1 -> 70.dp
+                2 -> 110.dp
+                else -> 70.dp
+            }
+        },
+        data = state.subscription,
+        headerCellContent = { index ->
+            val value = when (index) {
+                0 -> "Organization"
+                1 -> "%"
+                2 -> "Next month"
+                else -> ""
+            }
+            val alignment = when (index) {
+                0 -> TextAlign.Left
+                else -> TextAlign.Center
+            }
+            Text(
+                text = value,
+                fontSize = 14.sp,
+                textAlign = alignment,
+                modifier = Modifier.padding(0.dp, 20.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold,
+            )
+        },
+        cellContent = { index, item ->
+            val value = when (index) {
+                0 -> item.charityID
+                1 -> "${
+                    ((item.amount / state.subscription.sumOf { it.amount }) * 100).roundToInt()
+                }%"
+                2 -> "${item.amount.roundToInt()} kr."
+                else -> ""
+            }
+            val alignment = when (index) {
+                0 -> TextAlign.Left
+                else -> TextAlign.Center
+            }
+            Text(
+                text = value,
+                fontSize = 13.sp,
+                textAlign = alignment,
+                modifier = Modifier.padding(0.dp, 20.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -199,10 +178,11 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(0.dp, 20.dp)) {
-            // Organisationer i et grid
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(0.dp, 20.dp)
+        ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
                 Modifier.height(330.dp), horizontalArrangement = Arrangement.Start,
@@ -225,25 +205,19 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                             ) {
                                 TextField(
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    modifier = Modifier.padding(0.dp, 30.dp),
                                     value = text,
-                                    onValueChange = {
-                                        text = it
+                                    onValueChange = { value: String ->
+                                        text = value
                                         if (text.isNotEmpty()) {
                                             viewModel.updateSubscriptionState(
                                                 subscription,
-                                                it.toDouble()
+                                                value.toDouble()
                                             )
-                                            sum = state.subscription.sumOf { it.amount }
+                                            sum = state.subscription.sumOf { amount -> amount.amount }
                                         }
                                     },
-                                    label = { Text("Amount (DKK)") },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color.White,
-
-                                        ),
-                                    textStyle = TextStyle.Default.copy(fontSize = 18.sp),
-                                    singleLine = true
+                                    singleLine = true,
+                                    label = { Text(subscription.charityID) },
                                 )
                             }
                         }
@@ -295,14 +269,14 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                     AlertDialog(
                         onDismissRequest = {
                             openDialog.value = false
-                            viewModel.popupControl = false
+                            viewModel.popupIsOpen = false
                         },
                         title = { Text(text = "Portfolio Update") },
                         text = { Text(text = "Your changes have been saved and your portfolio is now updated!") },
                         confirmButton = {
                             Button(onClick = {
                                 openDialog.value = false
-                                viewModel.popupControl = false
+                                viewModel.popupIsOpen = false
                             }) {
                                 Text("Ok")
                             }
