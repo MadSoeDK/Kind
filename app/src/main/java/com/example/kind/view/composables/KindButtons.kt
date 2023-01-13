@@ -109,9 +109,9 @@ fun KindButtonOutlined(onClick: () -> Unit, Width: Int, TextProvider: String,) {
 }
 
 @Composable
-fun KindButtonDanger(Onclick: () -> Unit, TextProvider: String,){
+fun KindButtonDanger(onClick: () -> Unit, TextProvider: String,){
     Button(
-        onClick = { Onclick },
+        onClick = { onClick },
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.errorContainer,
             //contentColor = MaterialTheme.colorScheme.onErrorContainer
