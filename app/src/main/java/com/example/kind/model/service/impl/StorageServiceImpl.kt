@@ -48,9 +48,11 @@ class StorageServiceImpl : StorageService {
         }
     }
 
+    override suspend fun updateCurrentUser(){
+        currentUser = FirebaseAuth.getInstance().currentUser
+    }
 
     override suspend fun getUIDofCurrentUser(): String{
-        currentUser = FirebaseAuth.getInstance().currentUser
         return currentUser?.uid ?: ""
     }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.kind.model.service.impl.AccountServiceImpl
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance()),
+    private val storage: StorageServiceImpl = StorageServiceImpl()
 ) : ViewModel() {
 
     var loggedIn by mutableStateOf(auth.hasUser)
@@ -24,6 +26,7 @@ class AppViewModel(
         viewModelScope.launch {
             try {
                 auth.signOut()
+                storage.updateCurrentUser()
                 println("Successfully logged out")
             } catch (e: Exception) {
                 println("Error logged in" + e.printStackTrace())
