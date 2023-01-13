@@ -47,7 +47,6 @@ fun ProfileScreen(
         }
         Button(
             onClick = {
-
                 viewModel.deleteUser()
                 onLogout()
             },

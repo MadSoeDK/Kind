@@ -45,15 +45,12 @@ class StorageServiceImpl : StorageService {
             }
         }
     override suspend fun updateUser(email: String, password: String) {
-        currentUser!!.updateEmail(email)
-        currentUser.updatePassword(password)
-
-        /*try {
+        try {
             currentUser!!.updateEmail(email)
             currentUser.updatePassword(password)
         } catch (e : FirebaseAuthRecentLoginRequiredException) {
             currentUser!!.reauthenticate(EmailAuthProvider.getCredential(currentUser?.email.toString(), password))
-        }*/
+        }
     }
 
         // If not, then add it to your subscriptions
@@ -79,7 +76,7 @@ class StorageServiceImpl : StorageService {
     }
 
     override suspend fun deleteUser() {
-        database.collection("Users").document("${currentUser?.uid}").delete()
+        database.collection("Users").document(currentUser?.uid.toString()).delete()
         currentUser!!.delete()
     }
 
