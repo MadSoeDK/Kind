@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 class CharityViewModel(
     val navController: NavController,
     id: String,
+    val onAddToPortfolio: () -> Unit
 ) : ViewModel() {
 
     // State setup
@@ -27,7 +28,7 @@ class CharityViewModel(
     val data: StateFlow<Charity> = _data.asStateFlow()
 
     init {
-        GlobalScope.launch {
+        viewModelScope.launch {
             _data.update {
                 val charity = storage.getCharity(id)
                 it.copy(
@@ -47,6 +48,7 @@ class CharityViewModel(
     fun addToPortfolio(){
         viewModelScope.launch {
             storage.addToPortfolio(data.value.id)
+            onAddToPortfolio()
         }
     }
 

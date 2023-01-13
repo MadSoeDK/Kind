@@ -31,6 +31,10 @@ class PortfolioViewModel : ViewModel() {
     var popupIsOpen by mutableStateOf(false)
 
     init {
+        getSubscriptions()
+    }
+
+    fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val subscriptions = storage.getSubscriptions()
