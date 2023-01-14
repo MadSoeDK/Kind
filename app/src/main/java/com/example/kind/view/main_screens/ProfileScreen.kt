@@ -123,9 +123,6 @@ fun ProfileScreen(
         } else {
             ReSignIn(viewModel = viewModel, onLogout)
         }
-        KindButton(onClick = { viewModel.onFormSubmit() }, textProvider = "Submit")
-        KindButtonDanger(onClick = { viewModel.deleteUser() }, TextProvider = "Delete User")
-        KindButton(onClick = onLogout, textProvider = "Logout")
     }
 
 }

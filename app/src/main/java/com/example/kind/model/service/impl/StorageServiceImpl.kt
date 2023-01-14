@@ -3,10 +3,12 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.EmailAuthProvider
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -35,18 +37,26 @@ class StorageServiceImpl : StorageService {
         }
     }
 
-    override suspend fun addToPortfolio(charityId: String){
+    override suspend fun addToPortfolio(charityId: String) {
 
         val checkList = getSubscriptions()
         var Subscribed = false
 
+        // If not, then add it to your subscriptions
+        if (!Subscribed) {
+            val subscription = Subscription(0.0, charityId, charityId, Timestamp(1, 1))
+
+            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+                .add(subscription)
+        }
+
         // Check if you are already subscribed
-        checkList.forEach{
-            if (it.charityID == charityId)
-            {
+        checkList.forEach {
+            if (it.charityID == charityId) {
                 Subscribed = true
             }
         }
+    }
 
     override suspend fun updateUser(email: String, password: String) {
         try {
@@ -59,14 +69,6 @@ class StorageServiceImpl : StorageService {
                     password
                 )
             )
-        }
-    }
-
-        // If not, then add it to your subscriptions
-        if (!Subscribed) {
-            val subscription = Subscription(0.0,charityId,charityId, Timestamp(1,1))
-
-            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").add(subscription)
         }
     }
 
@@ -103,7 +105,7 @@ class StorageServiceImpl : StorageService {
     }
 
     // Subscriptions
-    override suspend fun addSubscription(amount: Double, user: String, charity: String) {
+    /*override suspend fun addSubscription(amount: Double, user: String, charity: String) {
         val charityDocRef = database.collection("Charity").document(charity)
         val userDocRef = database.collection("User").document(user)
 
@@ -117,6 +119,7 @@ class StorageServiceImpl : StorageService {
             userDocRef.collection("Subscription").add(subscription)
         }
     }
+     */
 
     override suspend fun deleteSubscription(user: String, subscription: String) {
         database.collection("User").document(user).collection("Subscription").document(subscription)
@@ -217,26 +220,31 @@ class StorageServiceImpl : StorageService {
             .toObjects()
     }
 
-    override suspend fun getHomeArticles(id: String): List<Article>{
+    override suspend fun getHomeArticles(id: String): List<Article> {
         // Setup vairables
         var subscriptions = listOf<Subscription>()
         var charities = listOf<Charity?>()
         var articlePointers = listOf<String>()
-        var articleList: List<Article> = listOf()//database.collection("Articles").limit(5).get().await().toObjects()
+        var articleList: List<Article> =
+            listOf()//database.collection("Articles").limit(5).get().await().toObjects()
 
         // Get the subscriptions from User
-        subscriptions = database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").get().await().toObjects()
+        subscriptions =
+            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+                .get().await().toObjects()
 
         // Get charities from subscription
-        subscriptions.forEach(){
+        subscriptions.forEach() {
 
-            charities += database.collection("Charity").document(it.charityID).get().await().toObject<Charity>()
+            charities += database.collection("Charity").document(it.charityID).get().await()
+                .toObject<Charity>()
         }
 
         // Get article pointers from charities
-        charities.forEach(){
+        charities.forEach() {
 
-            articleList += database.collection("Charity").document(it!!.id).collection("Articles").get().await().toObjects()
+            articleList += database.collection("Charity").document(it!!.id).collection("Articles")
+                .get().await().toObjects()
         }
 
         // article
