@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.view.theme.*
@@ -24,17 +25,17 @@ import com.example.kind.view.composables.KindCard
 fun HomeScreen(
     viewModel: HomeViewModel
 ) {
-
     val state by viewModel.data.collectAsState()
 
-    Column {
+    Column(modifier = Modifier.padding(10.dp, 10.dp)) {
         HeaderAndText(state.amountDonated.toString() + " kr.", "Your total donated amount")
         Text(
             text = "Charity Update",
             color = MaterialTheme.colorScheme.primary,
-            style = Typography.headlineMedium
+            style = Typography.headlineMedium,
+            fontSize = 24.sp
         )
-        Text("The latest news from your charities")
+        Text("The latest news from your charities", fontSize = 14.sp)
         if (state.charities.isEmpty()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,8 +55,8 @@ fun HomeScreen(
                             Spacer(modifier = Modifier.width(10.dp))
                         }
                         KindCard(
-                            titleProvider = element.title,
-                            subTitleProvider = element.charityName,
+                            titleProvider = element.charityName,
+                            subTitleProvider = element.title,
                             iconImage = element.iconImage,
                             mainImage = element.mainImage,
                             onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
@@ -63,15 +64,16 @@ fun HomeScreen(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.height(50.dp))
+        
+        Spacer(modifier = Modifier.padding(0.dp, 10.dp))
 
         Text(
             text = "Explore charities",
             color = MaterialTheme.colorScheme.primary,
-            style = Typography.headlineLarge
+            style = Typography.headlineLarge,
+            fontSize = 24.sp
         )
-        Text("Get to know other charities better")
+        Text("Get to know other charities better", fontSize = 14.sp)
 
 
         if (state.charities.isEmpty()) {

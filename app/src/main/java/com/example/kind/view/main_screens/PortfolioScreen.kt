@@ -185,22 +185,13 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
-                Modifier.height(330.dp), horizontalArrangement = Arrangement.Start,
+                Modifier.padding(0.dp, 20.dp).height(220.dp), horizontalArrangement = Arrangement.Start,
                 content = {
                     state.subscription.forEach { subscription ->
                         item {
-                            Spacer(modifier = Modifier.padding(0.dp, 20.dp))
-                            Text(
-                                text = subscription.charityID,
-                                fontWeight = Typography.headlineMedium.fontWeight,
-                                fontSize = Typography.labelSmall.fontSize.times(1.5),
-                                color = Color.Black,
-                                textAlign = TextAlign.Center,
-                            )
-
-                            var text by remember { mutableStateOf(subscription.amount.toString()) }
+                             var text by remember { mutableStateOf(subscription.amount.toString()) }
                             Box(
-                                modifier = Modifier.width(40.dp),
+                                modifier = Modifier.width(40.dp).padding(0.dp, 10.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 TextField(
