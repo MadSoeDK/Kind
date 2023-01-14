@@ -27,8 +27,9 @@ fun HomeScreen(
 ) {
     val state by viewModel.data.collectAsState()
 
-    Column(modifier = Modifier.padding(10.dp, 10.dp)) {
+    Column(modifier = Modifier.padding(0.dp, 0.dp)) {
         HeaderAndText(state.amountDonated.toString() + " kr.", "Your total donated amount")
+        Spacer(modifier = Modifier.padding(0.dp, 20.dp))
         Text(
             text = "Charity Update",
             color = MaterialTheme.colorScheme.primary,

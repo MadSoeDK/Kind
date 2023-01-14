@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
     Column(
         modifier = Modifier
-            .padding(20.dp, 0.dp)
+            .padding(0.dp, 0.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
