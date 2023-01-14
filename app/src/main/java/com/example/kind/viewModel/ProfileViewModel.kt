@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class ProfileViewModel : ViewModel() {
             name = "Email",
             label = "Email",
             validators = listOf(Required(), Email()),
-            readOnly = true
+            readOnly = true,
         ),
         KindTextField(
             name = "Password",

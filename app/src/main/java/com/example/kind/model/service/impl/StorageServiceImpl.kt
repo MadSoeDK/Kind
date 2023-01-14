@@ -3,7 +3,6 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-import com.example.kind.view.composables.Password
 import com.google.firebase.auth.EmailAuthProvider
 
 import com.google.firebase.auth.FirebaseAuth
@@ -73,6 +72,7 @@ class StorageServiceImpl : StorageService {
 
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = currentUser?.uid.toString()
+        println("Portfolio: " + currentUser?.uid)
         val subscriptions =
             database.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
@@ -86,15 +86,20 @@ class StorageServiceImpl : StorageService {
     }
 
     override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
-        currentUser!!.reauthenticate(
-            EmailAuthProvider.getCredential(
-                currentUser.email.toString(),
-                confirmPassword
+        println("Profile " + currentUser.toString())
+        try {
+            database.collection("Users").document(currentUser?.uid.toString()).delete()
+            currentUser?.delete()
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            currentUser?.reauthenticate(
+                EmailAuthProvider.getCredential(
+                    currentUser.email.toString(),
+                    confirmPassword
+                )
             )
-        )
-
-        database.collection("Users").document(currentUser.uid).delete()
-        currentUser.delete()
+            database.collection("Users").document(currentUser?.uid.toString()).delete()
+            currentUser?.delete()
+        }
     }
 
     // Subscriptions
