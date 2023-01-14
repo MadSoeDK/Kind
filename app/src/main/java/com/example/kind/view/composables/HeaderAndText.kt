@@ -11,12 +11,12 @@ import com.example.kind.view.theme.Typography
 @Composable
 fun HeaderAndText(
     headerProvider: String,
-    textProvider: String,
+    textProvider: String
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 50.dp),
+            .padding(0.dp, 25.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

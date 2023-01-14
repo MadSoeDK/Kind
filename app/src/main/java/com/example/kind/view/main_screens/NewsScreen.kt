@@ -17,7 +17,6 @@ import com.example.kind.view.composables.CharityHeaderAndSubsectionText
 fun NewsScreen() {
     CharityHeaderAndSubsectionText(
         Title = "Charity Updates",
-        Subtitle = "Get latest updates from your charities",
         Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
     )
     Column(modifier = Modifier.fillMaxHeight())

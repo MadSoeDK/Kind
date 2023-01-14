@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.OutlinedButton
@@ -26,32 +27,33 @@ fun KindCharityCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(6.dp)
             .width(250.dp)
-            .height(250.dp)
+            .height(175.dp)
+            .clickable { onClick() }
     ) {
         Column(
-            modifier = Modifier.padding(20.dp, 0.dp),
+            modifier = Modifier.padding(5.dp, 5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(0.dp, 5.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 AsyncImage(
                     model = iconImage,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(64.dp)
+                        .size(50.dp)
                         .clip(
                             CircleShape
                         )
-                        .border(1.dp, Color.Black, CircleShape),
-                    contentScale = ContentScale.FillBounds
+                        .border(0.75.dp, Color.Black, CircleShape),
+                    contentScale = ContentScale.FillBounds,
+
                 )
-            }
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+                Spacer(modifier = Modifier.padding(5.dp))
                 Text(
                     text = Title,
                     fontWeight = Typography.headlineMedium.fontWeight,
-                    fontSize = Typography.headlineSmall.fontSize,
+                    fontSize = Typography.headlineSmall.fontSize.times(0.65),
                     color = Typography.headlineLarge.color
                 )
             }
@@ -60,18 +62,11 @@ fun KindCharityCard(
                 Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,
-                    fontSize = Typography.displayMedium.fontSize,
+                    fontSize = Typography.displayMedium.fontSize.times(0.85),
                     color = Typography.displayMedium.color,
                 )
             }
-            OutlinedButton(onClick = { onClick() }) {
-                Text(
-                    text = ReadMore,
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color
-                )
-            }
+
         }
     }
 }
