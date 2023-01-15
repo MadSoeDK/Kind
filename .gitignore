@@ -52,3 +52,6 @@ app/build/generated/source/buildConfig/debug/com/example/kind/BuildConfig.java
 /.gradle/7.3/fileChanges/last-build.bin
 .gradle/workspace-id.txt.lock
 .gradle/workspace-id.txt
+/firebasefunctions/node_modules/
+/firebasefunctions/firestore-debug.log
+/firebasefunctions/ui-debug.log
