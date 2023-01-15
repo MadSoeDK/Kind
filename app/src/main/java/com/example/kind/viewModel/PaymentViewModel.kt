@@ -13,15 +13,7 @@ class PaymentViewModel(
 ) : ViewModel() {
 
     //var payButtonIsEnabled by mutableStateOf(false)
-    val paymentId: String = ""
-    val clientSecret: String = ""
-
-
-    fun test() {
-        viewModelScope.launch {
-            //payment.createCustomer()
-        }
-    }
+    var payIsEnabled by mutableStateOf(false)
 
     fun initializeSession() {
         viewModelScope.launch {
@@ -31,9 +23,18 @@ class PaymentViewModel(
 
     fun createPaymentIntent() {
         viewModelScope.launch {
-            stripeUtil.createPaymentIntent(50.0)
+            stripeUtil.createPaymentIntent(260.0)
             stripeUtil.selectedPayMethod()
         }
     }
+
+    fun selectShipping() {
+        stripeUtil.selectShipping()
+    }
+
+    fun confirmPaymentIntent() {
+        stripeUtil.confirmPaymentIntent()
+    }
+
 
 }

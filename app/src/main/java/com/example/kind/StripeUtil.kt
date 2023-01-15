@@ -13,12 +13,9 @@ import com.stripe.android.model.ConfirmPaymentIntentParams
 import com.stripe.android.model.PaymentMethod
 import com.stripe.android.view.BillingAddressFields
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,8 +36,11 @@ class StripeUtil @Inject constructor(
 
     var paymentSession: PaymentSession? = null
 
-    fun setupPaymentSession() {
+    fun getPublishasbleKey(): String {
+        return PaymentConfiguration.getInstance(context).publishableKey
+    }
 
+    fun setupPaymentSession() {
         CustomerSession.initCustomerSession(context = context, ephemeralKeyProvider = FirebaseEphemeralKeyProvider())
 
         paymentSession = PaymentSession(context, PaymentSessionConfig.Builder()
@@ -57,7 +57,7 @@ class StripeUtil @Inject constructor(
                     Log.d("PaymentSession", "${data.isPaymentReadyToCharge} <> ${data.paymentMethod}")
 
                     if (data.isPaymentReadyToCharge) {
-                        Log.d("PaymentSession", "Ready to charge");
+                        Log.d("PaymentSession", "Ready to charge")
                         //payButtonIsEnabled = true
 
                         data.paymentMethod?.let { paymethod ->
@@ -82,12 +82,18 @@ class StripeUtil @Inject constructor(
         paymentSession?.presentPaymentMethodSelection()
     }
 
-    fun createPaymentIntent(amount: Double, currency: String = "dkk") {
-        CoroutineScope(Dispatchers.Default).launch {
-            clientSecret = storage.createStripePaymentIntent(amount, currency)
+    fun selectShipping() {
+        paymentSession?.presentShippingFlow()
+    }
 
-        }
-        stripe.confirmPayment(context, ConfirmPaymentIntentParams.createWithPaymentMethodId(_paymentMethodData.value.id.toString(), clientSecret))
+
+    suspend fun createPaymentIntent(amount: Double, currency: String = "dkk") {
+        clientSecret = storage.createStripePaymentIntent(amount, currency)
+    }
+
+    fun confirmPaymentIntent() {
+        stripe.confirmPayment(context, ConfirmPaymentIntentParams.createWithPaymentMethodId(
+            _paymentMethodData.value.paymentMethod?.id.toString(), clientSecret))
     }
 
 }

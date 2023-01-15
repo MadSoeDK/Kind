@@ -187,31 +187,24 @@ class StorageServiceImpl(
 
     override suspend fun createStripePaymentIntent(amount: Double, currency: String): String {
         //database.useEmulator("10.0.2.2", 8080)
-        var client_secret = ""
-        database.collection("stripe_customers")
+        val colRef = database.collection("stripe_customers")
             .document(currentUser?.uid.toString())
             .collection("payments")
-            .add(
-                hashMapOf(
-                    "amount" to amount,
-                    "currency" to currency
-                )
-            ).addOnSuccessListener {
-                Log.d("payment", "Added document to firebase with ID ${it.id}")
 
-                it.addSnapshotListener { snapshot, e ->
-                    if(e != null) {
-                        println(e.printStackTrace())
-                        return@addSnapshotListener
-                    }
-                    if ((snapshot != null) && snapshot.exists()) {
-                        client_secret = snapshot.data?.get("client_secret").toString()
-                    }
-                }
+        val docRef = colRef.add(
+            hashMapOf(
+                "amount" to amount,
+                "currency" to currency
+            )
+        ).addOnSuccessListener {
+            Log.d("payment", "Added document to firebase with ID ${it.id}")
+        }.await()
 
-            }
-        println("Client secret :$client_secret")
-        return client_secret
+        Thread.sleep(5000)
+
+        val payment = colRef.document(docRef.id).get().await().toObject<KindPaymentIntent>()!!
+        println("Payment object $payment")
+        return payment.client_secret!!
     }
 
     private fun changeCharityField(charity: String, fieldName: String, amount: Int) {
