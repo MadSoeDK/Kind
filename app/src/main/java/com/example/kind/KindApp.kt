@@ -74,11 +74,10 @@ sealed class SignupScreens(val route: String) {
 
 @Composable
 fun KindApp(
-    context: ComponentActivity
+    stripeUtil: StripeUtil,
+    storage: StorageServiceImpl
 ) {
     val auth = AccountServiceImpl()
-    val storage = StorageServiceImpl()
-    val stripeUtil = StripeUtil(context = context, storage)
 
     val navController = rememberNavController()
     val appViewModel = AppViewModel(navController, auth)
@@ -303,23 +302,6 @@ fun Screen(
             }
         }
     )
-}
-
-@Composable
-fun paymentLauncher(
-    viewModel: PaymentViewModel
-): PaymentLauncher {
-    return PaymentLauncher.rememberLauncher("key") {
-        when(it) {
-            is PaymentResult.Completed -> {
-                // Do stuff
-                println("Something is happening")
-            }
-            else -> {
-                // Other stuff
-            }
-        }
-    }
 }
 
 @Composable

@@ -2,21 +2,19 @@ package com.example.kind.model.service.impl
 
 import android.util.Log
 import com.example.kind.model.*
-import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import com.stripe.android.Stripe
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import okhttp3.Request
-import java.util.UUID
+import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Singleton
 
 @Singleton
