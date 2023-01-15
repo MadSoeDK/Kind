@@ -35,4 +35,7 @@ interface StorageService {
     suspend fun getHomeArticles(id: String): List<Article>
     suspend fun addCharityArticle(articleContent : String, charity : String)
     suspend fun deleteArticle(article : String, charity : String)
+
+    // Payments
+    suspend fun createStripePaymentIntent(amount: Double, currency: String): String
 }

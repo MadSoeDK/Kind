@@ -1,21 +1,30 @@
 package com.example.kind.model.service.impl
 
+import android.util.Log
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import com.stripe.android.Stripe
 import kotlinx.coroutines.tasks.await
+import okhttp3.Request
 import java.util.UUID
+import javax.inject.Singleton
 
-class StorageServiceImpl : StorageService {
+@Singleton
+class StorageServiceImpl(
+    private val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+) : StorageService {
     private val database = Firebase.firestore
-    private val currentUser = FirebaseAuth.getInstance().currentUser
+     //= FirebaseAuth.getInstance().currentUser
 
     val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
@@ -174,6 +183,35 @@ class StorageServiceImpl : StorageService {
     override suspend fun deleteArticle(article: String, charity: String) {
         database.collection("Charity").document(charity).collection("Article").document(article)
             .delete()
+    }
+
+    override suspend fun createStripePaymentIntent(amount: Double, currency: String): String {
+        //database.useEmulator("10.0.2.2", 8080)
+        var client_secret = ""
+        database.collection("stripe_customers")
+            .document(currentUser?.uid.toString())
+            .collection("payments")
+            .add(
+                hashMapOf(
+                    "amount" to amount,
+                    "currency" to currency
+                )
+            ).addOnSuccessListener {
+                Log.d("payment", "Added document to firebase with ID ${it.id}")
+
+                it.addSnapshotListener { snapshot, e ->
+                    if(e != null) {
+                        println(e.printStackTrace())
+                        return@addSnapshotListener
+                    }
+                    if ((snapshot != null) && snapshot.exists()) {
+                        client_secret = snapshot.data?.get("client_secret").toString()
+                    }
+                }
+
+            }
+        println("Client secret :$client_secret")
+        return client_secret
     }
 
     private fun changeCharityField(charity: String, fieldName: String, amount: Int) {
