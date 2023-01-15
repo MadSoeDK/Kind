@@ -9,14 +9,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun KindButton(onClick: () -> Unit, textProvider: String) {
+fun KindButton(onClick: () -> Unit, textProvider: String, width: Int) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
-            .width(280.dp)
+            .width(width.dp)
     ) {
         Text(
             text = textProvider,
@@ -88,13 +88,13 @@ fun KindButtonOutlined(onClick: () -> Unit, textProvider: String) {
             .width(280.dp),
         colors = ButtonDefaults
             .outlinedButtonColors(
-                containerColor = MaterialTheme.colorScheme.background
+                containerColor = MaterialTheme.colorScheme.primary
             )
     ) {
         Text(
             text = textProvider,
             //color = MaterialTheme.colorScheme.onBackground,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.onSecondary,
             fontWeight = FontWeight.Medium,
         )
     }

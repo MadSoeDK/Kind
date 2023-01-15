@@ -15,23 +15,28 @@ fun SmallHeaderAndText(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(0.dp, 5.dp),
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier.padding(0.dp, 10.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 5.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = headerProvider,
-                fontWeight = Typography.headlineLarge.fontWeight,
-                fontSize = Typography.headlineMedium.fontSize,
-                color = Typography.headlineLarge.color
-            )
+            Row(
+                modifier = Modifier.padding(0.dp, 10.dp)
+            ) {
+                Text(
+                    text = headerProvider,
+                    fontWeight = Typography.headlineLarge.fontWeight,
+                    fontSize = Typography.headlineMedium.fontSize,
+                    color = Typography.headlineLarge.color
+                )
+            }
         }
-        Row {
-            Text(text = textProvider)
-        }
+        Text(text = textProvider)
     }
 }

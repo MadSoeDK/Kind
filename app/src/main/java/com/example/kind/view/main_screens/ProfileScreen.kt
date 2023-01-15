@@ -25,8 +25,8 @@ fun ProfileScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        KindButton(onClick = { viewModel.onFormSubmit() }, textProvider = "Submit")
+        KindButton(onClick = { viewModel.onFormSubmit() }, textProvider = "Submit", 100)
         KindButtonDanger(onClick = { viewModel.deleteUser() }, TextProvider = "Delete User")
-        KindButton(onClick = onLogout, textProvider = "Logout")
+        KindButton(onClick = onLogout, textProvider = "Logout", 100)
     }
 }

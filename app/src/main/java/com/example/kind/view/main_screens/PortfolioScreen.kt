@@ -237,7 +237,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                     viewModel.updateSubscription()
                     openDialog.value = true
                                      },
-                    textProvider = "Save")
+                    textProvider = "Save", width = 120)
                 /*Button(
                     onClick = {
                         viewModel.updateSubscription()
