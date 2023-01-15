@@ -4,6 +4,8 @@ import com.example.kind.model.Article
 import com.example.kind.model.Charity
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 
 interface StorageService {
 
@@ -37,5 +39,6 @@ interface StorageService {
     suspend fun deleteArticle(article : String, charity : String)
 
     // Payments
-    suspend fun createStripePaymentIntent(amount: Double, currency: String): String
+    suspend fun createStripePaymentIntent(amount: Double, currency: String): Task<DocumentReference>
+    suspend fun getClientSecret(doc: DocumentReference): String
 }

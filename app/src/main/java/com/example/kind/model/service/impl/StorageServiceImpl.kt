@@ -3,17 +3,15 @@ package com.example.kind.model.service.impl
 import android.util.Log
 import com.example.kind.model.*
 import com.example.kind.model.service.StorageService
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
-import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Singleton
 
@@ -183,7 +181,7 @@ class StorageServiceImpl(
             .delete()
     }
 
-    override suspend fun createStripePaymentIntent(amount: Double, currency: String): String {
+    override suspend fun createStripePaymentIntent(amount: Double, currency: String): Task<DocumentReference> {
         //database.useEmulator("10.0.2.2", 8080)
         val colRef = database.collection("stripe_customers")
             .document(currentUser?.uid.toString())
@@ -196,12 +194,23 @@ class StorageServiceImpl(
             )
         ).addOnSuccessListener {
             Log.d("payment", "Added document to firebase with ID ${it.id}")
-        }.await()
+        }
 
-        Thread.sleep(5000)
+        return docRef
+
+        /*Thread.sleep(5000)
 
         val payment = colRef.document(docRef.id).get().await().toObject<KindPaymentIntent>()!!
         println("Payment object $payment")
+        return payment.client_secret!!*/
+    }
+
+    override suspend fun getClientSecret(doc: DocumentReference): String {
+        val payment = database.collection("stripe_customers")
+            .document(currentUser?.uid.toString())
+            .collection("payments")
+            .document(doc.id).get().await().toObject<KindPaymentIntent>()!!
+
         return payment.client_secret!!
     }
 
