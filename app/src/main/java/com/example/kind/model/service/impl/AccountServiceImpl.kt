@@ -6,7 +6,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AccountServiceImpl @Inject constructor(
     private val auth : FirebaseAuth = FirebaseAuth.getInstance(),
     private val storage : FirebaseFirestore = FirebaseFirestore.getInstance()

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl
 ) : ViewModel() {
 
     var loggedIn by mutableStateOf(auth.hasUser)

@@ -1,15 +1,10 @@
 package com.example.kind.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.Article
-import com.example.kind.getFakeArticles
 import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +22,7 @@ class CharityViewModel(
     val data: StateFlow<Charity> = _data.asStateFlow()
 
     init {
-        GlobalScope.launch {
+        viewModelScope.launch {
             _data.update {
                 val charity = storage.getCharity(id)
                 it.copy(
@@ -43,14 +38,4 @@ class CharityViewModel(
             }
         }
     }
-
-    /*
-    fun getArticles(): List<com.example.kind.model.Article> {
-        var articleList: List<com.example.kind.model.Article> = listOf()
-        viewModelScope.launch {
-            articleList = storage.getArticles(data.value.id)
-        }
-        return articleList
-    }
-    */
 }

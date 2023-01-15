@@ -113,7 +113,7 @@ fun CharityScreen(
             }
         }
 
-        OutlinedButton(onClick = { /*TODO*/ }) {
+        OutlinedButton(onClick = { viewModel.navController.navigate(HomeScreens.Payment.route) }) {
             Text(
                 text = "Donate Now",
                 fontWeight = Typography.labelLarge.fontWeight,
