@@ -1,5 +1,6 @@
 package com.example.kind
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,6 +24,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.model.service.impl.AccountServiceImpl
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
 import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
@@ -34,6 +37,11 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.stripe.android.PaymentSession
+import com.stripe.android.payments.paymentlauncher.PaymentLauncher
+import com.stripe.android.payments.paymentlauncher.PaymentResult
+import com.stripe.android.paymentsheet.PaymentSheet
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Root : HomeScreens("root", Icons.Filled.Favorite)
@@ -43,6 +51,7 @@ sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Profile : HomeScreens("profile", Icons.Filled.AccountBox)
     object Charity : HomeScreens("charity", Icons.Filled.Favorite)
     object Article : HomeScreens("article", Icons.Filled.Favorite)
+    object Payment : HomeScreens("payment", Icons.Filled.Favorite)
 }
 
 sealed class AuthenticationScreens(val route: String) {
@@ -64,14 +73,20 @@ sealed class SignupScreens(val route: String) {
 }
 
 @Composable
-fun KindApp() {
+fun KindApp(
+    context: ComponentActivity
+) {
+    val auth = AccountServiceImpl()
+    val storage = StorageServiceImpl()
+    val stripeUtil = StripeUtil(context = context, storage)
+
     val navController = rememberNavController()
-    val appViewModel = AppViewModel(navController)
+    val appViewModel = AppViewModel(navController, auth)
     NavHost(
         navController = navController,
         startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
-        homeNavGraph(navController, appViewModel)
+        homeNavGraph(navController, appViewModel, stripeUtil)
         authNavGraph(navController)
         signupNavGraph(navController, appViewModel)
     }
@@ -80,12 +95,14 @@ fun KindApp() {
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
+    stripeUtil: StripeUtil
 ) {
     val homeViewModel = HomeViewModel(navController)
     val portfolioViewModel = PortfolioViewModel()
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()
+    val paymentViewModel = PaymentViewModel(stripeUtil)
 
     navigation(
         startDestination = HomeScreens.Home.route,
@@ -162,6 +179,11 @@ fun NavGraphBuilder.homeNavGraph(
                     )
                 }
             )
+        }
+        composable(
+            HomeScreens.Payment.route
+        ) {
+            PaymentScreen(viewModel = paymentViewModel)
         }
     }
 }
@@ -284,10 +306,20 @@ fun Screen(
 }
 
 @Composable
-fun SigninScreen(
-
-) {
-
+fun paymentLauncher(
+    viewModel: PaymentViewModel
+): PaymentLauncher {
+    return PaymentLauncher.rememberLauncher("key") {
+        when(it) {
+            is PaymentResult.Completed -> {
+                // Do stuff
+                println("Something is happening")
+            }
+            else -> {
+                // Other stuff
+            }
+        }
+    }
 }
 
 @Composable
