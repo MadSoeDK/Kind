@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class CharityViewModel(
     val navController: NavController,
-    id: String,
+    val id: String,
 ) : ViewModel() {
 
     // State setup

@@ -25,12 +25,9 @@ import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
 fun CharityScreen(
-    //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
-
     val state by viewModel.data.collectAsState()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -113,7 +110,7 @@ fun CharityScreen(
             }
         }
 
-        OutlinedButton(onClick = { viewModel.navController.navigate(HomeScreens.Payment.route) }) {
+        OutlinedButton(onClick = { viewModel.navController.navigate(HomeScreens.Payment.route + "/" + viewModel.id) }) {
             Text(
                 text = "Donate Now",
                 fontWeight = Typography.labelLarge.fontWeight,

@@ -74,18 +74,19 @@ sealed class SignupScreens(val route: String) {
 
 @Composable
 fun KindApp(
-    stripeUtil: StripeUtil,
+    paymentViewModel: PaymentViewModel,
     storage: StorageServiceImpl
 ) {
     val auth = AccountServiceImpl()
 
     val navController = rememberNavController()
     val appViewModel = AppViewModel(navController, auth)
+    paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
         startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
-        homeNavGraph(navController, appViewModel, stripeUtil)
+        homeNavGraph(navController, appViewModel, paymentViewModel)
         authNavGraph(navController)
         signupNavGraph(navController, appViewModel)
     }
@@ -95,13 +96,13 @@ fun KindApp(
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
     appViewModel: AppViewModel,
-    stripeUtil: StripeUtil
+    paymentViewModel: PaymentViewModel
 ) {
     val homeViewModel = HomeViewModel(navController)
     val portfolioViewModel = PortfolioViewModel()
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()
-    val paymentViewModel = PaymentViewModel(stripeUtil)
+    //val paymentViewModel = PaymentViewModel(stripeUtil)
 
     navigation(
         startDestination = HomeScreens.Home.route,
@@ -180,9 +181,10 @@ fun NavGraphBuilder.homeNavGraph(
             )
         }
         composable(
-            HomeScreens.Payment.route
+            HomeScreens.Payment.route + "/{name}",
+            arguments = listOf(navArgument("name") { type = NavType.StringType })
         ) {
-            PaymentScreen(viewModel = paymentViewModel)
+            PaymentScreen(viewModel = paymentViewModel, it.arguments!!.getString("name", ""))
         }
     }
 }
