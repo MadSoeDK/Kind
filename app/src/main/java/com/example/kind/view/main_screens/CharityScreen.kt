@@ -2,6 +2,7 @@ package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
@@ -59,8 +60,7 @@ fun CharityScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
-                    ,
+                    .fillMaxHeight(),
                 contentScale = ContentScale.Crop,
             )
             AsyncImage(
@@ -89,21 +89,44 @@ fun CharityScreen(
             )
         }
 
-        DisplayDonatorsAndDonations(charityViewModel = viewModel)
+        //DisplayDonatorsAndDonations(charityViewModel = viewModel)
 
-        KindButton(onClick = { viewModel.addToPortfolio() }, textProvider = "Subscribe", width = 125)
+        Row(modifier = Modifier.padding(horizontal = 10.dp)) {
+            KindButton(onClick = { /*TODO*/ }, textProvider = "Donate", width = 105)
+            Spacer(modifier = Modifier.padding(horizontal = 10.dp))
+            OutlinedButton(
+                onClick = { viewModel.addToPortfolio() },
+                content = { Text(text = "Add to portfolio") },
+            )
+        }
 
-        KindButton(onClick = { /*TODO*/ }, textProvider = "One time donation", width = 170)
+        Spacer(modifier = Modifier.padding(vertical = 5.dp))
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = "About us",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.75),
+                fontWeight = MaterialTheme.typography.headlineLarge.fontWeight
+            )
+            Text(
+                text = state.desc,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6)
+            )
+        }
 
 
-        Column(modifier = Modifier.padding(20.dp, 0.dp)) {
-            // About
-            SmallHeaderAndText(headerProvider = "About", textProvider = state.desc)
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
+        //DisplayDonatorsAndDonations(charityViewModel = viewModel)
 
+
+
+        Column(modifier = Modifier.padding(20.dp, 15.dp)) {
             // Post
             SmallHeaderAndText(
                 headerProvider = "Posts",
-                textProvider = "Read the latest posts from the organization"
+                textProvider = "Latest news from " + state.name
             )
 
             LazyRow {

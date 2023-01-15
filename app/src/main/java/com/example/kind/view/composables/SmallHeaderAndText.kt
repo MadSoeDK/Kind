@@ -17,7 +17,7 @@ fun SmallHeaderAndText(
         modifier = Modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         Column(
             modifier = Modifier
@@ -26,9 +26,7 @@ fun SmallHeaderAndText(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            Row(
-                modifier = Modifier.padding(0.dp, 10.dp)
-            ) {
+            Row {
                 Text(
                     text = headerProvider,
                     fontWeight = Typography.headlineLarge.fontWeight,
