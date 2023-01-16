@@ -4,23 +4,26 @@ import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.EmailAuthProvider
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
-    val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
+    val subscription =
+        Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
     // Users
     override suspend fun addUser(user: User) {
@@ -34,29 +37,44 @@ class StorageServiceImpl : StorageService {
         }
     }
 
-    override suspend fun addToPortfolio(charityId: String){
+    override suspend fun addToPortfolio(charityId: String) {
 
         val checkList = getSubscriptions()
         var Subscribed = false
 
+        // If not, then add it to your subscriptions
+        if (!Subscribed) {
+            val subscription = Subscription(0.0, charityId, charityId, Timestamp(1, 1))
+
+            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+                .add(subscription)
+        }
+
         // Check if you are already subscribed
-        checkList.forEach{
-            if (it.charityID == charityId)
-            {
+        checkList.forEach {
+            if (it.charityID == charityId) {
                 Subscribed = true
             }
         }
+    }
 
-        // If not, then add it to your subscriptions
-        if (!Subscribed) {
-            val subscription = Subscription(0.0,charityId,charityId, Timestamp(1,1))
-
-            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").add(subscription)
+    override suspend fun updateUser(email: String, password: String) {
+        try {
+            currentUser!!.updateEmail(email)
+            currentUser.updatePassword(password)
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            currentUser!!.reauthenticate(
+                EmailAuthProvider.getCredential(
+                    currentUser?.email.toString(),
+                    password
+                )
+            )
         }
     }
 
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = currentUser?.uid.toString()
+        println("Portfolio: " + currentUser?.uid)
         val subscriptions =
             database.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
@@ -69,12 +87,25 @@ class StorageServiceImpl : StorageService {
         return portfolio
     }
 
-    override suspend fun deleteUser(userId: String) {
-        database.collection("Users").document(userId).delete()
+    override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
+        println("Profile " + currentUser.toString())
+        try {
+            database.collection("Users").document(currentUser?.uid.toString()).delete()
+            currentUser?.delete()
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            currentUser?.reauthenticate(
+                EmailAuthProvider.getCredential(
+                    currentUser.email.toString(),
+                    confirmPassword
+                )
+            )
+            database.collection("Users").document(currentUser?.uid.toString()).delete()
+            currentUser?.delete()
+        }
     }
 
     // Subscriptions
-    override suspend fun addSubscription(amount: Double, user: String, charity: String) {
+    /*override suspend fun addSubscription(amount: Double, user: String, charity: String) {
         val charityDocRef = database.collection("Charity").document(charity)
         val userDocRef = database.collection("User").document(user)
 
@@ -88,6 +119,7 @@ class StorageServiceImpl : StorageService {
             userDocRef.collection("Subscription").add(subscription)
         }
     }
+     */
 
     override suspend fun deleteSubscription(user: String, subscription: String) {
         database.collection("User").document(user).collection("Subscription").document(subscription)
@@ -100,7 +132,8 @@ class StorageServiceImpl : StorageService {
     ) {
         val documentId = currentUser?.uid.toString()
         database.collection("Users").document(documentId)
-            .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get().addOnSuccessListener { documents ->
+            .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get()
+            .addOnSuccessListener { documents ->
                 documents.forEach {
                     val docRef: DocumentReference =
                         database.collection("Users").document(currentUser?.uid.toString())
@@ -136,13 +169,19 @@ class StorageServiceImpl : StorageService {
     }
 
     // Charity
-    override suspend fun getCharity(id: String): Charity?{
+    override suspend fun getCharity(id: String): Charity? {
+
+        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+
         try {
             return database.collection("Charity").document(id).get().await().toObject()
-        }
-        catch (e: Exception)
-        {
-            return Charity(0,0,"","Sorry, we are unable to find this charity page. Come back later")
+        } catch (e: Exception) {
+            return Charity(
+                0,
+                0,
+                "",
+                "Sorry, we are unable to find this charity page. Come back later"
+            )
         }
     }
 
@@ -181,26 +220,31 @@ class StorageServiceImpl : StorageService {
             .toObjects()
     }
 
-    override suspend fun getHomeArticles(id: String): List<Article>{
+    override suspend fun getHomeArticles(id: String): List<Article> {
         // Setup vairables
         var subscriptions = listOf<Subscription>()
         var charities = listOf<Charity?>()
         var articlePointers = listOf<String>()
-        var articleList: List<Article> = listOf()//database.collection("Articles").limit(5).get().await().toObjects()
+        var articleList: List<Article> =
+            listOf()//database.collection("Articles").limit(5).get().await().toObjects()
 
         // Get the subscriptions from User
-        subscriptions = database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").get().await().toObjects()
+        subscriptions =
+            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+                .get().await().toObjects()
 
         // Get charities from subscription
-        subscriptions.forEach(){
+        subscriptions.forEach() {
 
-            charities += database.collection("Charity").document(it.charityID).get().await().toObject<Charity>()
+            charities += database.collection("Charity").document(it.charityID).get().await()
+                .toObject<Charity>()
         }
 
         // Get article pointers from charities
-        charities.forEach(){
+        charities.forEach() {
 
-            articleList += database.collection("Charity").document(it!!.id).collection("Articles").get().await().toObjects()
+            articleList += database.collection("Charity").document(it!!.id).collection("Articles")
+                .get().await().toObjects()
         }
 
         // article

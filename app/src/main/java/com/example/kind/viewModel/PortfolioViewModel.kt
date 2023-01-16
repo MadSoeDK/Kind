@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
+import com.example.kind.view.composables.KindTextField
+import com.example.kind.view.composables.Required
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,9 +30,22 @@ class PortfolioViewModel : ViewModel() {
     private val _data = MutableStateFlow(PortState())
     val data: StateFlow<PortState> = _data.asStateFlow()
 
+    var isOpen by mutableStateOf(false)
+
+    var fields: List<KindTextField> = listOf(
+        KindTextField(
+            name = "Indtast beløb",
+            label = "Indtast beløb",
+            validators = listOf(Required()),
+        ),
+    )
     var popupIsOpen by mutableStateOf(false)
 
     init {
+        getSubscriptions()
+    }
+
+    fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val subscriptions = storage.getSubscriptions()
@@ -50,16 +65,17 @@ class PortfolioViewModel : ViewModel() {
         popupIsOpen = !popupIsOpen
     }
 
-    fun onFormSubmit() {
-        /*if (formState.validate()) {
+    /*fun onFormSubmit() {
+        if (formState.validate()) {
             // TODO: Do something on form submission
-        }*/
+        }
         //TODO: Add alert for user
         println("Form submission error!")
-    }
+    }*/
 
-    fun getSpend(): Float {
-        return 0f
+    fun getMonthlyDonatedAmount(): String {
+        var amount = 300
+        return amount.toString()
     }
 
     fun updateSubscription() {
@@ -92,5 +108,4 @@ class PortfolioViewModel : ViewModel() {
 
         return colors
     }
-
 }
