@@ -98,7 +98,8 @@ fun PaymentScreen(
                         }
                         viewModel.createPaymentIntent()
                     },
-                    textProvider = "Select Payment Method"
+                    textProvider = "Select Payment Method",
+                    170
                 )
             }
             
@@ -118,7 +119,8 @@ fun PaymentScreen(
                             clientSecret = paymentState.clientSecret!!
                         ))
                     },
-                    textProvider = "Pay"
+                    textProvider = "Pay",
+                    100
                 )
             }
         }
