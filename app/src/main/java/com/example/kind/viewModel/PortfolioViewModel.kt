@@ -91,6 +91,10 @@ class PortfolioViewModel : ViewModel() {
         _data.update { _data.value }
     }
 
+    fun getSpend(): Double {
+        return 10.0
+    }
+
     fun getColors(): List<Color> {
         val colors: MutableList<Color> = mutableListOf()
         colors.add(Color(0xFFbf95d4))
