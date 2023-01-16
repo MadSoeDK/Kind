@@ -1,5 +1,6 @@
 package com.example.kind.view.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,14 +10,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun KindButton(onClick: () -> Unit, textProvider: String, width: Int) {
+fun KindButton(onClick: () -> Unit, textProvider: String) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
-            .width(width.dp)
+            .width(280.dp)
     ) {
         Text(
             text = textProvider,
@@ -88,13 +89,17 @@ fun KindButtonOutlined(onClick: () -> Unit, textProvider: String) {
             .width(280.dp),
         colors = ButtonDefaults
             .outlinedButtonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+                containerColor = MaterialTheme.colorScheme.background
+            ),
+        border = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.primary,
+        )
     ) {
         Text(
             text = textProvider,
             //color = MaterialTheme.colorScheme.onBackground,
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Medium,
         )
     }
