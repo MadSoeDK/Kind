@@ -118,9 +118,7 @@ fun ProfileScreen(
                 }
                 Text("Delete User")
             }
-            Button(onClick = onLogout) {
-                Text(text = "Logout")
-            }
+            KindButton(onClick = onLogout, "Log Out")
         } else {
             ReSignIn(viewModel = viewModel, onLogout)
         }
