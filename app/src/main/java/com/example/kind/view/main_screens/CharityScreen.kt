@@ -2,7 +2,6 @@ package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
@@ -16,17 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.KindButton
+import com.example.kind.view.composables.KindCard
 import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
-import com.example.kind.view.composables.KindCard
 import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
@@ -90,6 +87,18 @@ fun CharityScreen(
         }
 
         //DisplayDonatorsAndDonations(charityViewModel = viewModel)
+        Spacer(modifier = Modifier.padding(vertical = 5.dp))
+
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = state.desc,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6)
+            )
+        }
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 10.dp)) {
             KindButton(onClick = { /*TODO*/ }, textProvider = "Donate", width = 105)
@@ -100,21 +109,6 @@ fun CharityScreen(
             )
         }
 
-        Spacer(modifier = Modifier.padding(vertical = 5.dp))
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = "About us",
-                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.75),
-                fontWeight = MaterialTheme.typography.headlineLarge.fontWeight
-            )
-            Text(
-                text = state.desc,
-                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6)
-            )
-        }
 
 
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
