@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import com.example.kind.model.Charity
 import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +26,10 @@ class CharityViewModel(
     val data: StateFlow<Charity> = _data.asStateFlow()
 
     init {
+        update()
+    }
+
+    fun update() {
         viewModelScope.launch {
             _data.update {
                 val charity = storage.getCharity(id)
@@ -57,5 +62,16 @@ class CharityViewModel(
             storage.addToPortfolio(data.value.id)
             onAddToPortfolio()
         }
+        _data.update { it.copy(inPortfolio = true) }
+    }
+
+    fun removeFromPortfolio(){
+        viewModelScope.launch {
+            storage.removeFromPortfolio(data.value.id)
+            //delay(1000)
+            onAddToPortfolio()
+        }
+        //charities.value.subscription.find(id)
+        _data.update { it.copy(inPortfolio = false) }
     }
 }

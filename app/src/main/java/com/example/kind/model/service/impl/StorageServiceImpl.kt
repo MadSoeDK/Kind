@@ -60,6 +60,17 @@ class StorageServiceImpl(
         }
     }
 
+    override suspend fun removeFromPortfolio(charityId: String)
+    {
+        database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").whereEqualTo("charityID", charityId)
+            .get().addOnSuccessListener { querySnapshot ->
+                for (doc in querySnapshot) {
+                    doc.reference.delete()
+                }
+            }.await()
+        println("Removed from portfolio")
+    }
+
     override suspend fun updateUser(email: String, password: String) {
         try {
             currentUser!!.updateEmail(email)

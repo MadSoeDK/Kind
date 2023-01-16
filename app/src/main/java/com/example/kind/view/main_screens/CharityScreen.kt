@@ -121,13 +121,21 @@ fun CharityScreen(
             Row(modifier = Modifier.padding(horizontal = 10.dp)) {
                 KindButtonEdit(Onclick = { /*TODO*/ }, TextProvider = "Donate", width = 100)
                 Spacer(modifier = Modifier.padding(horizontal = 10.dp))
-                OutlinedButton(
-                    onClick = { viewModel.addToPortfolio() },
-                    content = { Text(text = "Add to portfolio") },
-                )
+
+                if (!state.inPortfolio) {
+                    OutlinedButton(
+                        onClick = { viewModel.addToPortfolio() },
+                        content = { Text(text = "Add to portfolio") },
+                    )
+                }
+                else
+                {
+                    OutlinedButton(
+                        onClick = { viewModel.removeFromPortfolio()},
+                        content = { Text(text = "Remove from portfolio") },
+                    )
+                }
             }
-
-
 
             Spacer(modifier = Modifier.padding(vertical = 10.dp))
             //DisplayDonatorsAndDonations(charityViewModel = viewModel)
