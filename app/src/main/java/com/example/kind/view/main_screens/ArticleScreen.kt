@@ -91,7 +91,7 @@ fun ArticleScreen(
                 contentDescription = null,
                 modifier = Modifier
                     .absoluteOffset(y = 20.dp)
-                    .size(50.dp)
+                    .size(55.dp)
                     .clip(CircleShape)
                     .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
                     .align(alignment = Alignment.BottomCenter),
