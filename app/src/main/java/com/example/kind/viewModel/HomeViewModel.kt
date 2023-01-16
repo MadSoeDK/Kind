@@ -17,7 +17,7 @@ class HomeViewModel(
 
     // Setup the homeState Dataclass
     data class HomeState(
-        var amountDonated: Int = 0,
+        var amountDonated: Int = 150,
         var articles: List<com.example.kind.model.Article> = listOf(),
         var charities: List<com.example.kind.model.Charity> = listOf()
     )

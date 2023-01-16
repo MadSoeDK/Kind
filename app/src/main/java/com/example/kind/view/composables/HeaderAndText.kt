@@ -3,6 +3,7 @@ package com.example.kind.view.composables
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +30,7 @@ fun HeaderAndText(
             Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
-                .padding(0.dp, 15.dp),
+                .padding(0.dp, 35.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(

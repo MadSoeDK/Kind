@@ -30,7 +30,7 @@ fun KindCard(
 ) {
     Card(modifier = Modifier
         .padding(8.dp)
-        .fillMaxWidth()
+        .width(265.dp)
         .height(200.dp)
         .clickable { onClick() }
         .border(

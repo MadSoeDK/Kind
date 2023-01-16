@@ -24,10 +24,10 @@ fun HomeScreen(
 ) {
     val state by viewModel.data.collectAsState()
 
-    Column(modifier = Modifier.padding(0.dp, 0.dp)) {
+    Column {
         HeaderAndText(state.amountDonated.toString() + " kr.", "Your total donated amount")
         Spacer(modifier = Modifier.padding(0.dp, 10.dp))
-        Column(modifier = Modifier.padding(10.dp, 0.dp)) {
+        Column(modifier = Modifier.padding(20.dp, 0.dp)) {
             Text(
                 text = "Charity Update",
                 color = MaterialTheme.colorScheme.primary,
@@ -35,37 +35,38 @@ fun HomeScreen(
                 fontSize = 24.sp
             )
             Text("The latest news from your charities", fontSize = 14.sp)
-            if (state.charities.isEmpty()) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                LazyRow {
-                    state.articles.forEachIndexed { i, element ->
-                        item {
-                            // Add left padding to first element
-                            if (i == 0) {
-                                Spacer(modifier = Modifier.width(10.dp))
-                            }
-                            KindCard(
-                                titleProvider = element.charityName,
-                                subTitleProvider = element.title,
-                                iconImage = element.iconImage,
-                                mainImage = element.mainImage,
-                                onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+        }
+        if (state.charities.isEmpty()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp)
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyRow {
+                state.articles.forEachIndexed { i, element ->
+                    item {
+                        // Add left padding to first element
+                        if (i == 0) {
+                            Spacer(modifier = Modifier.width(10.dp))
                         }
+                        KindCard(
+                            titleProvider = element.charityName,
+                            subTitleProvider = element.title,
+                            iconImage = element.iconImage,
+                            mainImage = element.mainImage,
+                            onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
                     }
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
-
+        Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+        Column(modifier = Modifier.padding(20.dp, 0.dp)) {
             Text(
                 text = "Explore charities",
                 color = MaterialTheme.colorScheme.primary,
@@ -74,37 +75,38 @@ fun HomeScreen(
             )
             Text("Get to know other charities better", fontSize = 14.sp)
 
+        }
 
-            if (state.charities.isEmpty()) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(100.dp)
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                LazyRow {
-                    state.charities.forEachIndexed { i, element ->
-                        item {
-                            if (i == 0) {
-                                Spacer(modifier = Modifier.width(10.dp))
-                            }
-                            KindCard(
-                                titleProvider = element.name,
-                                iconImage = element.iconImage,
-                                mainImage = element.mainImage,
-                                subTitleProvider = element.name,
-                                onClick = {
-                                    viewModel.navController.navigate(HomeScreens.Charity.route + "/" + element.id)
-                                },
-                            )
+        if (state.charities.isEmpty()) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp)
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyRow {
+                state.charities.forEachIndexed { i, element ->
+                    item {
+                        if (i == 0) {
+                            Spacer(modifier = Modifier.width(10.dp))
                         }
+                        KindCard(
+                            titleProvider = element.name,
+                            iconImage = element.iconImage,
+                            mainImage = element.mainImage,
+                            subTitleProvider = element.name,
+                            onClick = {
+                                viewModel.navController.navigate(HomeScreens.Charity.route + "/" + element.id)
+                            },
+                        )
                     }
                 }
             }
         }
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
     }
 }
