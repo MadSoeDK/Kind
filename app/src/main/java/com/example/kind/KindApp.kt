@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
+import com.example.kind.view.auth_screens.ForgotPasswordScreen
 import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
@@ -266,6 +267,7 @@ fun NavGraphBuilder.signupNavGraph(
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
 ) {
+    val loginViewModel = LoginViewModel(navController)
     navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route
@@ -277,10 +279,14 @@ fun NavGraphBuilder.authNavGraph(
             )
         }
         composable(route = AuthenticationScreens.Login.route) {
-            LoginScreen(LoginViewModel(navController))
+            LoginScreen(loginViewModel
+            ) { navController.navigate(AuthenticationScreens.ForgotPassword.route) }
         }
         composable(route = AuthenticationScreens.About.route) {
             AboutKindScreen { navController.navigate(SignupScreens.CreatePortfolio.route) }
+        }
+        composable(route = AuthenticationScreens.ForgotPassword.route) {
+            ForgotPasswordScreen(loginViewModel = loginViewModel) { navController.navigate(AuthenticationScreens.Login.route) }
         }
     }
 }
