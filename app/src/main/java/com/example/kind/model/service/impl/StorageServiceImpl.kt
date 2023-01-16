@@ -278,8 +278,7 @@ class StorageServiceImpl(
             .delete()
     }
 
-    override suspend fun createStripePaymentIntent(amount: Double, currency: String): Task<DocumentReference> {
-        //database.useEmulator("10.0.2.2", 8080)
+    override suspend fun createStripePaymentIntent(amount: Double, currency: String, charityId: String): Task<DocumentReference> {
         val colRef = database.collection("stripe_customers")
             .document(currentUser?.uid.toString())
             .collection("payments")
@@ -287,19 +286,15 @@ class StorageServiceImpl(
         val docRef = colRef.add(
             hashMapOf(
                 "amount" to amount,
-                "currency" to currency
+                "currency" to currency,
+                "date" to Date(),
+                "charity_id" to charityId
             )
         ).addOnSuccessListener {
             Log.d("payment", "Added document to firebase with ID ${it.id}")
         }
 
         return docRef
-
-        /*Thread.sleep(5000)
-
-        val payment = colRef.document(docRef.id).get().await().toObject<KindPaymentIntent>()!!
-        println("Payment object $payment")
-        return payment.client_secret!!*/
     }
 
     override suspend fun getClientSecret(doc: DocumentReference): String {
