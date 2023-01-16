@@ -73,7 +73,10 @@ class ProfileViewModel : ViewModel() {
     fun CoroutineScope.saveChanges() {
         launch(Dispatchers.IO) {
             // Call method here
-            storage.updateUser(formState.fields.get(0).text, formState.fields.get(1).text)
+            storage.updateUser(
+                formState.fields.get(0).text,
+                formState.fields.get(1).text
+            )
         }
     }
 
@@ -86,7 +89,10 @@ class ProfileViewModel : ViewModel() {
     fun CoroutineScope.deleteUser() {
         launch(Dispatchers.IO) {
             // Call method here
-            storage.deleteUser(formState.fields.get(0).text, formState.fields.get(1).text)
+            storage.deleteUser(
+                formState.fields.get(0).text,
+                formState.fields.get(1).text
+            )
         }
     }
 }
