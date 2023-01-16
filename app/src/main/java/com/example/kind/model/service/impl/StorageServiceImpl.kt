@@ -20,32 +20,18 @@ class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
     private var currentUser = FirebaseAuth.getInstance().currentUser
 
-    val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
-
     // Users
     override suspend fun addUser(user: User) {
         database.collection("Users").add(user).addOnSuccessListener { documentReference ->
             val documentId = currentUser?.uid.toString()
 
             database.collection("Users").document("$documentId").collection("Subscriptions")
-                .add(subscription)
             database.collection("Users").document("$documentId").collection("Donations")
-                .add(subscription)
         }
     }
 
     override suspend fun changeUser(user: User, uid : String) {
-        database.collection("Users").document(uid).set(user).addOnSuccessListener { documentReference ->
-            val documentId = currentUser?.uid.toString()
-
-            /*
-            TODO
-            database.collection("Users").document("$documentId").collection("Subscriptions")
-                .add(subscription)
-            database.collection("Users").document("$documentId").collection("Donations")
-                .add(subscription)
-             */
-        }
+        database.collection("Users").document(uid).set(user)
     }
 
     override suspend fun updateCurrentUser(){

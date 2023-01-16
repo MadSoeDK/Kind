@@ -36,26 +36,6 @@ class AppViewModel(
         }
     }
 
-    fun onSignUp(data: Map<String, String>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-
-                auth.createUserWithEmailAndPassword(
-                    data.getValue("Email"),
-                    data.getValue("Password")
-                )
-                auth.authenticateUser(
-                    data.getValue("Email"),
-                    data.getValue("Password")
-                )
-                println("New user created")
-            } catch (e: Exception) {
-                println("Could not sign in: " + e.printStackTrace())
-            }
-        }
-        navController.navigate(AuthenticationScreens.About.route)
-    }
-
     fun navigate(route: String) {
         if (route != navController.currentDestination?.route) {
             navController.navigate(route) {

@@ -59,6 +59,7 @@ sealed class SignupScreens(val route: String) {
     object CreatePortfolio : SignupScreens("create_portfolio")
     object SetAmount : SignupScreens("portfolio_amount")
     object SetFreq : SignupScreens("portfolio_freq")
+    object Charity : SignupScreens("charity")
     object BuildPortfolio : SignupScreens("build_portfolio")
     object Summary : SignupScreens("portfolio_summary")
 }
@@ -173,7 +174,8 @@ fun NavGraphBuilder.signupNavGraph(
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
-        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) }
+        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
+        navController = navController
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -184,8 +186,7 @@ fun NavGraphBuilder.signupNavGraph(
                 content = {
                     PersonalInformationScreen(
                         viewModel = signupViewModel,
-                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) },
-                        appViewModel = appViewModel
+                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) }
                     ) {
                         navController.navigate(AuthenticationScreens.Root.route)
                     }
@@ -222,9 +223,26 @@ fun NavGraphBuilder.signupNavGraph(
 
         composable(route = SignupScreens.BuildPortfolio.route) {
             PortfolioBuilderScreen(
+                viewModel = signupViewModel,
                 navigateToPortfolioBuilder = { navController.navigate(SignupScreens.BuildPortfolio.route) },
                 next = { navController.navigate(SignupScreens.Summary.route) },
                 back = { navController.navigate(SignupScreens.SetFreq.route) }
+            )
+        }
+
+        composable(
+            SignupScreens.Charity.route + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) { NavBackStackEntry ->
+            Screen(
+                content = {
+                    CharityScreen(
+                        viewModel = CharityViewModel(
+                            navController = navController,
+                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                        ),
+                    )
+                }
             )
         }
 

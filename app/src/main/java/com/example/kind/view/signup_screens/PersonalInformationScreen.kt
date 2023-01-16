@@ -2,10 +2,7 @@ package com.example.kind.view.signup_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +15,6 @@ import com.example.kind.viewModel.SignupViewModel
 @Composable
 fun PersonalInformationScreen(
     viewModel: SignupViewModel,
-    appViewModel: AppViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -37,9 +33,13 @@ fun PersonalInformationScreen(
         Button(
             onClick = {
                 viewModel.onFormSubmit(viewModel.formState.getData())
-                appViewModel.onSignUp(viewModel.formState.getData())
+                viewModel.onSignUp(viewModel.formState.getData())
                 }) {
             Text("Submit")
+        }
+        if (!viewModel.userIsCreated) {
+            Spacer(modifier = Modifier.height(20.dp))
+            CircularProgressIndicator()
         }
         Row(
             modifier = Modifier
@@ -52,6 +52,7 @@ fun PersonalInformationScreen(
             TextButton(onClick = { back() }) {
                 Text("← Back")
             }
+            //TODO Remove?
             Button(onClick = { next() }) {
                 Text("Next →")
             }

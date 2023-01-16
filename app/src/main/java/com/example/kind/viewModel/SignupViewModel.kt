@@ -5,7 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.kind.AuthenticationScreens
 import com.example.kind.HomeScreens
+import com.example.kind.SignupScreens
 import com.example.kind.model.Charity
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.AccountServiceImpl
@@ -14,9 +17,12 @@ import com.example.kind.view.composables.Email
 import com.example.kind.view.composables.FormState
 import com.example.kind.view.composables.KindTextField
 import com.example.kind.view.composables.Required
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -34,12 +40,18 @@ data class PortfolioState(
 )
 
 class SignupViewModel(
+    val navController: NavController,
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
 ) : ViewModel() {
     private val storage: StorageServiceImpl = StorageServiceImpl()
     private val auth: AccountServiceImpl = AccountServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
+    var userIsCreated by mutableStateOf(true)
+    private val _data =
+        MutableStateFlow(listOf<Charity>())
+    val data: StateFlow<List<Charity>> = _data.asStateFlow()
+    var charityList: List<Charity> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
@@ -52,6 +64,10 @@ class SignupViewModel(
             validators = listOf(Required())
         ),
     )
+
+    init {
+        getCharities()
+    }
 
     fun onFormSubmit(data: Map<String, String>) {
         if (!formState.validate()) {
@@ -91,6 +107,29 @@ class SignupViewModel(
         return User(formState.getData().getValue("Full name"), monthlyPayment)
     }
 
+    fun onSignUp(data: Map<String, String>) {
+        viewModelScope.launch {
+            try {
+                userIsCreated = false
+                auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
+                auth.authenticateUser(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
+                println("New user created")
+                userIsCreated = true
+                navController.navigate(AuthenticationScreens.About.route) {
+                    popUpTo(AuthenticationScreens.About.route)
+                }
+            } catch (e: Exception) {
+                println("Could not sign in: " + e.printStackTrace())
+            }
+        }
+    }
+
     fun addDataToUser(){
         viewModelScope.launch {
             try {
@@ -101,6 +140,19 @@ class SignupViewModel(
                 println(e.printStackTrace())
             }
         }
+    }
+
+    fun getCharities(): List<Charity> {
+        viewModelScope.launch {
+            try {
+                _data.update {
+                    storage.getCharities()
+                }
+            } catch (e: Exception) {
+                println(e.printStackTrace())
+            }
+        }
+        return charityList
     }
 }
 
