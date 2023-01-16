@@ -20,7 +20,7 @@ import com.example.kind.view.theme.Typography
 @Composable
 fun AuthenticationScreen(
     navigateToLogin: () -> Unit,
-    navigateToSignup: () -> Unit
+    navigateToSignup: () -> Unit,
 ) {
     Column(
         modifier = Modifier

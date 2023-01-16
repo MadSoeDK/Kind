@@ -16,6 +16,7 @@ interface StorageService {
     suspend fun getSubscriptions() : List<Subscription>
 
     // Subscriptions
+    suspend fun removeFromPortfolio(charityId: String)
     suspend fun addToPortfolio(charityid: String)
     suspend fun deleteSubscription(user : String, subscription : String)
     suspend fun modifySubscriptionAmount(subscription: Subscription, amount: Double)

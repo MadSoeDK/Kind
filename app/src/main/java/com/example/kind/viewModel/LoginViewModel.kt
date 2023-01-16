@@ -1,5 +1,7 @@
 package com.example.kind.viewModel
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +14,8 @@ import com.example.kind.view.composables.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -20,6 +24,8 @@ class LoginViewModel(
 ) : ViewModel() {
     var isLoggedIn by mutableStateOf(auth.hasUser)
     var isLoading by mutableStateOf(false)
+    var emailSentSuccesfully by mutableStateOf(false)
+    var emailSentAttempted by mutableStateOf(false)
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
@@ -65,5 +71,24 @@ class LoginViewModel(
                 isLoggedIn = false
             }
         }
+    }
+
+    fun sendResetPasswordEmail(emailAddress: String) {
+
+        println("Attempting to send mail")
+
+        Firebase.auth.sendPasswordResetEmail(emailAddress)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(ContentValues.TAG, "Email sent.")
+                    emailSentAttempted = true
+                    emailSentSuccesfully = true
+                }
+                else{
+                    println("Email failed to send")
+                    emailSentAttempted = true
+                    emailSentSuccesfully = false
+                }
+            }
     }
 }
