@@ -36,8 +36,6 @@ class ExplorerViewModel(
                 println(e.printStackTrace())
             }
         }
-        println("Returning this data: " + charityList.toString())
-
         return charityList
     }
 }

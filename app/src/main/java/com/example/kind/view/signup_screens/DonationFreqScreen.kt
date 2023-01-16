@@ -37,12 +37,12 @@ fun DonationFreqScreen(
                     .width(300.dp),
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = if (isSystemInDarkTheme()) {
-                        if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primary
+                        if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outline
                     } else {
                         if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
                     },
                     contentColor = if (isSystemInDarkTheme()) {
-                        if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimary
+                        if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground
                     } else {
                         if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
                     },
