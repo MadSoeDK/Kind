@@ -82,7 +82,7 @@ fun CharityScreen(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .border(1.dp, Color.Black, CircleShape)
+                        .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
                         .align(alignment = Alignment.BottomCenter),
                     contentScale = ContentScale.FillBounds
                 )
