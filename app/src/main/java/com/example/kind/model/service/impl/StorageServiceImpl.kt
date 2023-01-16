@@ -20,7 +20,7 @@ import javax.inject.Singleton
 
 @Singleton
 class StorageServiceImpl(
-    private val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 ) : StorageService {
     private val database = Firebase.firestore
      //= FirebaseAuth.getInstance().currentUser
@@ -231,6 +231,7 @@ class StorageServiceImpl(
         var articleList: List<Article> =
             listOf()//database.collection("Articles").limit(5).get().await().toObjects()
 
+        println(currentUser)
         // Get the subscriptions from User
         subscriptions =
             database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
