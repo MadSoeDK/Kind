@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.kind.view.composables.KindButton
 import com.example.kind.viewModel.PaymentViewModel
 import com.stripe.android.model.ConfirmPaymentIntentParams
@@ -58,6 +60,13 @@ fun PaymentScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
+        IconButton(onClick = { /*viewModel.navController.popBackStack()*/ }, modifier = Modifier.zIndex(1f)) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                "",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
         if (viewModel.paymentPending) {
             if (!viewModel.paymentSuccess) {
                 Text(text = "Request is pending. Please wait")

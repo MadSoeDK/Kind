@@ -28,14 +28,14 @@ fun KindButton(onClick: () -> Unit, textProvider: String) {
 }
 
 @Composable
-fun KindButton(Onclick: () -> Unit, Width: Int, TextProvider: String,) {
+fun KindButtonEdit(Onclick: () -> Unit, width: Int, TextProvider: String,) {
     Button(
-        onClick = { Onclick },
+        onClick = { Onclick() },
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
-            .width(Width.dp)
+            .width(width.dp)
     ) {
         Text(
             text = TextProvider,

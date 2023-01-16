@@ -7,13 +7,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.capitalize
@@ -152,6 +150,7 @@ fun NavGraphBuilder.homeNavGraph(
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
+                modifier = Modifier.fillMaxSize(),
                 NavigationBar = { KindNavigationBar(navController) },
                 content = {
                     CharityScreen(
@@ -288,23 +287,23 @@ fun NavGraphBuilder.authNavGraph(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Screen(
+    modifier: Modifier = Modifier,
     NavigationBar: @Composable () -> Unit = {},
     FloatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         bottomBar = { NavigationBar() },
-        floatingActionButton = { FloatingActionButton() },
-        content = {
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                content(it)
-            }
+        floatingActionButton = { FloatingActionButton() }
+    ) {
+        Column(
+            modifier = modifier
+                .padding(it)
+                .verticalScroll(rememberScrollState())
+        ) {
+            content(it)
         }
-    )
+    }
 }
 
 @Composable
