@@ -72,7 +72,8 @@ fun KindNewsCard(
         ) {
             Row(modifier = Modifier.padding(0.dp, 15.dp)) {
                 Image(
-                    painter = OrganizationIcon, contentDescription = null, modifier = Modifier
+                    painter = OrganizationIcon, contentDescription = null,
+                    modifier = Modifier
                         .height(200.dp)
                         .fillMaxWidth()
                 )
