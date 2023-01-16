@@ -2,20 +2,28 @@ package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import coil.compose.AsyncImage
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.kind.HomeScreens
+import com.example.kind.view.composables.KindButton
 import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.composables.KindCard
@@ -23,16 +31,19 @@ import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
 fun CharityScreen(
+    //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
+
     val state by viewModel.data.collectAsState()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(0.dp, 5.dp)
+            .padding(0.dp, 0.dp)
     )
     {
         // Background
@@ -43,16 +54,17 @@ fun CharityScreen(
                 .height(200.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
+
             AsyncImage(
-                model = state.mainImage.toString(),
+                model = state.mainImage,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
             AsyncImage(
-                model = state.iconImage.toString(),
+                model = state.iconImage,
                 contentDescription = null,
                 modifier = Modifier
                     .size(64.dp)
@@ -61,8 +73,6 @@ fun CharityScreen(
                     .align(alignment = Alignment.BottomCenter),
                 contentScale = ContentScale.FillBounds
             )
-            Row(modifier = Modifier.align(Alignment.BottomCenter)) {
-            }
         }
         // Donations, Donors & Picture
         Row(
@@ -71,86 +81,119 @@ fun CharityScreen(
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = state.donaters.toString() + "\n Donors",
-                color = MaterialTheme.colorScheme.secondary,
-                fontSize = Typography.headlineMedium.fontSize,
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.padding(50.dp, 0.dp))
-            Text(
-                text = state.donations.toString() + "\n Donations",
-                color = MaterialTheme.colorScheme.secondary,
-                fontSize = Typography.headlineMedium.fontSize,
+                text = state.name,
+                fontWeight = Typography.headlineLarge.fontWeight,
+                fontSize = Typography.headlineSmall.fontSize,
+                color = Typography.headlineLarge.color,
                 textAlign = TextAlign.Center
             )
         }
 
-        // Header & Button
+        //DisplayDonatorsAndDonations(charityViewModel = viewModel)
+
+        Row(modifier = Modifier.padding(horizontal = 10.dp)) {
+            KindButton(onClick = { /*TODO*/ }, textProvider = "Donate", width = 105)
+            Spacer(modifier = Modifier.padding(horizontal = 10.dp))
+            OutlinedButton(
+                onClick = { viewModel.addToPortfolio() },
+                content = { Text(text = "Add to portfolio") },
+            )
+        }
+
+        Spacer(modifier = Modifier.padding(vertical = 5.dp))
+
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(0.dp, 10.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Row(
-                modifier = Modifier.padding(0.dp, 10.dp)
-            ) {
-                Text(
-                    text = state.name,
-                    fontWeight = Typography.headlineLarge.fontWeight,
-                    fontSize = Typography.headlineLarge.fontSize,
-                    color = Typography.headlineLarge.color
-                )
-            }
-            Row {
-                Text(text = "Some category here!")
-            }
-        }
-
-        OutlinedButton(onClick = { viewModel.navController.navigate(HomeScreens.Payment.route + "/" + viewModel.id) }) {
             Text(
-                text = "Donate Now",
-                fontWeight = Typography.labelLarge.fontWeight,
-                fontSize = Typography.labelLarge.fontSize,
-                color = Typography.headlineLarge.color
+                text = "About us",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.75),
+                fontWeight = MaterialTheme.typography.headlineLarge.fontWeight
+            )
+            Text(
+                text = state.desc,
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6)
             )
         }
 
 
+        Spacer(modifier = Modifier.padding(vertical = 10.dp))
+        //DisplayDonatorsAndDonations(charityViewModel = viewModel)
 
-        if(!state.inPortfolio) {
-            OutlinedButton(onClick = { viewModel.addToPortfolio() }) {
-                Text(
-                    text = "Add to portfolio",
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.headlineLarge.color
-                )
-            }
-        }
 
-        // About
-        SmallHeaderAndText(headerProvider = "About", textProvider = state.desc)
 
-        // Post
-        SmallHeaderAndText(
-            headerProvider = "Posts",
-            textProvider = "Read the latest posts from the organization"
-        )
+        Column(modifier = Modifier.padding(20.dp, 15.dp)) {
+            // Post
+            SmallHeaderAndText(
+                headerProvider = "Posts",
+                textProvider = "Latest news from " + state.name
+            )
 
-        LazyRow {
-            state.articles.forEach {
-                item {
-                    KindCard(
-                        titleProvider = it.title,
-                        subTitleProvider = it.charityName,
-                        onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id) },
-                        iconImage = it.iconImage,
-                        mainImage = it.mainImage
-                    )
+            LazyRow {
+                state.articles.forEach {
+                    item {
+                        KindCard(
+                            titleProvider = it.title,
+                            subTitleProvider = it.charityName,
+                            onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id) },
+                            iconImage = it.iconImage,
+                            mainImage = it.mainImage
+                        )
+                    }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun DisplayDonatorsAndDonations(charityViewModel: CharityViewModel) {
+    val state by charityViewModel.data.collectAsState()
+    Row(
+        Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .clip(shape = RoundedCornerShape(16.dp)),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            Modifier
+                .size(120.dp, 40.dp)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = state.donaters.toString() + " Donators",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        Spacer(modifier = Modifier.padding(15.dp))
+        Box(
+            Modifier
+                .size(120.dp, 40.dp)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = state.donations.toString() + " Donations",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
