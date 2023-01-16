@@ -33,7 +33,7 @@ class AppViewModel(
     }
 
     fun onSignUp(data: Map<String, String>) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             try {
                 auth.createUserWithEmailAndPassword(
                     data.getValue("Email"),

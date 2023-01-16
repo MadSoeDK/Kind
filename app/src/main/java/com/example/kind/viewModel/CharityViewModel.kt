@@ -1,9 +1,11 @@
 package com.example.kind.viewModel
 
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.model.Charity
+import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,8 +16,9 @@ import kotlinx.coroutines.launch
 class CharityViewModel(
     val navController: NavController,
     val id: String,
+    val onAddToPortfolio: () -> Unit,
+    val charities: State<PortState>
 ) : ViewModel() {
-
     // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
@@ -33,9 +36,26 @@ class CharityViewModel(
                     iconImage = charity.iconImage,
                     mainImage = charity.mainImage,
                     name = charity.name,
-                    articles = storage.getArticles(charity.id)//charity.articles
+                    articles = storage.getArticles(charity.id),
+                    inPortfolio = charity.inPortfolio
                 )
             }
+            charities.value.subscription.forEach {
+                if (it.charityID == _data.value.id) {
+                    _data.update {
+                        it.copy(
+                            inPortfolio = true
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun addToPortfolio(){
+        viewModelScope.launch {
+            storage.addToPortfolio(data.value.id)
+            onAddToPortfolio()
         }
     }
 }

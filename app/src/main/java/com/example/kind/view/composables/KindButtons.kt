@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -20,6 +21,7 @@ fun KindButton(onClick: () -> Unit, textProvider: String) {
         Text(
             text = textProvider,
             color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -37,6 +39,7 @@ fun KindButton(Onclick: () -> Unit, Width: Int, TextProvider: String,) {
         Text(
             text = TextProvider,
             color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -54,6 +57,7 @@ fun KindButtonBackground(Onclick: () -> Unit, TextProvider: String,) {
         Text(
             text = TextProvider,
             color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -71,6 +75,7 @@ fun KindButtonBackground(Onclick: () -> Unit, Width: Int, TextProvider: String,)
         Text(
             text = TextProvider,
             color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -86,7 +91,12 @@ fun KindButtonOutlined(onClick: () -> Unit, textProvider: String) {
                 containerColor = MaterialTheme.colorScheme.background
             )
     ) {
-        Text(text = textProvider)
+        Text(
+            text = textProvider,
+            //color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Medium,
+        )
     }
 }
 
@@ -103,15 +113,17 @@ fun KindButtonOutlined(onClick: () -> Unit, Width: Int, TextProvider: String,) {
     ) {
         Text(
             text = TextProvider,
-            color = MaterialTheme.colorScheme.onBackground,
+            //color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
 
 @Composable
-fun KindButtonDanger(Onclick: () -> Unit, TextProvider: String,){
+fun KindButtonDanger(onClick: () -> Unit, TextProvider: String,){
     Button(
-        onClick = { Onclick },
+        onClick = { onClick },
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.errorContainer,
             //contentColor = MaterialTheme.colorScheme.onErrorContainer
@@ -122,6 +134,7 @@ fun KindButtonDanger(Onclick: () -> Unit, TextProvider: String,){
         Text(
             text = TextProvider,
             color = MaterialTheme.colorScheme.onErrorContainer,
+            fontWeight = FontWeight.Medium,
         )
     }
 }
@@ -140,6 +153,7 @@ fun KindButtonDanger(Onclick: () -> Unit, Width: Int, TextProvider: String,){
         Text(
             text = TextProvider,
             color = MaterialTheme.colorScheme.onErrorContainer,
+            fontWeight = FontWeight.Medium,
         )
     }
 }

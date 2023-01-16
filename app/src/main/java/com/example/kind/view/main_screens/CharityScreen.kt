@@ -7,9 +7,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import coil.compose.AsyncImage
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -117,6 +115,19 @@ fun CharityScreen(
                 fontSize = Typography.labelLarge.fontSize,
                 color = Typography.headlineLarge.color
             )
+        }
+
+
+
+        if(!state.inPortfolio) {
+            OutlinedButton(onClick = { viewModel.addToPortfolio() }) {
+                Text(
+                    text = "Add to portfolio",
+                    fontWeight = Typography.labelLarge.fontWeight,
+                    fontSize = Typography.labelLarge.fontSize,
+                    color = Typography.headlineLarge.color
+                )
+            }
         }
 
         // About
