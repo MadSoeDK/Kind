@@ -30,16 +30,19 @@ fun KindCharityCard(
             .padding(6.dp)
             .width(250.dp)
             .height(175.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .background(MaterialTheme.colorScheme.background),
         //colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = Color.White)
     ) {
 
         Column(
-            modifier = Modifier.padding(5.dp),
+            modifier = Modifier
+                .padding(5.dp)
+                .background(MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = Modifier.padding(5.dp),
+                modifier = Modifier.padding(5.dp).background(MaterialTheme.colorScheme.background),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -51,7 +54,8 @@ fun KindCharityCard(
                         .clip(
                             CircleShape
                         )
-                        .border(1.dp, Color.LightGray, CircleShape),
+                        .border(1.dp, Color.LightGray, CircleShape)
+                        .background(MaterialTheme.colorScheme.background),
                     contentScale = ContentScale.FillBounds,
 
                     )

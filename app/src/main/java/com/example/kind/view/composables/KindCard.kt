@@ -37,8 +37,12 @@ fun KindCard(
             width = 1.dp,
             color = MaterialTheme.colorScheme.outline,
             shape = MaterialTheme.shapes.medium
-        )) {
-        Column {
+        )
+        .background(MaterialTheme.colorScheme.background)
+    ) {
+        Column (
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+        ) {
             Box(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.background)
@@ -50,7 +54,8 @@ fun KindCard(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(),
+                        .fillMaxHeight()
+                        .background(MaterialTheme.colorScheme.background),
                     contentScale = ContentScale.FillBounds
                 )
             }
@@ -58,7 +63,7 @@ fun KindCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.background)
                     .padding(10.dp),
             ) {
                 AsyncImage(
@@ -67,10 +72,11 @@ fun KindCard(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(CircleShape)
-                        .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape),
+                        .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
+                        .background(MaterialTheme.colorScheme.background),
                     contentScale = ContentScale.FillBounds
                 )
-                Column(modifier = Modifier.padding(8.dp, 0.dp)) {
+                Column(modifier = Modifier.padding(8.dp, 0.dp).background(MaterialTheme.colorScheme.background)) {
                     Text(
                         text = titleProvider,
                         color = MaterialTheme.colorScheme.onBackground,
