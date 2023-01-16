@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 
@@ -26,18 +28,16 @@ fun KindCard(
     mainImage: String,
     onClick: () -> Unit,
 ) {
-    Card(
-        modifier = Modifier
-            .padding(8.dp)
-            .width(200.dp)
-            .height(200.dp)
-            .clickable { onClick() }
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = MaterialTheme.shapes.medium
-            )
-    ) {
+    Card(modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth()
+        .height(200.dp)
+        .clickable { onClick() }
+        .border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+            shape = MaterialTheme.shapes.medium
+        )) {
         Column {
             Box(
                 modifier = Modifier
@@ -58,20 +58,30 @@ fun KindCard(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.background),
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .padding(10.dp),
             ) {
                 AsyncImage(
                     model = iconImage,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(64.dp)
+                        .size(40.dp)
                         .clip(CircleShape)
                         .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape),
                     contentScale = ContentScale.FillBounds
                 )
                 Column(modifier = Modifier.padding(8.dp, 0.dp)) {
-                    Text(text = titleProvider, color = MaterialTheme.colorScheme.onBackground)
-                    Text(text = subTitleProvider, color = MaterialTheme.colorScheme.onBackground)
+                    Text(
+                        text = titleProvider,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = subTitleProvider,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontSize = 12.sp
+                    )
                 }
             }
         }
