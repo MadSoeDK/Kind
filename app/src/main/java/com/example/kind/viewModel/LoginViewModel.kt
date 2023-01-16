@@ -23,11 +23,17 @@ class LoginViewModel(
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
-        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
+        KindTextField(
+            name = "Email",
+            label = "Email",
+            validators = listOf(Required(), Email()),
+            readOnly = false
+        ),
         KindTextField(
             name = "Password",
             label = "Password",
-            validators = listOf(Required(), Password())
+            validators = listOf(Required(), Password()),
+            readOnly = false
         ),
     )
 

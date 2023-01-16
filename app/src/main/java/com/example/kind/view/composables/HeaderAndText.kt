@@ -16,7 +16,7 @@ fun HeaderAndText(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 50.dp),
+            .padding(10.dp, 20.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

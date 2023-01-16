@@ -83,6 +83,7 @@ fun SummaryScreen(
                 }
                 Text(
                     text = value,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 14.sp,
                     textAlign = alignment,
                     modifier = Modifier.padding(0.dp, 20.dp),
