@@ -1,13 +1,13 @@
 package com.example.kind.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
 import com.example.kind.model.Charity
+import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,9 +19,9 @@ import kotlinx.coroutines.launch
 class CharityViewModel(
     val navController: NavController,
     id: String,
-    val onAddToPortfolio: () -> Unit
+    val onAddToPortfolio: () -> Unit,
+    val charities: State<PortState>
 ) : ViewModel() {
-
     // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
@@ -39,8 +39,18 @@ class CharityViewModel(
                     iconImage = charity.iconImage,
                     mainImage = charity.mainImage,
                     name = charity.name,
-                    articles = storage.getArticles(charity.id)//charity.articles
+                    articles = storage.getArticles(charity.id),
+                    inPortfolio = charity.inPortfolio
                 )
+            }
+            charities.value.subscription.forEach {
+                if (it.charityID == _data.value.id) {
+                    _data.update {
+                        it.copy(
+                            inPortfolio = true
+                        )
+                    }
+                }
             }
         }
     }
@@ -51,14 +61,4 @@ class CharityViewModel(
             onAddToPortfolio()
         }
     }
-
-    /*
-    fun getArticles(): List<com.example.kind.model.Article> {
-        var articleList: List<com.example.kind.model.Article> = listOf()
-        viewModelScope.launch {
-            articleList = storage.getArticles(data.value.id)
-        }
-        return articleList
-    }
-    */
 }

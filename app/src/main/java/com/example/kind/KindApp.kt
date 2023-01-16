@@ -142,7 +142,8 @@ fun NavGraphBuilder.homeNavGraph(
                         viewModel = CharityViewModel(
                             navController = navController,
                             id = NavBackStackEntry.arguments!!.getString("id", ""),
-                            onAddToPortfolio = { portfolioViewModel.getSubscriptions() }
+                            onAddToPortfolio = { portfolioViewModel.getSubscriptions() },
+                            charities = portfolioViewModel.data.collectAsState()
                         ),
                     )
                 }

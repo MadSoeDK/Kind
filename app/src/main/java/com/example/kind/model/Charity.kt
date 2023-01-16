@@ -9,7 +9,8 @@ data class Charity(
     val iconImage: String = "",
     val mainImage: String = "",
     var name: String = "",
-    val articles: List<Article> = listOf()
+    val articles: List<Article> = listOf(),
+    val inPortfolio: Boolean = false
 
     /*
     val id : Int,
