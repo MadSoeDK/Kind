@@ -45,19 +45,18 @@ class StorageServiceImpl(
         val checkList = getSubscriptions()
         var Subscribed = false
 
+        // Check if you are already subscribed
+        checkList.forEach {
+            if (it.charityID == charityId) {
+                Subscribed = true
+            }
+        }
         // If not, then add it to your subscriptions
         if (!Subscribed) {
             val subscription = Subscription(0.0, charityId, charityId, Timestamp(1, 1))
 
             database.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
                 .add(subscription)
-        }
-
-        // Check if you are already subscribed
-        checkList.forEach {
-            if (it.charityID == charityId) {
-                Subscribed = true
-            }
         }
     }
 
