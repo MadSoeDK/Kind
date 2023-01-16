@@ -30,13 +30,6 @@ fun PersonalInformationScreen(
             state = viewModel.formState,
             fields = viewModel.fields,
         )
-        Button(
-            onClick = {
-                viewModel.onFormSubmit(viewModel.formState.getData())
-                viewModel.onSignUp(viewModel.formState.getData())
-                }) {
-            Text("Submit")
-        }
         if (!viewModel.userIsCreated) {
             Spacer(modifier = Modifier.height(20.dp))
             CircularProgressIndicator()
@@ -53,7 +46,11 @@ fun PersonalInformationScreen(
                 Text("← Back")
             }
             //TODO Remove?
-            Button(onClick = { next() }) {
+            Button(
+                onClick = {
+                    viewModel.onFormSubmit(viewModel.formState.getData())
+                    viewModel.onSignUp(viewModel.formState.getData())
+                })  {
                 Text("Next →")
             }
         }
