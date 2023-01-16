@@ -27,7 +27,7 @@ fun HeaderAndText(
     ) {
         Box(
             Modifier
-                .background(MaterialTheme.colorScheme.primary)
+                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
                 .padding(0.dp, 15.dp),
             contentAlignment = Alignment.Center
