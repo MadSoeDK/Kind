@@ -78,7 +78,6 @@ fun KindApp(
     storage: StorageServiceImpl
 ) {
     val auth = AccountServiceImpl()
-
     val navController = rememberNavController()
     val appViewModel = AppViewModel(navController, auth)
     paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
@@ -86,7 +85,7 @@ fun KindApp(
         navController = navController,
         startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
-        homeNavGraph(navController, appViewModel, paymentViewModel)
+        homeNavGraph(navController, appViewModel, paymentViewModel, storage)
         authNavGraph(navController)
         signupNavGraph(navController, appViewModel)
     }
@@ -96,9 +95,10 @@ fun KindApp(
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
     appViewModel: AppViewModel,
-    paymentViewModel: PaymentViewModel
+    paymentViewModel: PaymentViewModel,
+    storage: StorageServiceImpl
 ) {
-    val homeViewModel = HomeViewModel(navController)
+    val homeViewModel = HomeViewModel(navController, storage)
     val portfolioViewModel = PortfolioViewModel()
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()

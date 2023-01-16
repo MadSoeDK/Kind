@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    val navController: NavController
+    val navController: NavController,
+    val storage: StorageServiceImpl
 ) : ViewModel() {
 
     // Setup the homeState Dataclass
@@ -22,15 +23,20 @@ class HomeViewModel(
     )
 
     // State setup
-    val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
     val data: StateFlow<HomeState> = _data.asStateFlow()
 
     init {
+        if (storage.currentUser != null) {
+            getHomeArticles()
+        }
+    }
+
+    fun getHomeArticles() {
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()
-                val articles = storage.getHomeArticles(charities.get(0).id)
+                val articles = storage.getHomeArticles(charities[0].id)
                 it.copy(
                     amountDonated = data.value.amountDonated,
                     articles = articles,
