@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.view.composables.HeaderAndText
@@ -36,12 +37,11 @@ fun ProfileScreen(
                 fields = viewModel.fields.subList(0, 2),
             )
             if (read) {
-                Button(onClick = {
+                KindButton(onClick = {
                     read = !read
                     viewModel.updateChanges()
-                }) {
-                    Text("Update Changes")
-                }
+                },
+                "Update changes")
             }
             if (!read) {
                 Button(onClick = {
@@ -87,7 +87,8 @@ fun ProfileScreen(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.errorContainer,
                     contentColor = MaterialTheme.colorScheme.onErrorContainer
-                )
+                ),
+                modifier = Modifier.width(280.dp),
             ) {
                 if (deleteAccountOpenDialog.value == true) {
                     AlertDialog(
