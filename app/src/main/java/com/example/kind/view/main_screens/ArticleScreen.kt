@@ -1,7 +1,10 @@
 package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -14,10 +17,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import coil.compose.AsyncImage
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ArticleViewModel
 
@@ -27,14 +38,90 @@ fun ArticleScreen(
 ) {
     val state by viewModel.data.collectAsState()
 
-    IconButton(onClick = { viewModel.navController.popBackStack() }, modifier = Modifier.zIndex(1f)) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            "",
-            tint = MaterialTheme.colorScheme.primary
-        )
-    }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            IconButton(
+                onClick = { viewModel.navController.popBackStack() },
+                modifier = Modifier.zIndex(1f)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    "",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+            Text(
+                text = state.title,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(25.dp)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.onBackground)
+                .fillMaxWidth()
+                .height(200.dp)
+                .align(Alignment.CenterHorizontally)
+        ) {
+            AsyncImage(
+                model = state.mainImage,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .blur(
+                        3.dp, 3.dp, edgeTreatment = BlurredEdgeTreatment(
+                            RoundedCornerShape(1.dp)
+                        )
+                    ),
+                contentScale = ContentScale.Crop,
+            )
+            AsyncImage(
+                model = state.iconImage,
+                contentDescription = null,
+                modifier = Modifier
+                    .absoluteOffset(y = 20.dp)
+                    .size(50.dp)
+                    .clip(CircleShape)
+                    .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
+                    .align(alignment = Alignment.BottomCenter),
+                contentScale = ContentScale.FillBounds,
 
+                )
+        }
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+        Row(
+            modifier = Modifier
+                .background(color = Color.White)
+                .fillMaxSize()
+                .align(Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Author: Mads Mikkelsen", fontSize = 14.sp)
+            Spacer(modifier = Modifier.padding(horizontal = 20.dp))
+            Text(text = "Date: 02-12-2000", fontSize = 14.sp)
+
+        }
+
+    }
+}
+
+/**
+ * ----------------------------------------------------------------:::::::::::::::-
+ */
+
+/*
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -73,5 +160,5 @@ fun ArticleScreen(
             textAlign = TextAlign.Center
         )
     }
-
-}
+    }
+ */

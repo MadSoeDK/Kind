@@ -83,13 +83,13 @@ fun KindCard(
                     Text(
                         text = titleProvider,
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
                         text = subTitleProvider,
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 12.sp
+                        fontSize = 11.sp
                     )
                 }
             }
