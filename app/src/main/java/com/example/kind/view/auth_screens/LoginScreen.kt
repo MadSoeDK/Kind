@@ -39,8 +39,7 @@ fun LoginScreen(
             )
             KindButton(
                 onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
-                textProvider = "Login",
-                width = 100
+                textProvider = "Login"
             )
             /*Button(
                 modifier = Modifier

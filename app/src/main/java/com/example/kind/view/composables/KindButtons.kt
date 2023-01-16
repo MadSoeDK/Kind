@@ -9,14 +9,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun KindButton(onClick: () -> Unit, textProvider: String, width: Int) {
+fun KindButton(onClick: () -> Unit, textProvider: String) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
-            .width(width.dp)
+            .width(280.dp)
     ) {
         Text(
             text = textProvider,

@@ -91,17 +91,19 @@ fun CharityScreen(
 
 
         Column(
+            Modifier.padding(horizontal = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = state.desc,
-                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6)
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
+                textAlign = TextAlign.Center
             )
         }
         Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 10.dp)) {
-            KindButton(onClick = { /*TODO*/ }, textProvider = "Donate", width = 105)
+            KindButton(onClick = { /*TODO*/ }, textProvider = "Donate")
             Spacer(modifier = Modifier.padding(horizontal = 10.dp))
             OutlinedButton(
                 onClick = { viewModel.addToPortfolio() },
@@ -116,7 +118,7 @@ fun CharityScreen(
 
 
 
-        Column(modifier = Modifier.padding(20.dp, 15.dp)) {
+        Column(modifier = Modifier.padding(20.dp, 0.dp)) {
             // Post
             SmallHeaderAndText(
                 headerProvider = "Posts",
