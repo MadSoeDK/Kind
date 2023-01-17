@@ -5,10 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.kind.model.service.impl.AccountServiceImpl
+import androidx.lifecycle.viewModelScope
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -64,13 +63,7 @@ class ProfileViewModel(val storage: StorageServiceImpl) : ViewModel() {
     }
 
     fun saveChanges() {
-        val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-        coroutineScope.saveChanges()
-    }
-
-    fun CoroutineScope.saveChanges() {
-        launch(Dispatchers.IO) {
+        viewModelScope.launch {
             // Call method here
             storage.updateUser(
                 formState.fields.get(0).text,

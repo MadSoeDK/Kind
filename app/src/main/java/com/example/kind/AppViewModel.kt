@@ -18,14 +18,16 @@ class AppViewModel(
         viewModelScope.launch {
             try {
                 auth.signOut()
-                storage.updateCurrentUser()
-                navController.navigate(AuthenticationScreens.Root.route)
+                navController.navigate(AuthenticationScreens.Root.route) {
+                    popUpTo(navController.graph.id) {
+                        inclusive = true
+                    }
+                }
                 println("Successfully logged out")
             } catch (e: Exception) {
                 println("Error logging out" + e.printStackTrace())
             }
         }
-        //navController.navigate(AuthenticationScreens.Root.route)
     }
 
     fun onSignUp(data: Map<String, String>) {
