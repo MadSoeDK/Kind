@@ -69,7 +69,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         colors = state.color
     )
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
+    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp).padding(horizontal = 30.dp), content = {
         state.subscription.forEachIndexed { i, it ->
             item {
                 Box(

@@ -41,7 +41,9 @@ fun ExplorerScreen(
                             Title = it.name,
                             Body = it.desc,
                             iconImage = it.iconImage,
-                            onClick = { viewModel.navController.navigate(HomeScreens.Charity.route + "/" + it.id) }
+                            onClick = {
+                                viewModel.navController.navigate(HomeScreens.Charity.route + "/" + it.id)
+                            }
                         )
                     }
                 }
