@@ -128,7 +128,7 @@ fun SummaryScreen(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                text = PortfolioViewModel().getSpend().toString() + " kr",
+                text = 10.0.toString() + " kr", //TODO fixed amount
                 fontSize = 14.sp,
                 modifier = Modifier.padding(horizontal = 15.dp),
                 color = MaterialTheme.colorScheme.onBackground,

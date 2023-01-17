@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,21 +32,34 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val state by viewModel.data.collectAsState()
-        if (state.subscription.isEmpty()) {
-            CircularProgressIndicator()
-        } else {
-            if (viewModel.popupIsOpen) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(30.dp),
-
-                    ) {
-                    EditPortfolio(viewModel = viewModel)
-                }
+        if (viewModel.haveSubscriptions) {
+            if (state.subscription.isEmpty()) {
+                CircularProgressIndicator()
             } else {
-                PortfolioContent(viewModel)
+                if (viewModel.popupIsOpen) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(30.dp),
+
+                        ) {
+                        EditPortfolio(viewModel = viewModel)
+                    }
+                } else {
+                    PortfolioContent(viewModel)
+                }
             }
+        } else {
+            Column(
+                modifier = Modifier.height(700.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "You have no charities in your portfolio")
+                    Text(text = "Start building your portfolio today!")
+                    Spacer(modifier = Modifier.height(20.dp))
+                    KindButton(onClick = viewModel.onNavigateToCharities, textProvider = "Explore Charities and Build Portfolio")
+                }
         }
     }
 }

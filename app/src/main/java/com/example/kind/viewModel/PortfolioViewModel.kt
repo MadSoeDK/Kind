@@ -23,14 +23,15 @@ data class PortState(
     var color: List<Color> = emptyList(),
 )
 
-class PortfolioViewModel : ViewModel() {
-
-    var storage: StorageServiceImpl = StorageServiceImpl()
+class PortfolioViewModel(
+    val storage: StorageServiceImpl,
+    val onNavigateToCharities: () -> Unit
+) : ViewModel() {
 
     private val _data = MutableStateFlow(PortState())
     val data: StateFlow<PortState> = _data.asStateFlow()
 
-    var isOpen by mutableStateOf(false)
+    var haveSubscriptions by mutableStateOf(false)
 
     var fields: List<KindTextField> = listOf(
         KindTextField(
@@ -48,9 +49,8 @@ class PortfolioViewModel : ViewModel() {
     fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                println("Current user " + storage.currentUser?.uid)
                 val subscriptions = storage.getSubscriptions()
-                println(subscriptions.toString())
+                haveSubscriptions = subscriptions.isNotEmpty()
                 _data.update {
                     _data.value.copy(
                         subscription = subscriptions,

@@ -93,7 +93,7 @@ fun NavGraphBuilder.homeNavGraph(
     storage: StorageServiceImpl
 ) {
     val homeViewModel = HomeViewModel(navController, storage)
-    val portfolioViewModel = PortfolioViewModel()
+    val portfolioViewModel = PortfolioViewModel(storage) { appViewModel.navController.navigate(HomeScreens.Explorer.route) }
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()
 
