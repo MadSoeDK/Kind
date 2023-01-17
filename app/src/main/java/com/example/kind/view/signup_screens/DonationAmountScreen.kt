@@ -37,8 +37,7 @@ fun DonationAmountScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                LoginHeader(size = 150, "How often will you make a donation")
-
+                LoginHeader("How often will you make a donation")
                 listOf(50, 100, 200).forEach {
                     Spacer(modifier = Modifier.height(15.dp))
                     OutlinedButton(

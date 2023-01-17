@@ -26,14 +26,7 @@ fun ForgotPasswordScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
-        LoginHeader(96)
-        Spacer(modifier = Modifier.height(40.dp))
-        Text(
-            "Reset your password",
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
+        LoginHeader("Reset your password")
         // Show email response
         if (loginViewModel.emailSentAttempted) {
             if (loginViewModel.emailSentSuccesfully == false) {
@@ -42,9 +35,7 @@ fun ForgotPasswordScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
-            }
-            else
-            {
+            } else {
                 Text(
                     "Recovery Email Sent!",
                     style = MaterialTheme.typography.bodyMedium,
