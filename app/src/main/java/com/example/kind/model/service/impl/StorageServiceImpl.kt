@@ -205,19 +205,7 @@ class StorageServiceImpl: StorageService {
 
     // Charity
     override suspend fun getCharity(id: String): Charity? {
-
-        //val charityList: List<Charity> = Firebase.firestore.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
-
-        try {
-            return Firebase.firestore.collection("Charity").document(id).get().await().toObject()
-        } catch (e: Exception) {
-            return Charity(
-                0,
-                0,
-                "",
-                "Sorry, we are unable to find this charity page. Come back later"
-            )
-        }
+        return Firebase.firestore.collection("Charity").document(id).get().await().toObject()
     }
 
     override suspend fun getCharities(): List<Charity> {

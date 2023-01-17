@@ -33,12 +33,7 @@ import com.example.kind.view.home.composables.SmallHeaderAndText
 fun CharityScreen(
     viewModel: CharityViewModel,
 ) {
-
     val state by viewModel.data.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.getCharity()
-    }
 
     Column (
             horizontalAlignment = Alignment.CenterHorizontally,

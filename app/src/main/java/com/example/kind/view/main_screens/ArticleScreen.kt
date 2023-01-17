@@ -39,10 +39,6 @@ fun ArticleScreen(
 ) {
     val state by viewModel.data.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.getArticleById()
-    }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

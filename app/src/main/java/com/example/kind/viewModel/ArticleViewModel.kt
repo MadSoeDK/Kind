@@ -20,6 +20,10 @@ class ArticleViewModel(
     private val _data = MutableStateFlow(com.example.kind.model.Article())
     val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
 
+    init {
+        getArticleById()
+    }
+
     fun getArticleById() {
         viewModelScope.launch {
             _data.update {

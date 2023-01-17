@@ -23,21 +23,15 @@ class CharityViewModel(
     private val _data = MutableStateFlow(Charity())
     val data: StateFlow<Charity> = _data.asStateFlow()
 
+    init {
+        getCharity()
+    }
+
     fun getCharity() {
         viewModelScope.launch {
+            val charity = storage.getCharity(id) ?: return@launch
             _data.update {
-                val charity = storage.getCharity(id)
-                it.copy(
-                    donaters = charity!!.donaters,
-                    donations = charity.donations,
-                    id = charity.id,
-                    desc = charity.desc,
-                    iconImage = charity.iconImage,
-                    mainImage = charity.mainImage,
-                    name = charity.name,
-                    articles = storage.getArticles(charity.id),
-                    inPortfolio = charity.inPortfolio
-                )
+                charity
             }
             charities.value.subscription.forEach {
                 if (it.charityID == _data.value.id) {
