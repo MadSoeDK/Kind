@@ -149,7 +149,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
             val value = when (index) {
                 0 -> item.charityID
                 1 -> "${
-                    ((item.amount / state.subscription.sumOf { it.amount }) * 100).roundToInt()
+                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001}) * 100).roundToInt()
                 }%"
                 2 -> "${item.amount.roundToInt()} kr."
                 else -> ""
