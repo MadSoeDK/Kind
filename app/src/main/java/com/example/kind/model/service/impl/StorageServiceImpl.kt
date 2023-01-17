@@ -3,7 +3,6 @@ package com.example.kind.model.service.impl
 import com.example.kind.model.*
 import com.example.kind.model.User
 import com.example.kind.model.service.StorageService
-import com.google.firebase.Timestamp
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
@@ -12,13 +11,13 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class StorageServiceImpl : StorageService {
     private val database = Firebase.firestore
-    private var currentUser = FirebaseAuth.getInstance().currentUser
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+
+    val subscription = Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
 
     // Users
     override suspend fun addUser(user: User) {
@@ -26,40 +25,9 @@ class StorageServiceImpl : StorageService {
             val documentId = currentUser?.uid.toString()
 
             database.collection("Users").document("$documentId").collection("Subscriptions")
+                .add(subscription)
             database.collection("Users").document("$documentId").collection("Donations")
-        }
-    }
-
-    override suspend fun changeUser(user: User, uid : String) {
-        database.collection("Users").document(uid).set(user)
-    }
-
-    override suspend fun updateCurrentUser(){
-        currentUser = FirebaseAuth.getInstance().currentUser
-    }
-
-    override suspend fun getUIDofCurrentUser(): String{
-        return currentUser?.uid ?: ""
-    }
-
-    override suspend fun addToPortfolio(charityId: String){
-
-        val checkList = getSubscriptions()
-        var Subscribed = false
-
-        // Check if you are already subscribed
-        checkList.forEach{
-            if (it.charityID == charityId)
-            {
-                Subscribed = true
-            }
-        }
-
-        // If not, then add it to your subscriptions
-        if (!Subscribed) {
-            val subscription = Subscription(0.0,charityId,charityId, Timestamp(1,1))
-
-            database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").add(subscription)
+                .add(subscription)
         }
     }
 
@@ -145,6 +113,9 @@ class StorageServiceImpl : StorageService {
 
     // Charity
     override suspend fun getCharity(id: String): Charity?{
+
+        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+
         try {
             return database.collection("Charity").document(id).get().await().toObject()
         }
@@ -189,31 +160,8 @@ class StorageServiceImpl : StorageService {
             .toObjects()
     }
 
-    override suspend fun getHomeArticles(id: String): List<Article>{
-        // Setup vairables
-        var subscriptions = listOf<Subscription>()
-        var charities = listOf<Charity?>()
-        var articlePointers = listOf<String>()
-        var articleList: List<Article> = listOf()//database.collection("Articles").limit(5).get().await().toObjects()
-
-        // Get the subscriptions from User
-        subscriptions = database.collection("Users").document(currentUser!!.uid).collection("Subscriptions").get().await().toObjects()
-
-        // Get charities from subscription
-        subscriptions.forEach(){
-
-            charities += database.collection("Charity").document(it.charityID).get().await().toObject<Charity>()
-        }
-
-        // Get article pointers from charities
-        charities.forEach(){
-
-            articleList += database.collection("Charity").document(it!!.id).collection("Articles").get().await().toObjects()
-        }
-
-        // article
-
-        return articleList
+    override suspend fun getHomeArticles(id: String): List<Article> {
+        return database.collection("Articles").limit(5).get().await().toObjects()
     }
 
     override suspend fun addCharityArticle(articleContent: String, charity: String) {

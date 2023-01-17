@@ -13,9 +13,9 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -30,10 +30,10 @@ import com.example.kind.viewModel.*
 import com.example.kind.view.signup_screens.*
 import com.example.kind.view.main_screens.*
 import com.example.kind.view.main_screens.ArticleScreen
+import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
-import java.util.*
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Root : HomeScreens("root", Icons.Filled.Favorite)
@@ -59,7 +59,6 @@ sealed class SignupScreens(val route: String) {
     object CreatePortfolio : SignupScreens("create_portfolio")
     object SetAmount : SignupScreens("portfolio_amount")
     object SetFreq : SignupScreens("portfolio_freq")
-    object Charity : SignupScreens("charity")
     object BuildPortfolio : SignupScreens("build_portfolio")
     object Summary : SignupScreens("portfolio_summary")
 }
@@ -174,8 +173,7 @@ fun NavGraphBuilder.signupNavGraph(
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
-        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
-        navController = navController
+        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) }
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -186,7 +184,8 @@ fun NavGraphBuilder.signupNavGraph(
                 content = {
                     PersonalInformationScreen(
                         viewModel = signupViewModel,
-                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) }
+                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) },
+                        appViewModel = appViewModel
                     ) {
                         navController.navigate(AuthenticationScreens.Root.route)
                     }
@@ -197,7 +196,7 @@ fun NavGraphBuilder.signupNavGraph(
         composable(route = SignupScreens.CreatePortfolio.route) {
             SignUpIntroScreen(
                 navigateToPortfolio = { navController.navigate(SignupScreens.SetAmount.route) },
-                navigateToHome = { navController.navigate(SignupScreens.Summary.route) }
+                navigateToHome = { navController.navigate(HomeScreens.Root.route) }
             )
         }
 
@@ -223,33 +222,15 @@ fun NavGraphBuilder.signupNavGraph(
 
         composable(route = SignupScreens.BuildPortfolio.route) {
             PortfolioBuilderScreen(
-                viewModel = signupViewModel,
                 navigateToPortfolioBuilder = { navController.navigate(SignupScreens.BuildPortfolio.route) },
                 next = { navController.navigate(SignupScreens.Summary.route) },
-                back = { navController.navigate(SignupScreens.SetFreq.route) }
-            )
-        }
-
-        composable(
-            SignupScreens.Charity.route + "/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
-        ) { NavBackStackEntry ->
-            Screen(
-                content = {
-                    CharityScreen(
-                        viewModel = CharityViewModel(
-                            navController = navController,
-                            id = NavBackStackEntry.arguments!!.getString("id", "")
-                        ),
-                    )
-                }
+                back = { navController.navigate(SignupScreens.Summary.route) }
             )
         }
 
         composable(route = SignupScreens.Summary.route) {
             Screen(content = {
                 SummaryScreen(
-                    viewModel = signupViewModel,
                     next = { navController.navigate(HomeScreens.Root.route) },
                     back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
                 )
@@ -332,11 +313,7 @@ fun KindNavigationBar(
                         contentDescription = null
                     )
                 },
-                label = { Text(text = screen.route.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.getDefault()
-                    ) else it.toString()
-                }) },
+                label = { Text(text = screen.route) },
                 selected = destination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = { navController.navigate(screen.route) {
                     restoreState = true

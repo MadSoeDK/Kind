@@ -48,4 +48,14 @@ class HomeViewModel(
     fun getDonatedAmount(): String {
         return 1534.toString() + " kr."
     }
+
+    fun getCharities(): List<com.example.kind.model.Charity> {
+        println("Charities Passed: "+data.value.charities.toString())
+        return data.value.charities//getFakeCharities()
+    }
+
+    fun getArticles(): List<com.example.kind.model.Article> {
+        println("Charities Passed: "+data.value.articles.toString())
+        return data.value.articles//getFakeArticles()
+    }
 }

@@ -14,24 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.PortfolioTemplateCard
 import com.example.kind.view.theme.Typography
-import com.example.kind.viewModel.SignupViewModel
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.example.kind.HomeScreens
-import com.example.kind.SignupScreens
-import com.example.kind.view.composables.KindCharityCard
-import com.example.kind.view.main_screens.CharityScreen
-import com.example.kind.viewModel.CharityViewModel
 
 @ExperimentalFoundationApi
 @Composable
 fun PortfolioBuilderScreen(
-    viewModel: SignupViewModel,
     navigateToPortfolioBuilder: () -> Unit,
     next: () -> Unit,
     back: () -> Unit
 ) {
-    val state by viewModel.data.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,13 +43,13 @@ fun PortfolioBuilderScreen(
         }
 
         LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp), content = {
-            state.forEach {item {
-                KindCharityCard(
-                Title = it.name,
-                Body = it.desc,
-                iconImage = it.iconImage,
-                onClick = { viewModel.navController.navigate(SignupScreens.Charity.route + "/" + it.id) }
-            ) }}
+            items(6 /*TODO: Needs to be adaptive based on the templates*/) {
+                PortfolioTemplateCard(
+                    Title = "Red Cross",
+                    Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    OrganizationIcon = painterResource(id = R.drawable.bekindsplashart1),
+                )
+            }
         })
 
         /*Column(
@@ -108,7 +98,7 @@ fun PortfolioBuilderScreen(
         Column(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
-        ) {/*
+        ) {
             OutlinedButton(
                 onClick = {/*navigateToPortfolioBuilder()*/ next() },
                 modifier = Modifier.width(300.dp)
@@ -119,7 +109,7 @@ fun PortfolioBuilderScreen(
                     fontSize = Typography.labelLarge.fontSize,
                     color = Typography.headlineLarge.color
                 )
-            }*/
+            }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier

@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.kind.model.service.impl.AccountServiceImpl
-import com.example.kind.model.service.impl.StorageServiceImpl
-import com.example.kind.viewModel.SignupViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +15,7 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance()),
-    private val storage: StorageServiceImpl = StorageServiceImpl()
+    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
 ) : ViewModel() {
 
     var loggedIn by mutableStateOf(auth.hasUser)
@@ -27,13 +24,27 @@ class AppViewModel(
         viewModelScope.launch {
             try {
                 auth.signOut()
-                storage.updateCurrentUser()
-                navController.navigate(AuthenticationScreens.Root.route)
                 println("Successfully logged out")
             } catch (e: Exception) {
-                println("Error logging out" + e.printStackTrace())
+                println("Error logged in" + e.printStackTrace())
             }
         }
+        navController.navigate(AuthenticationScreens.Root.route)
+    }
+
+    fun onSignUp(data: Map<String, String>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                auth.createUserWithEmailAndPassword(
+                    data.getValue("Email"),
+                    data.getValue("Password")
+                )
+                println("New user created")
+            } catch (e: Exception) {
+                println("Could not sign in: " + e.printStackTrace())
+            }
+        }
+        navController.navigate(AuthenticationScreens.About.route)
     }
 
     fun navigate(route: String) {

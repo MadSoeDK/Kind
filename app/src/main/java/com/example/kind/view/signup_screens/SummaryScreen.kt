@@ -18,13 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
 import com.example.kind.model.Portfolio
+import com.example.kind.model.Subscription
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
-import com.example.kind.viewModel.SignupViewModel
 
 @Composable
 fun SummaryScreen(
-    viewModel: SignupViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -84,7 +83,6 @@ fun SummaryScreen(
                 }
                 Text(
                     text = value,
-                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 14.sp,
                     textAlign = alignment,
                     modifier = Modifier.padding(0.dp, 20.dp),
@@ -168,9 +166,7 @@ fun SummaryScreen(
             TextButton(onClick = { back() }) {
                 Text("← Back")
             }
-            Button(onClick = {
-                viewModel.addDataToUser()
-                next() }) {
+            Button(onClick = { next() }) {
                 Text("Next →")
             }
         }
