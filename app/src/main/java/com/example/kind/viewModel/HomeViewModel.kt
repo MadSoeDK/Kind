@@ -38,10 +38,10 @@ class HomeViewModel(
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()
-                    //val articles = storage.getHomeArticles(charities.get(0).id)
+                val articles = storage.getHomeArticles(charities.get(0).id)
                 it.copy(
                     amountDonated = data.value.amountDonated,
-                    //articles = articles,
+                    articles = articles,
                     charities = charities//data.value.charities
                 )
             }

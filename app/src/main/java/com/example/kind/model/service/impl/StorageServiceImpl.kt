@@ -22,9 +22,6 @@ import javax.inject.Singleton
 class StorageServiceImpl(
     var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 ) : StorageService {
-    val subscription =
-        Subscription(50.0, "Knæk Cancer", "213213", com.google.firebase.Timestamp.now())
-
     // Users
     override suspend fun addUser(user: User) {
         Firebase.firestore.collection("Users").add(user).addOnSuccessListener { documentReference ->
@@ -125,13 +122,13 @@ class StorageServiceImpl(
 
     // Subscriptions
     override suspend fun addSubscription(amount: Double, user: String, charity: String) {
-        val charityDocRef = database.collection("Charity").document(charity)
-        val userDocRef = database.collection("User").document(user)
+        val charityDocRef = Firebase.firestore.collection("Charity").document(charity)
+        val userDocRef = Firebase.firestore.collection("User").document(user)
 
-        val date = com.google.firebase.Timestamp.now()
+        val date = Timestamp.now()
         val id = UUID.randomUUID().toString()
 
-        database.runTransaction { transaction ->
+        Firebase.firestore.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
             val charityID = charitySnapshot.getString("ID")!!
             val subscription = Subscription(amount, charityID, id, date)

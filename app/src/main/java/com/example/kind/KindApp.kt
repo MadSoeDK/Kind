@@ -73,15 +73,15 @@ fun KindApp(
     auth: AccountServiceImpl
 ) {
     val navController = rememberNavController()
-    val appViewModel = AppViewModel(navController, auth)
+    val appViewModel = AppViewModel(navController, auth, storage)
     paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
         startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage)
-        authNavGraph(navController)
-        signupNavGraph(navController, appViewModel)
+        authNavGraph(navController, auth, storage)
+        signupNavGraph(navController)
     }
 }
 
@@ -188,7 +188,6 @@ fun NavGraphBuilder.homeNavGraph(
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.signupNavGraph(
     navController: NavController,
-    appViewModel: AppViewModel
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
@@ -280,8 +279,10 @@ fun NavGraphBuilder.signupNavGraph(
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
+    auth: AccountServiceImpl,
+    storage: StorageServiceImpl
 ) {
-    val loginViewModel = LoginViewModel(navController)
+    val loginViewModel = LoginViewModel(navController, auth = auth, storage = storage)
     navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route
