@@ -39,7 +39,7 @@ fun ExplorerScreen(
         if (state.isEmpty()) {
             CircularProgressIndicator()
         } else {
-            LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(800.dp), content = {
+            LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(600.dp)) {
                 state.forEach {
                     item {
                         KindCharityCard(
@@ -52,7 +52,7 @@ fun ExplorerScreen(
                         )
                     }
                 }
-            })
+            }
         }
     }
 }

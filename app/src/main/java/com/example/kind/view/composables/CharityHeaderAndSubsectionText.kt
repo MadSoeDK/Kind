@@ -27,7 +27,11 @@ import com.example.kind.viewModel.ExplorerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<CharityCategory>, viewModel: ExplorerViewModel) {
+fun CharityHeaderAndSubsectionText(
+    Title: String,
+    Categories: Array<CharityCategory>,
+    viewModel: ExplorerViewModel
+) {
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(CharityCategory.All) }
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -37,16 +41,13 @@ fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<CharityCateg
             .padding(20.dp, 5.dp),
         verticalArrangement = Arrangement.Top, Alignment.Start
     ) {
-        Row(
-            modifier = Modifier.padding(0.dp, 20.dp)
-        ) {
-            Text(
-                text = Title,
-                fontWeight = Typography.headlineLarge.fontWeight,
-                fontSize = Typography.headlineSmall.fontSize,
-                color = MaterialTheme.colorScheme.secondary
-            )
-        }
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(
+            text = Title,
+            fontWeight = Typography.headlineLarge.fontWeight,
+            fontSize = Typography.headlineSmall.fontSize,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier.horizontalScroll(rememberScrollState()),
             verticalAlignment = Alignment.CenterVertically
@@ -54,16 +55,14 @@ fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<CharityCateg
             Categories.forEach {
                 Box(
                     modifier = Modifier
-                        .padding(horizontal = 15.dp)
                         .clickable {
                             onOptionSelected(it)
                             viewModel.getCharitiesByCategory(it.toString())
-                            println("category: " + it.toString())
                         }
                         .indicatorLine(
                             enabled = it != selectedOption,
                             colors = TextFieldDefaults.textFieldColors(
-                                focusedIndicatorColor = Color.Black,
+                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
                                 unfocusedIndicatorColor = Color.Transparent
                             ),
                             isError = false,
@@ -74,11 +73,13 @@ fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<CharityCateg
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
+                        modifier = Modifier.padding(4.dp),
                         text = it.name.replace('_', ' '),
                         fontWeight = if (it != selectedOption) MaterialTheme.typography.bodyLarge.fontWeight else MaterialTheme.typography.bodyMedium.fontWeight,
                         fontSize = Typography.labelLarge.fontSize,
                     )
                 }
+                Spacer(modifier = Modifier.width(15.dp))
             }
         }
     }

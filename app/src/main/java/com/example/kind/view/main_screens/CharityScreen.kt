@@ -41,10 +41,11 @@ fun CharityScreen(
             modifier = Modifier.fillMaxSize()
         ) {
         if (state.id.isEmpty()) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp), horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = Modifier.fillMaxWidth().height(500.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center)
+            {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         } else {
