@@ -18,7 +18,8 @@ import com.example.kind.viewModel.ProfileViewModel
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    transactionHistory: () -> Unit
 ) {
     val updateChangesOpenDialog = remember { mutableStateOf(false) }
     val deleteAccountOpenDialog = remember { mutableStateOf(false) }
@@ -119,6 +120,7 @@ fun ProfileScreen(
                 Text("Delete User")
             }
             KindButton(onClick = onLogout, "Log Out")
+            KindButton(onClick = transactionHistory, "Transaction history")
         } else {
             ReSignIn(viewModel = viewModel, onLogout)
         }

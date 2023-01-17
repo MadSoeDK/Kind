@@ -45,6 +45,7 @@ sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Charity : HomeScreens("charity", Icons.Filled.Favorite)
     object Article : HomeScreens("article", Icons.Filled.Favorite)
     object Payment : HomeScreens("payment", Icons.Filled.Favorite)
+    object TransactionHistory : HomeScreens("transaction_history", Icons.Filled.Favorite)
 }
 
 sealed class AuthenticationScreens(val route: String) {
@@ -133,7 +134,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(HomeScreens.Profile.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) }
-            ) { ProfileScreen(profileViewModel) { appViewModel.onLogout() } }
+            ) { ProfileScreen(viewModel = profileViewModel, onLogout = {appViewModel.onLogout()}, transactionHistory = {navController.navigate(HomeScreens.TransactionHistory.route)} ) }
         }
         composable(HomeScreens.Explorer.route) {
             Screen(
@@ -181,6 +182,18 @@ fun NavGraphBuilder.homeNavGraph(
             arguments = listOf(navArgument("name") { type = NavType.StringType })
         ) {
             PaymentScreen(viewModel = paymentViewModel, it.arguments!!.getString("name", ""))
+        }
+
+        composable(HomeScreens.Profile.route) {
+            Screen(
+                NavigationBar = { KindNavigationBar(navController) }
+            ) { ProfileScreen(viewModel = profileViewModel, onLogout = {appViewModel.onLogout()}, transactionHistory = {navController.navigate(HomeScreens.TransactionHistory.route)} ) }
+        }
+
+        composable(HomeScreens.TransactionHistory.route) {
+            val transactionHistoryViewModel = TransactionHistoryViewModel(storage = storage, navController = navController)
+            Screen{
+            TransactionHistoryScreen(viewModel = transactionHistoryViewModel, back = {navController.navigate(HomeScreens.Profile.route)})}
         }
     }
 }

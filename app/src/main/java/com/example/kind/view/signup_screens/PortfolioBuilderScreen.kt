@@ -39,31 +39,36 @@ fun PortfolioBuilderScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Top,
+        //verticalArrangement = Arrangement.Top,
     ) {
-        Row(
-            modifier = Modifier
-                .padding(20.dp, 20.dp),
-            //.align(Alignment.CenterHorizontally)
-        )
-        {
-            Text(
-                text = "Get started with some of our templates or build your own",
-                fontWeight = Typography.labelLarge.fontWeight,
-                fontSize = Typography.headlineMedium.fontSize,
-                color = MaterialTheme.colorScheme.onBackground
+        Column(
+            verticalArrangement = Arrangement.Top
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(20.dp, 20.dp),
+                //.align(Alignment.CenterHorizontally)
             )
+            {
+                Text(
+                    text = "Get started with your choice of charities",
+                    fontWeight = Typography.labelLarge.fontWeight,
+                    fontSize = Typography.headlineMedium.fontSize,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+
+            LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp), content = {
+                state.forEach {item {
+                    KindCharityCard(
+                        Title = it.name,
+                        Body = it.desc,
+                        iconImage = it.iconImage,
+                        onClick = { viewModel.navController.navigate(SignupScreens.Charity.route + "/" + it.id) }
+                    ) }}
+            })
         }
 
-        LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(450.dp), content = {
-            state.forEach {item {
-                KindCharityCard(
-                Title = it.name,
-                Body = it.desc,
-                iconImage = it.iconImage,
-                onClick = { viewModel.navController.navigate(SignupScreens.Charity.route + "/" + it.id) }
-            ) }}
-        })
 
         /*Column(
             verticalArrangement = Arrangement.SpaceBetween,
@@ -128,10 +133,11 @@ fun PortfolioBuilderScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
+                Spacer(modifier = Modifier.height(50.dp))
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp, 10.dp),
+                        .width(280.dp)
+                        //.padding(10.dp),
                 )
                 {
                     Column(
@@ -141,9 +147,6 @@ fun PortfolioBuilderScreen(
                         TextButton(onClick = { back() }) {
                             Text(
                                 text = "← Back",
-                                fontWeight = Typography.labelLarge.fontWeight,
-                                fontSize = Typography.labelLarge.fontSize,
-                                color = Typography.headlineLarge.color
                             )
                         }
                     }
@@ -154,9 +157,6 @@ fun PortfolioBuilderScreen(
                         Button(onClick = { next() }) {
                             Text(
                                 text = "Next →",
-                                fontWeight = Typography.labelLarge.fontWeight,
-                                fontSize = Typography.labelLarge.fontSize,
-                                color = Typography.headlineSmall.color
                             )
                         }
                     }
