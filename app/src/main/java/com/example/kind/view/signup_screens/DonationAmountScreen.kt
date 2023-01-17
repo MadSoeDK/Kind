@@ -70,8 +70,10 @@ fun DonationAmountScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
-                        Button(onClick = back) {
-                            Text(text = "Back")
+                        TextButton(onClick = { back() }) {
+                            Text(
+                                text = "← Back",
+                            )
                         }
                     }
 
