@@ -17,6 +17,9 @@ import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.SignupViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.style.TextAlign
 import com.example.kind.HomeScreens
 import com.example.kind.SignupScreens
 import com.example.kind.view.composables.KindCharityCard
@@ -31,7 +34,7 @@ fun PortfolioBuilderScreen(
     next: () -> Unit,
     back: () -> Unit
 ) {
-    val state by viewModel.data.collectAsState()
+    val state by viewModel.charityData.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -263,7 +263,9 @@ fun NavGraphBuilder.signupNavGraph(
                     CharityScreen(
                         viewModel = CharityViewModel(
                             navController = navController,
-                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                            id = NavBackStackEntry.arguments!!.getString("id", ""),
+                            onAddToPortfolio = {  },
+                            charities = signupViewModel.portfolioData.collectAsState()
                         ),
                     )
                 }

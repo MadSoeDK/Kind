@@ -20,10 +20,9 @@ import javax.inject.Singleton
 
 @Singleton
 class StorageServiceImpl(
-    val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 ) : StorageService {
     private val database = Firebase.firestore
-    private var currentUser = FirebaseAuth.getInstance().currentUser
      //= FirebaseAuth.getInstance().currentUser
 
     val subscription =
@@ -85,7 +84,7 @@ class StorageServiceImpl(
     override suspend fun updateUser(email: String, password: String) {
         try {
             currentUser!!.updateEmail(email)
-            currentUser.updatePassword(password)
+            currentUser!!.updatePassword(password)
         } catch (e: FirebaseAuthRecentLoginRequiredException) {
             currentUser!!.reauthenticate(
                 EmailAuthProvider.getCredential(
@@ -119,7 +118,7 @@ class StorageServiceImpl(
         } catch (e: FirebaseAuthRecentLoginRequiredException) {
             currentUser?.reauthenticate(
                 EmailAuthProvider.getCredential(
-                    currentUser.email.toString(),
+                    currentUser!!.email.toString(),
                     confirmPassword
                 )
             )
@@ -129,7 +128,7 @@ class StorageServiceImpl(
     }
 
     // Subscriptions
-    /*override suspend fun addSubscription(amount: Double, user: String, charity: String) {
+    override suspend fun addSubscription(amount: Double, user: String, charity: String) {
         val charityDocRef = database.collection("Charity").document(charity)
         val userDocRef = database.collection("User").document(user)
 
@@ -143,7 +142,6 @@ class StorageServiceImpl(
             userDocRef.collection("Subscription").add(subscription)
         }
     }
-     */
 
     override suspend fun deleteSubscription(user: String, subscription: String) {
         database.collection("User").document(user).collection("Subscription").document(subscription)

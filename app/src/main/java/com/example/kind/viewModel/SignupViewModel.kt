@@ -3,6 +3,7 @@ package com.example.kind.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -22,9 +23,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 enum class DonationFrequency {
     Monthly,
@@ -48,9 +46,11 @@ class SignupViewModel(
     private val auth: AccountServiceImpl = AccountServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
     var userIsCreated by mutableStateOf(true)
-    private val _data =
+    private val _charityData =
         MutableStateFlow(listOf<Charity>())
-    val data: StateFlow<List<Charity>> = _data.asStateFlow()
+    val charityData: StateFlow<List<Charity>> = _charityData.asStateFlow()
+    private val _portfolioData = MutableStateFlow(PortState())
+    val portfolioData: StateFlow<PortState> = _portfolioData.asStateFlow()
     var charityList: List<Charity> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
@@ -146,7 +146,7 @@ class SignupViewModel(
     fun getCharities(): List<Charity> {
         viewModelScope.launch {
             try {
-                _data.update {
+                _charityData.update {
                     storage.getCharities()
                 }
             } catch (e: Exception) {
