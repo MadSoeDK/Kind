@@ -61,7 +61,7 @@ sealed class SignupScreens(val route: String) {
     object CreatePortfolio : SignupScreens("create_portfolio")
     object SetAmount : SignupScreens("portfolio_amount")
     object SetFreq : SignupScreens("portfolio_freq")
-    object Charity : SignupScreens("charity")
+    object Charity : SignupScreens("signup_charity")
     object BuildPortfolio : SignupScreens("build_portfolio")
     object Summary : SignupScreens("portfolio_summary")
 }
