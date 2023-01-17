@@ -1,6 +1,7 @@
 package com.example.kind.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.Article
 import com.example.kind.getFakeArticles
@@ -25,13 +26,15 @@ class ArticleViewModel(
     val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
 
     init {
-        GlobalScope.launch {
+        viewModelScope.launch {
             _data.update {
                 val articleData = storage.getArticle(id)
                 it.copy(
                     charityName = articleData!!.charityName,
                     title = articleData.title,
-                    paragraf = articleData.paragraf
+                    paragraf = articleData.paragraf,
+                    iconImage = articleData.iconImage,
+                    mainImage = articleData.mainImage
                 )
             }
         }

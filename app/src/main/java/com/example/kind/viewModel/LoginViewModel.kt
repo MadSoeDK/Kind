@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.HomeScreens
 import com.example.kind.model.service.impl.AccountServiceImpl
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl()
+    private val auth: AccountServiceImpl,
+    private val storage: StorageServiceImpl
 ) : ViewModel() {
     //var isLoggedIn by mutableStateOf(Firebase.auth.currentUser != null)
     var isLoading by mutableStateOf(false)
@@ -54,6 +56,7 @@ class LoginViewModel(
                 navController.navigate(HomeScreens.Root.route) {
                     popUpTo(HomeScreens.Root.route)
                 }
+                storage.updateCurrentUser()
                 //println("Succesfully logged in $isLoggedIn")
                 return@launch
             } catch (e: FirebaseAuthInvalidUserException) {

@@ -81,6 +81,7 @@ fun CharityScreen(
                     model = state.iconImage,
                     contentDescription = null,
                     modifier = Modifier
+                        .absoluteOffset(y = 30.dp)
                         .size(64.dp)
                         .clip(CircleShape)
                         .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
@@ -89,11 +90,8 @@ fun CharityScreen(
                 )
             }
             // Donations, Donors & Picture
-            Row(
-                modifier = Modifier
-                    .padding(10.dp, 5.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
+
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
                 Text(
                     text = state.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
@@ -101,7 +99,6 @@ fun CharityScreen(
                     color = Typography.headlineLarge.color,
                     textAlign = TextAlign.Center
                 )
-            }
 
             //DisplayDonatorsAndDonations(charityViewModel = viewModel)
             Spacer(modifier = Modifier.padding(vertical = 5.dp))
