@@ -105,7 +105,7 @@ fun PaymentScreen(
                             viewModel.isError = true
                             return@KindButton
                         }
-                        viewModel.createPaymentIntent()
+                        viewModel.createPaymentIntent(charityName)
                     },
                     textProvider = "Select Payment Method"
                 )
@@ -127,7 +127,7 @@ fun PaymentScreen(
                             clientSecret = paymentState.clientSecret!!
                         ))
                     },
-                    textProvider = "Pay"
+                    textProvider = "Pay",
                 )
             }
         }

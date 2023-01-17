@@ -16,14 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusTarget
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.kind.HomeScreens
+import com.example.kind.view.composables.KindButton
 import com.example.kind.view.composables.KindButtonEdit
 import com.example.kind.view.composables.KindCard
 import com.example.kind.viewModel.CharityViewModel
@@ -45,7 +44,9 @@ fun CharityScreen(
         ) {
         println("State id " + state.id)
         if (state.id.isEmpty()) {
-            Column(modifier = Modifier.fillMaxWidth().height(500.dp), horizontalAlignment = Alignment.CenterHorizontally,
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .height(500.dp), horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center) {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
@@ -80,6 +81,7 @@ fun CharityScreen(
                     model = state.iconImage,
                     contentDescription = null,
                     modifier = Modifier
+                        .absoluteOffset(y = 30.dp)
                         .size(64.dp)
                         .clip(CircleShape)
                         .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
@@ -88,11 +90,8 @@ fun CharityScreen(
                 )
             }
             // Donations, Donors & Picture
-            Row(
-                modifier = Modifier
-                    .padding(10.dp, 5.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
+
+            Spacer(modifier = Modifier.padding(vertical = 20.dp))
                 Text(
                     text = state.name,
                     fontWeight = Typography.headlineLarge.fontWeight,
@@ -100,7 +99,6 @@ fun CharityScreen(
                     color = Typography.headlineLarge.color,
                     textAlign = TextAlign.Center
                 )
-            }
 
             //DisplayDonatorsAndDonations(charityViewModel = viewModel)
             Spacer(modifier = Modifier.padding(vertical = 5.dp))
@@ -119,15 +117,23 @@ fun CharityScreen(
             Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
             Row(modifier = Modifier.padding(horizontal = 10.dp)) {
-                KindButtonEdit(Onclick = { /*TODO*/ }, TextProvider = "Donate", width = 100)
+                KindButtonEdit(Onclick = { viewModel.navController.navigate(HomeScreens.Payment.route + "/" + viewModel.id) }, TextProvider = "Donate", width = 120)
                 Spacer(modifier = Modifier.padding(horizontal = 10.dp))
-                OutlinedButton(
-                    onClick = { viewModel.addToPortfolio() },
-                    content = { Text(text = "Add to portfolio") },
-                )
+
+                if (!state.inPortfolio) {
+                    OutlinedButton(
+                        onClick = { viewModel.addToPortfolio() },
+                        content = { Text(text = "Add to portfolio") },
+                    )
+                }
+                else
+                {
+                    OutlinedButton(
+                        onClick = { viewModel.removeFromPortfolio()},
+                        content = { Text(text = "Remove from portfolio") },
+                    )
+                }
             }
-
-
 
             Spacer(modifier = Modifier.padding(vertical = 10.dp))
             //DisplayDonatorsAndDonations(charityViewModel = viewModel)
@@ -157,55 +163,55 @@ fun CharityScreen(
         }
     }
 
-    @Composable
-    fun DisplayDonatorsAndDonations(charityViewModel: CharityViewModel) {
-        val state by charityViewModel.data.collectAsState()
-        Row(
+@Composable
+fun DisplayDonatorsAndDonations(charityViewModel: CharityViewModel) {
+    val state by charityViewModel.data.collectAsState()
+    Row(
+        Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .clip(shape = RoundedCornerShape(16.dp)),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
             Modifier
-                .padding(10.dp)
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center)
-                .clip(shape = RoundedCornerShape(16.dp)),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+                .size(120.dp, 40.dp)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                Modifier
-                    .size(120.dp, 40.dp)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = state.donaters.toString() + " Donators",
-                    fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Spacer(modifier = Modifier.padding(15.dp))
-            Box(
-                Modifier
-                    .size(120.dp, 40.dp)
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(16.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = state.donations.toString() + " Donations",
-                    fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Text(
+                textAlign = TextAlign.Center,
+                text = state.donaters.toString() + " Donators",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        Spacer(modifier = Modifier.padding(15.dp))
+        Box(
+            Modifier
+                .size(120.dp, 40.dp)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = state.donations.toString() + " Donations",
+                fontSize = MaterialTheme.typography.headlineSmall.fontSize.times(0.6),
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
+}
 }

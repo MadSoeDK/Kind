@@ -1,6 +1,5 @@
 package com.example.kind
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,10 +10,8 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -25,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
+import com.example.kind.view.auth_screens.ForgotPasswordScreen
 import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
@@ -34,11 +32,8 @@ import com.example.kind.view.main_screens.ArticleScreen
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.stripe.android.PaymentSession
-import com.stripe.android.payments.paymentlauncher.PaymentLauncher
-import com.stripe.android.payments.paymentlauncher.PaymentResult
-import com.stripe.android.paymentsheet.PaymentSheet
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
@@ -66,6 +61,7 @@ sealed class SignupScreens(val route: String) {
     object CreatePortfolio : SignupScreens("create_portfolio")
     object SetAmount : SignupScreens("portfolio_amount")
     object SetFreq : SignupScreens("portfolio_freq")
+    object Charity : SignupScreens("signup_charity")
     object BuildPortfolio : SignupScreens("build_portfolio")
     object Summary : SignupScreens("portfolio_summary")
 }
@@ -73,19 +69,19 @@ sealed class SignupScreens(val route: String) {
 @Composable
 fun KindApp(
     paymentViewModel: PaymentViewModel,
-    storage: StorageServiceImpl
+    storage: StorageServiceImpl,
+    auth: AccountServiceImpl
 ) {
-    val auth = AccountServiceImpl()
     val navController = rememberNavController()
-    val appViewModel = AppViewModel(navController, auth)
+    val appViewModel = AppViewModel(navController, auth, storage)
     paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
-        startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
+        startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage)
-        authNavGraph(navController)
-        signupNavGraph(navController, appViewModel)
+        authNavGraph(navController, auth, storage)
+        signupNavGraph(navController)
     }
 }
 
@@ -192,11 +188,11 @@ fun NavGraphBuilder.homeNavGraph(
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.signupNavGraph(
     navController: NavController,
-    appViewModel: AppViewModel
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
-        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) }
+        navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
+        navController = navController
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -207,8 +203,7 @@ fun NavGraphBuilder.signupNavGraph(
                 content = {
                     PersonalInformationScreen(
                         viewModel = signupViewModel,
-                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) },
-                        appViewModel = appViewModel
+                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) }
                     ) {
                         navController.navigate(AuthenticationScreens.Root.route)
                     }
@@ -219,7 +214,7 @@ fun NavGraphBuilder.signupNavGraph(
         composable(route = SignupScreens.CreatePortfolio.route) {
             SignUpIntroScreen(
                 navigateToPortfolio = { navController.navigate(SignupScreens.SetAmount.route) },
-                navigateToHome = { navController.navigate(HomeScreens.Root.route) }
+                navigateToHome = { navController.navigate(SignupScreens.Summary.route) }
             )
         }
 
@@ -245,15 +240,35 @@ fun NavGraphBuilder.signupNavGraph(
 
         composable(route = SignupScreens.BuildPortfolio.route) {
             PortfolioBuilderScreen(
+                viewModel = signupViewModel,
                 navigateToPortfolioBuilder = { navController.navigate(SignupScreens.BuildPortfolio.route) },
                 next = { navController.navigate(SignupScreens.Summary.route) },
-                back = { navController.navigate(SignupScreens.Summary.route) }
+                back = { navController.navigate(SignupScreens.SetFreq.route) }
+            )
+        }
+
+        composable(
+            SignupScreens.Charity.route + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) { NavBackStackEntry ->
+            Screen(
+                content = {
+                    CharityScreen(
+                        viewModel = CharityViewModel(
+                            navController = navController,
+                            id = NavBackStackEntry.arguments!!.getString("id", ""),
+                            onAddToPortfolio = {  },
+                            charities = signupViewModel.portfolioData.collectAsState()
+                        ),
+                    )
+                }
             )
         }
 
         composable(route = SignupScreens.Summary.route) {
             Screen(content = {
                 SummaryScreen(
+                    viewModel = signupViewModel,
                     next = { navController.navigate(HomeScreens.Root.route) },
                     back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
                 )
@@ -264,7 +279,10 @@ fun NavGraphBuilder.signupNavGraph(
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
+    auth: AccountServiceImpl,
+    storage: StorageServiceImpl
 ) {
+    val loginViewModel = LoginViewModel(navController, auth = auth, storage = storage)
     navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route
@@ -276,17 +294,21 @@ fun NavGraphBuilder.authNavGraph(
             )
         }
         composable(route = AuthenticationScreens.Login.route) {
-            LoginScreen(LoginViewModel(navController))
+            LoginScreen(loginViewModel
+            ) { navController.navigate(AuthenticationScreens.ForgotPassword.route) }
         }
         composable(route = AuthenticationScreens.About.route) {
             AboutKindScreen { navController.navigate(SignupScreens.CreatePortfolio.route) }
+        }
+        composable(route = AuthenticationScreens.ForgotPassword.route) {
+            ForgotPasswordScreen(loginViewModel = loginViewModel) { navController.navigate(AuthenticationScreens.Login.route) }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Screen(
+fun Screen (
     modifier: Modifier = Modifier,
     NavigationBar: @Composable () -> Unit = {},
     FloatingActionButton: @Composable () -> Unit = {},

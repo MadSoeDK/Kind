@@ -30,7 +30,7 @@ fun KindCard(
 ) {
     Card(modifier = Modifier
         .padding(8.dp)
-        .fillMaxWidth()
+        .width(265.dp)
         .height(200.dp)
         .clickable { onClick() }
         .border(
@@ -83,13 +83,13 @@ fun KindCard(
                     Text(
                         text = titleProvider,
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
                         text = subTitleProvider,
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 12.sp
+                        fontSize = 11.sp
                     )
                 }
             }

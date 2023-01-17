@@ -3,6 +3,8 @@ package com.example.kind.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.kind.HomeScreens
+import com.example.kind.model.Article
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +19,7 @@ class HomeViewModel(
 
     // Setup the homeState Dataclass
     data class HomeState(
-        var amountDonated: Int = 0,
+        var amountDonated: Int = 150,
         var articles: List<com.example.kind.model.Article> = listOf(),
         var charities: List<com.example.kind.model.Charity> = listOf()
     )
@@ -36,7 +38,7 @@ class HomeViewModel(
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()
-                val articles = storage.getHomeArticles(charities[0].id)
+                val articles = storage.getHomeArticles(charities.get(0).id)
                 it.copy(
                     amountDonated = data.value.amountDonated,
                     articles = articles,
@@ -45,6 +47,4 @@ class HomeViewModel(
             }
         }
     }
-
-
 }

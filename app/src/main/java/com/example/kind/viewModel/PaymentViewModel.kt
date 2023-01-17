@@ -33,8 +33,6 @@ class PaymentViewModel(
     @ApplicationContext val context: ComponentActivity,
     val storage: StorageServiceImpl,
 ) : ViewModel() {
-    //private val stripe: Stripe by lazy { Stripe(context, PaymentConfiguration.getInstance(context).publishableKey) }
-
     lateinit var navigateOnPaymentSuccess: () -> Unit
 
     private val _paymentState = MutableStateFlow(PaymentState())
@@ -95,11 +93,11 @@ class PaymentViewModel(
         )
     }
 
-    fun createPaymentIntent() {
+    fun createPaymentIntent(charityName: String) {
         viewModelScope.launch {
             paymentPending = true
             val amount = _paymentState.value.amount?.toDouble()!!
-            val task = storage.createStripePaymentIntent(amount*100, "dkk")
+            val task = storage.createStripePaymentIntent(amount*100, "dkk", charityName)
             val result = task.await()
             withContext(Dispatchers.IO) {
                 Thread.sleep(5000)

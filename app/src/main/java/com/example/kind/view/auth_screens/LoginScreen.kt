@@ -16,6 +16,7 @@ import com.example.kind.viewModel.LoginViewModel
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
+    navigateToResetPassword: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -41,25 +42,18 @@ fun LoginScreen(
                 onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
                 textProvider = "Login"
             )
-            /*Button(
-                modifier = Modifier
-                    .width(280.dp),
-                onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
-            ) {
-                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
-            }*/
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Forgot password",
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.clickable { /* TODO */ }
+                modifier = Modifier.clickable {
+                    navigateToResetPassword()
+                }
             )
         } else {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(20.dp))
         }
         Spacer(modifier = Modifier.height(40.dp))
-
     }
-
 }

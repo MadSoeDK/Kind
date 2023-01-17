@@ -48,7 +48,9 @@ class PortfolioViewModel : ViewModel() {
     fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                println("Current user " + storage.currentUser?.uid)
                 val subscriptions = storage.getSubscriptions()
+                println(subscriptions.toString())
                 _data.update {
                     _data.value.copy(
                         subscription = subscriptions,
