@@ -59,7 +59,7 @@ fun HomeScreen(
                             subTitleProvider = element.title,
                             iconImage = element.iconImage,
                             mainImage = element.mainImage,
-                            onClick = { viewModel.navController.navigate("home") }) //TODO: Home for now!
+                            onClick = { viewModel.navController.navigate( HomeScreens.Article.route + "/" + element.id) })
                     }
                 }
             }

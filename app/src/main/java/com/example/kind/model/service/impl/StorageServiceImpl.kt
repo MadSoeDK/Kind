@@ -57,7 +57,7 @@ class StorageServiceImpl(
         }
         // If not, then add it to your subscriptions
         if (!Subscribed) {
-            val subscription = Subscription(0.0, charityId, charityId, Timestamp(1, 1))
+            val subscription = Subscription(10.0, charityId, charityId, Timestamp(1, 1))
 
             Firebase.firestore.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
                 .add(subscription)
