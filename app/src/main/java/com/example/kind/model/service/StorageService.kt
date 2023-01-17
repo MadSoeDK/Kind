@@ -15,6 +15,7 @@ interface StorageService {
     suspend fun deleteUser(confirmEmail: String, confirmPassword: String)
     suspend fun getSubscriptions() : List<Subscription>
     suspend fun addSubscription(amount: Double, user: String, charity: String)
+    suspend fun getDonationsAmount(): Int
 
     // Subscriptions
     suspend fun removeFromPortfolio(charityId: String)

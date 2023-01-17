@@ -125,6 +125,16 @@ class StorageServiceImpl(
         }
     }
 
+    override suspend fun getDonationsAmount(): Int{
+
+        val donationList =  Firebase.firestore.collection("stripe_customers").document(currentUser!!.uid)
+                            .collection("payments").get().await().toObjects<Payment>()
+
+        return donationList.sumOf {
+            it.amount!!.toInt()/100
+        }
+    }
+
     // Subscriptions
     override suspend fun addSubscription(amount: Double, user: String, charity: String) {
         val charityDocRef = Firebase.firestore.collection("Charity").document(charity)

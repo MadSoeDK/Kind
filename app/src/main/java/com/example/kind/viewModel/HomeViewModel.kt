@@ -39,8 +39,9 @@ class HomeViewModel(
             _data.update {
                 val charities = storage.getCharities()
                 val articles = storage.getHomeArticles(charities.get(0).id)
+                val donationAmount = storage.getDonationsAmount()
                 it.copy(
-                    amountDonated = data.value.amountDonated,
+                    amountDonated = donationAmount,
                     articles = articles,
                     charities = charities
                 )
