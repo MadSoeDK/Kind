@@ -129,7 +129,7 @@ class SignupViewModel(
     fun addDataToUser(){
         viewModelScope.launch {
             try {
-                storage.updateCurrentUser()
+                //storage.updateCurrentUser()
                 storage.changeUser(generateUser(), storage.getUIDofCurrentUser())
             }
             catch (e: Exception) {
