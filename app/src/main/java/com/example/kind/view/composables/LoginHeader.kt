@@ -23,7 +23,7 @@ fun LoginHeader(titleText: String) {
         Image(
             painterResource(id = R.drawable.bekindsplashart1),
             contentDescription = "Kind Logo",
-            modifier = Modifier.size(250.dp)
+            modifier = Modifier.size(150.dp)
         )
         Spacer(modifier = Modifier.height(30.dp))
         Text(
