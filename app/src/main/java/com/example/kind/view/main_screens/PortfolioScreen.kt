@@ -220,8 +220,13 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                 onValueChange = { value: String ->
                                     text = value
                                     var numericValue = 10.0
+
+                                    // Input validation
                                     try {
                                         numericValue = value.toDouble()
+                                        if (numericValue < 0){
+
+                                        }
                                     } catch (e: Exception){
                                         numericValue = 10.0
                                         if (text.isNotEmpty()) {
@@ -238,7 +243,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                     }
                                 },
                                 singleLine = true,
-                                label = { Text(subscription.charityID) },
+                                label = { Text(subscription.charityName + " (DKK)") },
                             )
                         }
                     }
@@ -250,11 +255,12 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Total: " + sum.toString(),
+                text = "Total: " + sum.roundToInt().toString() + " DKK",
                 fontWeight = Typography.labelLarge.fontWeight,
                 fontSize = Typography.displayMedium.fontSize,
                 color = Typography.labelLarge.color,
             )
+            Spacer(modifier = Modifier.padding(0.dp, 5.dp))
             Text(
                 text = "The changes will take effect next month.",
                 fontWeight = Typography.displayMedium.fontWeight,
