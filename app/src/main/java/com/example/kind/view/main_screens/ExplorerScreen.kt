@@ -28,7 +28,6 @@ fun ExplorerScreen(
         //TODO: Seperate categories composable
         CharityHeaderAndSubsectionText(
             Title = "Charity Explorer",
-            Subtitle = "Get to know other charities better",
             Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
         )
 

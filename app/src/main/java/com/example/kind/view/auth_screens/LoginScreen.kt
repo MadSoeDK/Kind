@@ -1,5 +1,7 @@
 package com.example.kind.view.auth_screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,14 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.kind.AuthenticationScreens
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.KindButton
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.viewModel.LoginViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
+    navigateToResetPassword: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -41,25 +47,18 @@ fun LoginScreen(
                 onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
                 textProvider = "Login"
             )
-            /*Button(
-                modifier = Modifier
-                    .width(280.dp),
-                onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
-            ) {
-                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
-            }*/
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Forgot password",
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.clickable { /* TODO */ }
+                modifier = Modifier.clickable {
+                    navigateToResetPassword()
+                }
             )
         } else {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(20.dp))
         }
         Spacer(modifier = Modifier.height(40.dp))
-
     }
-
 }

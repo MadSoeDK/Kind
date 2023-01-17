@@ -13,29 +13,20 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.view.theme.Typography
 
 @Composable
-fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: Array<String>) {
+fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<String>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(25.dp, 50.dp),
+            .padding(25.dp, 5.dp),
         verticalArrangement = Arrangement.Top, Alignment.Start
     ) {
         Row(
-            modifier = Modifier.padding(0.dp, 10.dp)
+            modifier = Modifier.padding(0.dp, 20.dp)
         ) {
             Text(
                 text = Title,
                 fontWeight = Typography.headlineLarge.fontWeight,
                 fontSize = Typography.headlineSmall.fontSize,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-        Row(modifier = Modifier.padding(0.dp, 10.dp)) {
-            Text(
-                text = Subtitle,
-                fontWeight = Typography.headlineMedium.fontWeight,
-                fontSize = Typography.headlineSmall.fontSize,
-                //TODO Need to find correct color
                 color = MaterialTheme.colorScheme.secondary
             )
         }
@@ -58,7 +49,6 @@ fun CharityHeaderAndSubsectionText(Title: String, Subtitle: String, Categories: 
 fun CharityHeaderAndSubsectionTextPreview() {
     CharityHeaderAndSubsectionText(
         Title = "Charity Explorer",
-        Subtitle = "Get to know other charities better",
         Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
     )
 }

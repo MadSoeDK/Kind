@@ -33,9 +33,13 @@ fun KindNewsCard(
             .padding(8.dp)
             .width(350.dp)
             .height(550.dp)
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        Row(modifier = Modifier.padding(0.dp, 5.dp))
-        {
+        Row(
+            modifier = Modifier
+            .padding(0.dp, 5.dp)
+            .background(MaterialTheme.colorScheme.background)
+        ) {
             Image(
                 painter = OrganizationIcon,
                 contentDescription = null,

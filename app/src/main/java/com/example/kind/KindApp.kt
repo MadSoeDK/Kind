@@ -1,18 +1,17 @@
 package com.example.kind
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.capitalize
@@ -23,7 +22,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.model.service.impl.AccountServiceImpl
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
+import com.example.kind.view.auth_screens.ForgotPasswordScreen
 import com.example.kind.view.auth_screens.LoginScreen
 import com.example.kind.view.main_screens.PortfolioScreen
 import com.example.kind.viewModel.*
@@ -33,6 +35,11 @@ import com.example.kind.view.main_screens.ArticleScreen
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.stripe.android.PaymentSession
+import com.stripe.android.payments.paymentlauncher.PaymentLauncher
+import com.stripe.android.payments.paymentlauncher.PaymentResult
+import com.stripe.android.paymentsheet.PaymentSheet
 import java.util.*
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
@@ -43,6 +50,7 @@ sealed class HomeScreens(val route: String, var icon: ImageVector) {
     object Profile : HomeScreens("profile", Icons.Filled.AccountBox)
     object Charity : HomeScreens("charity", Icons.Filled.Favorite)
     object Article : HomeScreens("article", Icons.Filled.Favorite)
+    object Payment : HomeScreens("payment", Icons.Filled.Favorite)
 }
 
 sealed class AuthenticationScreens(val route: String) {
@@ -65,14 +73,19 @@ sealed class SignupScreens(val route: String) {
 }
 
 @Composable
-fun KindApp() {
+fun KindApp(
+    paymentViewModel: PaymentViewModel,
+    storage: StorageServiceImpl
+) {
+    val auth = AccountServiceImpl()
     val navController = rememberNavController()
-    val appViewModel = AppViewModel(navController)
+    val appViewModel = AppViewModel(navController, auth)
+    paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
         startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
-        homeNavGraph(navController, appViewModel)
+        homeNavGraph(navController, appViewModel, paymentViewModel, storage)
         authNavGraph(navController)
         signupNavGraph(navController, appViewModel)
     }
@@ -81,9 +94,11 @@ fun KindApp() {
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
-    appViewModel: AppViewModel
+    appViewModel: AppViewModel,
+    paymentViewModel: PaymentViewModel,
+    storage: StorageServiceImpl
 ) {
-    val homeViewModel = HomeViewModel(navController)
+    val homeViewModel = HomeViewModel(navController, storage)
     val portfolioViewModel = PortfolioViewModel()
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()
@@ -137,12 +152,15 @@ fun NavGraphBuilder.homeNavGraph(
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { NavBackStackEntry ->
             Screen(
+                modifier = Modifier.fillMaxSize(),
                 NavigationBar = { KindNavigationBar(navController) },
                 content = {
                     CharityScreen(
                         viewModel = CharityViewModel(
                             navController = navController,
-                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                            id = NavBackStackEntry.arguments!!.getString("id", ""),
+                            onAddToPortfolio = { portfolioViewModel.getSubscriptions() },
+                            charities = portfolioViewModel.data.collectAsState()
                         ),
                     )
                 }
@@ -163,6 +181,12 @@ fun NavGraphBuilder.homeNavGraph(
                     )
                 }
             )
+        }
+        composable(
+            HomeScreens.Payment.route + "/{name}",
+            arguments = listOf(navArgument("name") { type = NavType.StringType })
+        ) {
+            PaymentScreen(viewModel = paymentViewModel, it.arguments!!.getString("name", ""))
         }
     }
 }
@@ -261,6 +285,7 @@ fun NavGraphBuilder.signupNavGraph(
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
 ) {
+    val loginViewModel = LoginViewModel(navController)
     navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route
@@ -272,10 +297,14 @@ fun NavGraphBuilder.authNavGraph(
             )
         }
         composable(route = AuthenticationScreens.Login.route) {
-            LoginScreen(LoginViewModel(navController))
+            LoginScreen(loginViewModel
+            ) { navController.navigate(AuthenticationScreens.ForgotPassword.route) }
         }
         composable(route = AuthenticationScreens.About.route) {
             AboutKindScreen { navController.navigate(SignupScreens.CreatePortfolio.route) }
+        }
+        composable(route = AuthenticationScreens.ForgotPassword.route) {
+            ForgotPasswordScreen(loginViewModel = loginViewModel) { navController.navigate(AuthenticationScreens.Login.route) }
         }
     }
 }
@@ -283,30 +312,23 @@ fun NavGraphBuilder.authNavGraph(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Screen(
+    modifier: Modifier = Modifier,
     NavigationBar: @Composable () -> Unit = {},
     FloatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         bottomBar = { NavigationBar() },
-        floatingActionButton = { FloatingActionButton() },
-        content = {
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                content(it)
-            }
+        floatingActionButton = { FloatingActionButton() }
+    ) {
+        Column(
+            modifier = modifier
+                .padding(it)
+                .verticalScroll(rememberScrollState())
+        ) {
+            content(it)
         }
-    )
-}
-
-@Composable
-fun SigninScreen(
-
-) {
-
+    }
 }
 
 @Composable

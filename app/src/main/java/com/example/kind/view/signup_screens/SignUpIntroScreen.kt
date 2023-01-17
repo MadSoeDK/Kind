@@ -60,5 +60,8 @@ fun SignUpIntroScreen(
         Button(onClick = navigateToPortfolio) {
             Text(text = "Build now")
         }
+        TextButton(onClick = navigateToHome) {
+            Text(text = "Build portfolio later")
+        }
     }
 }

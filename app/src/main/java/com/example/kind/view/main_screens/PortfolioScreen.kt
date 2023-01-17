@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
     Column(
         modifier = Modifier
-            .padding(20.dp, 0.dp)
+            .padding(0.dp, 0.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -57,7 +57,9 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
     val state by viewModel.data.collectAsState()
     HeaderAndText(
         headerProvider = "${state.subscription.sumOf { it.amount }.roundToInt()} kr.",
-        textProvider = "You currently donate ${state.subscription.sumOf { it.amount }.roundToInt()} kr. to ${state.subscription.size} organizations."
+        textProvider = "You donate ${
+            state.subscription.sumOf { it.amount }.roundToInt()
+        } kr. to ${state.subscription.size} organizations."
     )
 
     PieChart(
@@ -174,117 +176,99 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
     val state by viewModel.data.collectAsState()
     var sum by remember { mutableStateOf(state.subscription.sumOf { it.amount }) }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp, 10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(0.dp, 20.dp)
-        ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(1),
-                Modifier.height(330.dp), horizontalArrangement = Arrangement.Start,
-                content = {
-                    state.subscription.forEach { subscription ->
-                        item {
-                            Spacer(modifier = Modifier.padding(0.dp, 20.dp))
-                            Text(
-                                text = subscription.charityID,
-                                fontWeight = Typography.headlineMedium.fontWeight,
-                                fontSize = Typography.labelSmall.fontSize.times(1.5),
-                                color = Color.Black,
-                                textAlign = TextAlign.Center,
-                            )
 
-                            var text by remember { mutableStateOf(subscription.amount.toString()) }
-                            Box(
-                                modifier = Modifier.width(40.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                TextField(
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    value = text,
-                                    onValueChange = { value: String ->
-                                        text = value
-                                        if (text.isNotEmpty()) {
-                                            viewModel.updateSubscriptionState(
-                                                subscription,
-                                                value.toDouble()
-                                            )
-                                            sum = state.subscription.sumOf { amount -> amount.amount }
-                                        }
-                                    },
-                                    singleLine = true,
-                                    label = { Text(subscription.charityID) },
-                                )
-                            }
+        Text("Edit your subscription amount for each charity.", textAlign = TextAlign.Center)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            Modifier
+                .padding(0.dp, 20.dp)
+                .height(220.dp), horizontalArrangement = Arrangement.Start,
+            content = {
+                state.subscription.forEach { subscription ->
+                    item {
+                        var text by remember { mutableStateOf(subscription.amount.toString()) }
+                        Box(
+                            modifier = Modifier.padding(0.dp, 10.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            TextField(
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                value = text,
+                                onValueChange = { value: String ->
+                                    text = value
+                                    if (text.isNotEmpty()) {
+                                        viewModel.updateSubscriptionState(
+                                            subscription,
+                                            value.toDouble()
+                                        )
+                                        sum = state.subscription.sumOf { amount -> amount.amount }
+                                    }
+                                },
+                                singleLine = true,
+                                label = { Text(subscription.charityID) },
+                            )
                         }
                     }
-                })
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Total: " + sum.toString(),
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.labelLarge.color,
-                )
-                Text(
-                    text = "The changes will take effect next month.",
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.labelLarge.color,
-                )
-                Spacer(modifier = Modifier.padding(0.dp, 10.dp))
-                val openDialog = remember { mutableStateOf(false) }
-                KindButton(onClick = {
+                }
+            })
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Total: " + sum.toString(),
+                fontWeight = Typography.labelLarge.fontWeight,
+                fontSize = Typography.displayMedium.fontSize,
+                color = Typography.labelLarge.color,
+            )
+            Text(
+                text = "The changes will take effect next month.",
+                fontWeight = Typography.displayMedium.fontWeight,
+                fontSize = Typography.labelLarge.fontSize,
+                color = Typography.labelLarge.color,
+            )
+            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+            val openDialog = remember { mutableStateOf(false) }
+            KindButton(
+                onClick = {
                     viewModel.updateSubscription()
                     openDialog.value = true
-                                     },
-                    textProvider = "Save")
-                /*Button(
-                    onClick = {
-                        viewModel.updateSubscription()
-                        openDialog.value = true
+                },
+                textProvider = "Save Changes"
+            )
+
+            if (openDialog.value == true) {
+                AlertDialog(
+                    onDismissRequest = {
+                        openDialog.value = false
+                        viewModel.popupIsOpen = false
                     },
-                    Modifier
-                        .width(200.dp)
-                        .background(
-                            Typography.headlineLarge.color
+                    title = { Text(text = "Portfolio Update") },
+                    text = {
+                        Text(
+                            text = "Your changes have been saved and your portfolio is now updated!",
+                            fontWeight = FontWeight.Normal
                         )
-                ) {
-                    Text(
-                        text = "Save",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = MaterialTheme.colorScheme.background,
-                    )
-                }*/
-                if (openDialog.value == true) {
-                    AlertDialog(
-                        onDismissRequest = {
+                    },
+                    confirmButton = {
+                        Button(onClick = {
                             openDialog.value = false
                             viewModel.popupIsOpen = false
-                        },
-                        title = { Text(text = "Portfolio Update") },
-                        text = { Text(text = "Your changes have been saved and your portfolio is now updated!") },
-                        confirmButton = {
-                            Button(onClick = {
-                                openDialog.value = false
-                                viewModel.popupIsOpen = false
-                            }) {
-                                Text("Ok")
-                            }
+                        }) {
+                            Text("Ok")
                         }
-                    )
-                }
-                Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+                    },
+                    shape = MaterialTheme.shapes.medium
+                )
             }
+            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
         }
     }
 }
