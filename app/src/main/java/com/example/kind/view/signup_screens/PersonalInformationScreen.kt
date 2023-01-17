@@ -20,7 +20,9 @@ fun PersonalInformationScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
     ) {
         //Text(text = "Start building your portfolio of kindness today", style = Typography.headlineSmall, color = MaterialTheme.colorScheme.onBackground)
         Row(modifier = Modifier.padding(0.dp, 15.dp)) {
@@ -55,4 +57,5 @@ fun PersonalInformationScreen(
             }
         }
     }
+    Spacer(modifier = Modifier.height(40.dp))
 }

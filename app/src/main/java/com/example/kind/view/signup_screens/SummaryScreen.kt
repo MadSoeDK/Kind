@@ -174,6 +174,7 @@ fun SummaryScreen(
                 Text("Next →")
             }
         }
+        Spacer(modifier = Modifier.height(40.dp))
         /*
             TextField(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
