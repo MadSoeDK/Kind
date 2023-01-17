@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -24,13 +25,13 @@ fun <T> PortfolioTable(
 ) {
     Surface(
         modifier = modifier.background(MaterialTheme.colorScheme.background),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         LazyRow(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(30.dp)
         ) {
             items((0 until columnCount).toList()) { columnIndex ->
-                Column {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     (0..data.size).forEach { index ->
                         Surface(
                             //border = BorderStroke(1.dp, Color.LightGray ),
