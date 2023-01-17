@@ -315,7 +315,10 @@ class StorageServiceImpl: StorageService {
             .collection("payments")
             .document(doc.id).get().await().toObject<KindPaymentIntent>()!!
 
-        return payment.client_secret!!
+        if (payment.client_secret == null)
+            throw Exception("Client secret is null")
+
+        return payment.client_secret
     }
 
     private fun changeCharityField(charity: String, fieldName: String, amount: Int) {

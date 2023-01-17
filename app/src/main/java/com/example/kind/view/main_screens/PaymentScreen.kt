@@ -1,12 +1,8 @@
 package com.example.kind.view.main_screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.example.kind.view.composables.KindButton
 import com.example.kind.viewModel.PaymentViewModel
 import com.stripe.android.model.ConfirmPaymentIntentParams
@@ -29,14 +24,10 @@ fun paymentLauncher(
     return PaymentLauncher.rememberLauncher(publishedKey) {
         when(it) {
             is PaymentResult.Completed -> {
-                // Do stuff
-                viewModel.paymentPending = true
                 viewModel.paymentSuccess = true
-                Thread.sleep(3000)
-                viewModel.navigateOnPaymentSuccess()
             }
             else -> {
-                // Other stuff
+                // TODO Error handling
             }
         }
     }
@@ -66,9 +57,20 @@ fun PaymentScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 CircularProgressIndicator()
             } else {
-                Text(text = "Payment succeded")
+                Row {
+                    Text(text = "Payment succeeded")
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Icon(imageVector = Icons.Filled.CheckCircle, contentDescription = "Test")
+                }
+                Text(text = "Thank you for your generosity")
                 Spacer(modifier = Modifier.height(20.dp))
-                Icon(imageVector = Icons.Filled.CheckCircle, contentDescription = "Test")
+                Button(onClick = {
+                    viewModel.paymentPending = false
+                    viewModel.paymentSuccess = false
+                    viewModel.navigateOnPaymentSuccess
+                }) {
+                    Text(text = "Ok")
+                }
             }
         } else {
             Text(text = "Specify amount to donate to $charityName")
@@ -76,14 +78,14 @@ fun PaymentScreen(
             TextField (
                 value = paymentState.amount.toString(),
                 onValueChange = { value ->
-                    viewModel.isError = false
+                    viewModel.textFieldError = false
                     if(value.isNotEmpty())
                         viewModel.updateStateAmount(amount = value.toInt())
                 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                isError = viewModel.isError,
-                supportingText = { if(viewModel.isError) Text(text = "Minimum 10 DKK donation") }
+                isError = viewModel.textFieldError,
+                supportingText = { if(viewModel.textFieldError) Text(text = "Minimum 10 DKK donation") }
             )
             if (paymentState.payIsEnabled == true && paymentState.paymentMethod != null) {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -95,7 +97,7 @@ fun PaymentScreen(
                 KindButton(
                     onClick = {
                         if(paymentState.amount!! < 10) {
-                            viewModel.isError = true
+                            viewModel.textFieldError = true
                             return@KindButton
                         }
                         viewModel.createPaymentIntent(charityName)

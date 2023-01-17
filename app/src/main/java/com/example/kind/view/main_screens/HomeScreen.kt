@@ -34,7 +34,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.padding(0.dp, 10.dp))
         Column(modifier = Modifier.padding(20.dp, 0.dp)) {
             Text(
-                text = "Charity Update",
+                text = "Charity News",
                 color = MaterialTheme.colorScheme.primary,
                 style = Typography.headlineMedium,
                 fontSize = 24.sp

@@ -38,7 +38,7 @@ class PaymentViewModel(
     private val _paymentState = MutableStateFlow(PaymentState())
     val paymentState: StateFlow<PaymentState> = _paymentState
 
-    var isError by mutableStateOf(false)
+    var textFieldError by mutableStateOf(false)
     var paymentPending by mutableStateOf(false)
     var paymentSuccess by mutableStateOf(false)
 
@@ -95,17 +95,24 @@ class PaymentViewModel(
 
     fun createPaymentIntent(charityName: String) {
         viewModelScope.launch {
-            paymentPending = true
-            val amount = _paymentState.value.amount?.toDouble()!!
-            val task = storage.createStripePaymentIntent(amount*100, "dkk", charityName)
-            val result = task.await()
-            withContext(Dispatchers.IO) {
-                Thread.sleep(5000)
-                _paymentState.update { it.copy(clientSecret = storage.getClientSecret(result), payIsEnabled = true) }
+            try {
+                paymentPending = true
+                val amount = _paymentState.value.amount?.toDouble()!!
+                val task = storage.createStripePaymentIntent(amount*100, "dkk", charityName)
+                val result = task.await()
+                withContext(Dispatchers.IO) {
+                    Thread.sleep(5000)
+                    _paymentState.update { it.copy(clientSecret = storage.getClientSecret(result), payIsEnabled = true) }
+                    paymentPending = false
+                    println("State " + _paymentState.value.toString())
+                    paymentSession?.presentPaymentMethodSelection()
+                }
+            } catch (e: Exception) {
                 paymentPending = false
-                println("State " + _paymentState.value.toString())
-                paymentSession?.presentPaymentMethodSelection()
+                println(e.message)
+                e.printStackTrace()
             }
+
         }
     }
 }
