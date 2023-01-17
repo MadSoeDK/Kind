@@ -57,13 +57,3 @@ fun HeaderAndTextWithSelectionFilter(Title: String, Subtitle: String?, Categorie
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun CharityHeaderAndSelectionPreview() {
-    HeaderAndTextWithSelectionFilter(
-        Title = "Charity Explorer",
-        Subtitle = "Get to know other charities better",
-        Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
-    )
-}

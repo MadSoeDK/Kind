@@ -25,7 +25,7 @@ fun ExplorerScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CharityHeaderAndSubsectionText(
-            Title = "Charity Explorer",
+            Title = "Explore the different charities",
             Categories = CharityCategory.values(),
             viewModel = viewModel
         )

@@ -43,7 +43,7 @@ fun CharityHeaderAndSubsectionText(Title: String, Categories: Array<CharityCateg
             Text(
                 text = Title,
                 fontWeight = Typography.headlineLarge.fontWeight,
-                fontSize = Typography.headlineSmall.fontSize,
+                fontSize = Typography.headlineSmall.fontSize.times(0.8),
                 color = MaterialTheme.colorScheme.secondary
             )
         }
