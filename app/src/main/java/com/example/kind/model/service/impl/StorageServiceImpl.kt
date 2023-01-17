@@ -203,6 +203,11 @@ class StorageServiceImpl(
         return Firebase.firestore.collection("Charity").get().await().toObjects()
     }
 
+    override suspend fun getCharitiesByCategory(category: String): List<Charity> {
+        return Firebase.firestore.collection("Charity").whereEqualTo("category", category).get().await().toObjects()
+    }
+
+
     override suspend fun increaseCharityDonationNumber(charity: String) {
         changeCharityField(charity, "Donations", 1)
     }
