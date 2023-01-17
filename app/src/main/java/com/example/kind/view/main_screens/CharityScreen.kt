@@ -42,7 +42,6 @@ fun CharityScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-        println("State id " + state.id)
         if (state.id.isEmpty()) {
             Column(modifier = Modifier
                 .fillMaxWidth()

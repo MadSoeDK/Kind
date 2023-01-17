@@ -23,14 +23,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ArticleViewModel
+import java.time.ZoneId
+import java.util.*
 
 @Composable
 fun ArticleScreen(
@@ -43,10 +47,12 @@ fun ArticleScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+        Box(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.onBackground)
+                .fillMaxWidth()
+                .height(200.dp)
+                .align(Alignment.CenterHorizontally)
         ) {
             IconButton(
                 onClick = { viewModel.navController.popBackStack() },
@@ -58,21 +64,6 @@ fun ArticleScreen(
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
-            Text(
-                text = state.title,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.padding(25.dp)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.onBackground)
-                .fillMaxWidth()
-                .height(200.dp)
-                .align(Alignment.CenterHorizontally)
-        ) {
             AsyncImage(
                 model = state.mainImage,
                 contentDescription = null,
@@ -99,19 +90,70 @@ fun ArticleScreen(
 
                 )
         }
-        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+        Spacer(modifier = Modifier.padding(vertical = 20.dp))
         Row(
             modifier = Modifier
-                .background(color = Color.White)
                 .fillMaxSize()
                 .align(Alignment.CenterHorizontally),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Author: Mads Mikkelsen", fontSize = 14.sp)
+            Text(
+                text = state.title,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                textAlign = TextAlign.Left
+            )
+        }
+        Spacer(modifier = Modifier.padding(vertical = 2.5.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .align(Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Author: ", fontWeight = FontWeight.Bold, fontSize = 14.sp
+            )
+            Text(text = state.author, fontSize = 14.sp)
             Spacer(modifier = Modifier.padding(horizontal = 20.dp))
-            Text(text = "Date: 02-12-2000", fontSize = 14.sp)
+            Text(
+                text = "Date: ", fontWeight = FontWeight.Bold, fontSize = 14.sp
+            )
+            Text(
+                text = "${
+                    state.date.toDate().toInstant().atZone(ZoneId.of("Europe/Paris")).dayOfMonth
+                }. " + "${
+                    state.date.toDate().toInstant()
+                        .atZone(ZoneId.of("Europe/Paris")).month.toString()
+                        .subSequence(0, 1)
+                }" +
+                        "${
+                            state.date.toDate().toInstant()
+                                .atZone(ZoneId.of("Europe/Paris")).month.toString()
+                                .subSequence(0, 3).toString().subSequence(1, 3).toString()
+                                .toLowerCase(Locale.ROOT)
+                        } " +
+                        "${
+                            state.date.toDate().toInstant().atZone(ZoneId.of("Europe/Paris")).year
+                        }", fontSize = 14.sp
+            )
 
+        }
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 30.dp)
+        ) {
+            Text(
+                text = state.paragraf,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Justify
+            )
         }
 
     }
