@@ -16,74 +16,31 @@ import com.example.kind.viewModel.DonationFrequency
 //TODO set button to fixed size, ignoring the content
 @Composable
 fun DonationAmountScreen(
-    next: () -> Unit,
-    back: () -> Unit,
     selectedOption: Int,
     onOptionSelected: (Int) -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween,
+    LoginHeader("How much do you want to donate")
+    listOf(50, 100, 200).forEach {
+        Spacer(modifier = Modifier.height(15.dp))
+        OutlinedButton(
+            onClick = { onOptionSelected(it) },
+            shape = Shapes.extraSmall,
             modifier = Modifier
-                .fillMaxHeight()
-                .width(280.dp),
+                .width(300.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = if (isSystemInDarkTheme()) {
+                    if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outline
+                } else {
+                    if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
+                },
+                contentColor = if (isSystemInDarkTheme()) {
+                    if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground
+                } else {
+                    if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
+                },
+            )
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                LoginHeader("How often will you make a donation")
-                listOf(50, 100, 200).forEach {
-                    Spacer(modifier = Modifier.height(15.dp))
-                    OutlinedButton(
-                        onClick = { onOptionSelected(it) },
-                        shape = Shapes.extraSmall,
-                        modifier = Modifier
-                            .width(300.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            containerColor = if (isSystemInDarkTheme()) {
-                                if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outline
-                            } else {
-                                if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
-                            },
-                            contentColor = if (isSystemInDarkTheme()) {
-                                if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground
-                            } else {
-                                if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
-                            },
-                        )
-                    ) {
-                        Text(text = it.toString())
-                    }
-                }
-            }
-
-            Column {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(horizontalAlignment = Alignment.Start) {
-                        TextButton(onClick = { back() }) {
-                            Text(
-                                text = "← Back",
-                            )
-                        }
-                    }
-
-                    Column(horizontalAlignment = Alignment.End) {
-                        Button(onClick = next) {
-                            Text(text = "Next →")
-                        }
-                    }
-                }
-                Spacer(modifier = Modifier.height(40.dp))
-            }
+            Text(text = it.toString())
         }
     }
 }

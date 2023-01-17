@@ -63,19 +63,6 @@ class PortfolioViewModel(
         popupIsOpen = !popupIsOpen
     }
 
-    /*fun onFormSubmit() {
-        if (formState.validate()) {
-            // TODO: Do something on form submission
-        }
-        //TODO: Add alert for user
-        println("Form submission error!")
-    }*/
-
-    fun getMonthlyDonatedAmount(): String {
-        var amount = 300
-        return amount.toString()
-    }
-
     fun updateSubscription() {
         CoroutineScope(Dispatchers.IO).launch {
             _data.value.subscription.forEach {
@@ -87,10 +74,6 @@ class PortfolioViewModel(
     fun updateSubscriptionState(subscription: Subscription, amount: Double) {
         _data.value.subscription[_data.value.subscription.indexOf(subscription)].amount = amount
         _data.update { _data.value }
-    }
-
-    fun getSpend(): Double {
-        return 10.0
     }
 
     fun getColors(): List<Color> {

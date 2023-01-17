@@ -34,13 +34,7 @@ class StorageServiceImpl: StorageService {
         Firebase.firestore.collection("Users").document(uid).set(user)
     }
 
-
-    override suspend fun getUIDofCurrentUser(): String{
-        return Firebase.auth.currentUser?.uid ?: ""
-    }
-
     override suspend fun addToPortfolio(charityId: String){
-
         val checkList = getSubscriptions()
         var Subscribed = false
         var charity: Charity? = Charity()

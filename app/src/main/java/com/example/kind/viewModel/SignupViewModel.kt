@@ -7,11 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.model.Charity
+import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,7 +31,7 @@ enum class DonationFrequency {
 data class PortfolioState(
     var frequency: DonationFrequency? = null,
     var amount: Int? = 0,
-    var charities: List<Charity>? = null,
+    var subscriptions: List<Subscription> = listOf(),
 )
 
 class SignupViewModel(
@@ -36,16 +39,18 @@ class SignupViewModel(
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
     val navigateOnUserCreate: () -> Unit,
+    val navigateOnPortfolioCreate: () -> Unit,
     private val storage: StorageServiceImpl,
     private val auth: AccountServiceImpl
 ) : ViewModel() {
-    private var portfolioState = MutableStateFlow(PortfolioState())
     private val _charityData = MutableStateFlow(listOf<Charity>())
-
     val charityData: StateFlow<List<Charity>> = _charityData.asStateFlow()
-    private val _portfolioData = MutableStateFlow(PortState())
 
-    val portfolioData: StateFlow<PortState> = _portfolioData.asStateFlow()
+
+    private var _portfolioState = MutableStateFlow(PortState())
+    val portfolioState: StateFlow<PortState> = _portfolioState.asStateFlow()
+
+
     var charityList: List<Charity> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
@@ -56,41 +61,40 @@ class SignupViewModel(
     )
 
     var isLoading by mutableStateOf(false)
+    var amountState by mutableStateOf(0)
+    var frequencyState by mutableStateOf(DonationFrequency.Monthly)
 
     init {
         getCharities()
     }
 
     fun setFrequency(frequency: DonationFrequency) {
-        portfolioState.update { it.copy(frequency = frequency) }
+        frequencyState = frequency
         navigateFreq()
     }
 
     fun setAmount(amount: Int) {
-        portfolioState.update { it.copy(amount = amount) }
+        amountState = amount
         navigateAmount()
     }
 
     private fun generateUser(): User {
         var monthlyPayment = 0
-        monthlyPayment = when (portfolioState.value.frequency) {
+        monthlyPayment = when (frequencyState) {
             DonationFrequency.Monthly -> {
-                portfolioState.value.amount!!
+                amountState
             }
             DonationFrequency.Quarterly -> {
-                portfolioState.value.amount!!.div(3)
+                amountState.div(3)
             }
             DonationFrequency.HalfYearly -> {
-                portfolioState.value.amount!!.div(6)
+                amountState.div(6)
             }
             DonationFrequency.Yearly -> {
-                portfolioState.value.amount!!.div(12)
-            }
-            else -> {
-                0
+                amountState.div(12)
             }
         }
-        return User(formState.getData().getValue("Full name"), monthlyPayment)
+        return User(formState.getData().getOrDefault("Full name", ""), monthlyPayment)
     }
 
     fun onSignUpFormSubmit() {
@@ -106,6 +110,7 @@ class SignupViewModel(
                 isLoading = false
                 navigateOnUserCreate()
             } catch (e: FirebaseAuthUserCollisionException) {
+                isLoading = false
                 formState.fields[1].showError("User already exists")
             } catch (e: Exception) {
                 isLoading = false
@@ -114,11 +119,11 @@ class SignupViewModel(
         }
     }
 
-    fun addDataToUser(){
+    fun addDataToUser() {
         viewModelScope.launch {
             try {
-                //storage.updateCurrentUser()
-                storage.changeUser(generateUser(), storage.getUIDofCurrentUser())
+                storage.changeUser(generateUser(), Firebase.auth.currentUser?.uid!!)
+                navigateOnPortfolioCreate()
             }
             catch (e: Exception) {
                 println(e.printStackTrace())

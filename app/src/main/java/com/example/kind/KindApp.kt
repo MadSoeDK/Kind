@@ -216,7 +216,8 @@ fun NavGraphBuilder.signupNavGraph(
         navController = navController,
         storage = storage,
         auth = auth,
-        navigateOnUserCreate = { navController.navigate(SignupScreens.CreatePortfolio.route) { popUpTo(SignupScreens.CreatePortfolio.route) } }
+        navigateOnUserCreate = { navController.navigate(SignupScreens.CreatePortfolio.route) { popUpTo(SignupScreens.CreatePortfolio.route) } },
+        navigateOnPortfolioCreate = { navController.navigate(HomeScreens.Root.route) { popUpTo(HomeScreens.Root.route) } }
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -239,39 +240,60 @@ fun NavGraphBuilder.signupNavGraph(
         }
 
         composable(route = SignupScreens.CreatePortfolio.route) {
-            SignUpIntroScreen(
-                navigateToPortfolio = { navController.navigate(SignupScreens.SetAmount.route) },
-                navigateToHome = { navController.navigate(SignupScreens.Summary.route) }
-            )
+            Screen {
+                SignUpIntroScreen(
+                    navigateToPortfolio = { navController.navigate(SignupScreens.SetAmount.route) },
+                    navigateToHome = { navController.navigate(SignupScreens.Summary.route) }
+                )
+            }
+
         }
 
         composable(route = SignupScreens.SetAmount.route) {
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(50) }
-            DonationAmountScreen(
-                next = { signupViewModel.setAmount(selectedOption) },
-                back = { navController.navigate(SignupScreens.CreatePortfolio.route) },
-                selectedOption = selectedOption,
-                onOptionSelected = onOptionSelected
-            )
+            Screen(
+                signupNavigation = {
+                    SignupNavigation(
+                        next = { signupViewModel.setAmount(selectedOption) },
+                        back = { navController.popBackStack() }
+                    )
+                }
+            ) {
+                DonationAmountScreen(
+                    selectedOption = selectedOption,
+                    onOptionSelected = onOptionSelected
+                )
+            }
+
         }
 
         composable(route = SignupScreens.SetFreq.route) {
             val (selectedOption, onOptionSelected) = remember { mutableStateOf(DonationFrequency.Monthly) }
-            DonationFreqScreen(
-                next = { signupViewModel.setFrequency(selectedOption) },
-                back = { navController.navigate(SignupScreens.SetAmount.route) },
-                selectedOption,
-                onOptionSelected
-            )
+            Screen(
+                NavigationBar = {
+                    SignupNavigation(
+                        next = { signupViewModel.setFrequency(selectedOption) },
+                        back = { navController.popBackStack() }
+                    )
+                }
+            ) {
+                DonationFreqScreen(selectedOption, onOptionSelected)
+            }
         }
 
         composable(route = SignupScreens.BuildPortfolio.route) {
-            PortfolioBuilderScreen(
-                viewModel = signupViewModel,
-                navigateToPortfolioBuilder = { navController.navigate(SignupScreens.BuildPortfolio.route) },
-                next = { navController.navigate(SignupScreens.Summary.route) },
-                back = { navController.navigate(SignupScreens.SetFreq.route) }
-            )
+            Screen(
+                NavigationBar = {
+                    SignupNavigation(
+                        next = { navController.navigate(SignupScreens.Summary.route) },
+                        back = { navController.popBackStack() }
+                    )
+                }
+            ) {
+                PortfolioBuilderScreen(
+                    viewModel = signupViewModel,
+                )
+            }
         }
 
         composable(
@@ -285,7 +307,7 @@ fun NavGraphBuilder.signupNavGraph(
                             navController = navController,
                             id = NavBackStackEntry.arguments!!.getString("id", ""),
                             onAddToPortfolio = {  },
-                            charities = signupViewModel.portfolioData.collectAsState(),
+                            charities = signupViewModel.portfolioState.collectAsState(),
                             storage = storage
                         ),
                     )
@@ -294,13 +316,18 @@ fun NavGraphBuilder.signupNavGraph(
         }
 
         composable(route = SignupScreens.Summary.route) {
-            Screen(content = {
+            Screen(
+                NavigationBar = {
+                    SignupNavigation(
+                        next = { signupViewModel.addDataToUser() },
+                        back = { navController.popBackStack() }
+                    )
+                }
+            ) {
                 SummaryScreen(
                     viewModel = signupViewModel,
-                    next = { navController.navigate(HomeScreens.Root.route) },
-                    back = { navController.navigate(SignupScreens.BuildPortfolio.route) }
                 )
-            })
+            }
         }
     }
 }
@@ -367,10 +394,12 @@ fun SignupNavigation (
     Column(
         modifier = Modifier
             .padding(0.dp, 15.dp),
-        verticalArrangement = Arrangement.Bottom
+        verticalArrangement = Arrangement.Bottom,
     ) {
         Row(
-            modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp).width(300.dp),
+            modifier = Modifier
+                .padding(0.dp, 10.dp, 0.dp, 0.dp)
+                .width(300.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
