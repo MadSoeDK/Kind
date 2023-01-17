@@ -1,6 +1,7 @@
 package com.example.kind.view.main_screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.example.kind.view.composables.Form
@@ -26,7 +27,22 @@ fun ProfileScreen(
             fields = viewModel.fields,
         )
         KindButton(onClick = { viewModel.onFormSubmit() }, textProvider = "Submit")
-        KindButtonDanger(onClick = { viewModel.deleteUser() }, TextProvider = "Delete User")
-        KindButton(onClick = onLogout, textProvider = "Logout")
+        /*Button(onClick = { viewModel.onFormSubmit() }) {
+            Text("Submit")
+        }*/
+        KindButtonDanger(Onclick = { viewModel.deleteUser() }, TextProvider = "Delete User")
+        /*Button(
+            onClick = { viewModel.deleteUser() },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            )
+        ) {
+            Text("Delete User")
+        }*/
+        KindButton(onClick = { onLogout }, textProvider = "Logout")
+        /*Button(onClick = onLogout) {
+            Text(text = "Logout")
+        }*/
     }
 }
