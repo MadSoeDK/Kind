@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.theme.KindTheme
 import com.example.kind.viewModel.PaymentViewModel
@@ -11,6 +12,7 @@ import com.stripe.android.PaymentConfiguration
 
 class MainActivity : ComponentActivity() {
     val storage = StorageServiceImpl()
+    val auth = AccountServiceImpl()
     val paymentViewModel = PaymentViewModel(this, storage)//val stripeUtil = StripeUtil(this, storage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             KindTheme {
-                KindApp(paymentViewModel, storage)
+                KindApp(paymentViewModel, storage, auth)
             }
         }
     }

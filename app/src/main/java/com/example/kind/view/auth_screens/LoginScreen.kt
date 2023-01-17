@@ -1,7 +1,5 @@
 package com.example.kind.view.auth_screens
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,13 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.kind.AuthenticationScreens
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.KindButton
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.viewModel.LoginViewModel
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 @Composable
 fun LoginScreen(

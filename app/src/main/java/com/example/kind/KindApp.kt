@@ -1,6 +1,5 @@
 package com.example.kind
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,10 +10,8 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -35,11 +32,8 @@ import com.example.kind.view.main_screens.ArticleScreen
 import com.example.kind.viewModel.ExplorerViewModel
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.viewModel.ProfileViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.stripe.android.PaymentSession
-import com.stripe.android.payments.paymentlauncher.PaymentLauncher
-import com.stripe.android.payments.paymentlauncher.PaymentResult
-import com.stripe.android.paymentsheet.PaymentSheet
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 sealed class HomeScreens(val route: String, var icon: ImageVector) {
@@ -74,15 +68,15 @@ sealed class SignupScreens(val route: String) {
 @Composable
 fun KindApp(
     paymentViewModel: PaymentViewModel,
-    storage: StorageServiceImpl
+    storage: StorageServiceImpl,
+    auth: AccountServiceImpl
 ) {
-    val auth = AccountServiceImpl()
     val navController = rememberNavController()
     val appViewModel = AppViewModel(navController, auth)
     paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
-        startDestination = if (appViewModel.loggedIn) HomeScreens.Root.route else AuthenticationScreens.Root.route
+        startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage)
         authNavGraph(navController)
@@ -292,7 +286,7 @@ fun NavGraphBuilder.authNavGraph(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Screen(
+fun Screen (
     modifier: Modifier = Modifier,
     NavigationBar: @Composable () -> Unit = {},
     FloatingActionButton: @Composable () -> Unit = {},

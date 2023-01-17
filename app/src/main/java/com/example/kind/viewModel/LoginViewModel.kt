@@ -1,7 +1,5 @@
 package com.example.kind.viewModel
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,7 +9,6 @@ import androidx.navigation.NavController
 import com.example.kind.HomeScreens
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.view.composables.*
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.ktx.auth
@@ -20,9 +17,9 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl = AccountServiceImpl()
 ) : ViewModel() {
-    var isLoggedIn by mutableStateOf(auth.hasUser)
+    //var isLoggedIn by mutableStateOf(Firebase.auth.currentUser != null)
     var isLoading by mutableStateOf(false)
     var emailSentSuccesfully by mutableStateOf(false)
     var emailSentAttempted by mutableStateOf(false)
@@ -53,11 +50,11 @@ class LoginViewModel(
             try {
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
-                isLoggedIn = true
+                //isLoggedIn = true
                 navController.navigate(HomeScreens.Root.route) {
                     popUpTo(HomeScreens.Root.route)
                 }
-                println("Succesfully logged in $isLoggedIn")
+                //println("Succesfully logged in $isLoggedIn")
                 return@launch
             } catch (e: FirebaseAuthInvalidUserException) {
                 formState.fields[0].showError("Could not find user with this email")
@@ -65,27 +62,22 @@ class LoginViewModel(
                 formState.fields[1].showError("Wrong password")
             } catch (e: Exception) {
                 formState.showError("Some error happened. Try again later")
-                println("Error login:" + isLoggedIn + e.printStackTrace())
+                println("Error login:" + e.printStackTrace())
             } finally {
                 isLoading = false
-                isLoggedIn = false
+                //isLoggedIn = false
             }
         }
     }
 
     fun sendResetPasswordEmail(emailAddress: String) {
-
-        println("Attempting to send mail")
-
         Firebase.auth.sendPasswordResetEmail(emailAddress)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d(ContentValues.TAG, "Email sent.")
                     emailSentAttempted = true
                     emailSentSuccesfully = true
                 }
                 else{
-                    println("Email failed to send")
                     emailSentAttempted = true
                     emailSentSuccesfully = false
                 }

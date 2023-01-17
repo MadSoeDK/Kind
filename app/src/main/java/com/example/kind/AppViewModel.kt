@@ -1,24 +1,16 @@
 package com.example.kind
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.kind.model.service.impl.AccountServiceImpl
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AppViewModel(
     val navController: NavController,
     private val auth: AccountServiceImpl
 ) : ViewModel() {
-
-    var loggedIn by mutableStateOf(auth.hasUser)
 
     fun onLogout() {
         viewModelScope.launch {
