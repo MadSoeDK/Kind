@@ -41,16 +41,18 @@ class SignupViewModel(
     val navController: NavController,
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
-    private val storage: StorageServiceImpl
+    private val storage: StorageServiceImpl,
+    private val auth: AccountServiceImpl
 ) : ViewModel() {
+    //private val auth: AccountServiceImpl = AccountServiceImpl()
 
-    private val auth: AccountServiceImpl = AccountServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
     var userIsCreated by mutableStateOf(true)
-    private val _charityData =
-        MutableStateFlow(listOf<Charity>())
+    private val _charityData = MutableStateFlow(listOf<Charity>())
+
     val charityData: StateFlow<List<Charity>> = _charityData.asStateFlow()
     private val _portfolioData = MutableStateFlow(PortState())
+
     val portfolioData: StateFlow<PortState> = _portfolioData.asStateFlow()
     var charityList: List<Charity> = mutableListOf()
 
@@ -61,14 +63,10 @@ class SignupViewModel(
         KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
     )
 
+    var isLoading by mutableStateOf(false)
+
     init {
         getCharities()
-    }
-
-    fun onFormSubmit(data: Map<String, String>) {
-        if (!formState.validate()) {
-            return
-        }
     }
 
     fun setFrequency(frequency: DonationFrequency) {
@@ -103,23 +101,18 @@ class SignupViewModel(
         return User(formState.getData().getValue("Full name"), monthlyPayment)
     }
 
-    fun onSignUp(data: Map<String, String>) {
+    fun onSignUpFormSubmit(data: Map<String, String>) {
+        isLoading = true
+        if (!formState.validate()) {
+            isLoading = false
+            return
+        }
         viewModelScope.launch {
             try {
                 userIsCreated = false
-                auth.createUserWithEmailAndPassword(
-                    data.getValue("Email"),
-                    data.getValue("Password")
-                )
-                auth.authenticateUser(
-                    data.getValue("Email"),
-                    data.getValue("Password")
-                )
-                println("New user created")
+                auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+                isLoading = false
                 userIsCreated = true
-                navController.navigate(AuthenticationScreens.About.route) {
-                    popUpTo(AuthenticationScreens.About.route)
-                }
             } catch (e: Exception) {
                 println("Could not sign in: " + e.printStackTrace())
             }
