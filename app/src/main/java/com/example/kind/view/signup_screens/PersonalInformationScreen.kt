@@ -18,7 +18,7 @@ fun PersonalInformationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginHeader("Start building your portfolio of kindness today")
-        if (!viewModel.userIsCreated) {
+        if (viewModel.isLoading) {
             Spacer(modifier = Modifier.height(20.dp))
             CircularProgressIndicator()
         } else {

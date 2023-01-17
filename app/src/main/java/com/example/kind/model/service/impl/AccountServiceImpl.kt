@@ -27,9 +27,6 @@ class AccountServiceImpl @Inject constructor(): AccountService {
     }
 
     override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
-        val uid = Firebase.auth.createUserWithEmailAndPassword(email, password).await().user?.uid
-        if (uid != null) {
-            //TODO add some user error
-        }
+        Firebase.auth.createUserWithEmailAndPassword(email, password).await().user?.uid
     }
 }

@@ -3,21 +3,14 @@ package com.example.kind.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.AuthenticationScreens
-import com.example.kind.HomeScreens
-import com.example.kind.SignupScreens
 import com.example.kind.model.Charity
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
-import com.example.kind.view.composables.Email
-import com.example.kind.view.composables.FormState
-import com.example.kind.view.composables.KindTextField
-import com.example.kind.view.composables.Required
+import com.example.kind.view.composables.*
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,13 +34,11 @@ class SignupViewModel(
     val navController: NavController,
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
+    val navigateOnUserCreate: () -> Unit,
     private val storage: StorageServiceImpl,
     private val auth: AccountServiceImpl
 ) : ViewModel() {
-    //private val auth: AccountServiceImpl = AccountServiceImpl()
-
     private var portfolioState = MutableStateFlow(PortfolioState())
-    var userIsCreated by mutableStateOf(true)
     private val _charityData = MutableStateFlow(listOf<Charity>())
 
     val charityData: StateFlow<List<Charity>> = _charityData.asStateFlow()
@@ -60,7 +51,7 @@ class SignupViewModel(
     var fields: List<KindTextField> = listOf(
         KindTextField(name = "Full name", label = "Full name", validators = listOf(Required())),
         KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
-        KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
+        KindTextField(name = "Password", label = "Password", validators = listOf(Required(), Password())),
     )
 
     var isLoading by mutableStateOf(false)
@@ -101,7 +92,7 @@ class SignupViewModel(
         return User(formState.getData().getValue("Full name"), monthlyPayment)
     }
 
-    fun onSignUpFormSubmit(data: Map<String, String>) {
+    fun onSignUpFormSubmit() {
         isLoading = true
         if (!formState.validate()) {
             isLoading = false
@@ -109,10 +100,10 @@ class SignupViewModel(
         }
         viewModelScope.launch {
             try {
-                userIsCreated = false
+                val data = formState.getData()
                 auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
-                userIsCreated = true
+                navigateOnUserCreate()
             } catch (e: Exception) {
                 println("Could not sign in: " + e.printStackTrace())
             }

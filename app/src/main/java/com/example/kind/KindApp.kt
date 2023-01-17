@@ -215,7 +215,8 @@ fun NavGraphBuilder.signupNavGraph(
         navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
         navController = navController,
         storage = storage,
-        auth = auth
+        auth = auth,
+        navigateOnUserCreate = { navController.navigate(SignupScreens.CreatePortfolio.route) { popUpTo(SignupScreens.CreatePortfolio.route) } }
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -225,13 +226,8 @@ fun NavGraphBuilder.signupNavGraph(
            Screen (
                signupNavigation = {
                    SignupNavigation(
-                       viewModel = signupViewModel,
-                       next = {
-                           navController.navigate(SignupScreens.CreatePortfolio.route)
-                       },
-                       back = {
-                           navController.popBackStack()
-                       }
+                       next = { signupViewModel.onSignUpFormSubmit() },
+                       back = { navController.popBackStack() }
                    )
                },
                content = {
@@ -348,13 +344,14 @@ fun Screen (
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold (
-        bottomBar = { NavigationBar() },
-        floatingActionButton = { FloatingActionButton() }
+        bottomBar = NavigationBar,
+        floatingActionButton = FloatingActionButton
     ) {
         Column(
             modifier = modifier
                 .padding(it)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             content(it)
             signupNavigation()
@@ -363,33 +360,24 @@ fun Screen (
 }
 
 @Composable
-fun SignupNavigation(
-    viewModel: SignupViewModel,
-    next: () -> Unit,
-    back: () -> Unit
+fun SignupNavigation (
+    next: () -> Unit = {},
+    back: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
             .padding(0.dp, 15.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
         Row(
-            modifier = Modifier.width(300.dp),
+            modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp).width(300.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextButton(onClick = { back() }) {
+            TextButton(onClick = back) {
                 Text("← Back")
             }
-            Button(
-                onClick = {
-                    //viewModel.onFormSubmit(viewModel.formState.getData())
-                    //viewModel.onSignUp(viewModel.formState.getData())
-                    next()
-                })  {
+            Button(onClick = next ) {
                 Text("Next →")
             }
         }
