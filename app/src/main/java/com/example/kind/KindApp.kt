@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -82,7 +83,7 @@ fun KindApp(
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage)
         authNavGraph(navController, auth, storage)
-        signupNavGraph(navController, storage)
+        signupNavGraph(navController, storage, auth)
     }
 }
 
@@ -134,7 +135,10 @@ fun NavGraphBuilder.homeNavGraph(
         composable(HomeScreens.Profile.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) }
-            ) { ProfileScreen(viewModel = profileViewModel, onLogout = {appViewModel.onLogout()}, transactionHistory = {navController.navigate(HomeScreens.TransactionHistory.route)} ) }
+            ) { ProfileScreen(
+                viewModel = profileViewModel,
+                onLogout = { appViewModel.onLogout() },
+                transactionHistory = {navController.navigate(HomeScreens.TransactionHistory.route)} ) }
         }
         composable(HomeScreens.Explorer.route) {
             Screen(
@@ -203,13 +207,15 @@ fun NavGraphBuilder.homeNavGraph(
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.signupNavGraph(
     navController: NavController,
-    storage: StorageServiceImpl
+    storage: StorageServiceImpl,
+    auth: AccountServiceImpl
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
         navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
         navController = navController,
-        storage = storage
+        storage = storage,
+        auth = auth
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
@@ -218,9 +224,15 @@ fun NavGraphBuilder.signupNavGraph(
         composable(route = SignupScreens.Signup.route) {
            Screen (
                signupNavigation = {
-                   SignupNavigation(viewModel = signupViewModel, next = { navController.navigate(SignupScreens.CreatePortfolio.route) } ) {
-                       navController.navigate(AuthenticationScreens.Root.route)
-                   }
+                   SignupNavigation(
+                       viewModel = signupViewModel,
+                       next = {
+                           navController.navigate(SignupScreens.CreatePortfolio.route)
+                       },
+                       back = {
+                           navController.popBackStack()
+                       }
+                   )
                },
                content = {
                     PersonalInformationScreen (
@@ -332,9 +344,10 @@ fun Screen (
     modifier: Modifier = Modifier,
     NavigationBar: @Composable () -> Unit = {},
     FloatingActionButton: @Composable () -> Unit = {},
+    signupNavigation: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
-    Scaffold(
+    Scaffold (
         bottomBar = { NavigationBar() },
         floatingActionButton = { FloatingActionButton() }
     ) {
@@ -344,6 +357,41 @@ fun Screen (
                 .verticalScroll(rememberScrollState())
         ) {
             content(it)
+            signupNavigation()
+        }
+    }
+}
+
+@Composable
+fun SignupNavigation(
+    viewModel: SignupViewModel,
+    next: () -> Unit,
+    back: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(0.dp, 15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        Row(
+            modifier = Modifier.width(300.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(onClick = { back() }) {
+                Text("← Back")
+            }
+            Button(
+                onClick = {
+                    //viewModel.onFormSubmit(viewModel.formState.getData())
+                    //viewModel.onSignUp(viewModel.formState.getData())
+                    next()
+                })  {
+                Text("Next →")
+            }
         }
     }
 }
