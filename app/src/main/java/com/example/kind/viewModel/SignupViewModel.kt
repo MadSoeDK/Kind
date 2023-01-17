@@ -11,6 +11,7 @@ import com.example.kind.model.User
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -104,7 +105,10 @@ class SignupViewModel(
                 auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
                 navigateOnUserCreate()
+            } catch (e: FirebaseAuthUserCollisionException) {
+                formState.fields[1].showError("User already exists")
             } catch (e: Exception) {
+                isLoading = false
                 println("Could not sign in: " + e.printStackTrace())
             }
         }

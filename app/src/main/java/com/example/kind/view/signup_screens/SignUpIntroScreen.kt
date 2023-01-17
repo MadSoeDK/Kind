@@ -11,14 +11,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.kind.R
 import com.example.kind.view.composables.KindButton
+import com.example.kind.view.composables.LoginHeader
 
 @Composable
 fun SignUpIntroScreen(
@@ -37,20 +34,7 @@ fun SignUpIntroScreen(
             modifier = Modifier.width(300.dp)
         ) {
             Spacer(modifier = Modifier.height(75.dp))
-            Image(
-                painter = painterResource(id = R.drawable.bekindsplashart1),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Build your portfolio of charity now?",
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp),
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+            LoginHeader(titleText = "You have now created a user. Do you want to build your portfolio of charity now?")
             Text(
                 text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
                 fontSize = 14.sp,
@@ -66,7 +50,7 @@ fun SignUpIntroScreen(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            KindButton(onClick = { navigateToPortfolio() }, textProvider = "Build now")
+            KindButton(onClick = navigateToPortfolio , textProvider = "Build now")
             TextButton(onClick = navigateToHome) {
                 Text(text = "Build portfolio later")
             }
