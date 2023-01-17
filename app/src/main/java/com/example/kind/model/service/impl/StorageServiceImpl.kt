@@ -190,6 +190,10 @@ class StorageServiceImpl(
             .delete()
     }
 
+    override suspend fun getDonations(user: String) : List<Donation> {
+            return database.collection("User").document(user).collection("Donations").get().await().toObjects()
+    }
+
     // Charity
     override suspend fun getCharity(id: String): Charity? {
 
