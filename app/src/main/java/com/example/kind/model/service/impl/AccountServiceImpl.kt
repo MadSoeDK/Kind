@@ -37,7 +37,7 @@ class AccountServiceImpl @Inject constructor(
     override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
         val uid = auth.createUserWithEmailAndPassword(email, password).await().user?.uid
         if (uid != null) {
-            //TODO add some user error
+            storage.collection("Users").document(uid).set(User("John"))
         }
     }
 }
