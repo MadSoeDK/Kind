@@ -47,13 +47,17 @@ class ExplorerViewModel(
         return charityList
     }
     fun getCharitiesByCategory(category: String): List<com.example.kind.model.Charity> {
-        viewModelScope.launch {
-            try {
-                _data.update {
-                    storage.getCharitiesByCategory(category)
+        if(category.equals("All")) {
+            getCharities()
+        } else {
+            viewModelScope.launch {
+                try {
+                    _data.update {
+                        storage.getCharitiesByCategory(category)
+                    }
+                } catch (e: Exception) {
+                    println(e.printStackTrace())
                 }
-            } catch (e: Exception) {
-                println(e.printStackTrace())
             }
         }
         return charityList
