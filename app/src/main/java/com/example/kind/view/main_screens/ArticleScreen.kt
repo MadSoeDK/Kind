@@ -103,8 +103,8 @@ fun ArticleScreen(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                textAlign = TextAlign.Left
+                modifier = Modifier.padding(horizontal = 25.dp, vertical = 5.dp),
+                textAlign = TextAlign.Center
             )
         }
         Spacer(modifier = Modifier.padding(vertical = 2.5.dp))

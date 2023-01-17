@@ -161,6 +161,7 @@ fun PortfolioBuilderScreen(
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(40.dp))
             }
         }
     }

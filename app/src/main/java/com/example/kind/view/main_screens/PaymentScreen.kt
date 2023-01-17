@@ -60,13 +60,6 @@ fun PaymentScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        IconButton(onClick = { /*viewModel.navController.popBackStack()*/ }, modifier = Modifier.zIndex(1f)) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                "",
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
         if (viewModel.paymentPending) {
             if (!viewModel.paymentSuccess) {
                 Text(text = "Request is pending. Please wait")

@@ -211,7 +211,7 @@ class StorageServiceImpl(
     // Charity
     override suspend fun getCharity(id: String): Charity? {
 
-        //val charityList: List<Charity> = database.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
+        //val charityList: List<Charity> = Firebase.firestore.collection("Charity").whereEqualTo(FieldPath.documentId(), id).get().await().toObjects()
 
         try {
             return Firebase.firestore.collection("Charity").document(id).get().await().toObject()
@@ -270,7 +270,7 @@ class StorageServiceImpl(
         var subscriptions = listOf<Subscription>()
         var charities = mutableListOf<Charity?>()
         var articlePointers = listOf<String>()
-        var articleList = mutableListOf<Article>()//database.collection("Articles").limit(5).get().await().toObjects()
+        var articleList = mutableListOf<Article>()//Firebase.firestore.collection("Articles").limit(5).get().await().toObjects()
 
         println(currentUser)
         // Get the subscriptions from User

@@ -131,7 +131,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
     )
     PortfolioTable(
         modifier = Modifier,
-        columnCount = 4,
+        columnCount = 3,
         cellWidth = { index ->
             when (index) {
                 0 -> 120.dp

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
+import com.example.kind.view.composables.KindButton
 
 @Composable
 fun SignUpIntroScreen(
@@ -28,19 +29,20 @@ fun SignUpIntroScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.width(300.dp)
         ) {
+            Spacer(modifier = Modifier.height(75.dp))
             Image(
                 painter = painterResource(id = R.drawable.bekindsplashart1),
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds
             )
-            Spacer(modifier = Modifier.padding(vertical = 10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "Build your portfolio of charity now?",
                 fontSize = 24.sp,
@@ -58,12 +60,17 @@ fun SignUpIntroScreen(
                     MaterialTheme.colorScheme.onBackground},
                 modifier = Modifier.padding(10.dp)
             )
-            Button(onClick = navigateToPortfolio) {
-                Text(text = "Build now")
-            }
+
+        }
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            KindButton(onClick = { navigateToPortfolio() }, textProvider = "Build now")
             TextButton(onClick = navigateToHome) {
                 Text(text = "Build portfolio later")
             }
+            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }
