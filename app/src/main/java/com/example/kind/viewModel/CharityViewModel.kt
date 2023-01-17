@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.model.Charity
-import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +20,7 @@ class CharityViewModel(
 ) : ViewModel() {
     // State setup
     val storage: StorageServiceImpl = StorageServiceImpl()
-    private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(Charity())
     val data: StateFlow<Charity> = _data.asStateFlow()
 
     init {
@@ -68,10 +66,8 @@ class CharityViewModel(
     fun removeFromPortfolio(){
         viewModelScope.launch {
             storage.removeFromPortfolio(data.value.id)
-            //delay(1000)
             onAddToPortfolio()
         }
-        //charities.value.subscription.find(id)
         _data.update { it.copy(inPortfolio = false) }
     }
 }

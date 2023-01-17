@@ -24,8 +24,6 @@ fun ExplorerScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        //TODO: Seperate categories composable
-
         CharityHeaderAndSubsectionText(
             Title = "Charity Explorer",
             Categories = CharityCategory.values(),
