@@ -33,8 +33,6 @@ class PaymentViewModel(
     @ApplicationContext val context: ComponentActivity,
     val storage: StorageServiceImpl,
 ) : ViewModel() {
-    //private val stripe: Stripe by lazy { Stripe(context, PaymentConfiguration.getInstance(context).publishableKey) }
-
     lateinit var navigateOnPaymentSuccess: () -> Unit
 
     private val _paymentState = MutableStateFlow(PaymentState())
