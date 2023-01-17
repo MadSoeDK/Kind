@@ -20,8 +20,7 @@ data class ProfileState(
     var paymentMethod: String = "mobilepay"
 )
 
-class ProfileViewModel : ViewModel() {
-    var storage: StorageServiceImpl = StorageServiceImpl()
+class ProfileViewModel(val storage: StorageServiceImpl) : ViewModel() {
     var formState by mutableStateOf(FormState())
 
     var fields: List<KindTextField> = listOf(

@@ -19,10 +19,9 @@ enum class CharityCategory(category: String) {
     Children_Care("Children Care")
 }
 class ExplorerViewModel(
-    val navController: NavController
+    val navController: NavController,
+    var storage: StorageServiceImpl
 ) : ViewModel() {
-
-    var storage: StorageServiceImpl = StorageServiceImpl()
 
     var charityList: List<com.example.kind.model.Charity> = mutableListOf()
 

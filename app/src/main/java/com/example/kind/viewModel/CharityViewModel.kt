@@ -14,12 +14,12 @@ import kotlinx.coroutines.launch
 
 class CharityViewModel(
     val navController: NavController,
+    val storage: StorageServiceImpl,
     val id: String,
     val onAddToPortfolio: () -> Unit,
     val charities: State<PortState>
 ) : ViewModel() {
     // State setup
-    val storage: StorageServiceImpl = StorageServiceImpl()
     private val _data = MutableStateFlow(Charity())
     val data: StateFlow<Charity> = _data.asStateFlow()
 

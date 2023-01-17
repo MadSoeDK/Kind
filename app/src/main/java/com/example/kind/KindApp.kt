@@ -82,7 +82,7 @@ fun KindApp(
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage)
         authNavGraph(navController, auth, storage)
-        signupNavGraph(navController)
+        signupNavGraph(navController, storage)
     }
 }
 
@@ -155,7 +155,8 @@ fun NavGraphBuilder.homeNavGraph(
                             navController = navController,
                             id = NavBackStackEntry.arguments!!.getString("id", ""),
                             onAddToPortfolio = { portfolioViewModel.getSubscriptions() },
-                            charities = portfolioViewModel.data.collectAsState()
+                            charities = portfolioViewModel.data.collectAsState(),
+                            storage = storage
                         ),
                     )
                 }
@@ -171,7 +172,8 @@ fun NavGraphBuilder.homeNavGraph(
                     ArticleScreen(
                         viewModel = ArticleViewModel(
                             navController = navController,
-                            id = NavBackStackEntry.arguments!!.getString("id", "")
+                            id = NavBackStackEntry.arguments!!.getString("id", ""),
+                            storage = storage
                         )
                     )
                 }
@@ -201,25 +203,29 @@ fun NavGraphBuilder.homeNavGraph(
 @OptIn(ExperimentalFoundationApi::class)
 fun NavGraphBuilder.signupNavGraph(
     navController: NavController,
+    storage: StorageServiceImpl
 ) {
     val signupViewModel = SignupViewModel(
         navigateAmount = { navController.navigate(SignupScreens.SetFreq.route) },
         navigateFreq = { navController.navigate(SignupScreens.BuildPortfolio.route) },
-        navController = navController
+        navController = navController,
+        storage = storage
     )
     navigation(
         startDestination = SignupScreens.Signup.route,
         route = SignupScreens.Root.route
     ) {
         composable(route = SignupScreens.Signup.route) {
-            Screen(
-                content = {
-                    PersonalInformationScreen(
+           Screen (
+               signupNavigation = {
+                   SignupNavigation(viewModel = signupViewModel, next = { navController.navigate(SignupScreens.CreatePortfolio.route) } ) {
+                       navController.navigate(AuthenticationScreens.Root.route)
+                   }
+               },
+               content = {
+                    PersonalInformationScreen (
                         viewModel = signupViewModel,
-                        next = { navController.navigate(SignupScreens.CreatePortfolio.route) }
-                    ) {
-                        navController.navigate(AuthenticationScreens.Root.route)
-                    }
+                    )
                 }
             )
         }
@@ -271,7 +277,8 @@ fun NavGraphBuilder.signupNavGraph(
                             navController = navController,
                             id = NavBackStackEntry.arguments!!.getString("id", ""),
                             onAddToPortfolio = {  },
-                            charities = signupViewModel.portfolioData.collectAsState()
+                            charities = signupViewModel.portfolioData.collectAsState(),
+                            storage = storage
                         ),
                     )
                 }

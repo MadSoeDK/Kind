@@ -41,6 +41,7 @@ class SignupViewModel(
     val navController: NavController,
     val navigateAmount: () -> Unit,
     val navigateFreq: () -> Unit,
+    private val storage: StorageServiceImpl
 ) : ViewModel() {
     private val storage: StorageServiceImpl = StorageServiceImpl()
     private val auth: AccountServiceImpl = AccountServiceImpl()

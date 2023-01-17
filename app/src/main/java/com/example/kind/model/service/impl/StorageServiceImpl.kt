@@ -6,9 +6,8 @@ import com.example.kind.model.service.StorageService
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -19,9 +18,8 @@ import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class StorageServiceImpl(
-    var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-) : StorageService {
+class StorageServiceImpl: StorageService {
+
     // Users
     override suspend fun addUser(user: User) {
         Firebase.firestore.collection("Users").add(user).addOnSuccessListener { documentReference ->
