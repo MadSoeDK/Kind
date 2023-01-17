@@ -48,6 +48,7 @@ class StorageServiceImpl(
 
         val checkList = getSubscriptions()
         var Subscribed = false
+        var charity: Charity? = Charity()
 
         // Check if you are already subscribed
         checkList.forEach {
@@ -55,9 +56,14 @@ class StorageServiceImpl(
                 Subscribed = true
             }
         }
+
+        Thread.sleep(1000)
+
         // If not, then add it to your subscriptions
         if (!Subscribed) {
-            val subscription = Subscription(10.0, charityId, charityId, Timestamp(1, 1))
+            charity = getCharity(charityId)
+            println(charity.toString())
+            val subscription = Subscription(10.0, charityId, charityId, Timestamp(1, 1), charity!!.name)
 
             Firebase.firestore.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
                 .add(subscription)
