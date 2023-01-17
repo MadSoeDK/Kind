@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import coil.compose.AsyncImage
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -37,7 +38,7 @@ fun CharityScreen(
 
     val state by viewModel.data.collectAsState()
 
-    Column(
+    Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
@@ -88,8 +89,8 @@ fun CharityScreen(
                     contentScale = ContentScale.FillBounds
                 )
             }
-            // Donations, Donors & Picture
 
+            // Donations, Donors & Picture
             Spacer(modifier = Modifier.padding(vertical = 20.dp))
                 Text(
                     text = state.name,
@@ -99,9 +100,7 @@ fun CharityScreen(
                     textAlign = TextAlign.Center
                 )
 
-            //DisplayDonatorsAndDonations(charityViewModel = viewModel)
             Spacer(modifier = Modifier.padding(vertical = 5.dp))
-
 
             Column(
                 Modifier.padding(horizontal = 15.dp),
@@ -124,9 +123,7 @@ fun CharityScreen(
                         onClick = { viewModel.addToPortfolio() },
                         content = { Text(text = "Add to portfolio") },
                     )
-                }
-                else
-                {
+                } else {
                     OutlinedButton(
                         onClick = { viewModel.removeFromPortfolio()},
                         content = { Text(text = "Remove from portfolio") },
