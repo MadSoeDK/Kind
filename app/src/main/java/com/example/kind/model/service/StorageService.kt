@@ -11,6 +11,11 @@ interface StorageService {
 
     // Users
     suspend fun addUser(user: User)
+    suspend fun changeUser(user: User, uid: String)
+    suspend fun updateCurrentUser()
+    suspend fun getUIDofCurrentUser(): String
+    suspend fun deleteUser(userId : String)
+    suspend fun addToPortfolio(charityId: String)
     suspend fun updateUser(email: String, password: String)
     suspend fun deleteUser(confirmEmail: String, confirmPassword: String)
     suspend fun getSubscriptions() : List<Subscription>

@@ -54,6 +54,9 @@ fun SignUpIntroScreen(
                 MaterialTheme.colorScheme.onBackground},
             modifier = Modifier.padding(10.dp)
         )
+        TextButton(onClick = navigateToHome) {
+            Text(text = "Build portfolio later")
+        }
         Button(onClick = navigateToPortfolio) {
             Text(text = "Build now")
         }

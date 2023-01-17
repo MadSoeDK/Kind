@@ -18,12 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.R
 import com.example.kind.model.Portfolio
-import com.example.kind.model.Subscription
 import com.example.kind.viewModel.PortfolioViewModel
 import com.example.kind.view.composables.PortfolioTable
+import com.example.kind.viewModel.SignupViewModel
 
 @Composable
 fun SummaryScreen(
+    viewModel: SignupViewModel,
     next: () -> Unit,
     back: () -> Unit
 ) {
@@ -167,7 +168,9 @@ fun SummaryScreen(
             TextButton(onClick = { back() }) {
                 Text("← Back")
             }
-            Button(onClick = { next() }) {
+            Button(onClick = {
+                viewModel.addDataToUser()
+                next() }) {
                 Text("Next →")
             }
         }

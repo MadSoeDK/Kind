@@ -23,6 +23,7 @@ class StorageServiceImpl(
     val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 ) : StorageService {
     private val database = Firebase.firestore
+    private var currentUser = FirebaseAuth.getInstance().currentUser
      //= FirebaseAuth.getInstance().currentUser
 
     val subscription =
@@ -34,13 +35,23 @@ class StorageServiceImpl(
             val documentId = currentUser?.uid.toString()
 
             database.collection("Users").document("$documentId").collection("Subscriptions")
-                .add(subscription)
             database.collection("Users").document("$documentId").collection("Donations")
-                .add(subscription)
         }
     }
 
-    override suspend fun addToPortfolio(charityId: String) {
+    override suspend fun changeUser(user: User, uid : String) {
+        database.collection("Users").document(uid).set(user)
+    }
+
+    override suspend fun updateCurrentUser(){
+        currentUser = FirebaseAuth.getInstance().currentUser
+    }
+
+    override suspend fun getUIDofCurrentUser(): String{
+        return currentUser?.uid ?: ""
+    }
+
+    override suspend fun addToPortfolio(charityId: String){
 
         val checkList = getSubscriptions()
         var Subscribed = false
