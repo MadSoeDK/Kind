@@ -182,6 +182,16 @@ class StorageServiceImpl(
             .delete()
     }
 
+    override suspend fun getDonations(user: String): List<Donation> {
+        return database.collection("User").document(user).collection("payments").get().await()
+            .toObjects()
+    }
+
+    override suspend fun getPayments(user: String): List<Payment> {
+        return database.collection("stripe_customers").document(user).collection("payments").get().await()
+            .toObjects()
+    }
+
     // Charity
     override suspend fun getCharity(id: String): Charity? {
 

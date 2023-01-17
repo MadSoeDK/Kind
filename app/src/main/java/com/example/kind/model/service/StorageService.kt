@@ -1,9 +1,6 @@
 package com.example.kind.model.service
 
-import com.example.kind.model.Article
-import com.example.kind.model.Charity
-import com.example.kind.model.Subscription
-import com.example.kind.model.User
+import com.example.kind.model.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 
@@ -28,6 +25,7 @@ interface StorageService {
     // Donations
     suspend fun addDonation(amount : Double, user : String, charity : String, Desc : String = "")
     suspend fun deleteDonation(user : String, donation : String)
+    suspend fun getDonations(user: String): List<Donation>
 
     // Charity
     suspend fun getCharity(id: String): Charity?
@@ -46,6 +44,7 @@ interface StorageService {
     suspend fun deleteArticle(article : String, charity : String)
 
     // Payments
+    suspend fun getPayments(user: String): List<Payment>
     suspend fun createStripePaymentIntent(amount: Double, currency: String, charityId: String): Task<DocumentReference>
     suspend fun getClientSecret(doc: DocumentReference): String
 }
