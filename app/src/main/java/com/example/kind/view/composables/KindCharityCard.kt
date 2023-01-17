@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -35,9 +36,7 @@ fun KindCharityCard(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
                 shape = MaterialTheme.shapes.medium
-            )
-            //.background(MaterialTheme.colorScheme.background)
-        ,
+            ),
         //colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = Color.White)
     ) {
 
@@ -77,7 +76,7 @@ fun KindCharityCard(
                     color = Typography.headlineLarge.color
                 )
             }
-            Row(modifier = Modifier.padding(0.dp, 5.dp)) {
+            Row(modifier = Modifier.padding(5.dp, 5.dp)) {
                 //TODO need to center text
                 Text(
                     text = Body,

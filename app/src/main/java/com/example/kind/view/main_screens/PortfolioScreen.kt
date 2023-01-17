@@ -69,43 +69,48 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         colors = state.color
     )
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp).padding(horizontal = 30.dp), content = {
-        state.subscription.forEachIndexed { i, it ->
-            item {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        Modifier
+            .height(85.dp)
+            .padding(horizontal = 30.dp),
+        content = {
+            state.subscription.forEachIndexed { i, it ->
+                item {
                     Box(
-                        Modifier
-                            .clip(RectangleShape)
-                            .background(
-                                state.color[i]
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            Modifier
+                                .clip(RectangleShape)
+                                .background(
+                                    state.color[i]
+                                )
+                                .height(12.dp)
+                                .width(12.dp)
+                                .align(Alignment.BottomStart)
+                        )
+                        if (it.charityID.length <= 20) {
+                            Text(
+                                text = it.charityID + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize,
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
                             )
-                            .height(12.dp)
-                            .width(12.dp)
-                            .align(Alignment.BottomStart)
-                    )
-                    if (it.charityID.length <= 20) {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize,
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
-                    } else {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize.div(1.4),
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
+                        } else {
+                            Text(
+                                text = it.charityID + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
             }
-        }
-    })
+        })
 
     Text(
         text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
@@ -149,7 +154,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
             val value = when (index) {
                 0 -> item.charityID
                 1 -> "${
-                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001}) * 100).roundToInt()
+                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001 }) * 100).roundToInt()
                 }%"
                 2 -> "${item.amount.roundToInt()} kr."
                 else -> ""
