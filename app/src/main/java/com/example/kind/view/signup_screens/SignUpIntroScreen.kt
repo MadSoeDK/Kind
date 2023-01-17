@@ -31,34 +31,39 @@ fun SignUpIntroScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.bekindsplashart1),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds
-        )
-        Spacer(modifier = Modifier.padding(vertical = 10.dp))
-        Text(
-            text = "Build your portfolio of charity now?",
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp),
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Text(
-            text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center,
-            color = if (isSystemInDarkTheme()) {
-                MaterialTheme.colorScheme.primary} else {
-                MaterialTheme.colorScheme.onBackground},
-            modifier = Modifier.padding(10.dp)
-        )
-        Button(onClick = navigateToPortfolio) {
-            Text(text = "Build now")
-        }
-        TextButton(onClick = navigateToHome) {
-            Text(text = "Build portfolio later")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.width(300.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bekindsplashart1),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds
+            )
+            Spacer(modifier = Modifier.padding(vertical = 10.dp))
+            Text(
+                text = "Build your portfolio of charity now?",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp),
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+                color = if (isSystemInDarkTheme()) {
+                    MaterialTheme.colorScheme.primary} else {
+                    MaterialTheme.colorScheme.onBackground},
+                modifier = Modifier.padding(10.dp)
+            )
+            Button(onClick = navigateToPortfolio) {
+                Text(text = "Build now")
+            }
+            TextButton(onClick = navigateToHome) {
+                Text(text = "Build portfolio later")
+            }
         }
     }
 }
