@@ -164,7 +164,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         },
         cellContent = { index, item ->
             val value = when (index) {
-                0 -> item.charityID
+                0 -> item.charityName
                 1 -> "${
                     (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001 }) * 100).roundToInt()
                 }%"
@@ -219,10 +219,20 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                 value = text,
                                 onValueChange = { value: String ->
                                     text = value
+                                    var numericValue = 10.0
+                                    try {
+                                        numericValue = value.toDouble()
+                                    } catch (e: Exception){
+                                        numericValue = 10.0
+                                        if (text.isNotEmpty()) {
+                                            text = "10.0"
+                                        }
+                                    }
+
                                     if (text.isNotEmpty()) {
                                         viewModel.updateSubscriptionState(
                                             subscription,
-                                            value.toDouble()
+                                            numericValue //value.toDouble()
                                         )
                                         sum = state.subscription.sumOf { amount -> amount.amount }
                                     }
