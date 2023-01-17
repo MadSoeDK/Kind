@@ -30,12 +30,7 @@ class TransactionHistoryViewModel(
     private val _data = MutableStateFlow(TransactionState())
     val data: StateFlow<TransactionState> = _data.asStateFlow()
 
-    init {
-        getDonations()
-    }
-
-
-    fun getDonations(){
+    fun getDonations() {
                 viewModelScope.launch {
                     println(Firebase.auth.uid!!)
                     _data.update { it.copy(donations = storage.getPayments(Firebase.auth.uid!!)) }

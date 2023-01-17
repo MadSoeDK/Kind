@@ -28,12 +28,6 @@ class HomeViewModel(
     private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
     val data: StateFlow<HomeState> = _data.asStateFlow()
 
-    init {
-        if (storage.currentUser != null) {
-            getHomeArticles()
-        }
-    }
-
     fun getHomeArticles() {
         viewModelScope.launch {
             _data.update {

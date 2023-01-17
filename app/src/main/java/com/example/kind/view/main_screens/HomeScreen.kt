@@ -6,6 +6,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,6 +24,10 @@ fun HomeScreen(
     viewModel: HomeViewModel
 ) {
     val state by viewModel.data.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getHomeArticles()
+    }
 
     Column {
         HeaderAndText(state.amountDonated.toString() + " kr.", "Your total donated amount")

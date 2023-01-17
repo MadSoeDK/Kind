@@ -42,10 +42,6 @@ class PortfolioViewModel(
     )
     var popupIsOpen by mutableStateOf(false)
 
-    init {
-        getSubscriptions()
-    }
-
     fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {

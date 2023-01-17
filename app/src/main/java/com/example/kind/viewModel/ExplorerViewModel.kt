@@ -29,10 +29,6 @@ class ExplorerViewModel(
         MutableStateFlow(listOf<com.example.kind.model.Charity>()) //storage.getCharity(id)
     val data: StateFlow<List<com.example.kind.model.Charity>> = _data.asStateFlow()
 
-    init {
-        getCharities()
-    }
-
     fun getCharities(): List<com.example.kind.model.Charity> {
         viewModelScope.launch {
             try {
@@ -45,6 +41,7 @@ class ExplorerViewModel(
         }
         return charityList
     }
+
     fun getCharitiesByCategory(category: String): List<com.example.kind.model.Charity> {
         if(category.equals("All")) {
             getCharities()

@@ -43,7 +43,7 @@ class SignupViewModel(
     val navigateFreq: () -> Unit,
     private val storage: StorageServiceImpl
 ) : ViewModel() {
-    private val storage: StorageServiceImpl = StorageServiceImpl()
+
     private val auth: AccountServiceImpl = AccountServiceImpl()
     private var portfolioState = MutableStateFlow(PortfolioState())
     var userIsCreated by mutableStateOf(true)
@@ -56,15 +56,9 @@ class SignupViewModel(
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
-        KindTextField(name = "Full name", label = "Full name", validators = listOf(Required()), readOnly = false),
-        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email()), readOnly = false),
-        KindTextField(name = "Password", label = "Password", validators = listOf(Required()), readOnly = false),
-        KindTextField(
-            name = "Repeat password",
-            label = "Repeat password",
-            validators = listOf(Required()),
-            readOnly = false
-        ),
+        KindTextField(name = "Full name", label = "Full name", validators = listOf(Required())),
+        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
+        KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
     )
 
     init {

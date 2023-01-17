@@ -19,15 +19,11 @@ class CharityViewModel(
     val onAddToPortfolio: () -> Unit,
     val charities: State<PortState>
 ) : ViewModel() {
-    // State setup
+
     private val _data = MutableStateFlow(Charity())
     val data: StateFlow<Charity> = _data.asStateFlow()
 
-    init {
-        update()
-    }
-
-    fun update() {
+    fun getCharity() {
         viewModelScope.launch {
             _data.update {
                 val charity = storage.getCharity(id)

@@ -38,6 +38,10 @@ fun CharityScreen(
 
     val state by viewModel.data.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.getCharity()
+    }
+
     Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

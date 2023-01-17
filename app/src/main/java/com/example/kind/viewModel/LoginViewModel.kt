@@ -21,7 +21,6 @@ class LoginViewModel(
     private val auth: AccountServiceImpl,
     private val storage: StorageServiceImpl
 ) : ViewModel() {
-    //var isLoggedIn by mutableStateOf(Firebase.auth.currentUser != null)
     var isLoading by mutableStateOf(false)
     var emailSentSuccesfully by mutableStateOf(false)
     var emailSentAttempted by mutableStateOf(false)
@@ -52,12 +51,9 @@ class LoginViewModel(
             try {
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
-                //isLoggedIn = true
                 navController.navigate(HomeScreens.Root.route) {
                     popUpTo(HomeScreens.Root.route)
                 }
-                storage.updateCurrentUser()
-                //println("Succesfully logged in $isLoggedIn")
                 return@launch
             } catch (e: FirebaseAuthInvalidUserException) {
                 formState.fields[0].showError("Could not find user with this email")
@@ -68,7 +64,6 @@ class LoginViewModel(
                 println("Error login:" + e.printStackTrace())
             } finally {
                 isLoading = false
-                //isLoggedIn = false
             }
         }
     }

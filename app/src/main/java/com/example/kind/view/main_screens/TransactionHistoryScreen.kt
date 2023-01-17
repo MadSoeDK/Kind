@@ -26,7 +26,11 @@ import kotlin.math.roundToInt
 fun TransactionHistoryScreen(
     viewModel : TransactionHistoryViewModel,
     back: () -> Unit
-){
+) {
+    LaunchedEffect(Unit) {
+        viewModel.getDonations()
+    }
+
     val state by viewModel.data.collectAsState()
     IconButton(
         onClick = { viewModel.navController.popBackStack()},

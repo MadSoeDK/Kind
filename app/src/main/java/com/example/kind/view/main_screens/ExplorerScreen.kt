@@ -21,6 +21,11 @@ fun ExplorerScreen(
     viewModel: ExplorerViewModel
 ) {
     val state by viewModel.data.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getCharities()
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

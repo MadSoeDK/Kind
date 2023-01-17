@@ -93,15 +93,15 @@ fun NavGraphBuilder.homeNavGraph(
     paymentViewModel: PaymentViewModel,
     storage: StorageServiceImpl
 ) {
-    val homeViewModel = HomeViewModel(navController, storage)
-    val portfolioViewModel = PortfolioViewModel(storage) { appViewModel.navController.navigate(HomeScreens.Explorer.route) }
-    val explorerViewModel = ExplorerViewModel(navController)
-    val profileViewModel = ProfileViewModel()
-
     navigation(
         startDestination = HomeScreens.Home.route,
         route = HomeScreens.Root.route
     ) {
+        val homeViewModel = HomeViewModel(navController, storage)
+        val portfolioViewModel = PortfolioViewModel(storage) { appViewModel.navController.navigate(HomeScreens.Explorer.route) }
+        val explorerViewModel = ExplorerViewModel(navController, storage)
+        val profileViewModel = ProfileViewModel(storage)
+
         composable(HomeScreens.Home.route) {
             Screen(
                 NavigationBar = { KindNavigationBar(navController) },

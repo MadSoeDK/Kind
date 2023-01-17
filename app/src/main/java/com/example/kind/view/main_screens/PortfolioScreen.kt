@@ -25,6 +25,11 @@ import kotlin.math.roundToInt
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
+
+    LaunchedEffect(Unit) {
+        viewModel.getSubscriptions()
+    }
+
     Column(
         modifier = Modifier
             .padding(0.dp, 0.dp)
