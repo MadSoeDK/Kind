@@ -103,7 +103,6 @@ fun NavGraphBuilder.homeNavGraph(
     val portfolioViewModel = PortfolioViewModel()
     val explorerViewModel = ExplorerViewModel(navController)
     val profileViewModel = ProfileViewModel()
-    val transactionHistoryViewModel = TransactionHistoryViewModel()
 
     navigation(
         startDestination = HomeScreens.Home.route,
@@ -198,6 +197,7 @@ fun NavGraphBuilder.homeNavGraph(
         }
 
         composable(HomeScreens.TransactionHistory.route) {
+            val transactionHistoryViewModel = TransactionHistoryViewModel(storage = storage, navController = navController)
             Screen{
             TransactionHistoryScreen(viewModel = transactionHistoryViewModel, back = {navController.navigate(HomeScreens.Profile.route)})}
         }

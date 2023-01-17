@@ -1,16 +1,23 @@
 package com.example.kind.view.main_screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.kind.HomeScreens
+import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
+import com.example.kind.view.composables.KindButton
+import com.example.kind.view.composables.KindButtonOutlined
 import com.example.kind.view.composables.PortfolioTable
 import com.example.kind.viewModel.TransactionHistoryViewModel
 import kotlin.math.roundToInt
@@ -20,6 +27,22 @@ fun TransactionHistoryScreen(
     viewModel : TransactionHistoryViewModel,
     back: () -> Unit
 ){
+    val state by viewModel.data.collectAsState()
+    IconButton(
+        onClick = { viewModel.navController.popBackStack()},
+        modifier = Modifier.zIndex(1f),
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            "",
+            tint = MaterialTheme.colorScheme.primary
+        )
+    }
+    if(state.donations.isEmpty()) {
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            CircularProgressIndicator()
+        }
+    }
     Column(modifier = Modifier) {
         PortfolioTable(
             columnCount = 4,
@@ -31,7 +54,7 @@ fun TransactionHistoryScreen(
                     else -> 70.dp
                 }
             },
-            data = viewModel.getDonations(),
+            data = state.donations,
             headerCellContent = { index ->
                 val value = when (index) {
                     0 -> "Organization"
@@ -41,6 +64,7 @@ fun TransactionHistoryScreen(
                 }
                 val alignment = when (index) {
                     0 -> TextAlign.Left
+                    2 -> TextAlign.Right
                     else -> TextAlign.Center
                 }
                 Text(
@@ -56,9 +80,9 @@ fun TransactionHistoryScreen(
             modifier = Modifier,
             cellContent = { index, item ->
                 val value = when (index) {
-                    0 -> item.charityID
-                    1 -> item.date.toDate().toString()
-                    2 -> "${item.amount.roundToInt()} kr."
+                    0 -> item.charity_id
+                    1 -> item.date?.toDate().toString()
+                    2 -> "${item.amount?.roundToInt()} kr."
                     else -> ""
                 }
                 val alignment = when (index) {
@@ -66,7 +90,7 @@ fun TransactionHistoryScreen(
                     else -> TextAlign.Center
                 }
                 Text(
-                    text = value,
+                    text = value!!,
                     fontSize = 13.sp,
                     textAlign = alignment,
                     modifier = Modifier.padding(0.dp, 20.dp),

@@ -43,6 +43,7 @@ interface StorageService {
     suspend fun deleteArticle(article : String, charity : String)
 
     // Payments
+    suspend fun getPayments(user: String): List<Payment>
     suspend fun createStripePaymentIntent(amount: Double, currency: String, charityId: String): Task<DocumentReference>
     suspend fun getClientSecret(doc: DocumentReference): String
 }
