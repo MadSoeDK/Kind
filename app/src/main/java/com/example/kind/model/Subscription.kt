@@ -6,5 +6,6 @@ data class Subscription(
     var amount: Double = 0.0,
     val charityID: String = "",
     val id: String = "",
-    val initDate: Timestamp? = null
+    val initDate: Timestamp? = null,
+    val charityName: String = ""
 )

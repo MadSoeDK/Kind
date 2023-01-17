@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,21 +32,34 @@ fun PortfolioScreen(viewModel: PortfolioViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val state by viewModel.data.collectAsState()
-        if (state.subscription.isEmpty()) {
-            CircularProgressIndicator()
-        } else {
-            if (viewModel.popupIsOpen) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(30.dp),
-
-                    ) {
-                    EditPortfolio(viewModel = viewModel)
-                }
+        if (viewModel.haveSubscriptions) {
+            if (state.subscription.isEmpty()) {
+                CircularProgressIndicator()
             } else {
-                PortfolioContent(viewModel)
+                if (viewModel.popupIsOpen) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(30.dp),
+
+                        ) {
+                        EditPortfolio(viewModel = viewModel)
+                    }
+                } else {
+                    PortfolioContent(viewModel)
+                }
             }
+        } else {
+            Column(
+                modifier = Modifier.height(700.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "You have no charities in your portfolio")
+                    Text(text = "Start building your portfolio today!")
+                    Spacer(modifier = Modifier.height(20.dp))
+                    KindButton(onClick = viewModel.onNavigateToCharities, textProvider = "Explore Charities and Build Portfolio")
+                }
         }
     }
 }
@@ -69,43 +81,48 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         colors = state.color
     )
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
-        state.subscription.forEachIndexed { i, it ->
-            item {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        Modifier
+            .height(85.dp)
+            .padding(horizontal = 30.dp),
+        content = {
+            state.subscription.forEachIndexed { i, it ->
+                item {
                     Box(
-                        Modifier
-                            .clip(RectangleShape)
-                            .background(
-                                state.color[i]
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            Modifier
+                                .clip(RectangleShape)
+                                .background(
+                                    state.color[i]
+                                )
+                                .height(12.dp)
+                                .width(12.dp)
+                                .align(Alignment.BottomStart)
+                        )
+                        if (it.charityName.length <= 20) {
+                            Text(
+                                text = it.charityName + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize,
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
                             )
-                            .height(12.dp)
-                            .width(12.dp)
-                            .align(Alignment.BottomStart)
-                    )
-                    if (it.charityID.length <= 20) {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize,
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
-                    } else {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize.div(1.4),
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
+                        } else {
+                            Text(
+                                text = it.charityName + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
             }
-        }
-    })
+        })
 
     Text(
         text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
@@ -149,7 +166,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
             val value = when (index) {
                 0 -> item.charityID
                 1 -> "${
-                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001}) * 100).roundToInt()
+                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001 }) * 100).roundToInt()
                 }%"
                 2 -> "${item.amount.roundToInt()} kr."
                 else -> ""

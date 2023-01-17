@@ -90,7 +90,6 @@ class StorageServiceImpl(
 
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = currentUser?.uid.toString()
-        println("Portfolio: " + currentUser?.uid)
         val subscriptions =
             Firebase.firestore.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
@@ -203,6 +202,11 @@ class StorageServiceImpl(
     override suspend fun getCharities(): List<Charity> {
         return Firebase.firestore.collection("Charity").get().await().toObjects()
     }
+
+    override suspend fun getCharitiesByCategory(category: String): List<Charity> {
+        return Firebase.firestore.collection("Charity").whereEqualTo("category", category).get().await().toObjects()
+    }
+
 
     override suspend fun increaseCharityDonationNumber(charity: String) {
         changeCharityField(charity, "Donations", 1)

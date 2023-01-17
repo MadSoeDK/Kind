@@ -10,6 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+enum class CharityCategory(category: String) {
+    All("All"),
+    Health("Health"),
+    Disasters("Disasters"),
+    Climate("Climate"),
+    Welfare("Welfare"),
+    Children_Care("Children Care")
+}
 class ExplorerViewModel(
     val navController: NavController
 ) : ViewModel() {
@@ -34,6 +42,22 @@ class ExplorerViewModel(
                 }
             } catch (e: Exception) {
                 println(e.printStackTrace())
+            }
+        }
+        return charityList
+    }
+    fun getCharitiesByCategory(category: String): List<com.example.kind.model.Charity> {
+        if(category.equals("All")) {
+            getCharities()
+        } else {
+            viewModelScope.launch {
+                try {
+                    _data.update {
+                        storage.getCharitiesByCategory(category)
+                    }
+                } catch (e: Exception) {
+                    println(e.printStackTrace())
+                }
             }
         }
         return charityList

@@ -34,7 +34,9 @@ class ArticleViewModel(
                     title = articleData.title,
                     paragraf = articleData.paragraf,
                     iconImage = articleData.iconImage,
-                    mainImage = articleData.mainImage
+                    mainImage = articleData.mainImage,
+                    author = articleData.author,
+                    date = articleData.date,
                 )
             }
         }
