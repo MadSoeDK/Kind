@@ -102,9 +102,9 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
                                 .width(12.dp)
                                 .align(Alignment.BottomStart)
                         )
-                        if (it.charityID.length <= 20) {
+                        if (it.charityName.length <= 20) {
                             Text(
-                                text = it.charityID + "",
+                                text = it.charityName + "",
                                 fontWeight = Typography.headlineMedium.fontWeight,
                                 fontSize = Typography.labelSmall.fontSize,
                                 color = Typography.headlineLarge.color,
@@ -112,7 +112,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
                             )
                         } else {
                             Text(
-                                text = it.charityID + "",
+                                text = it.charityName + "",
                                 fontWeight = Typography.headlineMedium.fontWeight,
                                 fontSize = Typography.labelSmall.fontSize.div(1.4),
                                 color = Typography.headlineLarge.color,
