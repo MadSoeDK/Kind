@@ -23,7 +23,7 @@ class StorageServiceImpl: StorageService {
     // Users
     override suspend fun addUser(user: User) {
         Firebase.firestore.collection("Users").add(user).addOnSuccessListener { documentReference ->
-            val documentId = currentUser?.uid.toString()
+            val documentId = Firebase.auth.currentUser?.uid.toString()
 
             Firebase.firestore.collection("Users").document("$documentId").collection("Subscriptions")
             Firebase.firestore.collection("Users").document("$documentId").collection("Donations")
@@ -34,12 +34,9 @@ class StorageServiceImpl: StorageService {
         Firebase.firestore.collection("Users").document(uid).set(user)
     }
 
-    override suspend fun updateCurrentUser() {
-        currentUser = FirebaseAuth.getInstance().currentUser
-    }
 
     override suspend fun getUIDofCurrentUser(): String{
-        return currentUser?.uid ?: ""
+        return Firebase.auth.currentUser?.uid ?: ""
     }
 
     override suspend fun addToPortfolio(charityId: String){
@@ -63,13 +60,13 @@ class StorageServiceImpl: StorageService {
             println(charity.toString())
             val subscription = Subscription(10.0, charityId, charityId, Timestamp(1, 1), charity!!.name)
 
-            Firebase.firestore.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).collection("Subscriptions")
                 .add(subscription)
         }
     }
 
     override suspend fun removeFromPortfolio(charityId: String) {
-        Firebase.firestore.collection("Users").document(currentUser!!.uid).collection("Subscriptions").whereEqualTo("charityID", charityId)
+        Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).collection("Subscriptions").whereEqualTo("charityID", charityId)
             .get().addOnSuccessListener { querySnapshot ->
                 for (doc in querySnapshot) {
                     doc.reference.delete()
@@ -80,12 +77,12 @@ class StorageServiceImpl: StorageService {
 
     override suspend fun updateUser(email: String, password: String) {
         try {
-            currentUser!!.updateEmail(email)
-            currentUser!!.updatePassword(password)
+            Firebase.auth.currentUser!!.updateEmail(email)
+            Firebase.auth.currentUser!!.updatePassword(password)
         } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            currentUser!!.reauthenticate(
+            Firebase.auth.currentUser!!.reauthenticate(
                 EmailAuthProvider.getCredential(
-                    currentUser?.email.toString(),
+                    Firebase.auth.currentUser?.email.toString(),
                     password
                 )
             )
@@ -93,7 +90,7 @@ class StorageServiceImpl: StorageService {
     }
 
     override suspend fun getSubscriptions(): List<Subscription> {
-        val documentId = currentUser?.uid.toString()
+        val documentId = Firebase.auth.currentUser?.uid.toString()
         val subscriptions =
             Firebase.firestore.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
@@ -107,25 +104,25 @@ class StorageServiceImpl: StorageService {
     }
 
     override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
-        println("Profile " + currentUser.toString())
+        println("Profile " + Firebase.auth.currentUser.toString())
         try {
-            Firebase.firestore.collection("Users").document(currentUser?.uid.toString()).delete()
-            currentUser?.delete()
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete()
+            Firebase.auth.currentUser?.delete()
         } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            currentUser?.reauthenticate(
+            Firebase.auth.currentUser?.reauthenticate(
                 EmailAuthProvider.getCredential(
-                    currentUser!!.email.toString(),
+                    Firebase.auth.currentUser!!.email.toString(),
                     confirmPassword
                 )
             )
-            Firebase.firestore.collection("Users").document(currentUser?.uid.toString()).delete()
-            currentUser?.delete()
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete()
+            Firebase.auth.currentUser?.delete()
         }
     }
 
     override suspend fun getDonationsAmount(): Int{
 
-        val donationList =  Firebase.firestore.collection("stripe_customers").document(currentUser!!.uid)
+        val donationList =  Firebase.firestore.collection("stripe_customers").document(Firebase.auth.currentUser!!.uid)
                             .collection("payments").get().await().toObjects<Payment>()
 
         return donationList.sumOf {
@@ -158,13 +155,13 @@ class StorageServiceImpl: StorageService {
         subscription: Subscription,
         amount: Double
     ) {
-        val documentId = currentUser?.uid.toString()
+        val documentId = Firebase.auth.currentUser?.uid.toString()
         Firebase.firestore.collection("Users").document(documentId)
             .collection("Subscriptions").whereEqualTo("charityID", subscription.charityID).get()
             .addOnSuccessListener { documents ->
                 documents.forEach {
                     val docRef: DocumentReference =
-                        Firebase.firestore.collection("Users").document(currentUser?.uid.toString())
+                        Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString())
                             .collection("Subscriptions").document(it.id)
                     Firebase.firestore.runTransaction { transaction ->
                         transaction.update(docRef, "amount", amount)
@@ -270,10 +267,9 @@ class StorageServiceImpl: StorageService {
         var articlePointers = listOf<String>()
         var articleList = mutableListOf<Article>()//Firebase.firestore.collection("Articles").limit(5).get().await().toObjects()
 
-        println(currentUser)
         // Get the subscriptions from User
         subscriptions =
-            Firebase.firestore.collection("Users").document(currentUser!!.uid).collection("Subscriptions")
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).collection("Subscriptions")
                 .get().await().toObjects()
 
 
@@ -308,7 +304,7 @@ class StorageServiceImpl: StorageService {
 
     override suspend fun createStripePaymentIntent(amount: Double, currency: String, charityId: String): Task<DocumentReference> {
         val colRef = Firebase.firestore.collection("stripe_customers")
-            .document(currentUser?.uid.toString())
+            .document(Firebase.auth.currentUser?.uid.toString())
             .collection("payments")
 
         val docRef = colRef.add(
@@ -327,7 +323,7 @@ class StorageServiceImpl: StorageService {
 
     override suspend fun getClientSecret(doc: DocumentReference): String {
         val payment = Firebase.firestore.collection("stripe_customers")
-            .document(currentUser?.uid.toString())
+            .document(Firebase.auth.currentUser?.uid.toString())
             .collection("payments")
             .document(doc.id).get().await().toObject<KindPaymentIntent>()!!
 
