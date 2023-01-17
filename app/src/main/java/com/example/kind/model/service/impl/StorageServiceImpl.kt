@@ -90,7 +90,6 @@ class StorageServiceImpl(
 
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = currentUser?.uid.toString()
-        println("Portfolio: " + currentUser?.uid)
         val subscriptions =
             Firebase.firestore.collection("Users").document(documentId).collection("Subscriptions")
         // Call method here
