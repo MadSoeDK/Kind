@@ -3,12 +3,7 @@ package com.example.kind.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.Article
-import com.example.kind.getFakeArticles
-import com.example.kind.getFakeCharity
-import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,14 +13,14 @@ import kotlinx.coroutines.launch
 class ArticleViewModel(
     val navController: NavController,
     val storage: StorageServiceImpl,
-    id: String,
+    val id: String,
 ) : ViewModel() {
 
     // State setup
-    private val _data = MutableStateFlow(com.example.kind.model.Article()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(com.example.kind.model.Article())
     val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
 
-    init {
+    fun getArticleById() {
         viewModelScope.launch {
             _data.update {
                 val articleData = storage.getArticle(id)
@@ -41,9 +36,4 @@ class ArticleViewModel(
             }
         }
     }
-
-    val id = id
-    val title = "Dummy Title"
-    val paragraf = "Dummy paragraf "
-    val charityName = "Dummy charity name"
 }

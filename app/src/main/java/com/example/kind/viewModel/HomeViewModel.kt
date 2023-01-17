@@ -25,7 +25,7 @@ class HomeViewModel(
     )
 
     // State setup
-    private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(HomeState())
     val data: StateFlow<HomeState> = _data.asStateFlow()
 
     fun getHomeArticles() {

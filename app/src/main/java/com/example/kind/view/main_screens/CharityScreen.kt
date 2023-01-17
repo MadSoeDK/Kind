@@ -32,7 +32,6 @@ import com.example.kind.view.home.composables.SmallHeaderAndText
 
 @Composable
 fun CharityScreen(
-    //TODO:farver skal fikses
     viewModel: CharityViewModel,
 ) {
 
