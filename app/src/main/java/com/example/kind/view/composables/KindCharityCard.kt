@@ -59,10 +59,8 @@ fun KindCharityCard(
                     contentDescription = null,
                     modifier = Modifier
                         .size(50.dp)
-                        .clip(
-                            CircleShape
-                        )
-                        .border(1.dp, Color.LightGray, CircleShape)
+                        .clip(CircleShape)
+                        .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
                         //.background(MaterialTheme.colorScheme.background)
                     ,
                     contentScale = ContentScale.FillBounds,
@@ -85,7 +83,6 @@ fun KindCharityCard(
                     color = Typography.displayMedium.color,
                 )
             }
-
         }
     }
 }

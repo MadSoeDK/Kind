@@ -32,6 +32,7 @@ interface StorageService {
     // Charity
     suspend fun getCharity(id: String): Charity?
     suspend fun getCharities(): List<Charity>
+    suspend fun getCharitiesByCategory(category: String): List<Charity>
     suspend fun increaseCharityDonationNumber(charity: String)
     suspend fun decreaseCharityDonationNumber(charity: String)
     suspend fun increaseCharityDonaterNumber(charity: String)

@@ -169,7 +169,7 @@ fun ArticleScreen(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.surfaceVariant)
             .padding(20.dp, 25.dp)
     )
     {
@@ -178,7 +178,7 @@ fun ArticleScreen(
         // Charity
         Text(
             text = state.charityName,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Left
         )
@@ -186,7 +186,7 @@ fun ArticleScreen(
         // Title
         Text(
             text = state.title,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = Typography.headlineMedium.fontWeight,
             fontSize = Typography.headlineMedium.fontSize,
             textAlign = TextAlign.Center
@@ -197,7 +197,7 @@ fun ArticleScreen(
         // Article Text
         Text(
             text = state.paragraf,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = Typography.displayMedium.fontSize,
             textAlign = TextAlign.Center
         )

@@ -33,12 +33,12 @@ fun KindNewsCard(
             .padding(8.dp)
             .width(350.dp)
             .height(550.dp)
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier
             .padding(0.dp, 5.dp)
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Image(
                 painter = OrganizationIcon,
@@ -72,7 +72,8 @@ fun KindNewsCard(
         ) {
             Row(modifier = Modifier.padding(0.dp, 15.dp)) {
                 Image(
-                    painter = OrganizationIcon, contentDescription = null, modifier = Modifier
+                    painter = OrganizationIcon, contentDescription = null,
+                    modifier = Modifier
                         .height(200.dp)
                         .fillMaxWidth()
                 )

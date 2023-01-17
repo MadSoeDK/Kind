@@ -11,13 +11,14 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.R
 import com.example.kind.view.composables.KindNewsCard
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
+import com.example.kind.viewModel.CharityCategory
 
 @ExperimentalFoundationApi
 @Composable
 fun NewsScreen() {
     CharityHeaderAndSubsectionText(
         Title = "Charity Updates",
-        Categories = arrayOf("Health", "Disasters", "Climate", "Welfare", "Children Care")
+        Categories = CharityCategory.values()
     )
     Column(modifier = Modifier.fillMaxHeight())
     {
