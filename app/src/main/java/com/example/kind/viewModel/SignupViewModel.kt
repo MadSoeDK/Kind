@@ -94,7 +94,7 @@ class SignupViewModel(
                 amountState.div(12)
             }
         }
-        return User(formState.getData().getOrDefault("Full name", ""), monthlyPayment)
+        return User(formState.getData().getOrDefault("Full name", ""), monthlyPayment.toDouble())
     }
 
     fun onSignUpFormSubmit() {
@@ -131,7 +131,7 @@ class SignupViewModel(
         }
     }
 
-    fun getCharities(): List<Charity> {
+    private fun getCharities(): List<Charity> {
         viewModelScope.launch {
             try {
                 _charityData.update {

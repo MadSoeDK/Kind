@@ -30,6 +30,7 @@ fun HomeScreen(
     }
 
     Column {
+        Spacer(modifier = Modifier.padding(0.dp, 15.dp))
         HeaderAndText(state.amountDonated.toString() + " kr.", "Your total donated amount")
         Spacer(modifier = Modifier.padding(0.dp, 10.dp))
         Column(modifier = Modifier.padding(20.dp, 0.dp)) {
@@ -96,9 +97,7 @@ fun HomeScreen(
             LazyRow {
                 state.charities.forEachIndexed { i, element ->
                     item {
-                        if (i == 0) {
-                            Spacer(modifier = Modifier.width(10.dp))
-                        }
+                        if (i == 0) Spacer(modifier = Modifier.width(10.dp))
                         KindCard(
                             titleProvider = element.name,
                             iconImage = element.iconImage,

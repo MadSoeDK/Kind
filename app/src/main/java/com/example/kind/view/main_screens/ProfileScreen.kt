@@ -91,11 +91,10 @@ fun ProfileScreen(
                 ),
                 modifier = Modifier.width(280.dp),
             ) {
-                if (deleteAccountOpenDialog.value == true) {
+                if (deleteAccountOpenDialog.value) {
                     AlertDialog(
                         onDismissRequest = {
                             deleteAccountOpenDialog.value = false
-                            viewModel.updateChanges()
                         },
                         title = { Text(text = "Delete your account") },
                         text = { Text(text = "Are you sure you want to delete your account?") },
@@ -110,7 +109,6 @@ fun ProfileScreen(
                         dismissButton = {
                             Button(onClick = {
                                 deleteAccountOpenDialog.value = false
-                                viewModel.updateChanges()
                             }) {
                                 Text("Dismiss")
                             }

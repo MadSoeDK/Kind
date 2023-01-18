@@ -19,6 +19,7 @@ data class ProfileState(
 )
 
 class ProfileViewModel(val storage: StorageServiceImpl) : ViewModel() {
+
     var formState by mutableStateOf(FormState())
 
     var fields: List<KindTextField> = listOf(

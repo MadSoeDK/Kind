@@ -98,7 +98,6 @@ class StorageServiceImpl: StorageService {
     }
 
     override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
-        println("Profile " + Firebase.auth.currentUser.toString())
         try {
             Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete()
             Firebase.auth.currentUser?.delete()
