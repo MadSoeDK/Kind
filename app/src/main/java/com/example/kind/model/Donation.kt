@@ -8,14 +8,14 @@ data class Donation(
     val charityID: String? = "",
     val charityName: String? = "",
     val currency: String? = "",
-    val date: com.google.firebase.Timestamp? = Timestamp(Date()),
+    val date: Timestamp? = Timestamp(Date()),
     val description: String? = "",
     val ID: String? = ""
 )
 
 data class Payment(
     val amount: Double? = 0.0,
-    val charity_id: String? = "",
+    val charity_id: String? = "Red barnet",
     val currency: String? = "",
-    val date: com.google.firebase.Timestamp? = Timestamp(Date()),
+    val date: Timestamp? = Timestamp(Date()),
 )

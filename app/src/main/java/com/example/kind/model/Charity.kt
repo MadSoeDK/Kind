@@ -1,7 +1,6 @@
 package com.example.kind.model
 
-data class Charity(
-
+data class Charity (
     var donaters: Int = 0,
     var donations: Int = 0,
     val id: String = "",
@@ -12,11 +11,4 @@ data class Charity(
     val articles: List<Article> = listOf(),
     val inPortfolio: Boolean = false,
     val category: String = ""
-
-    /*
-    val id : Int,
-    var name : String,
-    var organization : String,
-    var supporters : List<User>,
-    var theme : String,*/
 )

@@ -39,7 +39,7 @@ fun ArticleScreen(
 ) {
     val state by viewModel.data.collectAsState()
 
-    Column(
+    Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
@@ -155,49 +155,3 @@ fun ArticleScreen(
 
     }
 }
-
-/**
- * ----------------------------------------------------------------:::::::::::::::-
- */
-
-/*
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.surfaceVariant)
-            .padding(20.dp, 25.dp)
-    )
-    {
-        Spacer(modifier = Modifier.padding(20.dp))
-
-        // Charity
-        Text(
-            text = state.charityName,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Typography.displayMedium.fontSize,
-            textAlign = TextAlign.Left
-        )
-
-        // Title
-        Text(
-            text = state.title,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = Typography.headlineMedium.fontWeight,
-            fontSize = Typography.headlineMedium.fontSize,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.padding(20.dp))
-
-        // Article Text
-        Text(
-            text = state.paragraf,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontSize = Typography.displayMedium.fontSize,
-            textAlign = TextAlign.Center
-        )
-    }
-    }
- */

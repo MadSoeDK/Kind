@@ -27,12 +27,23 @@ class CharityViewModel(
         getCharity()
     }
 
-    fun getCharity() {
+    private fun getCharity() {
         viewModelScope.launch {
             val charity = storage.getCharity(id) ?: return@launch
             _data.update {
-                charity
+                it.copy(
+                    donaters = charity.donaters,
+                    donations = charity.donations,
+                    id = charity.id,
+                    desc = charity.desc,
+                    iconImage = charity.iconImage,
+                    mainImage = charity.mainImage,
+                    name = charity.name,
+                    articles = storage.getArticles(charity.id),
+                    inPortfolio = charity.inPortfolio
+                )
             }
+            println(_data.toString())
             charities.value.subscription.forEach {
                 if (it.charityID == _data.value.id) {
                     _data.update {

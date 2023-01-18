@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.google.firestore.v1.TransactionOptions.ReadOnly
 
 /**
  * author and source: https://www.section.io/engineering-education/jetpack-compose-forms/

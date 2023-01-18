@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import coil.compose.AsyncImage
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -130,8 +129,9 @@ fun CharityScreen(
             }
 
             Spacer(modifier = Modifier.padding(vertical = 10.dp))
-            //DisplayDonatorsAndDonations(charityViewModel = viewModel)
 
+            // TODO : Further development, to be implemented
+            //DisplayDonatorsAndDonations(charityViewModel = viewModel)
 
             Column(modifier = Modifier.padding(20.dp, 0.dp)) {
                 // Post

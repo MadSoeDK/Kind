@@ -193,7 +193,7 @@ class StorageServiceImpl: StorageService {
     }
 
     override suspend fun getPayments(user: String): List<Payment> {
-        return Firebase.firestore.collection("stripe_customers").document(user).collection("payments").get().await()
+        return Firebase.firestore.collection("stripe_customers").document(user).collection("payments").limit(10).get().await()
             .toObjects()
     }
 
