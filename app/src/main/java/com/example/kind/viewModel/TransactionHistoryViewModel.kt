@@ -19,22 +19,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class TransactionState (
-    val donations: List<Payment> = listOf()
-)
 
 class TransactionHistoryViewModel(
     private val storage: StorageServiceImpl,
-    val navController: NavController,
 ) : ViewModel() {
-    private val _data = MutableStateFlow(TransactionState())
-    val data: StateFlow<TransactionState> = _data.asStateFlow()
+    private val _data = MutableStateFlow<List<Payment>>(listOf())
+    val data: StateFlow<List<Payment>> = _data.asStateFlow()
 
     fun getDonations() {
-                viewModelScope.launch {
-                    println(Firebase.auth.uid!!)
-                    _data.update { it.copy(donations = storage.getPayments(Firebase.auth.uid!!)) }
-                    println(_data.value.toString())
+        viewModelScope.launch {
+            _data.update { storage.getPayments(Firebase.auth.uid!!) }
         }
     }
 }

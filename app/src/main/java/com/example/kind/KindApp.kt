@@ -102,6 +102,7 @@ fun NavGraphBuilder.homeNavGraph(
         val portfolioViewModel = PortfolioViewModel(storage) { appViewModel.navController.navigate(HomeScreens.Explorer.route) }
         val explorerViewModel = ExplorerViewModel(navController, storage)
         val profileViewModel = ProfileViewModel(storage)
+        val transactionHistoryViewModel = TransactionHistoryViewModel(storage = storage)
 
         composable(HomeScreens.Home.route) {
             Screen(
@@ -138,7 +139,7 @@ fun NavGraphBuilder.homeNavGraph(
             ) { ProfileScreen(
                 viewModel = profileViewModel,
                 onLogout = { appViewModel.onLogout() },
-                transactionHistory = {navController.navigate(HomeScreens.TransactionHistory.route)} ) }
+                transactionHistory = { navController.navigate(HomeScreens.TransactionHistory.route) } ) }
         }
         composable(HomeScreens.Explorer.route) {
             Screen(
@@ -155,7 +156,7 @@ fun NavGraphBuilder.homeNavGraph(
                 NavigationBar = { KindNavigationBar(navController) },
                 content = {
                     CharityScreen(
-                        viewModel = CharityViewModel(
+                        viewModel = CharityViewModel (
                             navController = navController,
                             id = NavBackStackEntry.arguments!!.getString("id", ""),
                             onAddToPortfolio = { portfolioViewModel.getSubscriptions() },
@@ -197,9 +198,9 @@ fun NavGraphBuilder.homeNavGraph(
         }
 
         composable(HomeScreens.TransactionHistory.route) {
-            val transactionHistoryViewModel = TransactionHistoryViewModel(storage = storage, navController = navController)
-            Screen{
-            TransactionHistoryScreen(viewModel = transactionHistoryViewModel, back = {navController.navigate(HomeScreens.Profile.route)})}
+            Screen {
+                TransactionHistoryScreen(viewModel = transactionHistoryViewModel, back = {navController.popBackStack()})
+            }
         }
     }
 }

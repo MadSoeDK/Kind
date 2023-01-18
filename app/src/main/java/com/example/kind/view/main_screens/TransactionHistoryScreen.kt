@@ -30,76 +30,91 @@ fun TransactionHistoryScreen(
     }
 
     val state by viewModel.data.collectAsState()
-    IconButton(
-        onClick = { viewModel.navController.popBackStack()},
-        modifier = Modifier.zIndex(1f),
+
+    Spacer(modifier = Modifier.height(10.dp))
+
+    Row (
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            "",
-            tint = MaterialTheme.colorScheme.primary
-        )
+        IconButton(
+            onClick = back,
+            modifier = Modifier.zIndex(1f),
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                "Back",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+        Spacer(modifier = Modifier.width(20.dp))
+        Text(text = "Transactions")
     }
-    if(state.donations.isEmpty()) {
+
+    if(state.isEmpty()) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             CircularProgressIndicator()
         }
+    } else {
+        Column {
+            PortfolioTable(
+                columnCount = 4,
+                cellWidth = { index ->
+                    when (index) {
+                        0 -> 120.dp
+                        1 -> 70.dp
+                        2 -> 110.dp
+                        else -> 70.dp
+                    }
+                },
+                data = state,
+                headerCellContent = { index ->
+                    val value = when (index) {
+                        0 -> "Organization"
+                        1 -> "Date"
+                        2 -> "Amount"
+                        else -> ""
+                    }
+                    val alignment = when (index) {
+                        0 -> TextAlign.Left
+                        2 -> TextAlign.Right
+                        else -> TextAlign.Center
+                    }
+                    Text(
+                        text = value,
+                        fontSize = 14.sp,
+                        textAlign = alignment,
+                        modifier = Modifier.padding(0.dp, 20.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
+                modifier = Modifier,
+                cellContent = { index, item ->
+                    val value = when (index) {
+                        0 -> item.charity_id
+                        1 -> item.date?.toDate().toString()
+                        2 -> "${item.amount?.roundToInt()} kr."
+                        else -> ""
+                    }
+                    val alignment = when (index) {
+                        0 -> TextAlign.Left
+                        else -> TextAlign.Center
+                    }
+                    Text(
+                        text = value!!,
+                        fontSize = 13.sp,
+                        textAlign = alignment,
+                        modifier = Modifier.padding(0.dp, 20.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            )
+        }
     }
-    Column(modifier = Modifier) {
-        PortfolioTable(
-            columnCount = 4,
-            cellWidth = { index ->
-                when (index) {
-                    0 -> 120.dp
-                    1 -> 70.dp
-                    2 -> 110.dp
-                    else -> 70.dp
-                }
-            },
-            data = state.donations,
-            headerCellContent = { index ->
-                val value = when (index) {
-                    0 -> "Organization"
-                    1 -> "Date"
-                    2 -> "Amount"
-                    else -> ""
-                }
-                val alignment = when (index) {
-                    0 -> TextAlign.Left
-                    2 -> TextAlign.Right
-                    else -> TextAlign.Center
-                }
-                Text(
-                    text = value,
-                    fontSize = 14.sp,
-                    textAlign = alignment,
-                    modifier = Modifier.padding(0.dp, 20.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold,
-                )
-            },
-            modifier = Modifier,
-            cellContent = { index, item ->
-                val value = when (index) {
-                    0 -> item.charity_id
-                    1 -> item.date?.toDate().toString()
-                    2 -> "${item.amount?.roundToInt()} kr."
-                    else -> ""
-                }
-                val alignment = when (index) {
-                    0 -> TextAlign.Left
-                    else -> TextAlign.Center
-                }
-                Text(
-                    text = value!!,
-                    fontSize = 13.sp,
-                    textAlign = alignment,
-                    modifier = Modifier.padding(0.dp, 20.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        )
-    }
+
+    
 }
