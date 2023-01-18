@@ -70,17 +70,8 @@ class StorageServiceImpl: StorageService {
     }
 
     override suspend fun updateUser(email: String, password: String) {
-        try {
-            Firebase.auth.currentUser!!.updateEmail(email)
-            Firebase.auth.currentUser!!.updatePassword(password)
-        } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            Firebase.auth.currentUser!!.reauthenticate(
-                EmailAuthProvider.getCredential(
-                    Firebase.auth.currentUser?.email.toString(),
-                    password
-                )
-            )
-        }
+        Firebase.auth.currentUser!!.updateEmail(email)
+        Firebase.auth.currentUser!!.updatePassword(password)
     }
 
     override suspend fun getSubscriptions(): List<Subscription> {
@@ -97,25 +88,17 @@ class StorageServiceImpl: StorageService {
         return portfolio
     }
 
-    override suspend fun deleteUser(confirmEmail: String, confirmPassword: String) {
+    override suspend fun deleteUser(password: String) {
         try {
-            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete()
-            Firebase.auth.currentUser?.delete()
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
+            Firebase.auth.currentUser?.delete()?.await()
         } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            Firebase.auth.currentUser?.reauthenticate(
-                EmailAuthProvider.getCredential(
-                    Firebase.auth.currentUser!!.email.toString(),
-                    confirmPassword
-                )
-            )
-            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete()
-            Firebase.auth.currentUser?.delete()
+            throw e
         }
     }
 
     override suspend fun getDonationsAmount(): Int{
-
-        val donationList =  Firebase.firestore.collection("stripe_customers").document(Firebase.auth.currentUser!!.uid)
+        val donationList = Firebase.firestore.collection("stripe_customers").document(Firebase.auth.currentUser!!.uid)
                             .collection("payments").get().await().toObjects<Payment>()
 
         return donationList.sumOf {

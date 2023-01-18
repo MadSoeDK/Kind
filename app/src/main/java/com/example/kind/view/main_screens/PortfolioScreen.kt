@@ -225,13 +225,9 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                 onValueChange = { value: String ->
                                     text = value
                                     var numericValue: Double
-
                                     // Input validation
                                     try {
                                         numericValue = value.toDouble()
-                                        if (numericValue < 0){
-
-                                        }
                                     } catch (e: Exception){
                                         numericValue = 10.0
                                         if (text.isNotEmpty()) {

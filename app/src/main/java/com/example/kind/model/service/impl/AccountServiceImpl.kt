@@ -1,6 +1,8 @@
 package com.example.kind.model.service.impl
 
 import com.example.kind.model.service.AccountService
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -28,5 +30,12 @@ class AccountServiceImpl @Inject constructor(): AccountService {
 
     override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
         Firebase.auth.createUserWithEmailAndPassword(email, password).await().user?.uid
+    }
+
+    override suspend fun reAuthentication(email: String, password: String) {
+        Firebase.auth.currentUser?.reauthenticate(EmailAuthProvider.getCredential(
+            email,
+            password
+        ))?.await()
     }
 }

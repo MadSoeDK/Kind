@@ -33,13 +33,6 @@ class PortfolioViewModel(
 
     var haveSubscriptions by mutableStateOf(false)
 
-    var fields: List<KindTextField> = listOf(
-        KindTextField(
-            name = "Indtast beløb",
-            label = "Indtast beløb",
-            validators = listOf(Required()),
-        ),
-    )
     var popupIsOpen by mutableStateOf(false)
 
     fun getSubscriptions() {

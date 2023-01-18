@@ -7,120 +7,131 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.HeaderAndText
-import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.view.composables.KindButton
-import com.example.kind.view.composables.KindButtonDanger
+import com.example.kind.view.composables.KindButtonOutlined
 import com.example.kind.viewModel.ProfileViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel,
     onLogout: () -> Unit,
     transactionHistory: () -> Unit
 ) {
-    val updateChangesOpenDialog = remember { mutableStateOf(false) }
+
+    var updateChangesOpenDialog = remember { mutableStateOf(false) }
     val deleteAccountOpenDialog = remember { mutableStateOf(false) }
-    val reAuthOpenDialog = remember { mutableStateOf(false) }
-    var read by remember { mutableStateOf(true) }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (!reAuthOpenDialog.value) {
-            HeaderAndText(
-                headerProvider = "Account Settings",
-                textProvider = "Edit your personal settings below"
-            )
-            Form(
-                state = viewModel.formState,
-                fields = viewModel.fields.subList(0, 2),
-            )
-            if (read) {
-                KindButton(onClick = {
-                    read = !read
-                    viewModel.updateChanges()
-                },
-                "Update changes")
-            }
-            if (!read) {
-                Button(onClick = {
-                    updateChangesOpenDialog.value = true
-                }) {
-                    if (updateChangesOpenDialog.value == true) {
-                        AlertDialog(
-                            onDismissRequest = {
-                                updateChangesOpenDialog.value = false
-                                viewModel.updateChanges()
-                            },
-                            title = { Text(text = "Update User Details") },
-                            text = { Text(text = "Are you sure you want to update your user details?") },
-                            confirmButton = {
-                                Button(onClick = {
-                                    updateChangesOpenDialog.value = false
-                                    if (!viewModel.fields.isEmpty()) {
-                                        viewModel.saveChanges()
-                                    }
-                                    viewModel.updateChanges()
-                                }) {
-                                    Text("Accept")
-                                }
-                            },
-                            dismissButton = {
-                                Button(onClick = {
-                                    updateChangesOpenDialog.value = false
-                                    viewModel.updateChanges()
-                                    read = !read
-                                }) {
-                                    Text("Dismiss")
-                                }
-                            }
-                        )
-                    }
-                    Text("Save Changes")
-                }
-            }
-            Button(
-                onClick = {
-                    deleteAccountOpenDialog.value = true
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                ),
-                modifier = Modifier.width(280.dp),
-            ) {
-                if (deleteAccountOpenDialog.value) {
-                    AlertDialog(
-                        onDismissRequest = {
-                            deleteAccountOpenDialog.value = false
-                        },
-                        title = { Text(text = "Delete your account") },
-                        text = { Text(text = "Are you sure you want to delete your account?") },
-                        confirmButton = {
-                            Button(onClick = {
-                                reAuthOpenDialog.value = true
-                                deleteAccountOpenDialog.value = false
-                            }) {
-                                Text("Accept")
-                            }
-                        },
-                        dismissButton = {
-                            Button(onClick = {
-                                deleteAccountOpenDialog.value = false
-                            }) {
-                                Text("Dismiss")
-                            }
-                        }
-                    )
-                }
-                Text("Delete User")
-            }
-            KindButton(onClick = onLogout, "Log Out")
-            KindButton(onClick = transactionHistory, "Transaction history")
+
+        HeaderAndText(
+            headerProvider = "Account Settings",
+            textProvider = "Edit your personal settings below"
+        )
+
+        if(viewModel.isLoading) {
+            CircularProgressIndicator()
         } else {
-            ReSignIn(viewModel = viewModel, onLogout)
+            Form(state = viewModel.formState, fields = viewModel.fields)
+        }
+
+        if (viewModel.fieldReadOnly) {
+            KindButton(
+                onClick = {
+                    viewModel.fieldReadOnly = false
+                    viewModel.toggleFieldsReadState()
+                },
+                textProvider = "Change email and password"
+            )
+        } else {
+            KindButton(
+                onClick = {
+                    viewModel.fieldReadOnly = true
+                    updateChangesOpenDialog.value = true
+                },
+                textProvider = "Save Changes"
+            )
+        }
+
+        Button(
+            onClick = {
+                deleteAccountOpenDialog.value = true
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+                contentColor = MaterialTheme.colorScheme.onErrorContainer
+            ),
+            modifier = Modifier.width(280.dp),
+        ) {
+            Text("Delete User")
+        }
+
+        KindButtonOutlined(onClick = transactionHistory, "Transaction history")
+        KindButton(onClick = onLogout, "Log Out")
+
+
+        // Dialogs
+        if (updateChangesOpenDialog.value) {
+            AlertDialog(
+                onDismissRequest = { updateChangesOpenDialog.value = false },
+                title = { Text(text = "Update User Details") },
+                text = { Text(text = "Are you sure you want to update your user details?") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            updateChangesOpenDialog.value = false
+                            viewModel.onFormSubmit()
+                        }
+                    ) {
+                        Text("Accept")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        updateChangesOpenDialog.value = false
+                    }) {
+                        Text("Dismiss")
+                    }
+                }
+            )
+        }
+
+        var text by remember { mutableStateOf("") }
+
+        if (deleteAccountOpenDialog.value) {
+            AlertDialog(
+                onDismissRequest = { updateChangesOpenDialog.value = false },
+                title = { Text(text = "Delete account") },
+                text = {
+                    Column {
+                        Text(text = "Are you sure you want to delete your account? This cannot be undone. Input your password below")
+                        TextField(value = text, onValueChange = {text = it}, singleLine = true, visualTransformation = PasswordVisualTransformation())
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            deleteAccountOpenDialog.value = false
+                            viewModel.onDeleteUser(text)
+                        }
+                    ) {
+                        Text("Delete account")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        deleteAccountOpenDialog.value = false
+                    }) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
     }
 
@@ -137,12 +148,12 @@ fun ReSignIn(viewModel: ProfileViewModel, onLogout: () -> Unit) {
             headerProvider = "Confirmation",
             textProvider = "Please confirm your user details to delete your account."
         )
-        Form(
+        /*Form(
             state = viewModel.formState,
-            fields = viewModel.fields.subList(2, 4),
-        )
+            //fields = viewModel.fields.subList(2, 4),
+        )*/
         Button(onClick = {
-            viewModel.deleteUser()
+            //viewModel.onDeleteUser()
             onLogout()
         }) {
             Text("Confirm")

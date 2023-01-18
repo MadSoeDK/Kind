@@ -81,7 +81,7 @@ fun KindApp(
         navController = navController,
         startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
-        homeNavGraph(navController, appViewModel, paymentViewModel, storage)
+        homeNavGraph(navController, appViewModel, paymentViewModel, storage, auth)
         authNavGraph(navController, auth, storage)
         signupNavGraph(navController, storage, auth)
     }
@@ -92,7 +92,8 @@ fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
     appViewModel: AppViewModel,
     paymentViewModel: PaymentViewModel,
-    storage: StorageServiceImpl
+    storage: StorageServiceImpl,
+    auth: AccountServiceImpl
 ) {
     navigation(
         startDestination = HomeScreens.Home.route,
@@ -101,7 +102,11 @@ fun NavGraphBuilder.homeNavGraph(
         val homeViewModel = HomeViewModel(navController, storage)
         val portfolioViewModel = PortfolioViewModel(storage) { appViewModel.navController.navigate(HomeScreens.Explorer.route) }
         val explorerViewModel = ExplorerViewModel(navController, storage)
-        val profileViewModel = ProfileViewModel(storage)
+        val profileViewModel = ProfileViewModel(storage, auth = auth) {
+            navController.navigate(
+                AuthenticationScreens.Root.route
+            ) { popUpTo(navController.graph.id) }
+        }
         val transactionHistoryViewModel = TransactionHistoryViewModel(storage = storage)
 
         composable(HomeScreens.Home.route) {
