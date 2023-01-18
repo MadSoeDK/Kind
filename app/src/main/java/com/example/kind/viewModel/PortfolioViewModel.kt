@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.kind.model.Subscription
 import com.example.kind.model.service.impl.StorageServiceImpl
+import com.example.kind.view.composables.KindTextField
+import com.example.kind.view.composables.Required
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,19 +23,30 @@ data class PortState(
     var color: List<Color> = emptyList(),
 )
 
-class PortfolioViewModel : ViewModel() {
-
-    var storage: StorageServiceImpl = StorageServiceImpl()
+class PortfolioViewModel(
+    val storage: StorageServiceImpl,
+    val onNavigateToCharities: () -> Unit
+) : ViewModel() {
 
     private val _data = MutableStateFlow(PortState())
     val data: StateFlow<PortState> = _data.asStateFlow()
 
+    var haveSubscriptions by mutableStateOf(false)
+
+    var fields: List<KindTextField> = listOf(
+        KindTextField(
+            name = "Indtast beløb",
+            label = "Indtast beløb",
+            validators = listOf(Required()),
+        ),
+    )
     var popupIsOpen by mutableStateOf(false)
 
-    init {
+    fun getSubscriptions() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val subscriptions = storage.getSubscriptions()
+                haveSubscriptions = subscriptions.isNotEmpty()
                 _data.update {
                     _data.value.copy(
                         subscription = subscriptions,
@@ -48,18 +61,6 @@ class PortfolioViewModel : ViewModel() {
 
     fun toggleModal() {
         popupIsOpen = !popupIsOpen
-    }
-
-    fun onFormSubmit() {
-        /*if (formState.validate()) {
-            // TODO: Do something on form submission
-        }*/
-        //TODO: Add alert for user
-        println("Form submission error!")
-    }
-
-    fun getSpend(): Float {
-        return 0f
     }
 
     fun updateSubscription() {
@@ -92,5 +93,4 @@ class PortfolioViewModel : ViewModel() {
 
         return colors
     }
-
 }

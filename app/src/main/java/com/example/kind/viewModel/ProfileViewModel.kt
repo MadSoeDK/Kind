@@ -4,43 +4,49 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.kind.model.service.impl.AccountServiceImpl
+import androidx.lifecycle.viewModelScope
 import com.example.kind.model.service.impl.StorageServiceImpl
-import com.example.kind.view.composables.Email
-import com.example.kind.view.composables.FormState
-import com.example.kind.view.composables.KindTextField
-import com.example.kind.view.composables.Required
+import com.example.kind.view.composables.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
-    lateinit var storage: StorageServiceImpl
+data class ProfileState(
+    var email: String,
+    var password: String,
+    var monthlyPayment: Double,
+    var paymentMethod: String = "mobilepay"
+)
+
+class ProfileViewModel(val storage: StorageServiceImpl) : ViewModel() {
     var formState by mutableStateOf(FormState())
 
     var fields: List<KindTextField> = listOf(
-        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
-        KindTextField(name = "Password", label = "Password", validators = listOf(Required())),
         KindTextField(
-            name = "Monthly payment",
-            label = "Monthly Payment",
-            validators = listOf(Required())
+            name = "Email",
+            label = "Email",
+            validators = listOf(Required(), Email()),
+            readOnly = true,
         ),
         KindTextField(
-            name = "Update payment",
-            label = "Update payment",
-            validators = listOf(Required())
+            name = "Password",
+            label = "Password",
+            validators = listOf(Required(), Password()),
+            readOnly = true
         ),
         KindTextField(
-            name = "Payment method",
-            label = "Payment method",
-            validators = listOf(Required())
+            name = "Confirm Email",
+            label = "Confirm Email",
+            validators = listOf(Required(), Email()),
+            readOnly = false
         ),
         KindTextField(
-            name = "Update payment method",
-            label = "Update payment method",
-            validators = listOf(Required())
+            name = "Confirm Password",
+            label = "Confirm Password",
+            validators = listOf(Required(), Password()),
+            readOnly = false
         )
+
     )
 
     fun onFormSubmit() {
@@ -51,6 +57,20 @@ class ProfileViewModel : ViewModel() {
         println("Form submission error!")
     }
 
+    fun updateChanges() {
+        formState.fields.forEach { it.readOnlyState = !it.readOnlyState }
+    }
+
+    fun saveChanges() {
+        viewModelScope.launch {
+            // Call method here
+            storage.updateUser(
+                formState.fields.get(0).text,
+                formState.fields.get(1).text
+            )
+        }
+    }
+
     fun deleteUser() {
         val coroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -58,14 +78,12 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun CoroutineScope.deleteUser() {
-        storage = StorageServiceImpl()
         launch(Dispatchers.IO) {
             // Call method here
-            storage.deleteUser("e1onBFGdGk1PVwSsBh9M")
+            storage.deleteUser(
+                formState.fields.get(0).text,
+                formState.fields.get(1).text
+            )
         }
-    }
-
-    fun getButtonText(): String {
-        return "Button text";
     }
 }

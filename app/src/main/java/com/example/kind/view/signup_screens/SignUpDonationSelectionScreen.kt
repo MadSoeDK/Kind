@@ -50,9 +50,6 @@ fun SignUpDonationSelectionScreen(
                 TextButton(onClick = { back() }) {
                     Text(
                         text = "← Back",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineLarge.color
                     )
                 }
             }
@@ -60,13 +57,11 @@ fun SignUpDonationSelectionScreen(
                 Button(onClick = { next() }) {
                     Text(
                         text = "Next →",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = Typography.headlineSmall.color
                     )
                 }
             }
         }
+        Spacer(modifier = Modifier.height(40.dp))
     }
 }
 

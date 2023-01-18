@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,28 +25,46 @@ import kotlin.math.roundToInt
 
 @Composable
 fun PortfolioScreen(viewModel: PortfolioViewModel) {
+
+    LaunchedEffect(Unit) {
+        viewModel.getSubscriptions()
+    }
+
     Column(
         modifier = Modifier
-            .padding(20.dp, 0.dp)
+            .padding(0.dp, 0.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val state by viewModel.data.collectAsState()
-        if (state.subscription.isEmpty()) {
-            CircularProgressIndicator()
-        } else {
-            if (viewModel.popupIsOpen) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(30.dp),
-
-                    ) {
-                    EditPortfolio(viewModel = viewModel)
-                }
+        if (viewModel.haveSubscriptions) {
+            if (state.subscription.isEmpty()) {
+                CircularProgressIndicator()
             } else {
-                PortfolioContent(viewModel)
+                if (viewModel.popupIsOpen) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(30.dp),
+
+                        ) {
+                        EditPortfolio(viewModel = viewModel)
+                    }
+                } else {
+                    PortfolioContent(viewModel)
+                }
             }
+        } else {
+            Column(
+                modifier = Modifier.height(700.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "You have no charities in your portfolio")
+                    Text(text = "Start building your portfolio today!")
+                    Spacer(modifier = Modifier.height(20.dp))
+                    KindButton(onClick = viewModel.onNavigateToCharities, textProvider = "Explore Charities and Build Portfolio")
+                }
         }
     }
 }
@@ -57,7 +74,9 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
     val state by viewModel.data.collectAsState()
     HeaderAndText(
         headerProvider = "${state.subscription.sumOf { it.amount }.roundToInt()} kr.",
-        textProvider = "You currently donate ${state.subscription.sumOf { it.amount }.roundToInt()} kr. to ${state.subscription.size} organizations."
+        textProvider = "You donate ${
+            state.subscription.sumOf { it.amount }.roundToInt()
+        } kr. to ${state.subscription.size} organizations."
     )
 
     PieChart(
@@ -67,43 +86,48 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         colors = state.color
     )
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(85.dp), content = {
-        state.subscription.forEachIndexed { i, it ->
-            item {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        Modifier
+            .height(85.dp)
+            .padding(horizontal = 30.dp),
+        content = {
+            state.subscription.forEachIndexed { i, it ->
+                item {
                     Box(
-                        Modifier
-                            .clip(RectangleShape)
-                            .background(
-                                state.color[i]
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            Modifier
+                                .clip(RectangleShape)
+                                .background(
+                                    state.color[i]
+                                )
+                                .height(12.dp)
+                                .width(12.dp)
+                                .align(Alignment.BottomStart)
+                        )
+                        if (it.charityName.length <= 20) {
+                            Text(
+                                text = it.charityName + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize,
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
                             )
-                            .height(12.dp)
-                            .width(12.dp)
-                            .align(Alignment.BottomStart)
-                    )
-                    if (it.charityID.length <= 20) {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize,
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
-                    } else {
-                        Text(
-                            text = it.charityID + "",
-                            fontWeight = Typography.headlineMedium.fontWeight,
-                            fontSize = Typography.labelSmall.fontSize.div(1.4),
-                            color = Typography.headlineLarge.color,
-                            textAlign = TextAlign.Center,
-                        )
+                        } else {
+                            Text(
+                                text = it.charityName + "",
+                                fontWeight = Typography.headlineMedium.fontWeight,
+                                fontSize = Typography.labelSmall.fontSize.div(1.4),
+                                color = Typography.headlineLarge.color,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
             }
-        }
-    })
+        })
 
     Text(
         text = "Your charities", fontSize = 24.sp, textAlign = TextAlign.Center,
@@ -112,7 +136,7 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
     )
     PortfolioTable(
         modifier = Modifier,
-        columnCount = 4,
+        columnCount = 3,
         cellWidth = { index ->
             when (index) {
                 0 -> 120.dp
@@ -145,9 +169,9 @@ fun PortfolioContent(viewModel: PortfolioViewModel) {
         },
         cellContent = { index, item ->
             val value = when (index) {
-                0 -> item.charityID
+                0 -> item.charityName
                 1 -> "${
-                    ((item.amount / state.subscription.sumOf { it.amount }) * 100).roundToInt()
+                    (((item.amount + 0.00001) / state.subscription.sumOf { it.amount + 0.00001 }) * 100).roundToInt()
                 }%"
                 2 -> "${item.amount.roundToInt()} kr."
                 else -> ""
@@ -174,117 +198,115 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
     val state by viewModel.data.collectAsState()
     var sum by remember { mutableStateOf(state.subscription.sumOf { it.amount }) }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp, 10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(0.dp, 20.dp)
-        ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(1),
-                Modifier.height(330.dp), horizontalArrangement = Arrangement.Start,
-                content = {
-                    state.subscription.forEach { subscription ->
-                        item {
-                            Spacer(modifier = Modifier.padding(0.dp, 20.dp))
-                            Text(
-                                text = subscription.charityID,
-                                fontWeight = Typography.headlineMedium.fontWeight,
-                                fontSize = Typography.labelSmall.fontSize.times(1.5),
-                                color = Color.Black,
-                                textAlign = TextAlign.Center,
-                            )
 
-                            var text by remember { mutableStateOf(subscription.amount.toString()) }
-                            Box(
-                                modifier = Modifier.width(40.dp),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                TextField(
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    value = text,
-                                    onValueChange = { value: String ->
-                                        text = value
-                                        if (text.isNotEmpty()) {
-                                            viewModel.updateSubscriptionState(
-                                                subscription,
-                                                value.toDouble()
-                                            )
-                                            sum = state.subscription.sumOf { amount -> amount.amount }
+        Text("Edit your subscription amount for each charity.", textAlign = TextAlign.Center)
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            Modifier
+                .padding(0.dp, 20.dp)
+                .height(340.dp), horizontalArrangement = Arrangement.Start,
+            content = {
+                state.subscription.forEach { subscription ->
+                    item {
+                        var text by remember { mutableStateOf(subscription.amount.toString()) }
+                        Box(
+                            modifier = Modifier.padding(0.dp, 10.dp),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            TextField(
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                value = text,
+                                onValueChange = { value: String ->
+                                    text = value
+                                    var numericValue: Double
+
+                                    // Input validation
+                                    try {
+                                        numericValue = value.toDouble()
+                                        if (numericValue < 0){
+
                                         }
-                                    },
-                                    singleLine = true,
-                                    label = { Text(subscription.charityID) },
-                                )
-                            }
+                                    } catch (e: Exception){
+                                        numericValue = 10.0
+                                        if (text.isNotEmpty()) {
+                                            text = "10.0"
+                                        }
+                                    }
+
+                                    if (text.isNotEmpty()) {
+                                        viewModel.updateSubscriptionState(
+                                            subscription,
+                                            numericValue //value.toDouble()
+                                        )
+                                        sum = state.subscription.sumOf { amount -> amount.amount }
+                                    }
+                                },
+                                singleLine = true,
+                                label = { Text(subscription.charityName + " (DKK)") },
+                            )
                         }
                     }
-                })
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Total: " + sum.toString(),
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.labelLarge.color,
-                )
-                Text(
-                    text = "The changes will take effect next month.",
-                    fontWeight = Typography.labelLarge.fontWeight,
-                    fontSize = Typography.labelLarge.fontSize,
-                    color = Typography.labelLarge.color,
-                )
-                Spacer(modifier = Modifier.padding(0.dp, 10.dp))
-                val openDialog = remember { mutableStateOf(false) }
-                KindButton(onClick = {
+                }
+            })
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Total: " + sum.roundToInt().toString() + " DKK",
+                fontWeight = Typography.labelLarge.fontWeight,
+                fontSize = Typography.displayMedium.fontSize,
+                color = Typography.labelLarge.color,
+            )
+            Spacer(modifier = Modifier.padding(0.dp, 5.dp))
+            Text(
+                text = "The changes will take effect next month.",
+                fontWeight = Typography.displayMedium.fontWeight,
+                fontSize = Typography.labelLarge.fontSize,
+                color = Typography.labelLarge.color,
+            )
+            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+            val openDialog = remember { mutableStateOf(false) }
+            KindButton(
+                onClick = {
                     viewModel.updateSubscription()
                     openDialog.value = true
-                                     },
-                    textProvider = "Save")
-                /*Button(
-                    onClick = {
-                        viewModel.updateSubscription()
-                        openDialog.value = true
+                },
+                textProvider = "Save Changes"
+            )
+
+            if (openDialog.value == true) {
+                AlertDialog(
+                    onDismissRequest = {
+                        openDialog.value = false
+                        viewModel.popupIsOpen = false
                     },
-                    Modifier
-                        .width(200.dp)
-                        .background(
-                            Typography.headlineLarge.color
+                    title = { Text(text = "Portfolio Update") },
+                    text = {
+                        Text(
+                            text = "Your changes have been saved and your portfolio is now updated!",
+                            fontWeight = FontWeight.Normal
                         )
-                ) {
-                    Text(
-                        text = "Save",
-                        fontWeight = Typography.labelLarge.fontWeight,
-                        fontSize = Typography.labelLarge.fontSize,
-                        color = MaterialTheme.colorScheme.background,
-                    )
-                }*/
-                if (openDialog.value == true) {
-                    AlertDialog(
-                        onDismissRequest = {
+                    },
+                    confirmButton = {
+                        Button(onClick = {
                             openDialog.value = false
                             viewModel.popupIsOpen = false
-                        },
-                        title = { Text(text = "Portfolio Update") },
-                        text = { Text(text = "Your changes have been saved and your portfolio is now updated!") },
-                        confirmButton = {
-                            Button(onClick = {
-                                openDialog.value = false
-                                viewModel.popupIsOpen = false
-                            }) {
-                                Text("Ok")
-                            }
+                        }) {
+                            Text("Ok")
                         }
-                    )
-                }
-                Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+                    },
+                    shape = MaterialTheme.shapes.medium
+                )
             }
+            Spacer(modifier = Modifier.padding(0.dp, 10.dp))
         }
     }
 }

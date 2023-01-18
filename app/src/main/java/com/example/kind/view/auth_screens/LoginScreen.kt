@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.Form
 import com.example.kind.view.composables.KindButton
@@ -16,24 +17,17 @@ import com.example.kind.viewModel.LoginViewModel
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
+    navigateToResetPassword: () -> Unit
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
-        LoginHeader(96)
-        Spacer(modifier = Modifier.height(40.dp))
-        Text(
-            "Your Portfolio of Kindness",
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Spacer(modifier = Modifier.height(40.dp))
+        LoginHeader("Your Portfolio of Kindness")
         if (!viewModel.isLoading) {
-            Form(
+            Form (
                 state = viewModel.formState,
                 fields = viewModel.fields,
             )
@@ -41,25 +35,19 @@ fun LoginScreen(
                 onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
                 textProvider = "Login"
             )
-            /*Button(
-                modifier = Modifier
-                    .width(280.dp),
-                onClick = { viewModel.onAuthentication(viewModel.formState.getData()) },
-            ) {
-                Text("Login", color = MaterialTheme.colorScheme.onPrimary)
-            }*/
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Forgot password",
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.clickable { /* TODO */ }
+                modifier = Modifier.clickable {
+                    navigateToResetPassword()
+                },
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Medium,
             )
         } else {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(20.dp))
         }
         Spacer(modifier = Modifier.height(40.dp))
-
     }
-
 }

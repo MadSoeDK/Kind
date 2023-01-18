@@ -10,21 +10,24 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+enum class CharityCategory(category: String) {
+    All("All"),
+    Health("Health"),
+    Disasters("Disasters"),
+    Climate("Climate"),
+    Welfare("Welfare"),
+    Children_Care("Children Care")
+}
 class ExplorerViewModel(
-    val navController: NavController
+    val navController: NavController,
+    var storage: StorageServiceImpl
 ) : ViewModel() {
-
-    var storage: StorageServiceImpl = StorageServiceImpl()
 
     var charityList: List<com.example.kind.model.Charity> = mutableListOf()
 
     private val _data =
         MutableStateFlow(listOf<com.example.kind.model.Charity>()) //storage.getCharity(id)
     val data: StateFlow<List<com.example.kind.model.Charity>> = _data.asStateFlow()
-
-    init {
-        getCharities()
-    }
 
     fun getCharities(): List<com.example.kind.model.Charity> {
         viewModelScope.launch {
@@ -38,6 +41,23 @@ class ExplorerViewModel(
         }
         println("Returning this data: " + charityList.toString())
 
+        return charityList
+    }
+
+    fun getCharitiesByCategory(category: String): List<com.example.kind.model.Charity> {
+        if(category.equals("All")) {
+            getCharities()
+        } else {
+            viewModelScope.launch {
+                try {
+                    _data.update {
+                        storage.getCharitiesByCategory(category)
+                    }
+                } catch (e: Exception) {
+                    println(e.printStackTrace())
+                }
+            }
+        }
         return charityList
     }
 }

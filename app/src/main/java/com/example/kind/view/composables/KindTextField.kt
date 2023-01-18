@@ -32,12 +32,14 @@ open class Regex(var message: String, var regex: String = REGEX_MESSAGE) : Valid
 class KindTextField(
     val name: String,
     val label: String = "",
-    val validators: List<Validator>
+    val validators: List<Validator>,
+    var readOnly: Boolean = false
 ) {
     var text: String by mutableStateOf("")
     var lbl: String by mutableStateOf(label)
     var errorText: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)
+    var readOnlyState: Boolean by mutableStateOf(readOnly)
 
     fun clear() {
         text = ""
@@ -68,7 +70,8 @@ class KindTextField(
             },
             singleLine = true,
             supportingText = { if (hasError) Text(text = errorText) },
-            visualTransformation = if (name == "Password") PasswordVisualTransformation() else VisualTransformation.None
+            visualTransformation = if (name == "Password") PasswordVisualTransformation() else VisualTransformation.None,
+            readOnly = readOnlyState
         )
     }
 
@@ -76,7 +79,7 @@ class KindTextField(
         return validators.map {
             when (it) {
                 is Email -> {
-                    if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(text.replace("\n", "")).matches()) {
                         showError(it.message)
                         return@map false
                     }

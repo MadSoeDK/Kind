@@ -1,9 +1,7 @@
 package com.example.kind.view.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,37 +9,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kind.R
-import com.example.kind.view.theme.Typography
 
 @Composable
-fun LoginHeader(size: Int, description: String? = null) {
-
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-        Row {
-            Image(
-                painterResource(id = R.drawable.bekindsplashart1),
-                contentDescription = "",
-                Modifier.size((size * 1.75).dp)
-            )
-        }
-        if (description != null) {
-            Text(
-                text = description,
-                fontWeight = Typography.headlineSmall.fontWeight,
-                fontSize = Typography.headlineSmall.fontSize,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-        }
+fun LoginHeader(titleText: String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceAround,
+        modifier = Modifier
+            .padding(0.dp, 30.dp)
+    ) {
+        Image(
+            painterResource(id = R.drawable.bekindsplashart1),
+            contentDescription = "Kind Logo",
+            modifier = Modifier.size(150.dp)
+        )
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(
+            text = titleText,
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Center
+        )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginHeaderPreview() {
-    LoginHeader(96, "")
 }

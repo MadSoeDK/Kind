@@ -1,13 +1,9 @@
 package com.example.kind.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.Article
-import com.example.kind.getFakeArticles
-import com.example.kind.getFakeCharity
-import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,29 +12,32 @@ import kotlinx.coroutines.launch
 
 class ArticleViewModel(
     val navController: NavController,
-    id: String,
+    val storage: StorageServiceImpl,
+    val id: String,
 ) : ViewModel() {
 
     // State setup
-    val storage: StorageServiceImpl = StorageServiceImpl()
-    private val _data = MutableStateFlow(com.example.kind.model.Article()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(com.example.kind.model.Article())
     val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
 
     init {
-        GlobalScope.launch {
+        getArticleById()
+    }
+
+    fun getArticleById() {
+        viewModelScope.launch {
             _data.update {
                 val articleData = storage.getArticle(id)
                 it.copy(
                     charityName = articleData!!.charityName,
                     title = articleData.title,
-                    paragraf = articleData.paragraf
+                    paragraf = articleData.paragraf,
+                    iconImage = articleData.iconImage,
+                    mainImage = articleData.mainImage,
+                    author = articleData.author,
+                    date = articleData.date,
                 )
             }
         }
     }
-
-    val id = id
-    val title = "Dummy Title"
-    val paragraf = "Dummy paragraf "
-    val charityName = "Dummy charity name"
 }

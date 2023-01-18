@@ -3,6 +3,8 @@ package com.example.kind.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.kind.model.Article
+import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,51 +13,33 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    val navController: NavController
+    val navController: NavController,
+    val storage: StorageServiceImpl
 ) : ViewModel() {
 
     // Setup the homeState Dataclass
     data class HomeState(
-        var amountDonated: Int = 0,
-        var articles: List<com.example.kind.model.Article> = listOf(),
-        var charities: List<com.example.kind.model.Charity> = listOf()
+        var amountDonated: Int = 150,
+        var articles: List<Article> = listOf(),
+        var charities: List<Charity> = listOf()
     )
 
     // State setup
-    val storage: StorageServiceImpl = StorageServiceImpl()
-    private val _data = MutableStateFlow(HomeState()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(HomeState())
     val data: StateFlow<HomeState> = _data.asStateFlow()
 
-    init {
+    fun getHomeArticles() {
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()
                 val articles = storage.getHomeArticles(charities.get(0).id)
+                val donationAmount = storage.getDonationsAmount()
                 it.copy(
-                    amountDonated = data.value.amountDonated,
+                    amountDonated = donationAmount,
                     articles = articles,
-                    charities = charities//data.value.charities
+                    charities = charities
                 )
             }
         }
-    }
-
-    // Logic etc...
-    fun getText(): String {
-        return "Du er blandt top 5% af donorer. Godt gået!"
-    }
-
-    fun getDonatedAmount(): String {
-        return 1534.toString() + " kr."
-    }
-
-    fun getCharities(): List<com.example.kind.model.Charity> {
-        println("Charities Passed: "+data.value.charities.toString())
-        return data.value.charities//getFakeCharities()
-    }
-
-    fun getArticles(): List<com.example.kind.model.Article> {
-        println("Charities Passed: "+data.value.articles.toString())
-        return data.value.articles//getFakeArticles()
     }
 }

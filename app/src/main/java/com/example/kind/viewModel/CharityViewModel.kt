@@ -1,15 +1,11 @@
 package com.example.kind.viewModel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kind.Article
-import com.example.kind.getFakeArticles
 import com.example.kind.model.Charity
 import com.example.kind.model.service.impl.StorageServiceImpl
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,39 +14,61 @@ import kotlinx.coroutines.launch
 
 class CharityViewModel(
     val navController: NavController,
-    id: String,
+    val storage: StorageServiceImpl,
+    val id: String,
+    val onAddToPortfolio: () -> Unit,
+    val charities: State<PortState>
 ) : ViewModel() {
 
-    // State setup
-    val storage: StorageServiceImpl = StorageServiceImpl()
-    private val _data = MutableStateFlow(Charity()) //storage.getCharity(id)
+    private val _data = MutableStateFlow(Charity())
     val data: StateFlow<Charity> = _data.asStateFlow()
 
     init {
-        GlobalScope.launch {
+        getCharity()
+    }
+
+    private fun getCharity() {
+        viewModelScope.launch {
+            val charity = storage.getCharity(id) ?: return@launch
             _data.update {
-                val charity = storage.getCharity(id)
                 it.copy(
-                    donaters = charity!!.donaters,
+                    donaters = charity.donaters,
                     donations = charity.donations,
                     id = charity.id,
                     desc = charity.desc,
                     iconImage = charity.iconImage,
                     mainImage = charity.mainImage,
                     name = charity.name,
-                    articles = storage.getArticles(charity.id)//charity.articles
+                    articles = storage.getArticles(charity.id),
+                    inPortfolio = charity.inPortfolio
                 )
+            }
+            println(_data.toString())
+            charities.value.subscription.forEach {
+                if (it.charityID == _data.value.id) {
+                    _data.update {
+                        it.copy(
+                            inPortfolio = true
+                        )
+                    }
+                }
             }
         }
     }
 
-    /*
-    fun getArticles(): List<com.example.kind.model.Article> {
-        var articleList: List<com.example.kind.model.Article> = listOf()
+    fun addToPortfolio(){
         viewModelScope.launch {
-            articleList = storage.getArticles(data.value.id)
+            storage.addToPortfolio(data.value.id)
+            onAddToPortfolio()
         }
-        return articleList
+        _data.update { it.copy(inPortfolio = true) }
     }
-    */
+
+    fun removeFromPortfolio(){
+        viewModelScope.launch {
+            storage.removeFromPortfolio(data.value.id)
+            onAddToPortfolio()
+        }
+        _data.update { it.copy(inPortfolio = false) }
+    }
 }

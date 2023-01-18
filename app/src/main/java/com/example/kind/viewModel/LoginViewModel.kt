@@ -8,26 +8,36 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.HomeScreens
 import com.example.kind.model.service.impl.AccountServiceImpl
+import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     val navController: NavController,
-    private val auth: AccountServiceImpl = AccountServiceImpl(FirebaseAuth.getInstance())
+    private val auth: AccountServiceImpl,
+    private val storage: StorageServiceImpl
 ) : ViewModel() {
-    var isLoggedIn by mutableStateOf(auth.hasUser)
     var isLoading by mutableStateOf(false)
+    var emailSentSuccesfully by mutableStateOf(false)
+    var emailSentAttempted by mutableStateOf(false)
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
-        KindTextField(name = "Email", label = "Email", validators = listOf(Required(), Email())),
+        KindTextField(
+            name = "Email",
+            label = "Email",
+            validators = listOf(Required(), Email()),
+            readOnly = false
+        ),
         KindTextField(
             name = "Password",
             label = "Password",
-            validators = listOf(Required(), Password())
+            validators = listOf(Required(), Password()),
+            readOnly = false
         ),
     )
 
@@ -41,11 +51,9 @@ class LoginViewModel(
             try {
                 auth.authenticateUser(data.getValue("Email"), data.getValue("Password"))
                 isLoading = false
-                isLoggedIn = true
                 navController.navigate(HomeScreens.Root.route) {
                     popUpTo(HomeScreens.Root.route)
                 }
-                println("Succesfully logged in $isLoggedIn")
                 return@launch
             } catch (e: FirebaseAuthInvalidUserException) {
                 formState.fields[0].showError("Could not find user with this email")
@@ -53,11 +61,24 @@ class LoginViewModel(
                 formState.fields[1].showError("Wrong password")
             } catch (e: Exception) {
                 formState.showError("Some error happened. Try again later")
-                println("Error login:" + isLoggedIn + e.printStackTrace())
+                println("Error login:" + e.printStackTrace())
             } finally {
                 isLoading = false
-                isLoggedIn = false
             }
         }
+    }
+
+    fun sendResetPasswordEmail(emailAddress: String) {
+        Firebase.auth.sendPasswordResetEmail(emailAddress)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    emailSentAttempted = true
+                    emailSentSuccesfully = true
+                }
+                else{
+                    emailSentAttempted = true
+                    emailSentSuccesfully = false
+                }
+            }
     }
 }
