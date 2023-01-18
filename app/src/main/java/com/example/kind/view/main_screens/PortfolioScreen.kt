@@ -210,7 +210,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
             columns = GridCells.Fixed(1),
             Modifier
                 .padding(0.dp, 20.dp)
-                .height(220.dp), horizontalArrangement = Arrangement.Start,
+                .height(340.dp), horizontalArrangement = Arrangement.Start,
             content = {
                 state.subscription.forEach { subscription ->
                     item {
@@ -224,7 +224,7 @@ fun EditPortfolio(viewModel: PortfolioViewModel) {
                                 value = text,
                                 onValueChange = { value: String ->
                                     text = value
-                                    var numericValue = 10.0
+                                    var numericValue: Double
 
                                     // Input validation
                                     try {
