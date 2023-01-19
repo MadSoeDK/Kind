@@ -21,7 +21,7 @@ fun SummaryScreen(
 
     Column(modifier = Modifier.padding(15.dp, 25.dp)) {
         Text(
-            text = "Great! You are now set to donate xxx kr. per month to the following charities",
+            text = "Great! You are now set to donate " + viewModel.amountState + " kr. per month to the following charities",
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(10.dp),

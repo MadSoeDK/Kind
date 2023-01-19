@@ -1,19 +1,15 @@
 package com.example.kind.view.signup_screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Shapes
-import com.example.kind.viewModel.DonationFrequency
 
-//TODO set button to fixed size, ignoring the content
 @Composable
 fun DonationAmountScreen(
     selectedOption: Int,

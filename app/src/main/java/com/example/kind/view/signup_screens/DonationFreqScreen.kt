@@ -7,14 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.kind.view.composables.KindButton
+import com.example.kind.model.DonationFrequency
 import com.example.kind.view.composables.LoginHeader
 import com.example.kind.view.theme.Shapes
-import com.example.kind.viewModel.DonationFrequency
 
-//TODO set button to fixed size, ignoring the content
 @Composable
 fun DonationFreqScreen(
     selectedOption: DonationFrequency,
