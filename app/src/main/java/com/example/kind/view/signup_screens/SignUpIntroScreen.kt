@@ -23,11 +23,12 @@ fun SignUpIntroScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         LoginHeader(titleText = "You have now created a user. Do you want to build your portfolio of charity now?")
         Text(
             text = "You can use the app for one-time donations and make you portfolio later. However you get the most benefits with a portfolio.",
@@ -35,7 +36,7 @@ fun SignUpIntroScreen(
             textAlign = TextAlign.Center,
             color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp, 15.dp)
         )
         KindButton(onClick = navigateToPortfolio , textProvider = "Build now")
         TextButton(onClick = navigateToHome) {

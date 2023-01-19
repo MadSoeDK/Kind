@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.kind.model.*
 import com.example.kind.model.service.StorageService
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.ktx.auth
@@ -30,8 +29,10 @@ class StorageServiceImpl: StorageService {
         }
     }
 
-    override suspend fun changeUser(user: User, uid : String) {
-        Firebase.firestore.collection("Users").document(uid).set(user)
+    override suspend fun addSubscriptionToUser(subs: List<Subscription>) {
+        subs.forEach {
+            Firebase.firestore.collection("Users").document(Firebase.auth.uid!!).collection("Subscriptions").add(it)
+        }
     }
 
     override suspend fun addToPortfolio(charityId: String){

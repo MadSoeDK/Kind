@@ -7,16 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.kind.model.Charity
+import com.example.kind.model.DonationFrequency
 import com.example.kind.model.Subscription
 import com.example.kind.model.User
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.composables.*
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SignupViewModel(
@@ -28,15 +27,13 @@ class SignupViewModel(
     private val storage: StorageServiceImpl,
     private val auth: AccountServiceImpl
 ) : ViewModel() {
+    // Charities state
     private val _charityData = MutableStateFlow(listOf<Charity>())
     val charityData: StateFlow<List<Charity>> = _charityData.asStateFlow()
 
-
+    // User portfolio state
     private var _portfolioState = MutableStateFlow(PortState())
     val portfolioState: StateFlow<PortState> = _portfolioState.asStateFlow()
-
-
-    var charityList: List<Charity> = mutableListOf()
 
     var formState by mutableStateOf(FormState())
     var fields: List<KindTextField> = listOf(
@@ -92,6 +89,7 @@ class SignupViewModel(
             try {
                 val data = formState.getData()
                 auth.createUserWithEmailAndPassword(data.getValue("Email"), data.getValue("Password"))
+                storage.addUser(User(data.getValue("Full name")))
                 isLoading = false
                 navigateOnUserCreate()
             } catch (e: FirebaseAuthUserCollisionException) {
@@ -104,10 +102,10 @@ class SignupViewModel(
         }
     }
 
-    fun addDataToUser() {
+    fun onSignupSubmission() {
         viewModelScope.launch {
             try {
-                storage.changeUser(generateUser(), Firebase.auth.currentUser?.uid!!)
+                storage.addSubscriptionToUser(_portfolioState.value.subscription)
                 navigateOnPortfolioCreate()
             }
             catch (e: Exception) {
@@ -116,7 +114,7 @@ class SignupViewModel(
         }
     }
 
-    private fun getCharities(): List<Charity> {
+    fun getCharities() {
         viewModelScope.launch {
             try {
                 _charityData.update {
@@ -126,7 +124,50 @@ class SignupViewModel(
                 println(e.printStackTrace())
             }
         }
-        return charityList
+    }
+
+    fun getCharitiesByCategory(category: String) {
+        if(category == "All") {
+            getCharities()
+        } else {
+            viewModelScope.launch {
+                try {
+                    _charityData.update {
+                        storage.getCharitiesByCategory(category)
+                    }
+                } catch (e: Exception) {
+                    println(e.printStackTrace())
+                }
+            }
+        }
+    }
+
+    fun updateSelectedCharities(charity: List<Charity>) {
+        _charityData.update { charity }
+    }
+
+    fun updatePortfolioState() {
+        val subs: ArrayList<Subscription> = ArrayList()
+        val count = _charityData.value.count { it.inPortfolio }
+        println("Count " + count + "Amount " + amountState)
+         _charityData.value.map {
+            if (it.inPortfolio) {
+                subs.add(
+                    Subscription(
+                        amount = (amountState / count).toDouble(),
+                        charityID = it.id,
+                        charityName = it.name,
+                        initDate = Timestamp.now(),
+                        id = it.id
+                    )
+                )
+            }
+        }
+        _portfolioState.update {
+            it.copy(
+                subscription = subs
+            )
+        }
     }
 }
 
