@@ -1,6 +1,5 @@
 package com.example.kind.view.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -11,8 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
@@ -23,7 +20,6 @@ fun KindCharityCard(
     Title: String,
     Body: String,
     iconImage: String,
-    ReadMore: String = "Read More",
     onClick: () -> Unit,
 ) {
     Card(
@@ -37,20 +33,14 @@ fun KindCharityCard(
                 color = MaterialTheme.colorScheme.outline,
                 shape = MaterialTheme.shapes.medium
             ),
-        //colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = Color.White)
     ) {
 
         Column(
-            modifier = Modifier
-                .padding(5.dp)
-                //.background(MaterialTheme.colorScheme.background)
-            ,
+            modifier = Modifier.padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
-                modifier = Modifier.padding(5.dp)
-                    //.background(MaterialTheme.colorScheme.background)
-                ,
+                modifier = Modifier.padding(5.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -61,10 +51,8 @@ fun KindCharityCard(
                         .size(50.dp)
                         .clip(CircleShape)
                         .border(1.dp, MaterialTheme.colorScheme.outline, CircleShape)
-                        //.background(MaterialTheme.colorScheme.background)
                     ,
                     contentScale = ContentScale.FillBounds,
-
                     )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Text(
@@ -75,7 +63,6 @@ fun KindCharityCard(
                 )
             }
             Row(modifier = Modifier.padding(5.dp, 5.dp)) {
-                //TODO need to center text
                 Text(
                     text = Body,
                     fontWeight = Typography.displayMedium.fontWeight,

@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.kind.model.DonationFrequency
 import com.example.kind.model.service.impl.AccountServiceImpl
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.example.kind.view.auth_screens.AuthenticationScreen
@@ -265,10 +266,7 @@ fun NavGraphBuilder.signupNavGraph(
                     )
                 }
             ) {
-                DonationAmountScreen(
-                    selectedOption = selectedOption,
-                    onOptionSelected = onOptionSelected
-                )
+                DonationAmountScreen(selectedOption, onOptionSelected)
             }
 
         }
@@ -291,41 +289,25 @@ fun NavGraphBuilder.signupNavGraph(
             Screen(
                 NavigationBar = {
                     SignupNavigation(
-                        next = { navController.navigate(SignupScreens.Summary.route) },
+                        next = {
+                            signupViewModel.updatePortfolioState()
+                            navController.navigate(SignupScreens.Summary.route)
+                        },
                         back = { navController.popBackStack() }
                     )
                 }
             ) {
-                PortfolioBuilderScreen(
+                SelectCharitiesScreen (
                     viewModel = signupViewModel,
                 )
             }
-        }
-
-        composable(
-            SignupScreens.Charity.route + "/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
-        ) { NavBackStackEntry ->
-            Screen(
-                content = {
-                    CharityScreen(
-                        viewModel = CharityViewModel(
-                            navController = navController,
-                            id = NavBackStackEntry.arguments!!.getString("id", ""),
-                            onAddToPortfolio = {  },
-                            charities = signupViewModel.portfolioState.collectAsState(),
-                            storage = storage
-                        ),
-                    )
-                }
-            )
         }
 
         composable(route = SignupScreens.Summary.route) {
             Screen(
                 NavigationBar = {
                     SignupNavigation(
-                        next = { signupViewModel.addDataToUser() },
+                        next = { signupViewModel.onSignupSubmission()  },
                         back = { navController.popBackStack() }
                     )
                 }
@@ -399,8 +381,9 @@ fun SignupNavigation (
 ) {
     Column(
         modifier = Modifier
-            .padding(0.dp, 15.dp),
+            .padding(0.dp, 20.dp),
         verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier
