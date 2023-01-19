@@ -3,6 +3,8 @@ package com.example.kind.model.service
 import android.util.Log
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
 import com.stripe.android.EphemeralKeyProvider
 import com.stripe.android.EphemeralKeyUpdateListener
 
@@ -22,10 +24,7 @@ class FirebaseEphemeralKeyProvider : EphemeralKeyProvider {
             "customer_id" to "cus_NATNzQbvJN2rh8"
         )
 
-        val functions = FirebaseFunctions.getInstance()
-        //functions.useEmulator("10.0.2.2", 5001)
-
-        functions.getHttpsCallable("createEphemeralKey")
+        Firebase.functions.getHttpsCallable("createEphemeralKey")
             .call(data)
             .continueWith { task ->
                 if (!task.isSuccessful) {
