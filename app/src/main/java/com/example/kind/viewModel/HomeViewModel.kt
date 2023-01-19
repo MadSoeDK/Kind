@@ -1,5 +1,8 @@
 package com.example.kind.viewModel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -24,6 +27,8 @@ class HomeViewModel(
         var charities: List<Charity> = listOf()
     )
 
+    var haveHomeArticles by mutableStateOf(false)
+
     // State setup
     private val _data = MutableStateFlow(HomeState())
     val data: StateFlow<HomeState> = _data.asStateFlow()
@@ -32,7 +37,8 @@ class HomeViewModel(
         viewModelScope.launch {
             _data.update {
                 val charities = storage.getCharities()
-                val articles = storage.getHomeArticles(charities.get(0).id)
+                val articles = storage.getHomeArticles(charities[0].id)
+                haveHomeArticles = articles.isNotEmpty()
                 val donationAmount = storage.getDonationsAmount()
                 it.copy(
                     amountDonated = donationAmount,

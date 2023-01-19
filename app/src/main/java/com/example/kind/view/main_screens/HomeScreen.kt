@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.HeaderAndText
+import com.example.kind.view.composables.KindButtonOutlined
 import com.example.kind.view.composables.KindCard
 import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
@@ -40,38 +41,53 @@ fun HomeScreen(
                 style = Typography.headlineMedium,
                 fontSize = 24.sp
             )
-            Text("The latest news from your charities", fontSize = 14.sp)
         }
-        if (state.charities.isEmpty()) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(100.dp)
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyRow {
-                state.articles.forEachIndexed { i, element ->
-                    item {
-                        // Add left padding to first element
-                        if (i == 0) {
-                            Spacer(modifier = Modifier.width(10.dp))
+        if (viewModel.haveHomeArticles) {
+            Text("The latest news from your charities", fontSize = 14.sp)
+            if (state.articles.isEmpty()) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(100.dp)
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                LazyRow {
+                    state.articles.forEachIndexed { i, element ->
+                        item {
+                            // Add left padding to first element
+                            if (i == 0) {
+                                Spacer(modifier = Modifier.width(10.dp))
+                            }
+                            KindCard(
+                                titleProvider = element.charityName,
+                                subTitleProvider = element.title,
+                                iconImage = element.iconImage,
+                                mainImage = element.mainImage,
+                                onClick = { viewModel.navController.navigate( HomeScreens.Article.route + "/" + element.id) })
                         }
-                        KindCard(
-                            titleProvider = element.charityName,
-                            subTitleProvider = element.title,
-                            iconImage = element.iconImage,
-                            mainImage = element.mainImage,
-                            onClick = { viewModel.navController.navigate( HomeScreens.Article.route + "/" + element.id) })
                     }
                 }
+            }
+        } else {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .padding(20.dp, 10.dp)
+                    .height(150.dp)
+            ) {
+                Text(text = "You are not subscribed to any charities. Go to the Charity Explorer and add them to your portofolio.")
+                Spacer(modifier = Modifier.height(10.dp))
+                KindButtonOutlined(onClick = { viewModel.navController.navigate(HomeScreens.Explorer.route) }, textProvider = "Go to charities", width = 150)
             }
         }
 
         Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+
         Column(modifier = Modifier.padding(20.dp, 0.dp)) {
             Text(
                 text = "Explore charities",

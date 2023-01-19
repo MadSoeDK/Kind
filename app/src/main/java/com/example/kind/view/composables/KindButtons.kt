@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -96,20 +95,20 @@ fun KindButtonOutlined(onClick: () -> Unit, textProvider: String) {
 }
 
 @Composable
-fun KindButtonOutlined(onClick: () -> Unit, Width: Int, TextProvider: String,) {
-    Button(
+fun KindButtonOutlined(onClick: () -> Unit, width: Int, textProvider: String) {
+    OutlinedButton(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            //containerColor = MaterialTheme.colorScheme.background,
-            containerColor = Color.Transparent,
-        ),
-        modifier = Modifier
-            .width(Width.dp)
-    ) {
-        Text(
-            text = TextProvider,
-            color = MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.width(width.dp),
+        colors = ButtonDefaults
+            .outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.background
+            ),
+        border = BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.primary,
         )
+    ) {
+        Text(text = textProvider)
     }
 }
 
