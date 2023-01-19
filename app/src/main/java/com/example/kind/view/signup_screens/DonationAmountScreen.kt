@@ -19,28 +19,33 @@ fun DonationAmountScreen(
     selectedOption: Int,
     onOptionSelected: (Int) -> Unit
 ) {
-    LoginHeader("How much do you want to donate")
-    listOf(50, 100, 200).forEach {
-        Spacer(modifier = Modifier.height(15.dp))
-        OutlinedButton(
-            onClick = { onOptionSelected(it) },
-            shape = Shapes.extraSmall,
-            modifier = Modifier
-                .width(300.dp),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = if (isSystemInDarkTheme()) {
-                    if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outline
-                } else {
-                    if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
-                },
-                contentColor = if (isSystemInDarkTheme()) {
-                    if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground
-                } else {
-                    if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
-                },
-            )
-        ) {
-            Text(text = it.toString())
+    Column(
+        modifier = Modifier.padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LoginHeader("How much do you want to donate")
+        listOf(50, 100, 200).forEach {
+            Spacer(modifier = Modifier.height(15.dp))
+            OutlinedButton(
+                onClick = { onOptionSelected(it) },
+                shape = Shapes.extraSmall,
+                modifier = Modifier
+                    .width(300.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = if (isSystemInDarkTheme()) {
+                        if (it == selectedOption) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outline
+                    } else {
+                        if (it == selectedOption) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer
+                    },
+                    contentColor = if (isSystemInDarkTheme()) {
+                        if (it == selectedOption) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground
+                    } else {
+                        if (it == selectedOption) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
+                    },
+                )
+            ) {
+                Text(text = it.toString())
+            }
         }
     }
 }
