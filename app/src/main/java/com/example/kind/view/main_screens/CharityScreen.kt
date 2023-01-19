@@ -156,6 +156,7 @@ fun CharityScreen(
             }
         }
     }
+}
 
 @Composable
 fun DisplayDonatorsAndDonations(charityViewModel: CharityViewModel) {
@@ -207,5 +208,4 @@ fun DisplayDonatorsAndDonations(charityViewModel: CharityViewModel) {
             )
         }
     }
-}
 }

@@ -43,7 +43,6 @@ class CharityViewModel(
                     inPortfolio = charity.inPortfolio
                 )
             }
-            println(_data.toString())
             charities.value.subscription.forEach {
                 if (it.charityID == _data.value.id) {
                     _data.update {
