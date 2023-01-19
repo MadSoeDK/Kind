@@ -1,6 +1,7 @@
 package com.example.kind.model
 
 import com.google.firebase.Timestamp
+import com.stripe.android.model.PaymentMethod
 import java.util.*
 
 data class User (
@@ -80,3 +81,9 @@ data class KindPaymentIntent (
     val amount: Int? = null
 )
 
+data class PaymentState (
+    val paymentMethod: PaymentMethod? = null,
+    var clientSecret: String? = null,
+    var payIsEnabled: Boolean? = false,
+    var amount: Int? = 0
+)

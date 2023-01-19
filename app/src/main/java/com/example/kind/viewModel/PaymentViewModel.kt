@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kind.model.PaymentState
 import com.example.kind.model.service.FirebaseEphemeralKeyProvider
 import com.example.kind.model.service.impl.StorageServiceImpl
 import com.stripe.android.*
@@ -21,20 +22,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-data class PaymentState (
-    //val id: String? = null,
-    val paymentMethod: PaymentMethod? = null,
-    var clientSecret: String? = null,
-    var payIsEnabled: Boolean? = false,
-    var amount: Int? = 0
-)
-
 class PaymentViewModel(
     @ApplicationContext val context: ComponentActivity,
     val storage: StorageServiceImpl,
+    val navigateOnPaymentSuccess: () -> Unit = {}
 ) : ViewModel() {
-    lateinit var navigateOnPaymentSuccess: () -> Unit
-
     private val _paymentState = MutableStateFlow(PaymentState())
     val paymentState: StateFlow<PaymentState> = _paymentState
 

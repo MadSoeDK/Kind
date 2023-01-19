@@ -13,7 +13,7 @@ import com.stripe.android.PaymentConfiguration
 class MainActivity : ComponentActivity() {
     val storage = StorageServiceImpl()
     val auth = AccountServiceImpl()
-    val paymentViewModel = PaymentViewModel(this, storage)//val stripeUtil = StripeUtil(this, storage)
+    val paymentViewModel = PaymentViewModel(this, storage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
