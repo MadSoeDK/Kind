@@ -60,18 +60,18 @@ data class Donation(
     val ID: String? = ""
 )
 
+enum class DonationFrequency {
+    Monthly,
+    Quarterly,
+    HalfYearly,
+    Yearly
+}
+
 data class Payment (
     val amount: Double? = 0.0,
     val charity_id: String? = "Red barnet",
     val currency: String? = "",
     val date: Timestamp? = Timestamp(Date()),
-)
-
-data class Portfolio (
-    val organization: String,
-    val pct: Double,
-    val spend: Double,
-    val total: Double,
 )
 
 data class KindPaymentIntent (

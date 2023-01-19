@@ -18,21 +18,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-
-enum class DonationFrequency {
-    Monthly,
-    Quarterly,
-    HalfYearly,
-    Yearly
-}
-
-data class PortfolioState(
-    var frequency: DonationFrequency? = null,
-    var amount: Int? = 0,
-    var subscriptions: List<Subscription> = listOf(),
-)
 
 class SignupViewModel(
     val navController: NavController,
