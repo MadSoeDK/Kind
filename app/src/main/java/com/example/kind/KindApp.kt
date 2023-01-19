@@ -77,7 +77,6 @@ fun KindApp(
 ) {
     val navController = rememberNavController()
     val appViewModel = AppViewModel(navController, auth, storage)
-    paymentViewModel.navigateOnPaymentSuccess = { navController.navigate(HomeScreens.Explorer.route) }
     NavHost(
         navController = navController,
         startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
@@ -194,7 +193,9 @@ fun NavGraphBuilder.homeNavGraph(
             HomeScreens.Payment.route + "/{name}",
             arguments = listOf(navArgument("name") { type = NavType.StringType })
         ) {
-            PaymentScreen(viewModel = paymentViewModel, it.arguments!!.getString("name", ""))
+            PaymentScreen(viewModel = paymentViewModel, it.arguments!!.getString("name", "")) {
+                navController.navigate(HomeScreens.Explorer.route)
+            }
         }
 
         composable(HomeScreens.Profile.route) {

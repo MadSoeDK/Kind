@@ -38,6 +38,7 @@ fun paymentLauncher(
 fun PaymentScreen(
     viewModel: PaymentViewModel,
     charityName: String,
+    navigateOnPaymentSuccess: () -> Unit
 ) {
     val paymentLauncher = paymentLauncher(viewModel = viewModel, viewModel.getPublishableKey())
     val paymentState by viewModel.paymentState.collectAsState()
@@ -67,7 +68,7 @@ fun PaymentScreen(
                 Button(onClick = {
                     viewModel.paymentPending = false
                     viewModel.paymentSuccess = false
-                    viewModel.navigateOnPaymentSuccess
+                    navigateOnPaymentSuccess()
                 }) {
                     Text(text = "Ok")
                 }
