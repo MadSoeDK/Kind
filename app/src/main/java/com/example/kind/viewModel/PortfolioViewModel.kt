@@ -18,6 +18,11 @@ import kotlinx.coroutines.flow.update
 
 import kotlinx.coroutines.launch
 
+/**
+ * Retrieves data from the Storage Service about a user's subscriptions via getSubscriptions()
+ * and updates a subscriptions amount based on user entered data from the Edit Portfolio Composable
+ */
+
 data class PortState(
     var subscription: List<Subscription> = emptyList(),
     var color: List<Color> = emptyList(),

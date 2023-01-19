@@ -3,12 +3,17 @@ package com.example.kind.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.kind.model.Article
 import com.example.kind.model.service.impl.StorageServiceImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+/**
+ * Handling of Article data to show to a user from a specific charity.
+ */
 
 class ArticleViewModel(
     val navController: NavController,
@@ -17,8 +22,8 @@ class ArticleViewModel(
 ) : ViewModel() {
 
     // State setup
-    private val _data = MutableStateFlow(com.example.kind.model.Article())
-    val data: StateFlow<com.example.kind.model.Article> = _data.asStateFlow()
+    private val _data = MutableStateFlow(Article())
+    val data: StateFlow<Article> = _data.asStateFlow()
 
     init {
         getArticleById()

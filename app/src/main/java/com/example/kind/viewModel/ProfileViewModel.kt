@@ -16,6 +16,10 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+/**
+ * Handling of changing a user's details with Email and password as data values, and shows
+ * appropriate errors given wrong user input. Also makes sure a user can delete its account.
+ */
 data class ProfileState(
     var email: String,
     var password: String,

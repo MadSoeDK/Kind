@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Handling of showing a charity with their given data: id, description, iconImage, mainImage,
+ * name, articles and inPortfolio.
+ */
 class CharityViewModel(
     val navController: NavController,
     val storage: StorageServiceImpl,

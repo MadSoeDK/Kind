@@ -16,11 +16,15 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
+/**
+ * Authenticates user via email and password and gives appropriate responses when something wrong is entered.
+ */
 class LoginViewModel(
     val navController: NavController,
     private val auth: AccountServiceImpl,
     private val storage: StorageServiceImpl
 ) : ViewModel() {
+
     var isLoading by mutableStateOf(false)
     var emailSentSuccesfully by mutableStateOf(false)
     var emailSentAttempted by mutableStateOf(false)

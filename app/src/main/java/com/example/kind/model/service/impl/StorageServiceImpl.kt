@@ -16,6 +16,10 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Singleton
 
+/**
+ * Works together with the firestore to retrieve and connect the correct collections and
+ * documents that the viewModels can make use of to display and handle the data.
+ */
 @Singleton
 class StorageServiceImpl: StorageService {
 

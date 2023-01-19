@@ -4,6 +4,10 @@ import com.google.firebase.Timestamp
 import com.stripe.android.model.PaymentMethod
 import java.util.*
 
+/**
+ * Collection of all our data classes
+ */
+
 data class User (
     var name: String?,
     var monthlyPayment: Double? = null,

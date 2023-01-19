@@ -22,11 +22,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+/**
+ *
+ */
+
 class PaymentViewModel(
     @ApplicationContext val context: ComponentActivity,
     val storage: StorageServiceImpl,
     val navigateOnPaymentSuccess: () -> Unit = {}
 ) : ViewModel() {
+
     private val _paymentState = MutableStateFlow(PaymentState())
     val paymentState: StateFlow<PaymentState> = _paymentState
 

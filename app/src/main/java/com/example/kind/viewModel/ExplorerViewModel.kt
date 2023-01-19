@@ -11,7 +11,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-
+/**
+ * Handling of showing charities to the Explorer page with their data:
+ *      -desc
+ *      -iconImage
+ *      -mainImage
+ *      -name
+ *      -articles
+ *      -category
+ *
+ * Also connects charities by their category, so a user can filtrate their charities.
+ */
 class ExplorerViewModel(
     val navController: NavController,
     var storage: StorageServiceImpl

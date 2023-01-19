@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+
 class SignupViewModel(
     val navController: NavController,
     val navigateAmount: () -> Unit,
