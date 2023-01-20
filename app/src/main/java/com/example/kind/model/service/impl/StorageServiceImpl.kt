@@ -90,14 +90,6 @@ class StorageServiceImpl: StorageService {
     }
 
     /**
-     * Update user's Email and password
-     */
-    override suspend fun updateUser(email: String, password: String) {
-        Firebase.auth.currentUser!!.updateEmail(email)
-        Firebase.auth.currentUser!!.updatePassword(password)
-    }
-
-    /**
      * Retrieves all the user's subscriptions that a user has
      */
     override suspend fun getSubscriptions(): List<Subscription> {
@@ -314,14 +306,5 @@ class StorageServiceImpl: StorageService {
             throw Exception("Client secret is null")
 
         return payment.client_secret
-    }
-
-    private fun changeCharityField(charity: String, fieldName: String, amount: Int) {
-        val docRef = Firebase.firestore.collection("Charity").document(charity)
-        Firebase.firestore.runTransaction { transaction ->
-            val snapshot = transaction.get(docRef)
-            val NewNumber = snapshot.getDouble(fieldName)!! + amount
-            transaction.update(docRef, fieldName, NewNumber)
-        }
     }
 }
