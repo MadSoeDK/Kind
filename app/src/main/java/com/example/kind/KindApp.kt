@@ -388,14 +388,15 @@ fun SignupNavigation (
     ) {
         Row(
             modifier = Modifier
-                .padding(0.dp, 10.dp, 0.dp, 0.dp)
-                .width(300.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(0.dp, 10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextButton(onClick = back) {
                 Text("← Back")
             }
+            Spacer(modifier = Modifier.padding(horizontal = 50.dp))
             Button(onClick = next ) {
                 Text("Next →")
             }
