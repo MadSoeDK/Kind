@@ -3,6 +3,7 @@ package com.example.kind.view.signup_screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,7 +20,7 @@ fun SummaryScreen(
 ) {
     val state by viewModel.portfolioState.collectAsState()
 
-    Column(modifier = Modifier.padding(15.dp, 25.dp)) {
+    Column(modifier = Modifier.padding(15.dp, 25.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = "Great! You are now set to donate " + viewModel.amountState + " kr. per month to the following charities",
             fontSize = 20.sp,
