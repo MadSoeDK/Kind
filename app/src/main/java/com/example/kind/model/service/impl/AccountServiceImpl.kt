@@ -1,7 +1,6 @@
 package com.example.kind.model.service.impl
 
 import com.example.kind.model.service.AccountService
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -37,5 +36,10 @@ class AccountServiceImpl @Inject constructor(): AccountService {
             email,
             password
         ))?.await()
+    }
+
+    override suspend fun updateUser(email: String, password: String) {
+        Firebase.auth.currentUser!!.updateEmail(email).await()
+        Firebase.auth.currentUser!!.updatePassword(password).await()
     }
 }

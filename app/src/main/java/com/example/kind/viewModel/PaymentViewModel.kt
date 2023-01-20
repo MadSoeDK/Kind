@@ -93,15 +93,13 @@ class PaymentViewModel(
                 val task = storage.createStripePaymentIntent(amount*100, "dkk", charityName)
                 val result = task.await()
                 withContext(Dispatchers.IO) {
-                    Thread.sleep(5000)
+                    Thread.sleep(5000) // TODO: We do not at the moment have a better solution than this
                     _paymentState.update { it.copy(clientSecret = storage.getClientSecret(result), payIsEnabled = true) }
                     paymentPending = false
-                    println("State " + _paymentState.value.toString())
                     paymentSession?.presentPaymentMethodSelection()
                 }
             } catch (e: Exception) {
                 paymentPending = false
-                println(e.message)
                 e.printStackTrace()
             }
 

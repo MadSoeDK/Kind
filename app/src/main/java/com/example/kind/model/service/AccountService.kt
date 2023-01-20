@@ -7,4 +7,5 @@ interface AccountService {
     suspend fun changePassword(email: String, password: String)
     suspend fun createUserWithEmailAndPassword(email: String, password : String)
     suspend fun reAuthentication(email: String, password: String)
+    suspend fun updateUser(email: String, password: String)
 }

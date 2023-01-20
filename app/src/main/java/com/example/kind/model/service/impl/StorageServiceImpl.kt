@@ -35,6 +35,15 @@ class StorageServiceImpl: StorageService {
         }
     }
 
+    override suspend fun deleteUserFromFirestore(password: String) {
+        try {
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
+            Firebase.auth.currentUser?.delete()?.await()
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            throw e
+        }
+    }
+
     override suspend fun addToPortfolio(charityId: String){
         val checkList = getSubscriptions()
         var Subscribed = false
@@ -70,11 +79,6 @@ class StorageServiceImpl: StorageService {
         println("Removed from portfolio")
     }
 
-    override suspend fun updateUser(email: String, password: String) {
-        Firebase.auth.currentUser!!.updateEmail(email)
-        Firebase.auth.currentUser!!.updatePassword(password)
-    }
-
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = Firebase.auth.currentUser?.uid.toString()
         val subscriptions =
@@ -87,15 +91,6 @@ class StorageServiceImpl: StorageService {
             println(e.printStackTrace())
         }
         return portfolio
-    }
-
-    override suspend fun deleteUser(password: String) {
-        try {
-            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
-            Firebase.auth.currentUser?.delete()?.await()
-        } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            throw e
-        }
     }
 
     override suspend fun getDonationsAmount(): Int{
@@ -192,29 +187,6 @@ class StorageServiceImpl: StorageService {
     override suspend fun getCharitiesByCategory(category: String): List<Charity> {
         return Firebase.firestore.collection("Charity").whereEqualTo("category", category).get().await().toObjects()
     }
-
-
-    override suspend fun increaseCharityDonationNumber(charity: String) {
-        changeCharityField(charity, "Donations", 1)
-    }
-
-    override suspend fun decreaseCharityDonationNumber(charity: String) {
-        changeCharityField(charity, "Donations", -1)
-    }
-
-    override suspend fun increaseCharityDonaterNumber(charity: String) {
-        changeCharityField(charity, "Donators", 1)
-    }
-
-    override suspend fun decreaseCharityDonaterNumber(charity: String) {
-        changeCharityField(charity, "Donators", -1)
-    }
-
-
-    //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
-    override suspend fun addCharityAdministator() {}
-
-    override suspend fun deleteCharityAdministrator() {}
 
     override suspend fun getArticle(id: String): Article? {
         return Firebase.firestore.collection("Articles").document(id).get().await().toObject()
