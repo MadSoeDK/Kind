@@ -43,7 +43,7 @@ fun HomeScreen(
             )
         }
         if (viewModel.haveHomeArticles) {
-            Text("The latest news from your charities", fontSize = 14.sp)
+            Text("The latest news from your charities", fontSize = 14.sp, modifier = Modifier.padding(horizontal = 20.dp))
             if (state.articles.isEmpty()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,

@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Stripe private API key. Save it in local.properties file.
         PaymentConfiguration.init(
             applicationContext,
             BuildConfig.API_KEY
@@ -27,6 +28,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    // Used by Stripe to handle the payment
     @Deprecated("Deprecated in Java", ReplaceWith(
         "super.onActivityResult(requestCode, resultCode, data)",
         "androidx.activity.ComponentActivity"
@@ -34,7 +37,6 @@ class MainActivity : ComponentActivity() {
     )
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        println("Request-code:$requestCode Result-code $resultCode")
         paymentViewModel.paymentSession?.handlePaymentData(requestCode, resultCode, data)
     }
 }

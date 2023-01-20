@@ -61,7 +61,7 @@ class ProfileViewModel(
         }
         viewModelScope.launch {
             try {
-                storage.updateUser(
+                auth.updateUser(
                     formState.getData().getValue("Email"),
                     formState.getData().getValue("Password"),
                 )
@@ -93,7 +93,7 @@ class ProfileViewModel(
     fun onDeleteUser(password: String) {
         viewModelScope.launch {
             try {
-                storage.deleteUser(
+                storage.deleteUserFromFirestore(
                     formState.getData().getValue("Password"),
                 )
             } catch (e: FirebaseAuthRecentLoginRequiredException) {

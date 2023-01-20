@@ -9,8 +9,7 @@ interface StorageService {
     // Users
     suspend fun addUser(user: User)
     suspend fun addSubscriptionToUser(subs: List<Subscription>)
-    suspend fun updateUser(email: String, password: String)
-    suspend fun deleteUser(password: String)
+    suspend fun deleteUserFromFirestore(password: String)
     suspend fun getSubscriptions() : List<Subscription>
     suspend fun addSubscription(amount: Double, user: String, charity: String)
     suspend fun getDonationsAmount(): Int
@@ -30,12 +29,11 @@ interface StorageService {
     suspend fun getCharity(id: String): Charity?
     suspend fun getCharities(): List<Charity>
     suspend fun getCharitiesByCategory(category: String): List<Charity>
-    suspend fun increaseCharityDonationNumber(charity: String)
+    // TODO: To be implemented
+    /*suspend fun increaseCharityDonationNumber(charity: String)
     suspend fun decreaseCharityDonationNumber(charity: String)
     suspend fun increaseCharityDonaterNumber(charity: String)
-    suspend fun decreaseCharityDonaterNumber(charity: String)
-    suspend fun addCharityAdministator()
-    suspend fun deleteCharityAdministrator()
+    suspend fun decreaseCharityDonaterNumber(charity: String)*/
     suspend fun getArticle(id: String): Article?
     suspend fun getArticles(id: String): List<Article>
     suspend fun getHomeArticles(id: String): List<Article>

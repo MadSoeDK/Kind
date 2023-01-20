@@ -117,7 +117,6 @@ fun PaymentScreen(
                         if (paymentState.paymentMethod == null)
                             return@KindButton //Error
 
-                        println("Payment confirm state $paymentState")
                         paymentLauncher.confirm(ConfirmPaymentIntentParams.createWithPaymentMethodId(
                             paymentMethodId = paymentState.paymentMethod?.id!!,
                             clientSecret = paymentState.clientSecret!!

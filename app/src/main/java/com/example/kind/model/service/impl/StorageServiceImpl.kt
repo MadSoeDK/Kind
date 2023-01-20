@@ -16,10 +16,6 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Singleton
 
-/**
- * Works together with the firestore to retrieve and connect the correct collections and
- * documents that the viewModels can make use of to display and handle the data.
- */
 @Singleton
 class StorageServiceImpl: StorageService {
 
@@ -39,6 +35,18 @@ class StorageServiceImpl: StorageService {
     override suspend fun addSubscriptionToUser(subs: List<Subscription>) {
         subs.forEach {
             Firebase.firestore.collection("Users").document(Firebase.auth.uid!!).collection("Subscriptions").add(it)
+        }
+    }
+
+    /**
+     * Deletes a user from the firestore
+     */
+    override suspend fun deleteUserFromFirestore(password: String) {
+        try {
+            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
+            Firebase.auth.currentUser?.delete()?.await()
+        } catch (e: FirebaseAuthRecentLoginRequiredException) {
+            throw e
         }
     }
 
@@ -106,21 +114,6 @@ class StorageServiceImpl: StorageService {
         return portfolio
     }
 
-    /**
-     * Deletes a user from the firestore and authentication
-     */
-    override suspend fun deleteUser(password: String) {
-        try {
-            Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
-            Firebase.auth.currentUser?.delete()?.await()
-        } catch (e: FirebaseAuthRecentLoginRequiredException) {
-            throw e
-        }
-    }
-
-    /**
-     * Gets all-time spent from a user
-     */
     override suspend fun getDonationsAmount(): Int{
         val donationList = Firebase.firestore.collection("stripe_customers").document(Firebase.auth.currentUser!!.uid)
                             .collection("payments").get().await().toObjects<Payment>()
@@ -225,29 +218,6 @@ class StorageServiceImpl: StorageService {
     override suspend fun getCharitiesByCategory(category: String): List<Charity> {
         return Firebase.firestore.collection("Charity").whereEqualTo("category", category).get().await().toObjects()
     }
-
-
-    override suspend fun increaseCharityDonationNumber(charity: String) {
-        changeCharityField(charity, "Donations", 1)
-    }
-
-    override suspend fun decreaseCharityDonationNumber(charity: String) {
-        changeCharityField(charity, "Donations", -1)
-    }
-
-    override suspend fun increaseCharityDonaterNumber(charity: String) {
-        changeCharityField(charity, "Donators", 1)
-    }
-
-    override suspend fun decreaseCharityDonaterNumber(charity: String) {
-        changeCharityField(charity, "Donators", -1)
-    }
-
-
-    //TODO we don't have a definition on what an admin is yet (is it a user variable, or a whitelist in the charity?)
-    override suspend fun addCharityAdministator() {}
-
-    override suspend fun deleteCharityAdministrator() {}
 
     override suspend fun getArticle(id: String): Article? {
         return Firebase.firestore.collection("Articles").document(id).get().await().toObject()

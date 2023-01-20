@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+ * Stripe integration with Firebase functions
+ * @author https://github.com/stripe-archive/firebase-mobile-payments
+ */
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
