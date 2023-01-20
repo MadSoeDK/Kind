@@ -111,7 +111,7 @@ fun ProfileScreen(
                 text = {
                     Column {
                         Text(text = "Are you sure you want to delete your account? This cannot be undone. Input your password below")
-                        TextField(value = text, onValueChange = {text = it}, singleLine = true, visualTransformation = PasswordVisualTransformation())
+                        TextField(value = text, onValueChange = {text = it}, singleLine = true, visualTransformation = PasswordVisualTransformation(), label = {Text("Password")})
                     }
                 },
                 confirmButton = {
@@ -132,31 +132,6 @@ fun ProfileScreen(
                     }
                 }
             )
-        }
-    }
-
-}
-
-@Composable
-fun ReSignIn(viewModel: ProfileViewModel, onLogout: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        HeaderAndText(
-            headerProvider = "Confirmation",
-            textProvider = "Please confirm your user details to delete your account."
-        )
-        /*Form(
-            state = viewModel.formState,
-            //fields = viewModel.fields.subList(2, 4),
-        )*/
-        Button(onClick = {
-            //viewModel.onDeleteUser()
-            onLogout()
-        }) {
-            Text("Confirm")
         }
     }
 }
