@@ -61,7 +61,7 @@ class CharityViewModel(
 
     fun addToPortfolio(){
         viewModelScope.launch {
-            storage.addToPortfolio(data.value.id)
+            storage.addCharityToPortfolio(data.value.id)
             onAddToPortfolio()
         }
         _data.update { it.copy(inPortfolio = true) }
@@ -69,7 +69,7 @@ class CharityViewModel(
 
     fun removeFromPortfolio(){
         viewModelScope.launch {
-            storage.removeFromPortfolio(data.value.id)
+            storage.removeCharityFromPortfolio(data.value.id)
             onAddToPortfolio()
         }
         _data.update { it.copy(inPortfolio = false) }

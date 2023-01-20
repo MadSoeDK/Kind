@@ -23,7 +23,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 /**
- *
+ * Handles all the communication with stripe ensuring a user can make a donation of subscribe
  */
 
 class PaymentViewModel(

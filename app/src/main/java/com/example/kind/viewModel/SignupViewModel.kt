@@ -18,7 +18,9 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-
+/**
+ * Handles the signUp flow a user has to enter when creating their account in the Kind app
+ */
 class SignupViewModel(
     val navController: NavController,
     val navigateAmount: () -> Unit,

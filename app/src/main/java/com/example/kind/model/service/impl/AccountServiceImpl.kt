@@ -9,6 +9,9 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Handles the authentication and modification of the user
+ */
 @Singleton
 class AccountServiceImpl @Inject constructor(): AccountService {
     override suspend fun authenticateUser(email: String, password: String) {

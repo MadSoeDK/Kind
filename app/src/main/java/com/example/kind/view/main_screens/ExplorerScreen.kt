@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kind.HomeScreens
 import com.example.kind.model.CharityCategory
 import com.example.kind.view.composables.CharityHeaderAndSubsectionText
-import com.example.kind.view.composables.KindCharityCard
+import com.example.kind.view.composables.KindExploreCard
 import com.example.kind.view.theme.Typography
 import com.example.kind.viewModel.ExplorerViewModel
 
@@ -79,7 +79,7 @@ fun ExplorerScreen(
             LazyVerticalGrid(columns = GridCells.Fixed(2), Modifier.height(600.dp)) {
                 state.forEach {
                     item {
-                        KindCharityCard(
+                        KindExploreCard(
                             Title = it.name,
                             Body = it.desc,
                             iconImage = it.iconImage,

@@ -33,13 +33,19 @@ class StorageServiceImpl: StorageService {
         }
     }
 
+    /**
+     * Adds a subscription to a user in firebase
+     */
     override suspend fun addSubscriptionToUser(subs: List<Subscription>) {
         subs.forEach {
             Firebase.firestore.collection("Users").document(Firebase.auth.uid!!).collection("Subscriptions").add(it)
         }
     }
 
-    override suspend fun addToPortfolio(charityId: String){
+    /**
+     * Adds a charity to a user's portfolio
+     */
+    override suspend fun addCharityToPortfolio(charityId: String) {
         val checkList = getSubscriptions()
         var Subscribed = false
         var charity: Charity? = Charity()
@@ -51,12 +57,11 @@ class StorageServiceImpl: StorageService {
             }
         }
 
-        Thread.sleep(1000)
+        //Thread.sleep(1000)
 
         // If not, then add it to your subscriptions
         if (!Subscribed) {
             charity = getCharity(charityId)
-            println(charity.toString())
             val subscription = Subscription(10.0, charityId, charityId, Timestamp(1, 1), charity!!.name)
 
             Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).collection("Subscriptions")
@@ -64,21 +69,29 @@ class StorageServiceImpl: StorageService {
         }
     }
 
-    override suspend fun removeFromPortfolio(charityId: String) {
+    /**
+     * Removes a charity from a user's portfolio
+     */
+    override suspend fun removeCharityFromPortfolio(charityId: String) {
         Firebase.firestore.collection("Users").document(Firebase.auth.currentUser!!.uid).collection("Subscriptions").whereEqualTo("charityID", charityId)
             .get().addOnSuccessListener { querySnapshot ->
                 for (doc in querySnapshot) {
                     doc.reference.delete()
                 }
             }.await()
-        println("Removed from portfolio")
     }
 
+    /**
+     * Update user's Email and password
+     */
     override suspend fun updateUser(email: String, password: String) {
         Firebase.auth.currentUser!!.updateEmail(email)
         Firebase.auth.currentUser!!.updatePassword(password)
     }
 
+    /**
+     * Retrieves all the user's subscriptions that a user has
+     */
     override suspend fun getSubscriptions(): List<Subscription> {
         val documentId = Firebase.auth.currentUser?.uid.toString()
         val subscriptions =
@@ -93,6 +106,9 @@ class StorageServiceImpl: StorageService {
         return portfolio
     }
 
+    /**
+     * Deletes a user from the firestore and authentication
+     */
     override suspend fun deleteUser(password: String) {
         try {
             Firebase.firestore.collection("Users").document(Firebase.auth.currentUser?.uid.toString()).delete().await()
@@ -102,6 +118,9 @@ class StorageServiceImpl: StorageService {
         }
     }
 
+    /**
+     * Gets all-time spent from a user
+     */
     override suspend fun getDonationsAmount(): Int{
         val donationList = Firebase.firestore.collection("stripe_customers").document(Firebase.auth.currentUser!!.uid)
                             .collection("payments").get().await().toObjects<Payment>()
@@ -111,7 +130,9 @@ class StorageServiceImpl: StorageService {
         }
     }
 
-    // Subscriptions
+    /**
+     * Adds a subscription to a user in the firestore
+     */
     override suspend fun addSubscription(amount: Double, user: String, charity: String) {
         val charityDocRef = Firebase.firestore.collection("Charity").document(charity)
         val userDocRef = Firebase.firestore.collection("User").document(user)
@@ -127,11 +148,17 @@ class StorageServiceImpl: StorageService {
         }
     }
 
+    /**
+     * Deletes a subscription given a specific user
+     */
     override suspend fun deleteSubscription(user: String, subscription: String) {
         Firebase.firestore.collection("User").document(user).collection("Subscription").document(subscription)
             .delete()
     }
 
+    /**
+     * Modifies a user's subscription amount
+     */
     override suspend fun modifySubscriptionAmount(
         subscription: Subscription,
         amount: Double
@@ -151,12 +178,14 @@ class StorageServiceImpl: StorageService {
             }
     }
 
-    // Donations
+    /**
+     * Adds a donation a user has made
+     */
     override suspend fun addDonation(amount: Double, user: String, charity: String, Desc: String) {
         val charityDocRef = Firebase.firestore.collection("Charity").document(charity)
         val userDocRef = Firebase.firestore.collection("User").document(user)
 
-        val date = com.google.firebase.Timestamp.now()
+        val date = Timestamp.now()
         val id = UUID.randomUUID().toString()
         Firebase.firestore.runTransaction { transaction ->
             val charitySnapshot = transaction.get(charityDocRef)
@@ -229,12 +258,14 @@ class StorageServiceImpl: StorageService {
             .toObjects()
     }
 
+    /**
+     * Gets the articles from charities a user is subscribed to
+     */
     override suspend fun getHomeArticles(id: String): List<Article> {
         // Setup vairables
-        var subscriptions = listOf<Subscription>()
-        var charities = mutableListOf<Charity?>()
-        var articlePointers = listOf<String>()
-        var articleList = mutableListOf<Article>()//Firebase.firestore.collection("Articles").limit(5).get().await().toObjects()
+        val subscriptions: List<Subscription>
+        val charities = mutableListOf<Charity?>()
+        val articleList = mutableListOf<Article>()
 
         // Get the subscriptions from User
         subscriptions =
@@ -259,6 +290,9 @@ class StorageServiceImpl: StorageService {
         return articleList
     }
 
+    /**
+     * Adds a article to a specific charity
+     */
     override suspend fun addCharityArticle(articleContent: String, charity: String) {
         val articleId = System.currentTimeMillis().toString()
         val article = Article(articleId, articleContent)
@@ -266,11 +300,18 @@ class StorageServiceImpl: StorageService {
         Firebase.firestore.collection("Charity").document(charity).collection("Articles").add(article)
     }
 
+    /**
+     * Deletes a article from a specfic charity
+     */
     override suspend fun deleteArticle(article: String, charity: String) {
         Firebase.firestore.collection("Charity").document(charity).collection("Article").document(article)
             .delete()
     }
 
+    /**
+     * Create s a stripe payment intent that can be confirmed og cancelled and adds it to
+     * a user's payments in the stripe_customers collection
+     */
     override suspend fun createStripePaymentIntent(amount: Double, currency: String, charityId: String): Task<DocumentReference> {
         val colRef = Firebase.firestore.collection("stripe_customers")
             .document(Firebase.auth.currentUser?.uid.toString())
@@ -290,6 +331,9 @@ class StorageServiceImpl: StorageService {
         return docRef
     }
 
+    /**
+     * Fetches a client secret to confirm a payment intent
+     */
     override suspend fun getClientSecret(doc: DocumentReference): String {
         val payment = Firebase.firestore.collection("stripe_customers")
             .document(Firebase.auth.currentUser?.uid.toString())

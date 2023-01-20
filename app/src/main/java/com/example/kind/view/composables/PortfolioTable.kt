@@ -13,6 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * @author: https://alexzh.com/jetpack-compose-building-grids/
+ *
+ * Used in PortfolioScreen to display charity information
+ */
 @Composable
 fun <T> PortfolioTable(
     columnCount: Int,
@@ -34,8 +39,6 @@ fun <T> PortfolioTable(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     (0..data.size).forEach { index ->
                         Surface(
-                            //border = BorderStroke(1.dp, Color.LightGray ),
-                            //contentColor = Color.Transparent,
                             modifier = Modifier.width(cellWidth(columnIndex)),
                             color = MaterialTheme.colorScheme.background
                         ) {

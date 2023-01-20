@@ -15,8 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import coil.compose.AsyncImage
 import com.example.kind.view.theme.Typography
 
+/**
+ * Used to display charities only in the ExplorerScreen
+ */
 @Composable
-fun KindCharityCard(
+fun KindExploreCard(
     Title: String,
     Body: String,
     iconImage: String,

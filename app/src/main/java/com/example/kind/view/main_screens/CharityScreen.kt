@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.KindButtonEdit
-import com.example.kind.view.composables.KindCard
+import com.example.kind.view.composables.KindCharityAndArticleCard
 import com.example.kind.viewModel.CharityViewModel
 import com.example.kind.view.theme.Typography
 import com.example.kind.view.home.composables.SmallHeaderAndText
@@ -143,7 +143,7 @@ fun CharityScreen(
                 LazyRow {
                     state.articles.forEach {
                         item {
-                            KindCard(
+                            KindCharityAndArticleCard(
                                 titleProvider = it.title,
                                 subTitleProvider = it.charityName,
                                 onClick = { viewModel.navController.navigate(HomeScreens.Article.route + "/" + it.id) },

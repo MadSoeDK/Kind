@@ -23,7 +23,7 @@ fun ProfileScreen(
     transactionHistory: () -> Unit
 ) {
 
-    var updateChangesOpenDialog = remember { mutableStateOf(false) }
+    val updateChangesOpenDialog = remember { mutableStateOf(false) }
     val deleteAccountOpenDialog = remember { mutableStateOf(false) }
 
     Column(

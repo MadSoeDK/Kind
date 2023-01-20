@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.example.kind.HomeScreens
 import com.example.kind.view.composables.HeaderAndText
 import com.example.kind.view.composables.KindButtonOutlined
-import com.example.kind.view.composables.KindCard
+import com.example.kind.view.composables.KindCharityAndArticleCard
 import com.example.kind.view.theme.*
 import com.example.kind.viewModel.HomeViewModel
 
@@ -62,7 +62,7 @@ fun HomeScreen(
                             if (i == 0) {
                                 Spacer(modifier = Modifier.width(10.dp))
                             }
-                            KindCard(
+                            KindCharityAndArticleCard(
                                 titleProvider = element.charityName,
                                 subTitleProvider = element.title,
                                 iconImage = element.iconImage,
@@ -114,7 +114,7 @@ fun HomeScreen(
                 state.charities.forEachIndexed { i, element ->
                     item {
                         if (i == 0) Spacer(modifier = Modifier.width(10.dp))
-                        KindCard(
+                        KindCharityAndArticleCard(
                             titleProvider = element.name,
                             iconImage = element.iconImage,
                             mainImage = element.mainImage,

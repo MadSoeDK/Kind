@@ -19,7 +19,7 @@ import coil.compose.AsyncImage
 
 
 @Composable
-fun KindCard(
+fun KindCharityAndArticleCard(
     titleProvider: String,
     subTitleProvider: String = "",
     iconImage: String,

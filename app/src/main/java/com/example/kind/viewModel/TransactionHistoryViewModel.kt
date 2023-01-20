@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- *
+ * Handles all the payments a user has made through time and returns it
  */
 
 class TransactionHistoryViewModel(
