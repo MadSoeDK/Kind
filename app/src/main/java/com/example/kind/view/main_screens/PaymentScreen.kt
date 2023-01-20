@@ -27,6 +27,8 @@ fun paymentLauncher(
                 viewModel.paymentSuccess = true
             }
             else -> {
+                viewModel.paymentPending = false
+                viewModel.paymentSuccess = false
                 // TODO Error handling
             }
         }

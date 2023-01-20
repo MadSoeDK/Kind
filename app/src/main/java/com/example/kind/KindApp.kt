@@ -82,7 +82,7 @@ fun KindApp(
         startDestination = if (Firebase.auth.currentUser != null) HomeScreens.Root.route else AuthenticationScreens.Root.route
     ) {
         homeNavGraph(navController, appViewModel, paymentViewModel, storage, auth)
-        authNavGraph(navController, auth, storage)
+        authNavGraph(navController, auth)
         signupNavGraph(navController, storage, auth)
     }
 }
@@ -324,9 +324,8 @@ fun NavGraphBuilder.signupNavGraph(
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
     auth: AccountServiceImpl,
-    storage: StorageServiceImpl
 ) {
-    val loginViewModel = LoginViewModel(navController, auth = auth, storage = storage)
+    val loginViewModel = LoginViewModel(navController, auth = auth)
     navigation(
         startDestination = AuthenticationScreens.Authenticate.route,
         route = AuthenticationScreens.Root.route

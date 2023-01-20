@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     val navController: NavController,
     private val auth: AccountServiceImpl,
-    private val storage: StorageServiceImpl
 ) : ViewModel() {
 
     var isLoading by mutableStateOf(false)
@@ -35,13 +34,15 @@ class LoginViewModel(
             name = "Email",
             label = "Email",
             validators = listOf(Required(), Email()),
-            readOnly = false
+            readOnly = false,
+            defaultText = "kd1@kind.dk"
         ),
         KindTextField(
             name = "Password",
             label = "Password",
             validators = listOf(Required(), Password()),
-            readOnly = false
+            readOnly = false,
+            defaultText = "123456"
         ),
     )
 
