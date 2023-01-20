@@ -111,6 +111,7 @@ fun ProfileScreen(
                 text = {
                     Column {
                         Text(text = "Are you sure you want to delete your account? This cannot be undone. Input your password below")
+                        Spacer(modifier = Modifier.padding(vertical = 15.dp))
                         TextField(value = text, onValueChange = {text = it}, singleLine = true, visualTransformation = PasswordVisualTransformation(), label = {Text("Password")})
                     }
                 },
