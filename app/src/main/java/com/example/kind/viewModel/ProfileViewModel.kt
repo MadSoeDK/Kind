@@ -40,6 +40,7 @@ class ProfileViewModel(
             label = "Email",
             validators = listOf(Required(), Email()),
             readOnly = true,
+            defaultText = Firebase.auth.currentUser?.email.let { "" }
         ),
         KindTextField(
             name = "Password",

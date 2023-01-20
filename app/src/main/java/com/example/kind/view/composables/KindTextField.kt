@@ -33,9 +33,10 @@ class KindTextField(
     val name: String,
     val label: String = "",
     val validators: List<Validator>,
-    var readOnly: Boolean = false
+    var readOnly: Boolean = false,
+    val defaultText: String = ""
 ) {
-    var text: String by mutableStateOf("")
+    var text: String by mutableStateOf(defaultText)
     var lbl: String by mutableStateOf(label)
     var errorText: String by mutableStateOf("")
     var hasError: Boolean by mutableStateOf(false)

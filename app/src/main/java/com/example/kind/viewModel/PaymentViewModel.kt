@@ -93,7 +93,9 @@ class PaymentViewModel(
                 val task = storage.createStripePaymentIntent(amount*100, "dkk", charityName)
                 val result = task.await()
                 withContext(Dispatchers.IO) {
-                    Thread.sleep(5000) // TODO: We do not at the moment have a better solution than this
+                    // TODO: We do not at the moment have a better solution than this
+                    // We have to wait for the firebase function to finish. This is very vulnerable to errors.
+                    Thread.sleep(5000)
                     _paymentState.update { it.copy(clientSecret = storage.getClientSecret(result), payIsEnabled = true) }
                     paymentPending = false
                     paymentSession?.presentPaymentMethodSelection()
