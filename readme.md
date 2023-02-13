@@ -12,7 +12,7 @@ Password: 123456
 
 OBS: Integration with Stripe is no longer in service!
 
-[[Kind_Poster.png]]
+![](Kind_Poster.png)
 
 ## Features implemented
 - Donate to charities through Stripe integration.
