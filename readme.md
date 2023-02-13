@@ -12,6 +12,8 @@ Password: 123456
 
 OBS: Integration with Stripe is no longer in service!
 
+[[Kind_Poster.png]]
+
 ## Features implemented
 - Donate to charities through Stripe integration.
 - Build a portfolio of charities in a monthly subscription. The user can manage the portfolio and continously add/remove charities from their monthly donation.
