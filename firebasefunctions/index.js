@@ -11,7 +11,7 @@ const { Logging } = require('@google-cloud/logging');
 const logging = new Logging({
   projectId: process.env.GCLOUD_PROJECT,
 });
-const stripe = require('stripe')("rk_test_51MPijlEdqjLxqDOffhnseYTpmXhDEHjoeBm2z26v5ocpt6y5xAlLoty4pK9QWpGJ7R19A6ga0RwNKH42kouXDKAz0075ybadk8", {
+const stripe = require('stripe')(process.env.stripekey, {
   apiVersion: '2020-03-02',
 });
 
